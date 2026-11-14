@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at_utc": "2026-11-14T21:29:04.301129+00:00",
+  "generated_at_utc": "2026-11-14T22:23:58.082466+00:00",
   "case_id": "ukraine",
   "title": "Ukraine & Kyiv 4-Elements Environmental Trend Observatory",
   "conflict_start": "2022-02-24",
@@ -1754,7 +1754,7 @@
     ]
   },
   "regional_fire_water_earth_contrast": {
-    "interpretation": "Fire-weather contrast: Candidate Western and Central comparison regions experienced stronger 2022 evaporative drying (higher VPD, lower surface soil moisture) yet recorded lower FIRMS type0 presumed vegetation detection rates, whereas the proposed Donbas-Kharkiv frontline corridor had smaller mean VPD/soil shifts while type0 detection rates changed +72.4% and type2 other static land hotspot detections changed -83.3%.",
+    "interpretation": "Fire-weather context: Candidate Western and Central comparison boxes recorded stronger 2022 box-mean evaporative drying (higher VPD, lower surface soil moisture) alongside lower FIRMS type0 presumed vegetation detection rates, whereas the proposed Donbas-Kharkiv corridor showed smaller box-mean VPD/soil shifts while type0 detection rates changed +72.4% and type2 other static land hotspot detections changed -83.3%. Note: Coarse 0.5 deg regional box averages provide background context and do not rule out localized or sub-monthly drought.",
     "candidate_role_qualification": "Regions labeled 'proposed study' and 'candidate reference' are analytical spatial comparisons only; no Ukrainian oblast is an un-impacted causal control (airspace closures, displacement, power disruptions, and missile strikes affected western and central regions as well).",
     "external_eu_weather_context_2015_2019_vs_2022": [
       {
