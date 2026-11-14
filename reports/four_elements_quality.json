@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-14T19:49:52.620355+00:00",
+  "provenance": {
+    "giovanni_no2_csv": {
+      "file": "NASA_Giovanni_NO2_2015-03-01_to_2022-08-31.csv",
+      "sha256": "f6a26eece77fb2bb932d6beb3cac7460a1e8d701b22d17ed247bd776d598aee1"
+    },
+    "power_monthly_json": {
+      "file": "ukraine_power_monthly_2015_2022.json",
+      "sha256": "ab4dc36efd2fcb3cbb01fb9e67b96698f7806d1fa72c402413d3d7f3b2a51084"
+    },
+    "power_daily_json": {
+      "file": "kyiv_power_daily_2015_2022.json",
+      "sha256": "5447b5b4ee619b9e2a160b64e8a3ebc2787391cebe3623f4b66f05a1699c28f6"
+    },
+    "no2_monthly_csv_sha256": "b6004972e3908359a5192945b3fb0979a84684db3abc2a40e7edf3b2199015c3",
+    "fire_monthly_csv_sha256": "eff964c71db604009867dd9a857d69128045f3b898f831c72a58685a9ad00aa7"
+  },
+  "counts": {
+    "monthly_panel_rows": 768,
+    "regions_count": 8,
+    "kyiv_daily_rows": 2741,
+    "no2_valid_daily_observations": 1432,
+    "monthly_power_missing_t2m_cells": 0,
+    "monthly_power_missing_vpd_cells": 0
+  },
+  "invariants": {
+    "allow_nan_json": false,
+    "missing_no2_never_zero_filled": true,
+    "before_after_seasonal_inference": "not_assessed",
+    "causal_attribution": "not_established"
+  }
+}

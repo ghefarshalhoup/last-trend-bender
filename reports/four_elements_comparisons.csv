@@ -1,0 +1,25 @@
+region_id,metric_id,element,label,units,is_interval_scale,source_layer,baseline_2015_2019_mean,baseline_2019_2021_mean,target_2022_mean,vs_2015_2019_abs_diff,vs_2015_2019_pct_change,vs_2015_2019_status,vs_2019_2021_abs_diff,vs_2019_2021_pct_change,vs_2019_2021_status
+kyiv_no2_box,no2_mean_molec_cm2,air,Tropospheric NO2 Column (OMNO2d),molecules/cm^2,False,OMI OMNO2d v004,2387702465893908.0,2206251841871632.5,1727839059223483.0,-659863406670425.0,-27.64,computed,-478412782648149.5,-21.68,computed
+kyiv_no2_box,ws10m,air,10m Wind Speed,m/s,False,NASA POWER MERRA-2,4.1425,3.9927,4.3291,0.1866,4.5,computed,0.3364,8.42,computed
+kyiv_no2_box,cloud_amt,air,Total Cloud Amount,%,False,NASA POWER CERES/MERRA-2,56.853,57.6594,58.45,1.597,2.81,computed,0.7906,1.37,computed
+kyiv_no2_box,ps,air,Surface Barometric Pressure,kPa,False,NASA POWER MERRA-2,99.6963,99.6957,99.8385,0.1422,0.14,computed,0.1429,0.14,computed
+kyiv_no2_box,cloud_radiative_attenuation_wm2,air,Cloud Radiative Attenuation (SWclr - SWall),W/m^2,True,Derived CERES,58.2022,61.9534,72.4344,14.2323,,withheld_interval_scale,10.481,,withheld_interval_scale
+kyiv_no2_box,fire_type0_per_1k_km2_day,fire,VIIRS Vegetation Fire Density (type0),det / 1000 km^2 / day,False,FIRMS VIIRS S-NPP,0.3479,0.2518,0.461,0.1131,32.5,computed,0.2091,83.03,computed
+kyiv_no2_box,fire_type2_per_1k_km2_day,fire,VIIRS Static Industrial Anomaly Density (type2),det / 1000 km^2 / day,False,FIRMS VIIRS S-NPP,0.0,0.0,0.0,0.0,,withheld_nonpositive_baseline,0.0,,withheld_nonpositive_baseline
+kyiv_no2_box,t2m,fire,2m Air Temperature,°C,True,NASA POWER MERRA-2,15.1871,14.7855,14.0596,-1.1275,,withheld_interval_scale,-0.726,,withheld_interval_scale
+kyiv_no2_box,t2m_max,fire,Monthly Peak 2m Temperature (T2M_MAX),°C,True,NASA POWER MERRA-2,27.2925,26.6425,26.3587,-0.9338,,withheld_interval_scale,-0.2838,,withheld_interval_scale
+kyiv_no2_box,dtr_c,fire,Mean Daily Diurnal Temp Range (T2M_RANGE),°C,False,NASA POWER MERRA-2,10.9696,10.4619,10.4397,-0.5299,-4.83,computed,-0.0222,-0.21,computed
+kyiv_no2_box,allsky_sfc_sw_dwn,fire,All-Sky Downward Shortwave Flux,MJ/m^2/day,False,NASA POWER CERES,18.4747,18.0211,17.2367,-1.238,-6.7,computed,-0.7844,-4.35,computed
+kyiv_no2_box,pet_fao56_mm_day,fire,FAO-56 Penman-Monteith PET,mm/day,False,Derived FAO-56 PM,3.8381,3.6022,3.5202,-0.3179,-8.28,computed,-0.082,-2.28,computed
+kyiv_no2_box,prectotcorr,water,Bias-Corrected Precipitation,mm/day,False,NASA POWER MERRA-2,1.5616,1.8642,1.7006,0.139,8.9,computed,-0.1636,-8.78,computed
+kyiv_no2_box,qv2m,water,2m Specific Humidity,g/kg,False,NASA POWER MERRA-2,7.6114,7.7957,7.5183,-0.093,-1.22,computed,-0.2774,-3.56,computed
+kyiv_no2_box,rh2m,water,2m Relative Humidity,%,False,NASA POWER MERRA-2,68.7899,70.2965,71.0776,2.2877,3.33,computed,0.7811,1.11,computed
+kyiv_no2_box,vpd_kpa,water,Vapor Pressure Deficit (VPD),kPa,False,Derived MERRA-2,0.7736,0.6949,0.6646,-0.1091,-14.1,computed,-0.0303,-4.36,computed
+kyiv_no2_box,evptrns_mm_day,water,Vegetation Transpiration Flux,mm/day,False,NASA POWER MERRA-2,1.0496,1.1156,1.0103,-0.0393,-3.74,computed,-0.1053,-9.44,computed
+kyiv_no2_box,precip_minus_pet_mm_day,water,Climatic Water Balance (P - PET),mm/day,True,Derived FAO-56,-2.2766,-1.738,-1.8197,0.4569,,withheld_interval_scale,-0.0816,,withheld_interval_scale
+kyiv_no2_box,gwettop,earth,Surface Soil Wetness (0–5 cm),fraction,False,NASA POWER MERRA-2,0.508,0.5211,0.5131,0.0051,1.0,computed,-0.008,-1.53,computed
+kyiv_no2_box,gwetroot,earth,Root-Zone Soil Wetness (0–100 cm),fraction,False,NASA POWER MERRA-2,0.4836,0.4914,0.4831,-0.0005,-0.09,computed,-0.0083,-1.69,computed
+kyiv_no2_box,gwetprof,earth,Profile Soil Moisture,fraction,False,NASA POWER MERRA-2,0.5161,0.5232,0.5157,-0.0004,-0.07,computed,-0.0075,-1.43,computed
+kyiv_no2_box,ts,earth,Earth Skin Temperature,°C,True,NASA POWER MERRA-2,15.5862,15.1218,14.4736,-1.1126,,withheld_interval_scale,-0.6482,,withheld_interval_scale
+kyiv_no2_box,ts_minus_t2m_c,earth,Skin-Air Thermal Decoupling (Ts - T2m),°C,True,Derived MERRA-2,0.3991,0.3362,0.414,0.0149,,withheld_interval_scale,0.0778,,withheld_interval_scale
+kyiv_no2_box,allsky_srf_alb,earth,All-Sky Surface Albedo,dimensionless,False,NASA POWER CERES,0.1633,0.1572,0.1517,-0.0117,-7.14,computed,-0.0056,-3.53,computed
