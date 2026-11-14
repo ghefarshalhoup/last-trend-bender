@@ -1,0 +1,18 @@
+# Python and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.env
+
+# Avoid committing satellite datasets and exported results
+/data/*
+!/data/.gitkeep
+
+# Local operating system / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
