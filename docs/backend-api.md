@@ -184,7 +184,7 @@ Every error uses one shape:
 | Code | Status | When |
 |---|---|---|
 | `data_unavailable` | 503 | Result file missing, unreadable or invalid. `details` lists the load problems. |
-| `chart_unavailable` | 503 | Contract is fine but that PNG is missing, not a PNG, or its path in the contract drifted. |
+| `chart_unavailable` | 503 | Contract is fine but that chart's entry is missing or points elsewhere, or its PNG is missing or not a PNG. |
 | `chart_not_found` | 404 | `chart_id` is not on the allowlist. |
 | `not_found` / `method_not_allowed` | 404 / 405 | Unknown route or non-GET method. |
 
@@ -207,6 +207,9 @@ served. Beyond types and required keys of schema 1.x, it checks:
 - Before/after inference: unless `status` is `assessed`, `p_value` and both
   CI bounds must be `null` and significance must not be claimed.
 - An assessed trend window has a slope and a `p_value` in [0, 1].
+- Types are strict, with no coercion: every numeric value in the contract is
+  declared, and a numeric string (`"123"`), a boolean, or a fractional count
+  is rejected. JSON integers remain valid where a float is expected.
 - Booleans are real JSON booleans.
 - The contract lists all three charts, each pointing at the expected file.
 
@@ -224,7 +227,8 @@ those with the backend.
    east]]`, Leaflet `fitBounds` order). `sampled_grid_center_extent` is
    optional context; label it as grid-center bounds, not a footprint. There is
    no pollution heatmap: show `map.note` near the map.
-4. **Charts** — use each `charts[].url` as an `<img src>` (prefix the API base
+4. **Charts** — `charts` lists only charts that are ready to load; an
+   unavailable chart is omitted (and reported by `/api/health`). Use each `charts[].url` as an `<img src>` (prefix the API base
    URL), with `title` as caption. `contract.data_csv_path` names the CSV behind
    each figure if interactive charts come later.
 5. **Results** — read numbers from `result`:
@@ -251,6 +255,6 @@ Large numbers are in molecules/cm² (`~10¹⁵`); format them in the UI.
 ## Tests
 
 ```bash
-python -m pytest backend/tests -q                 # backend (44 tests)
+python -m pytest backend/tests -q                 # backend (54 tests)
 python -m unittest discover -s tests -v           # existing analysis tests
 ```

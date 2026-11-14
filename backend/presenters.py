@@ -66,7 +66,15 @@ def build_map(raw: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
-def build_chart_links(raw: Dict[str, Any]) -> List[Dict[str, Any]]:
+def build_chart_links(data: AirKyivData) -> List[Dict[str, Any]]:
+    """Link only charts that passed the load checks.
+
+    A chart missing from the contract, pointing at the wrong file, or absent
+    on disk is omitted here; ``/api/health`` reports it and the chart route
+    answers 503. The study itself stays available.
+    """
+    raw = data.raw
+    assert raw is not None
     return [
         {
             "chart_id": spec.chart_id,
@@ -76,6 +84,7 @@ def build_chart_links(raw: Dict[str, Any]) -> List[Dict[str, Any]]:
             "contract": raw["charts"][spec.chart_id],
         }
         for spec in AIR_KYIV_CHARTS.values()
+        if data.chart_ready.get(spec.chart_id, False)
     ]
 
 
@@ -134,7 +143,7 @@ def build_air_study(data: AirKyivData) -> Dict[str, Any]:
         "study_id": AIR_STUDY_ID,
         "schema_version": raw["schema_version"],
         "map": build_map(raw),
-        "charts": build_chart_links(raw),
+        "charts": build_chart_links(data),
         "highlights": build_highlights(raw),
         "result": raw,
     }
