@@ -10,6 +10,8 @@ venv/
 # Avoid committing satellite datasets and exported results
 /data/*
 !/data/.gitkeep
+!/data/frozen/
+!/data/frozen/**
 
 # Local operating system / editor files
 .DS_Store

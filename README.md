@@ -13,10 +13,27 @@ A NASA Earth-observation hackathon project investigating how armed conflicts cha
 
 ## Project layout
 - `data/` — local raw/processed datasets; large files are intentionally excluded from Git
-- `src/` — reusable Python analysis and processing scripts
-- `notebooks/` — exploratory analysis and reproducible figures
-- `docs/` — study specification, methods, sources, and findings
-- `backend/` — read-only FastAPI service that serves validated results to the frontend
+- `src/` — reusable Python analysis, statistical rigor, and processing modules (`no2_pipeline.py`, `fire_pipeline.py`, `fire_analysis.py`, `weather_power_pipeline.py`, `stats_rigor.py`, `four_elements_analysis.py`, `build_web_bundle.py`)
+- `web/` — zero-backend interactive 4-Elements Trend Observatory (`index.html`, `app.css`, `app.js`, `data/ukraine_4elements_bundle.json`)
+- `reports/` — reproducible validated CSV, strict JSON, and figure artifacts
+- `docs/` — study specification, methods, findings, and schemas
+- `backend/` — read-only FastAPI service (Milestone 1)
+
+## Full 4-Elements Kyiv & Ukraine Observatory
+Beyond the Milestone 1 NO₂ replication, the 4-Elements workflow fuses **Air** (`OMNO2d v004` + MERRA-2 wind/cloud), **Fire** (`FIRMS VIIRS S-NPP` `type0` vegetation vs `type2` industrial + FAO-56 PET), **Water** (`PRECTOTCORR`, Vapor Pressure Deficit, `P - PET`), and **Earth** (`GWETTOP`/`GWETROOT`, `Ts - T2m`, albedo) across 8 aligned regions (`2015–2022`).
+
+```bash
+# 1. Fetch & cache live NASA POWER MERRA-2/CERES data (only needed if data/raw/nasa_power is empty)
+python -m src.weather_power_pipeline --fetch
+
+# 2. Run 4-Elements statistical integration & charts
+python -m src.four_elements_analysis
+
+# 3. Compile interactive observatory JSON bundle & launch UI
+python -m src.build_web_bundle
+python3 -m http.server 8080 --directory web
+```
+See [docs/four-elements-methods.md](docs/four-elements-methods.md), [docs/four-elements-findings.md](docs/four-elements-findings.md), and [docs/four-elements-results-schema.md](docs/four-elements-results-schema.md).
 
 ## First milestone
 Reproduce one credible NO₂ comparison using matched calendar months before/during the 2022 invasion, with dataset provenance, then evaluate reference-region differences.

@@ -1,0 +1,57 @@
+region_id,region_name,region_role,filter_mode,window_id,y2019_detections,y2020_detections,y2021_detections,y2022_detections,baseline_2019_2021_mean_detections,pct_change_vs_2019_2021,pct_status_vs_2019_2021,pct_change_vs_2021,baseline_2019_2021_rate_per_day,y2022_rate_per_day,rate_pct_change_vs_2019_2021
+ukraine_national,Ukraine (Full Country Export),national_aggregate,type0_vegetation_all_conf,mar_aug,56222,63707,22497,42248,47475.33,-11.01,computed,87.79,258.0181,251.4762,-2.54
+ukraine_national,Ukraine (Full Country Export),national_aggregate,type0_vegetation_all_conf,may_aug,29673,19633,15907,22599,21737.67,3.96,computed,42.07,176.729,209.25,18.4
+ukraine_national,Ukraine (Full Country Export),national_aggregate,type0_vegetation_nominal_high,mar_aug,53113,60967,21112,39622,45064.0,-12.08,computed,87.68,244.913,235.8452,-3.7
+ukraine_national,Ukraine (Full Country Export),national_aggregate,type0_vegetation_nominal_high,may_aug,27055,17844,14636,20451,19845.0,3.05,computed,39.73,161.3415,189.3611,17.37
+ukraine_national,Ukraine (Full Country Export),national_aggregate,all_types_all_conf,mar_aug,69745,75589,32896,45179,59410.0,-23.95,computed,37.34,322.8804,268.9226,-16.71
+ukraine_national,Ukraine (Full Country Export),national_aggregate,all_types_all_conf,may_aug,40066,28614,24559,24988,31079.67,-19.6,computed,1.75,252.6802,231.3704,-8.43
+ukraine_national,Ukraine (Full Country Export),national_aggregate,type2_static_industrial,mar_aug,11649,10344,9033,2329,10342.0,-77.48,computed,-74.22,56.2065,13.8631,-75.34
+ukraine_national,Ukraine (Full Country Export),national_aggregate,type2_static_industrial,may_aug,9059,7912,7552,1933,8174.33,-76.35,computed,-74.4,66.458,17.8981,-73.07
+donbas_kharkiv_east,"East Frontline Corridor (Donbas–Kharkiv, proposed study)",proposed_study_region,type0_vegetation_all_conf,mar_aug,11727,18044,5836,18072,11869.0,52.26,computed,209.66,64.5054,107.5714,66.76
+donbas_kharkiv_east,"East Frontline Corridor (Donbas–Kharkiv, proposed study)",proposed_study_region,type0_vegetation_all_conf,may_aug,9133,10539,4823,12886,8165.0,57.82,computed,167.18,66.3821,119.3148,79.74
+donbas_kharkiv_east,"East Frontline Corridor (Donbas–Kharkiv, proposed study)",proposed_study_region,type0_vegetation_nominal_high,mar_aug,10857,16995,5459,16714,11103.67,50.53,computed,206.17,60.346,99.4881,64.86
+donbas_kharkiv_east,"East Frontline Corridor (Donbas–Kharkiv, proposed study)",proposed_study_region,type0_vegetation_nominal_high,may_aug,8320,9629,4465,11678,7471.33,56.3,computed,161.55,60.7425,108.1296,78.01
+donbas_kharkiv_east,"East Frontline Corridor (Donbas–Kharkiv, proposed study)",proposed_study_region,all_types_all_conf,mar_aug,17972,24052,10641,19057,17555.0,8.56,computed,79.09,95.4076,113.4345,18.89
+donbas_kharkiv_east,"East Frontline Corridor (Donbas–Kharkiv, proposed study)",proposed_study_region,all_types_all_conf,may_aug,14010,15139,8902,13658,12683.67,7.68,computed,53.43,103.1192,126.463,22.64
+donbas_kharkiv_east,"East Frontline Corridor (Donbas–Kharkiv, proposed study)",proposed_study_region,type2_static_industrial,mar_aug,6095,5921,4734,859,5583.33,-84.61,computed,-81.85,30.3442,5.1131,-83.15
+donbas_kharkiv_east,"East Frontline Corridor (Donbas–Kharkiv, proposed study)",proposed_study_region,type2_static_industrial,may_aug,4752,4539,4020,676,4437.0,-84.76,computed,-83.18,36.0732,6.2593,-82.65
+south_steppe_belt,"South Steppe Corridor (Kherson–Mykolaiv–Crimea edge, proposed study)",proposed_study_region,type0_vegetation_all_conf,mar_aug,7209,3899,3820,5946,4976.0,19.49,computed,55.65,27.0435,35.3929,30.87
+south_steppe_belt,"South Steppe Corridor (Kherson–Mykolaiv–Crimea edge, proposed study)",proposed_study_region,type0_vegetation_all_conf,may_aug,6501,2917,3657,4956,4358.33,13.71,computed,35.52,35.4336,45.8889,29.51
+south_steppe_belt,"South Steppe Corridor (Kherson–Mykolaiv–Crimea edge, proposed study)",proposed_study_region,type0_vegetation_nominal_high,mar_aug,6373,3472,3387,5334,4410.67,20.93,computed,57.48,23.971,31.75,32.45
+south_steppe_belt,"South Steppe Corridor (Kherson–Mykolaiv–Crimea edge, proposed study)",proposed_study_region,type0_vegetation_nominal_high,may_aug,5707,2515,3235,4373,3819.0,14.51,computed,35.18,31.0488,40.4907,30.41
+south_steppe_belt,"South Steppe Corridor (Kherson–Mykolaiv–Crimea edge, proposed study)",proposed_study_region,all_types_all_conf,mar_aug,7507,4145,4078,6077,5243.33,15.9,computed,49.02,28.4964,36.1726,26.94
+south_steppe_belt,"South Steppe Corridor (Kherson–Mykolaiv–Crimea edge, proposed study)",proposed_study_region,all_types_all_conf,may_aug,6738,3107,3890,5057,4578.33,10.46,computed,30.0,37.2222,46.8241,25.8
+south_steppe_belt,"South Steppe Corridor (Kherson–Mykolaiv–Crimea edge, proposed study)",proposed_study_region,type2_static_industrial,mar_aug,261,221,254,92,245.33,-62.5,computed,-63.78,1.3333,0.5476,-58.93
+south_steppe_belt,"South Steppe Corridor (Kherson–Mykolaiv–Crimea edge, proposed study)",proposed_study_region,type2_static_industrial,may_aug,223,180,232,74,211.67,-65.04,computed,-68.1,1.7209,0.6852,-60.18
+kyiv_north_belt,"North Corridor (Kyiv–Chernihiv belt, proposed study)",proposed_study_region,type0_vegetation_all_conf,mar_aug,10278,13705,2120,6253,8701.0,-28.13,computed,194.95,47.288,37.2202,-21.29
+kyiv_north_belt,"North Corridor (Kyiv–Chernihiv belt, proposed study)",proposed_study_region,type0_vegetation_all_conf,may_aug,1643,573,625,1788,947.0,88.81,computed,186.08,7.6992,16.5556,115.03
+kyiv_north_belt,"North Corridor (Kyiv–Chernihiv belt, proposed study)",proposed_study_region,type0_vegetation_nominal_high,mar_aug,10050,13394,2067,6087,8503.67,-28.42,computed,194.48,46.2156,36.2321,-21.6
+kyiv_north_belt,"North Corridor (Kyiv–Chernihiv belt, proposed study)",proposed_study_region,type0_vegetation_nominal_high,may_aug,1545,540,597,1724,894.0,92.84,computed,188.78,7.2683,15.963,119.62
+kyiv_north_belt,"North Corridor (Kyiv–Chernihiv belt, proposed study)",proposed_study_region,all_types_all_conf,mar_aug,10289,13759,2133,6256,8727.0,-28.31,computed,193.3,47.4293,37.2381,-21.49
+kyiv_north_belt,"North Corridor (Kyiv–Chernihiv belt, proposed study)",proposed_study_region,all_types_all_conf,may_aug,1645,613,635,1790,964.33,85.62,computed,181.89,7.8401,16.5741,111.4
+kyiv_north_belt,"North Corridor (Kyiv–Chernihiv belt, proposed study)",proposed_study_region,type2_static_industrial,mar_aug,2,51,10,0,21.0,-100.0,computed,-100.0,0.1141,0.0,-100.0
+kyiv_north_belt,"North Corridor (Kyiv–Chernihiv belt, proposed study)",proposed_study_region,type2_static_industrial,may_aug,0,40,10,0,16.67,-100.0,computed,-100.0,0.1355,0.0,-100.0
+kyiv_no2_box,"Kyiv Air-Matched Box (0.5 deg, cross-layer check)",proposed_cross_layer_study_box,type0_vegetation_all_conf,mar_aug,129,127,24,166,93.33,77.86,computed,591.67,0.5072,0.9881,94.8
+kyiv_no2_box,"Kyiv Air-Matched Box (0.5 deg, cross-layer check)",proposed_cross_layer_study_box,type0_vegetation_all_conf,may_aug,25,20,17,8,20.67,-61.29,computed,-52.94,0.168,0.0741,-55.91
+kyiv_no2_box,"Kyiv Air-Matched Box (0.5 deg, cross-layer check)",proposed_cross_layer_study_box,type0_vegetation_nominal_high,mar_aug,125,124,23,162,90.67,78.68,computed,604.35,0.4928,0.9643,95.69
+kyiv_no2_box,"Kyiv Air-Matched Box (0.5 deg, cross-layer check)",proposed_cross_layer_study_box,type0_vegetation_nominal_high,may_aug,24,19,16,8,19.67,-59.32,computed,-50.0,0.1599,0.0741,-53.67
+kyiv_no2_box,"Kyiv Air-Matched Box (0.5 deg, cross-layer check)",proposed_cross_layer_study_box,all_types_all_conf,mar_aug,129,127,24,166,93.33,77.86,computed,591.67,0.5072,0.9881,94.8
+kyiv_no2_box,"Kyiv Air-Matched Box (0.5 deg, cross-layer check)",proposed_cross_layer_study_box,all_types_all_conf,may_aug,25,20,17,8,20.67,-61.29,computed,-52.94,0.168,0.0741,-55.91
+kyiv_no2_box,"Kyiv Air-Matched Box (0.5 deg, cross-layer check)",proposed_cross_layer_study_box,type2_static_industrial,mar_aug,0,0,0,0,0.0,,withheld_nonpositive_baseline,,0.0,0.0,
+kyiv_no2_box,"Kyiv Air-Matched Box (0.5 deg, cross-layer check)",proposed_cross_layer_study_box,type2_static_industrial,may_aug,0,0,0,0,0.0,,withheld_nonpositive_baseline,,0.0,0.0,
+central_interior_cand,Central Interior Steppe (proposed reference for East/South),proposed_reference_region,type0_vegetation_all_conf,mar_aug,12964,10607,5747,4004,9772.67,-59.03,computed,-30.33,53.1123,23.8333,-55.13
+central_interior_cand,Central Interior Steppe (proposed reference for East/South),proposed_reference_region,type0_vegetation_all_conf,may_aug,7933,4167,4485,1352,5528.33,-75.54,computed,-69.86,44.9458,12.5185,-72.15
+central_interior_cand,Central Interior Steppe (proposed reference for East/South),proposed_reference_region,type0_vegetation_nominal_high,mar_aug,12321,10166,5496,3816,9327.67,-59.09,computed,-30.57,50.6938,22.7143,-55.19
+central_interior_cand,Central Interior Steppe (proposed reference for East/South),proposed_reference_region,type0_vegetation_nominal_high,may_aug,7376,3830,4253,1229,5153.0,-76.15,computed,-71.1,41.8943,11.3796,-72.84
+central_interior_cand,Central Interior Steppe (proposed reference for East/South),proposed_reference_region,all_types_all_conf,mar_aug,19379,15656,10530,5527,15188.33,-63.61,computed,-47.51,82.5453,32.8988,-60.14
+central_interior_cand,Central Interior Steppe (proposed reference for East/South),proposed_reference_region,all_types_all_conf,may_aug,12771,7919,8356,2608,9682.0,-73.06,computed,-68.79,78.7154,24.1481,-69.32
+central_interior_cand,Central Interior Steppe (proposed reference for East/South),proposed_reference_region,type2_static_industrial,mar_aug,4760,3657,3499,1106,3972.0,-72.16,computed,-68.39,21.587,6.5833,-69.5
+central_interior_cand,Central Interior Steppe (proposed reference for East/South),proposed_reference_region,type2_static_industrial,may_aug,3649,2757,2835,934,3080.33,-69.68,computed,-67.05,25.0434,8.6481,-65.47
+west_ukraine_cand,Western Ukraine (proposed reference for North/Kyiv),proposed_reference_region,type0_vegetation_all_conf,mar_aug,9660,11341,3137,6075,8046.0,-24.5,computed,93.66,43.7283,36.1607,-17.31
+west_ukraine_cand,Western Ukraine (proposed reference for North/Kyiv),proposed_reference_region,type0_vegetation_all_conf,may_aug,2676,983,857,817,1505.33,-45.73,computed,-4.67,12.2385,7.5648,-38.19
+west_ukraine_cand,Western Ukraine (proposed reference for North/Kyiv),proposed_reference_region,type0_vegetation_nominal_high,mar_aug,9377,11046,3078,5915,7833.67,-24.49,computed,92.17,42.5743,35.2083,-17.3
+west_ukraine_cand,Western Ukraine (proposed reference for North/Kyiv),proposed_reference_region,type0_vegetation_nominal_high,may_aug,2508,934,828,753,1423.33,-47.1,computed,-9.06,11.5718,6.9722,-39.75
+west_ukraine_cand,Western Ukraine (proposed reference for North/Kyiv),proposed_reference_region,all_types_all_conf,mar_aug,10195,11841,3674,6352,8570.0,-25.88,computed,72.89,46.5761,37.8095,-18.82
+west_ukraine_cand,Western Ukraine (proposed reference for North/Kyiv),proposed_reference_region,all_types_all_conf,may_aug,3111,1379,1313,1071,1934.33,-44.63,computed,-18.43,15.7263,9.9167,-36.94
+west_ukraine_cand,Western Ukraine (proposed reference for North/Kyiv),proposed_reference_region,type2_static_industrial,mar_aug,531,494,536,272,520.33,-47.73,computed,-49.25,2.8279,1.619,-42.75
+west_ukraine_cand,Western Ukraine (proposed reference for North/Kyiv),proposed_reference_region,type2_static_industrial,may_aug,435,396,455,249,428.67,-41.91,computed,-45.27,3.4851,2.3056,-33.85

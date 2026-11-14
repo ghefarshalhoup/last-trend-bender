@@ -17,10 +17,30 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 ENV_PREFIX = "WAR_TRACKER_"
 ENV_REPORTS_DIR = f"{ENV_PREFIX}REPORTS_DIR"
 ENV_AIR_RESULTS_FILE = f"{ENV_PREFIX}AIR_KYIV_RESULTS"
+ENV_ATLAS_CATALOG_FILE = f"{ENV_PREFIX}ATLAS_CATALOG_RESULTS"
+ENV_FIRE_RESULTS_FILE = f"{ENV_PREFIX}FIRE_UKRAINE_RESULTS"
+ENV_FIRE_CELLS_FILE = f"{ENV_PREFIX}FIRE_UKRAINE_CELLS"
+ENV_WATER_RESULTS_FILE = f"{ENV_PREFIX}WATER_UKRAINE_RESULTS"
+ENV_EARTH_RESULTS_FILE = f"{ENV_PREFIX}EARTH_UKRAINE_RESULTS"
+ENV_AIR_WEATHER_FILE = f"{ENV_PREFIX}AIR_WEATHER_RESULTS"
 ENV_CORS_ORIGINS = f"{ENV_PREFIX}CORS_ORIGINS"
 
 DEFAULT_REPORTS_DIR = "reports"
 DEFAULT_AIR_RESULTS_FILE = "air_no2_results.json"
+DEFAULT_ATLAS_CATALOG_FILE = "atlas_catalog.json"
+DEFAULT_FIRE_RESULTS_FILE = "atlas_fire_ukraine.json"
+DEFAULT_FIRE_CELLS_FILE = "atlas_fire_cells.json"
+DEFAULT_WATER_RESULTS_FILE = "atlas_water_ukraine.json"
+DEFAULT_EARTH_RESULTS_FILE = "atlas_earth_ukraine.json"
+DEFAULT_AIR_WEATHER_FILE = "atlas_air_weather_ukraine.json"
+ATLAS_ARTIFACT_FILENAMES: Tuple[str, ...] = (
+    DEFAULT_ATLAS_CATALOG_FILE,
+    DEFAULT_FIRE_RESULTS_FILE,
+    DEFAULT_FIRE_CELLS_FILE,
+    DEFAULT_WATER_RESULTS_FILE,
+    DEFAULT_EARTH_RESULTS_FILE,
+    DEFAULT_AIR_WEATHER_FILE,
+)
 DEFAULT_CORS_ORIGINS: Tuple[str, ...] = (
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -60,6 +80,27 @@ class Settings:
         default_factory=lambda: REPO_ROOT / DEFAULT_REPORTS_DIR / DEFAULT_AIR_RESULTS_FILE
     )
     cors_origins: Tuple[str, ...] = DEFAULT_CORS_ORIGINS
+    atlas_catalog_results: Optional[Path] = None
+    fire_ukraine_results: Optional[Path] = None
+    fire_ukraine_cells: Optional[Path] = None
+    water_ukraine_results: Optional[Path] = None
+    earth_ukraine_results: Optional[Path] = None
+    air_weather_results: Optional[Path] = None
+
+    def __post_init__(self) -> None:
+        # Resolve omitted atlas paths under reports_dir so tests passing custom
+        # Settings(reports_dir=tmp) remain completely isolated from repo reports/.
+        defaults = (
+            ("atlas_catalog_results", DEFAULT_ATLAS_CATALOG_FILE),
+            ("fire_ukraine_results", DEFAULT_FIRE_RESULTS_FILE),
+            ("fire_ukraine_cells", DEFAULT_FIRE_CELLS_FILE),
+            ("water_ukraine_results", DEFAULT_WATER_RESULTS_FILE),
+            ("earth_ukraine_results", DEFAULT_EARTH_RESULTS_FILE),
+            ("air_weather_results", DEFAULT_AIR_WEATHER_FILE),
+        )
+        for attr, filename in defaults:
+            if getattr(self, attr) is None:
+                object.__setattr__(self, attr, self.reports_dir / filename)
 
     @classmethod
     def from_env(cls, env: Optional[Mapping[str, str]] = None) -> "Settings":
@@ -70,4 +111,22 @@ class Settings:
             reports_dir=reports_dir,
             air_kyiv_results=results,
             cors_origins=parse_origins(env.get(ENV_CORS_ORIGINS)),
+            atlas_catalog_results=resolve_path(
+                env.get(ENV_ATLAS_CATALOG_FILE, DEFAULT_ATLAS_CATALOG_FILE), reports_dir
+            ),
+            fire_ukraine_results=resolve_path(
+                env.get(ENV_FIRE_RESULTS_FILE, DEFAULT_FIRE_RESULTS_FILE), reports_dir
+            ),
+            fire_ukraine_cells=resolve_path(
+                env.get(ENV_FIRE_CELLS_FILE, DEFAULT_FIRE_CELLS_FILE), reports_dir
+            ),
+            water_ukraine_results=resolve_path(
+                env.get(ENV_WATER_RESULTS_FILE, DEFAULT_WATER_RESULTS_FILE), reports_dir
+            ),
+            earth_ukraine_results=resolve_path(
+                env.get(ENV_EARTH_RESULTS_FILE, DEFAULT_EARTH_RESULTS_FILE), reports_dir
+            ),
+            air_weather_results=resolve_path(
+                env.get(ENV_AIR_WEATHER_FILE, DEFAULT_AIR_WEATHER_FILE), reports_dir
+            ),
         )

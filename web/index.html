@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ukraine &amp; Kyiv 4-Elements Environmental Trend Observatory</title>
+  <link rel="stylesheet" href="./app.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to trend observatory</a>
+
+  <header class="masthead">
+    <div class="container masthead-inner">
+      <div class="masthead-title-block">
+        <p class="eyebrow">NASA Space Apps &bull; Multi-Element Environmental Evidence Explorer</p>
+        <h1>Ukraine &amp; Kyiv 4-Elements Trend Observatory</h1>
+        <p class="subtitle">
+          Reading &amp; interpreting multi-sensor satellite trends across <strong>Air</strong> (OMI NO<sub>2</sub> + wind/cloud),
+          <strong>Fire</strong> (VIIRS S-NPP + temperature/PET), <strong>Water</strong> (MERRA-2 rainfall, VPD &amp; water balance),
+          and <strong>Earth</strong> (surface/root soil moisture &amp; skin-air coupling), 2015&ndash;2022.
+        </p>
+      </div>
+      <div class="masthead-actions" role="group" aria-label="Case evidence actions">
+        <button type="button" id="open-ledger-btn" class="btn btn-primary">
+          Case Ledger (<span id="ledger-count">0</span>)
+        </button>
+        <button type="button" id="export-md-btn" class="btn btn-secondary">
+          Export Brief (.md)
+        </button>
+        <button type="button" id="export-json-btn" class="btn btn-secondary">
+          Export JSON
+        </button>
+      </div>
+    </div>
+
+    <div class="container status-strip" role="region" aria-label="Statistical and causal safeguards">
+      <div class="status-pill">
+        <span class="pill-k">Conflict Onset</span>
+        <span class="pill-v" id="status-onset">2022-02-24</span>
+      </div>
+      <div class="status-pill">
+        <span class="pill-k">Post-Invasion Span</span>
+        <span class="pill-v">n = 1 season (Mar&ndash;Aug 2022)</span>
+      </div>
+      <div class="status-pill status-warn">
+        <span class="pill-k">Before/After p-value</span>
+        <span class="pill-v" id="status-ba-sig">not_assessed</span>
+      </div>
+      <div class="status-pill status-warn">
+        <span class="pill-k">Causal Attribution</span>
+        <span class="pill-v" id="status-causal">not_established</span>
+      </div>
+      <div class="status-pill status-good">
+        <span class="pill-k">Kyiv NO<sub>2</sub> Weather Model R&sup2;</span>
+        <span class="pill-v" id="status-r2-gain">0.080 &rarr; 0.363</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container main-grid">
+    <div id="load-error-banner" class="error-banner" hidden role="alert"></div>
+
+    <!-- SECTION I: 4-Element Trend & Interpreter Studio -->
+    <section class="panel" aria-labelledby="studio-heading">
+      <div class="panel-header">
+        <div>
+          <p class="section-tag">Section 1 &bull; Guided Trend Reader</p>
+          <h2 id="studio-heading">Explore Physical Signals &amp; Deseasonalized Anomalies</h2>
+        </div>
+        <button type="button" id="pin-current-btn" class="btn btn-outline">
+          + Pin Active Reading to Ledger
+        </button>
+      </div>
+
+      <div class="element-tabs" role="tablist" aria-label="Select environmental element">
+        <button type="button" role="tab" id="tab-air" class="el-tab" data-element="air" aria-selected="true" aria-controls="panel-explorer" tabindex="0">
+          <span class="el-dot dot-air" aria-hidden="true"></span>Air (NO<sub>2</sub> &amp; Met)
+        </button>
+        <button type="button" role="tab" id="tab-fire" class="el-tab" data-element="fire" aria-selected="false" aria-controls="panel-explorer" tabindex="-1">
+          <span class="el-dot dot-fire" aria-hidden="true"></span>Fire (VIIRS &amp; Thermal)
+        </button>
+        <button type="button" role="tab" id="tab-water" class="el-tab" data-element="water" aria-selected="false" aria-controls="panel-explorer" tabindex="-1">
+          <span class="el-dot dot-water" aria-hidden="true"></span>Water (Precip &amp; VPD)
+        </button>
+        <button type="button" role="tab" id="tab-earth" class="el-tab" data-element="earth" aria-selected="false" aria-controls="panel-explorer" tabindex="-1">
+          <span class="el-dot dot-earth" aria-hidden="true"></span>Earth (Soil &amp; Surface)
+        </button>
+      </div>
+
+      <div id="panel-explorer" class="explorer-body" role="tabpanel" aria-labelledby="tab-air">
+        <div class="controls-bar">
+          <label class="control-field">
+            <span class="control-label">Study Box</span>
+            <select id="select-region" class="select-input"></select>
+          </label>
+          <label class="control-field">
+            <span class="control-label">Metric</span>
+            <select id="select-metric" class="select-input"></select>
+          </label>
+          <label class="control-field">
+            <span class="control-label">Baseline Climatology</span>
+            <select id="select-baseline" class="select-input">
+              <option value="2015_2019">2015&ndash;2019 (5-yr OMI pre-COVID)</option>
+              <option value="2019_2021">2019&ndash;2021 (3-yr VIIRS pre-war)</option>
+            </select>
+          </label>
+          <label class="control-field">
+            <span class="control-label">Display Scale</span>
+            <select id="select-mode" class="select-input">
+              <option value="anomaly">Deseasonalized Anomaly</option>
+              <option value="raw">Raw Physical Values</option>
+            </select>
+          </label>
+          <label class="control-field">
+            <span class="control-label">Calendar Window</span>
+            <select id="select-season" class="select-input">
+              <option value="all">All 12 Months (2015&ndash;2022)</option>
+              <option value="mar_aug">Mar&ndash;Aug War Season Window</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="studio-split">
+          <div class="chart-card">
+            <div class="chart-card-head">
+              <div>
+                <h3 id="main-chart-title">Loading series&hellip;</h3>
+                <p id="main-chart-subtitle" class="muted-meta"></p>
+              </div>
+              <div class="legend-inline">
+                <span><i class="swatch-line" id="legend-series-swatch"></i> Series</span>
+                <span><i class="swatch-dashed"></i> 0 / Baseline</span>
+                <span><i class="swatch-invasion"></i> 2022-02-24</span>
+                <span><i class="swatch-flag"></i> Low-Coverage / Outage Month</span>
+              </div>
+            </div>
+
+            <div class="canvas-stage">
+              <canvas id="main-series-canvas" tabindex="0" aria-label="Interactive monthly trend chart. Use left and right arrow keys or hover to inspect monthly observations."></canvas>
+            </div>
+
+            <div id="month-inspector" class="month-inspector" aria-live="polite">
+              Move pointer or focus chart + use Left/Right arrows to inspect any month (2015&ndash;2022).
+            </div>
+          </div>
+
+          <aside class="interpreter-col" aria-label="Plain-language trend interpretation">
+            <div class="interp-card">
+              <p class="interp-kicker">1. Quantitative Snapshot (Mar&ndash;Aug 2022)</p>
+              <div id="kpi-readout" class="kpi-grid"></div>
+            </div>
+
+            <div class="interp-card">
+              <p class="interp-kicker">2. How to Read This Trend</p>
+              <p id="interp-reading-text" class="interp-copy"></p>
+            </div>
+
+            <div class="interp-card interp-caution">
+              <p class="interp-kicker">3. Confounders &amp; Measurement Limits</p>
+              <p id="interp-caution-text" class="interp-copy"></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION II: Confounder Check #1 — Kyiv Daily Meteorology & Box-Tiao -->
+    <section class="panel" aria-labelledby="weather-heading">
+      <div class="panel-header">
+        <div>
+          <p class="section-tag">Section 2 &bull; Confounder Control (Kyiv Air)</p>
+          <h2 id="weather-heading">Did Calm Wind, Clear Skies, or Low April Coverage Cause the NO<sub>2</sub> Drop?</h2>
+        </div>
+      </div>
+
+      <div class="weather-split">
+        <div class="subpanel">
+          <h3>Daily Wind &amp; Cloud Stratification (Mar&ndash;Aug 2022 vs Baselines)</h3>
+          <p class="muted-meta">
+            Faster wind dilutes NO<sub>2</sub> (pre-war daily Spearman &rho; = <strong id="spearman-wind">-0.272</strong>).
+            Filtering strictly to calm stagnant days (&lt; 3 m/s) or clear/moderate skies (&lt; 60% cloud) tests if meteorology alone explains 2022.
+          </p>
+          <div id="strata-buttons" class="pill-group" role="group" aria-label="Select daily meteorology filter stratum"></div>
+          <div id="stratum-detail-card" class="stratum-detail"></div>
+
+          <h4 class="subhead-sm">External EU Weather Context (Why Local Weather Control Is Mandatory)</h4>
+          <div id="eu-weather-strip" class="eu-strip"></div>
+        </div>
+
+        <div class="subpanel">
+          <div class="chart-card-head">
+            <div>
+              <h3>Observed NO<sub>2</sub> Anomaly vs Full No-Step Counterfactual</h3>
+              <p class="muted-meta">Kyiv Box&ndash;Tiao linear+step+weather regression (2015&ndash;2022); shaded band shows &plusmn;95% AR(1) uncertainty around trend + weather</p>
+            </div>
+          </div>
+          <div class="canvas-stage canvas-stage-sm">
+            <canvas id="weather-control-canvas" aria-label="Comparison of observed Kyiv NO2 monthly anomaly and full no-step trend plus weather counterfactual with 95% AR(1) uncertainty band"></canvas>
+          </div>
+          <div id="box-tiao-grid" class="mini-model-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION III: Confounder Check #2 — Ukraine Fire x Water x Earth Drought-Mismatch -->
+    <section class="panel" aria-labelledby="contrast-heading">
+      <div class="panel-header">
+        <div>
+          <p class="section-tag">Section 3 &bull; Sub-National Drought-Fire Mismatch</p>
+          <h2 id="contrast-heading">Climate Drying vs Active-Detection Rate Divergence Across 6 Ukraine Comparators (Mar&ndash;Aug 2022)</h2>
+        </div>
+      </div>
+
+      <div class="contrast-split">
+        <div class="subpanel">
+          <h3>Atmospheric Drying (+&Delta;VPD) vs Presumed Vegetation Detection Rate Shift (% vs 2019&ndash;2021)</h3>
+          <p class="muted-meta">
+            Click any region marker to load it in Section 1. Across box-level averages, Western &amp; Central comparators (not un-impacted controls) dried (+0.06 to +0.14 kPa VPD, topsoil -0.028 to -0.043) alongside <em>declining</em> presumed-vegetation (<code>type0</code>) detection rates (-22% to -56%),
+            while Donbas&ndash;Kharkiv rose +72.4% (+104.3% under matched 169d/yr UKR-clipped audit) with +0.052 kPa VPD and an -83.3% decline in <code>type2</code> static land anomalies. Coarse 0.5&deg; box means do not rule out localized drought; hotspots do not measure burned area.
+          </p>
+          <div class="canvas-stage canvas-stage-md">
+            <canvas id="fire-vpd-scatter" tabindex="0" aria-label="Interactive scatter chart of 2022 VPD drought shift vs presumed-vegetation type0 detection rate change across 6 Ukraine regions. Use Left and Right arrows to step through regions and Enter to inspect in Section 1."></canvas>
+          </div>
+          <div id="scatter-hover-readout" class="month-inspector" aria-live="polite">
+            Click, hover, or focus chart + Left/Right arrows &amp; Enter to inspect any region point.
+          </div>
+        </div>
+
+        <div class="subpanel">
+          <h3 id="regional-table-title">Regional Multi-Element Matrix (Mar&ndash;Aug 2022 vs 2019&ndash;2021)</h3>
+          <div tabindex="0" role="region" aria-labelledby="regional-table-title" class="table-wrapper">
+            <table id="regional-contrast-table" class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">Region (Role)</th>
+                  <th scope="col">Veg type0 %</th>
+                  <th scope="col">Static type2 %</th>
+                  <th scope="col">&Delta;VPD (kPa)</th>
+                  <th scope="col">&Delta;Soil Wet</th>
+                  <th scope="col">&Delta;T2M (&deg;C)</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION IV: Multi-Year Trends (BH/BY FDR) & Prewhitened Couplings -->
+    <section class="panel" aria-labelledby="trends-heading">
+      <div class="panel-header">
+        <div>
+          <p class="section-tag">Section 4 &bull; Multiple-Testing Guardrails &amp; Physical Couplings</p>
+          <h2 id="trends-heading">8-Year Seasonal Trends (BH/BY FDR) vs AR(1)-Prewhitened Cross-Element Couplings</h2>
+        </div>
+        <div class="pill-group" role="group" aria-label="Switch statistical summary table">
+          <button type="button" id="show-couplings-btn" class="pill-btn active">Physical Couplings</button>
+          <button type="button" id="show-trends-btn" class="pill-btn">8-Yr Kyiv Seasonal MK</button>
+        </div>
+      </div>
+
+      <p id="trends-table-note" class="muted-meta"></p>
+      <div tabindex="0" role="region" aria-labelledby="trends-heading" class="table-wrapper table-wrapper-wide">
+        <table id="stats-rigor-table" class="data-table">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION V: Methodological Guardrails & Provenance -->
+    <section class="panel" aria-labelledby="limits-heading">
+      <div class="panel-header">
+        <div>
+          <p class="section-tag">Section 5 &bull; Transparency &amp; Provenance</p>
+          <h2 id="limits-heading">Mandatory Scientific Limitations &amp; Input Checksums</h2>
+        </div>
+      </div>
+      <div class="limits-grid">
+        <ul id="limitations-list" class="limits-list"></ul>
+        <div id="provenance-box" class="provenance-box"></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="case-ledger-dialog" class="ledger-dialog" closedby="any" aria-labelledby="ledger-dialog-title">
+    <div class="dialog-header">
+      <div>
+        <p class="eyebrow">Investigator Working Notes</p>
+        <h2 id="ledger-dialog-title">Case Evidence Ledger</h2>
+      </div>
+      <button type="button" id="close-ledger-btn" class="btn btn-secondary">Close</button>
+    </div>
+    <p class="muted-meta">
+      Pinned observations keep their baseline label, calendar coverage caveats, and <code>not_established</code> causal status when exported.
+    </p>
+    <div id="ledger-items" class="ledger-list"></div>
+    <div class="dialog-footer">
+      <button type="button" id="clear-ledger-btn" class="btn btn-outline">Clear Ledger</button>
+      <div class="dialog-footer-right">
+        <button type="button" id="modal-export-md-btn" class="btn btn-primary">Download Situation Brief (.md)</button>
+        <button type="button" id="modal-export-json-btn" class="btn btn-secondary">Download Snapshot (.json)</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
