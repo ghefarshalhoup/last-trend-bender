@@ -1,0 +1,186 @@
+{
+  "provenance": {
+    "input_file": "NASA_Giovanni_NO2_2015-03-01_to_2022-08-31.csv",
+    "input_sha256": "f6a26eece77fb2bb932d6beb3cac7460a1e8d701b22d17ed247bd776d598aee1",
+    "input_bytes": 69842,
+    "header_line_number_1based": 9,
+    "title": "Time Series, Area-Averaged of NO2 Tropospheric Column (30% Cloud Screened) daily 0.25 deg. [OMI (daily)",
+    "dataset": "OMNO2d v004",
+    "variable": "mean_OMNO2d_004_ColumnAmountNO2TropCloudScreened",
+    "units": "molecules/cm^2",
+    "user_start_date": "2015-03-01",
+    "user_end_date": "2022-08-31",
+    "user_bounding_box": {
+      "west": 30.273,
+      "south": 50.2,
+      "east": 30.773,
+      "north": 50.7
+    },
+    "data_bounding_box": {
+      "west": 30.375,
+      "south": 50.375,
+      "east": 30.625,
+      "north": 50.625
+    },
+    "reproducibility_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2015-03-01T00:00:00Z&endtime=2022-08-31T23:59:59Z&bbox=30.273,50.2,30.773,50.7&data=OMNO2d_004_ColumnAmountNO2TropCloudScreened&portal=GIOVANNI&format=json",
+    "declared_fill_value": -1.267651e+30
+  },
+  "daily_counts": {
+    "start_date": "2015-03-01",
+    "end_date": "2022-08-31",
+    "calendar_days": 2741,
+    "raw_dated_rows": 2714,
+    "fill_value_rows": 1282,
+    "other_missing_rows": 0,
+    "absent_dates_count": 27,
+    "valid_observations": 1432,
+    "negative_valid_observations": 43,
+    "min_valid_value": -9236627820000000.0,
+    "max_valid_value": 2.03834101e+16,
+    "overall_daily_coverage_fraction": 0.522437,
+    "absent_dates": [
+      "2016-03-05",
+      "2016-03-06",
+      "2016-03-07",
+      "2016-03-08",
+      "2016-03-09",
+      "2016-03-10",
+      "2016-03-11",
+      "2016-03-12",
+      "2016-03-13",
+      "2016-03-14",
+      "2016-05-30",
+      "2016-05-31",
+      "2016-06-01",
+      "2016-06-02",
+      "2016-06-03",
+      "2016-06-04",
+      "2016-06-05",
+      "2016-06-06",
+      "2016-06-07",
+      "2016-06-08",
+      "2016-06-09",
+      "2016-06-11",
+      "2016-06-12",
+      "2017-03-13",
+      "2017-03-14",
+      "2017-03-15",
+      "2017-03-16"
+    ]
+  },
+  "monthly_summary": {
+    "total_months": 90,
+    "months_with_any_valid_obs": 90,
+    "months_with_zero_valid_obs": [],
+    "sparse_threshold_valid_days": 10,
+    "very_sparse_threshold_valid_days": 5,
+    "sparse_months_count": 13,
+    "very_sparse_months_count": 2,
+    "sparse_months": [
+      {
+        "month": "2015-11",
+        "valid_days": 6,
+        "calendar_days": 30,
+        "coverage_fraction": 0.2,
+        "no2_mean_molec_cm2": 2464161790500000.0
+      },
+      {
+        "month": "2016-03",
+        "valid_days": 4,
+        "calendar_days": 31,
+        "coverage_fraction": 0.129,
+        "no2_mean_molec_cm2": 3353302186000000.0
+      },
+      {
+        "month": "2016-10",
+        "valid_days": 9,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2903,
+        "no2_mean_molec_cm2": 3707782675222222.0
+      },
+      {
+        "month": "2016-11",
+        "valid_days": 8,
+        "calendar_days": 30,
+        "coverage_fraction": 0.2667,
+        "no2_mean_molec_cm2": 2183448973125000.0
+      },
+      {
+        "month": "2017-10",
+        "valid_days": 8,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2581,
+        "no2_mean_molec_cm2": 3158637689875000.0
+      },
+      {
+        "month": "2017-11",
+        "valid_days": 5,
+        "calendar_days": 30,
+        "coverage_fraction": 0.1667,
+        "no2_mean_molec_cm2": 2083762736000000.0
+      },
+      {
+        "month": "2017-12",
+        "valid_days": 8,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2581,
+        "no2_mean_molec_cm2": 1932765642875000.0
+      },
+      {
+        "month": "2019-11",
+        "valid_days": 6,
+        "calendar_days": 30,
+        "coverage_fraction": 0.2,
+        "no2_mean_molec_cm2": 3665301781666666.5
+      },
+      {
+        "month": "2020-01",
+        "valid_days": 9,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2903,
+        "no2_mean_molec_cm2": 3413501472222222.0
+      },
+      {
+        "month": "2020-11",
+        "valid_days": 4,
+        "calendar_days": 30,
+        "coverage_fraction": 0.1333,
+        "no2_mean_molec_cm2": 1962230023500000.0
+      },
+      {
+        "month": "2021-11",
+        "valid_days": 9,
+        "calendar_days": 30,
+        "coverage_fraction": 0.3,
+        "no2_mean_molec_cm2": 4001103992222222.0
+      },
+      {
+        "month": "2021-12",
+        "valid_days": 9,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2903,
+        "no2_mean_molec_cm2": 1155214009333333.2
+      },
+      {
+        "month": "2022-04",
+        "valid_days": 8,
+        "calendar_days": 30,
+        "coverage_fraction": 0.2667,
+        "no2_mean_molec_cm2": 1822031443500000.0
+      }
+    ]
+  },
+  "validation_checks": {
+    "raw_rows_decompose_exactly": true,
+    "calendar_days_equal_raw_plus_absent": true,
+    "monthly_valid_days_sum_matches_daily": true,
+    "monthly_calendar_days_sum_matches_daily": true,
+    "coverage_fraction_within_bounds": true
+  },
+  "processing_rules": {
+    "missing_values_never_zero_filled": true,
+    "negative_valid_values_preserved": true,
+    "sparse_month_rule": "valid_days < 10",
+    "causal_claim_caveat": "Tropospheric column NO2 reflects regional atmospheric column density, not street-level exposure; temporal drops alone cannot establish war causation without matched controls and weather adjustments."
+  }
+}
