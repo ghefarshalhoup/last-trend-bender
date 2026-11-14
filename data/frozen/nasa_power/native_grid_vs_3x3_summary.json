@@ -1,0 +1,55 @@
+{
+  "donbas_kharkiv_east_3x3_vs_dense_native": {
+    "T2M": {
+      "n_months": 96,
+      "mean_bias_3x3_minus_native": -0.11359,
+      "rmse": 0.17039,
+      "max_abs_diff": 0.50886,
+      "mar_aug_2022_vs_2019_2021_diff_3x3": -0.38783,
+      "mar_aug_2022_vs_2019_2021_diff_native": -0.29253
+    },
+    "PRECTOTCORR": {
+      "n_months": 96,
+      "mean_bias_3x3_minus_native": 0.01032,
+      "rmse": 0.10993,
+      "max_abs_diff": 0.43784,
+      "mar_aug_2022_vs_2019_2021_diff_3x3": -0.3097,
+      "mar_aug_2022_vs_2019_2021_diff_native": -0.38006
+    },
+    "EVPTRNS": {
+      "n_months": 96,
+      "mean_bias_3x3_minus_native": 0.03677,
+      "rmse": 0.1536,
+      "max_abs_diff": 0.63111,
+      "mar_aug_2022_vs_2019_2021_diff_3x3": -0.15123,
+      "mar_aug_2022_vs_2019_2021_diff_native": -0.33005
+    },
+    "ALLSKY_SFC_SW_DWN": {
+      "n_months": 96,
+      "mean_bias_3x3_minus_native": 0.09367,
+      "rmse": 0.29179,
+      "max_abs_diff": 1.12086,
+      "mar_aug_2022_vs_2019_2021_diff_3x3": -0.12539,
+      "mar_aug_2022_vs_2019_2021_diff_native": 0.11643
+    },
+    "CLOUD_AMT": {
+      "n_months": 96,
+      "mean_bias_3x3_minus_native": 0.83032,
+      "rmse": 2.14185,
+      "max_abs_diff": 8.11168,
+      "mar_aug_2022_vs_2019_2021_diff_3x3": -0.98226,
+      "mar_aug_2022_vs_2019_2021_diff_native": -0.99793
+    },
+    "ALLSKY_SRF_ALB": {
+      "n_months": 96,
+      "mean_bias_3x3_minus_native": -0.00234,
+      "rmse": 0.02288,
+      "max_abs_diff": 0.08362,
+      "mar_aug_2022_vs_2019_2021_diff_3x3": 0.00947,
+      "mar_aug_2022_vs_2019_2021_diff_native": 0.00851
+    }
+  },
+  "kyiv_pet_elevation_179_vs_128_71m_max_abs_diff_mm_day": 0.0024,
+  "kyiv_pet_strict_fao56_vs_legacy_var_albedo_rmse_mm_day": 0.11918,
+  "kyiv_pet_strict_fao56_vs_legacy_var_albedo_max_abs_mm_day": 0.28773
+}

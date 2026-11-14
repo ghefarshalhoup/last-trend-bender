@@ -35,6 +35,7 @@ from src.stats_rigor import (
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_POWER_DIR = REPO_ROOT / "data" / "raw" / "nasa_power"
+FROZEN_POWER_DIR = REPO_ROOT / "data" / "frozen" / "nasa_power"
 DEFAULT_REPORTS_DIR = REPO_ROOT / "reports"
 
 MONTHLY_CACHE_FILENAME = "ukraine_power_monthly_2015_2022.json"
@@ -513,10 +514,16 @@ def load_power_panels(
     """Load cached monthly and daily NASA POWER panels (optionally fetching if absent)."""
     monthly_path = power_dir / MONTHLY_CACHE_FILENAME
     daily_path = power_dir / DAILY_CACHE_FILENAME
+    if (not monthly_path.is_file() or not daily_path.is_file()) and power_dir.resolve() == DEFAULT_POWER_DIR.resolve():
+        frozen_m = FROZEN_POWER_DIR / MONTHLY_CACHE_FILENAME
+        frozen_d = FROZEN_POWER_DIR / DAILY_CACHE_FILENAME
+        if frozen_m.is_file() and frozen_d.is_file():
+            monthly_path = frozen_m
+            daily_path = frozen_d
     if not monthly_path.is_file() or not daily_path.is_file():
         if not fetch_if_missing:
             raise FileNotFoundError(
-                f"NASA POWER cache files not found in {power_dir}. "
+                f"NASA POWER cache files not found in {power_dir} or {FROZEN_POWER_DIR}. "
                 "Run `python -m src.weather_power_pipeline --fetch` first."
             )
         fetch_and_cache_power_datasets(out_dir=power_dir)

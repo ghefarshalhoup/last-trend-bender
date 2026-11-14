@@ -110,9 +110,15 @@ class FourElementsUnitTests(unittest.TestCase):
         self.assertIsNone(by_id["t2m"]["vs_2015_2019_pct_change"])
         self.assertEqual(by_id["ts_minus_t2m_c"]["vs_2015_2019_status"], "withheld_interval_scale")
         self.assertIsNotNone(by_id["no2_mean_molec_cm2"]["vs_2015_2019_pct_change"])
+        self.assertIsNone(by_id["fire_type0_per_1k_km2_day"]["baseline_2015_2019_mean"])
+        self.assertEqual(by_id["fire_type0_per_1k_km2_day"]["vs_2015_2019_status"], "withheld_insufficient_baseline")
+        self.assertIsNone(by_id["fire_type2_per_1k_km2_day"]["baseline_2015_2019_mean"])
+        self.assertEqual(by_id["fire_type2_per_1k_km2_day"]["vs_2015_2019_status"], "withheld_insufficient_baseline")
 
         interv = compute_kyiv_intervention_and_weather_controls(kyiv)
         self.assertLess(interv["box_tiao_weather_controlled_all_months"]["delta_step"], -2.0e14)
+        self.assertIn("no_step_counterfactual_no2_anomaly_molec_cm2", interv["weather_residual_monthly_series"][0])
+        self.assertIn("no_step_counterfactual_ci95_half_molec_cm2", interv["weather_residual_monthly_series"][0])
         self.assertEqual(
             interv["box_tiao_weather_controlled_excl_apr2022"]["n_obs"],
             interv["box_tiao_weather_controlled_all_months"]["n_obs"] - 1,
@@ -209,6 +215,13 @@ class CommittedFourElementsReportTests(unittest.TestCase):
             bt["box_tiao_weather_controlled_excl_apr2022"]["n_obs"],
             bt["box_tiao_weather_controlled_all_months"]["n_obs"] - 1,
         )
+        # Counterfactual series includes full no-step trend + weather + 95% AR(1) uncertainty
+        row0 = bt["weather_residual_monthly_series"][0]
+        self.assertIn("no_step_counterfactual_no2_anomaly_molec_cm2", row0)
+        self.assertIn("no_step_counterfactual_ci95_half_molec_cm2", row0)
+        self.assertIn("weather_only_no2_anomaly_molec_cm2", row0)
+        self.assertGreater(row0["no_step_counterfactual_ci95_half_molec_cm2"], 0.0)
+        self.assertIn("box_tiao_weather_controlled_mar_aug_only", bt)
 
     def test_committed_daily_stratification_matches_csv(self) -> None:
         results = json.loads((REPORTS_DIR / "kyiv_four_elements_results.json").read_text(encoding="utf-8"))
@@ -237,6 +250,11 @@ class CommittedFourElementsReportTests(unittest.TestCase):
         self.assertLess(kyiv_comps["dtr_c"]["target_2022_mean"], 15.0)
         self.assertGreater(kyiv_comps["dtr_c"]["target_2022_mean"], 5.0)
         self.assertLess(kyiv_comps["vpd_kpa"]["target_2022_mean"], 0.90)
+        self.assertIsNone(kyiv_comps["fire_type0_per_1k_km2_day"]["baseline_2015_2019_mean"])
+        self.assertEqual(kyiv_comps["fire_type0_per_1k_km2_day"]["vs_2015_2019_status"], "withheld_insufficient_baseline")
+        self.assertIsNone(kyiv_comps["fire_type2_per_1k_km2_day"]["baseline_2015_2019_mean"])
+        self.assertIn("firms_cmr_matched_outage_sensitivity", results["regional_fire_water_earth_contrast"])
+        self.assertIn("spatial_mask_audit", results["regional_fire_water_earth_contrast"])
 
         for chart in results["charts"].values():
             p = REPO_ROOT / chart["png_path"]

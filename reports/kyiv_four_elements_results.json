@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at_utc": "2026-11-14T19:49:52.620355+00:00",
+  "generated_at_utc": "2026-11-14T22:23:24.205793+00:00",
   "case_id": "ukraine",
   "study_id": "kyiv_four_elements",
   "conflict_start": "2022-02-24",
@@ -122,16 +122,16 @@
       "region_id": "kyiv_no2_box",
       "metric_id": "fire_type0_per_1k_km2_day",
       "element": "fire",
-      "label": "VIIRS Vegetation Fire Density (type0)",
+      "label": "VIIRS Presumed Vegetation Fire Density (type0)",
       "units": "det / 1000 km^2 / day",
       "is_interval_scale": false,
       "source_layer": "FIRMS VIIRS S-NPP",
-      "baseline_2015_2019_mean": 0.3479,
+      "baseline_2015_2019_mean": null,
       "baseline_2019_2021_mean": 0.2518,
       "target_2022_mean": 0.461,
-      "vs_2015_2019_abs_diff": 0.1131,
-      "vs_2015_2019_pct_change": 32.5,
-      "vs_2015_2019_status": "computed",
+      "vs_2015_2019_abs_diff": null,
+      "vs_2015_2019_pct_change": null,
+      "vs_2015_2019_status": "withheld_insufficient_baseline",
       "vs_2019_2021_abs_diff": 0.2091,
       "vs_2019_2021_pct_change": 83.03,
       "vs_2019_2021_status": "computed"
@@ -140,16 +140,16 @@
       "region_id": "kyiv_no2_box",
       "metric_id": "fire_type2_per_1k_km2_day",
       "element": "fire",
-      "label": "VIIRS Static Industrial Anomaly Density (type2)",
+      "label": "VIIRS Other Static Land Source Density (type2)",
       "units": "det / 1000 km^2 / day",
       "is_interval_scale": false,
       "source_layer": "FIRMS VIIRS S-NPP",
-      "baseline_2015_2019_mean": 0.0,
+      "baseline_2015_2019_mean": null,
       "baseline_2019_2021_mean": 0.0,
       "target_2022_mean": 0.0,
-      "vs_2015_2019_abs_diff": 0.0,
+      "vs_2015_2019_abs_diff": null,
       "vs_2015_2019_pct_change": null,
-      "vs_2015_2019_status": "withheld_nonpositive_baseline",
+      "vs_2015_2019_status": "withheld_insufficient_baseline",
       "vs_2019_2021_abs_diff": 0.0,
       "vs_2019_2021_pct_change": null,
       "vs_2019_2021_status": "withheld_nonpositive_baseline"
@@ -234,14 +234,14 @@
       "units": "mm/day",
       "is_interval_scale": false,
       "source_layer": "Derived FAO-56 PM",
-      "baseline_2015_2019_mean": 3.8381,
-      "baseline_2019_2021_mean": 3.6022,
-      "target_2022_mean": 3.5202,
-      "vs_2015_2019_abs_diff": -0.3179,
-      "vs_2015_2019_pct_change": -8.28,
+      "baseline_2015_2019_mean": 3.7043,
+      "baseline_2019_2021_mean": 3.4768,
+      "target_2022_mean": 3.3912,
+      "vs_2015_2019_abs_diff": -0.3132,
+      "vs_2015_2019_pct_change": -8.45,
       "vs_2015_2019_status": "computed",
-      "vs_2019_2021_abs_diff": -0.082,
-      "vs_2019_2021_pct_change": -2.28,
+      "vs_2019_2021_abs_diff": -0.0856,
+      "vs_2019_2021_pct_change": -2.46,
       "vs_2019_2021_status": "computed"
     },
     {
@@ -342,13 +342,13 @@
       "units": "mm/day",
       "is_interval_scale": true,
       "source_layer": "Derived FAO-56",
-      "baseline_2015_2019_mean": -2.2766,
-      "baseline_2019_2021_mean": -1.738,
-      "target_2022_mean": -1.8197,
-      "vs_2015_2019_abs_diff": 0.4569,
+      "baseline_2015_2019_mean": -2.1428,
+      "baseline_2019_2021_mean": -1.6126,
+      "target_2022_mean": -1.6906,
+      "vs_2015_2019_abs_diff": 0.4522,
       "vs_2015_2019_pct_change": null,
       "vs_2015_2019_status": "withheld_interval_scale",
-      "vs_2019_2021_abs_diff": -0.0816,
+      "vs_2019_2021_abs_diff": -0.078,
       "vs_2019_2021_pct_change": null,
       "vs_2019_2021_status": "withheld_interval_scale"
     },
@@ -707,637 +707,908 @@
       {
         "month": "2015-03",
         "no2_anomaly_molec_cm2": 1580815983753508.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 344524999418079.8,
+        "weather_predicted_no2_anomaly_molec_cm2": 402712875419047.6,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 402712875419047.6,
+        "no_step_counterfactual_ci95_half_molec_cm2": 282168119803622.56,
+        "weather_only_no2_anomaly_molec_cm2": 344524999418079.8,
         "residual_after_trend_and_weather_molec_cm2": 1178103108334461.0,
         "ws10m_anomaly_ms": -0.031
       },
       {
         "month": "2015-04",
         "no2_anomaly_molec_cm2": -715311478760635.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -442411960578068.9,
-        "residual_after_trend_and_weather_molec_cm2": -330390533393102.0,
+        "weather_predicted_no2_anomaly_molec_cm2": -384920945367533.06,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -384920945367533.06,
+        "no_step_counterfactual_ci95_half_molec_cm2": 262588330032237.6,
+        "weather_only_no2_anomaly_molec_cm2": -442411960578068.9,
+        "residual_after_trend_and_weather_molec_cm2": -330390533393101.94,
         "ws10m_anomaly_ms": 0.439
       },
       {
         "month": "2015-05",
         "no2_anomaly_molec_cm2": -431779156392988.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -174020654332767.72,
+        "weather_predicted_no2_anomaly_molec_cm2": -117226499912662.02,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -117226499912662.02,
+        "no_step_counterfactual_ci95_half_molec_cm2": 223161912993150.8,
+        "weather_only_no2_anomaly_molec_cm2": -174020654332767.72,
         "residual_after_trend_and_weather_molec_cm2": -314552656480326.0,
         "ws10m_anomaly_ms": 0.264
       },
       {
         "month": "2015-06",
         "no2_anomaly_molec_cm2": 194715219667739.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -132154030280980.75,
+        "weather_predicted_no2_anomaly_molec_cm2": -76056736651305.14,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -76056736651305.14,
+        "no_step_counterfactual_ci95_half_molec_cm2": 213987994291475.06,
+        "weather_only_no2_anomaly_molec_cm2": -132154030280980.75,
         "residual_after_trend_and_weather_molec_cm2": 270771956319044.12,
         "ws10m_anomaly_ms": 0.032
       },
       {
         "month": "2015-07",
         "no2_anomaly_molec_cm2": -5079619984879.25,
-        "weather_predicted_no2_anomaly_molec_cm2": 100554592920471.19,
+        "weather_predicted_no2_anomaly_molec_cm2": 155955025759714.8,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 155955025759714.8,
+        "no_step_counterfactual_ci95_half_molec_cm2": 192094464838839.4,
+        "weather_only_no2_anomaly_molec_cm2": 100554592920471.19,
         "residual_after_trend_and_weather_molec_cm2": -161034645744594.06,
         "ws10m_anomaly_ms": 0.106
       },
       {
         "month": "2015-08",
         "no2_anomaly_molec_cm2": 276099761923219.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 128933076849456.22,
+        "weather_predicted_no2_anomaly_molec_cm2": 183636648898269.72,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 183636648898269.72,
+        "no_step_counterfactual_ci95_half_molec_cm2": 204662745426955.22,
+        "weather_only_no2_anomaly_molec_cm2": 128933076849456.22,
         "residual_after_trend_and_weather_molec_cm2": 92463113024949.78,
         "ws10m_anomaly_ms": -0.244
       },
       {
         "month": "2015-09",
         "no2_anomaly_molec_cm2": 9035664086507.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 160038342669197.84,
+        "weather_predicted_no2_anomaly_molec_cm2": 214045053927581.25,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 214045053927581.25,
+        "no_step_counterfactual_ci95_half_molec_cm2": 195679183792424.2,
+        "weather_only_no2_anomaly_molec_cm2": 160038342669197.84,
         "residual_after_trend_and_weather_molec_cm2": -205009389841073.75,
         "ws10m_anomaly_ms": 0.197
       },
       {
         "month": "2015-10",
         "no2_anomaly_molec_cm2": -88920894948333.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -183183861291515.3,
-        "residual_after_trend_and_weather_molec_cm2": 40953115875230.375,
+        "weather_predicted_no2_anomaly_molec_cm2": -129874010823563.89,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -129874010823563.89,
+        "no_step_counterfactual_ci95_half_molec_cm2": 228940756311148.7,
+        "weather_only_no2_anomaly_molec_cm2": -183183861291515.3,
+        "residual_after_trend_and_weather_molec_cm2": 40953115875230.39,
         "ws10m_anomaly_ms": -0.375
       },
       {
         "month": "2015-11",
         "no2_anomaly_molec_cm2": -224493772672619.0,
-        "weather_predicted_no2_anomaly_molec_cm2": 8981258485278.438,
-        "residual_after_trend_and_weather_molec_cm2": -286088020835418.75,
+        "weather_predicted_no2_anomaly_molec_cm2": 61594248162799.71,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 61594248162799.71,
+        "no_step_counterfactual_ci95_half_molec_cm2": 256512858610568.34,
+        "weather_only_no2_anomaly_molec_cm2": 8981258485278.438,
+        "residual_after_trend_and_weather_molec_cm2": -286088020835418.7,
         "ws10m_anomaly_ms": 0.007
       },
       {
         "month": "2015-12",
         "no2_anomaly_molec_cm2": 405883033594740.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 435465450698142.5,
+        "weather_predicted_no2_anomaly_molec_cm2": 487381579585233.6,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 487381579585233.6,
+        "no_step_counterfactual_ci95_half_molec_cm2": 316738908631391.25,
+        "weather_only_no2_anomaly_molec_cm2": 435465450698142.5,
         "residual_after_trend_and_weather_molec_cm2": -81498545990493.12,
         "ws10m_anomaly_ms": 0.486
       },
       {
         "month": "2016-01",
         "no2_anomaly_molec_cm2": -203798668931550.75,
-        "weather_predicted_no2_anomaly_molec_cm2": -229078084552824.66,
+        "weather_predicted_no2_anomaly_molec_cm2": -177858816456165.47,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -177858816456165.47,
+        "no_step_counterfactual_ci95_half_molec_cm2": 187988573866837.12,
+        "weather_only_no2_anomaly_molec_cm2": -229078084552824.66,
         "residual_after_trend_and_weather_molec_cm2": -25939852475385.28,
         "ws10m_anomaly_ms": 0.344
       },
       {
         "month": "2016-02",
         "no2_anomaly_molec_cm2": 165709844712467.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 283784383316119.0,
-        "residual_after_trend_and_weather_molec_cm2": -168596945909880.62,
+        "weather_predicted_no2_anomaly_molec_cm2": 334306790622348.2,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 334306790622348.2,
+        "no_step_counterfactual_ci95_half_molec_cm2": 285482249805387.44,
+        "weather_only_no2_anomaly_molec_cm2": 283784383316119.0,
+        "residual_after_trend_and_weather_molec_cm2": -168596945909880.7,
         "ws10m_anomaly_ms": 0.712
       },
       {
         "month": "2016-03",
         "no2_anomaly_molec_cm2": 323301333648245.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 58339172767172.68,
-        "residual_after_trend_and_weather_molec_cm2": 215136614365273.84,
+        "weather_predicted_no2_anomaly_molec_cm2": 108164719282971.67,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 108164719282971.67,
+        "no_step_counterfactual_ci95_half_molec_cm2": 203302335366007.72,
+        "weather_only_no2_anomaly_molec_cm2": 58339172767172.68,
+        "residual_after_trend_and_weather_molec_cm2": 215136614365273.8,
         "ws10m_anomaly_ms": -0.093
       },
       {
         "month": "2016-04",
         "no2_anomaly_molec_cm2": 566870854794920.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 84295882266101.84,
-        "residual_after_trend_and_weather_molec_cm2": 433446286803451.7,
+        "weather_predicted_no2_anomaly_molec_cm2": 133424567991468.78,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 133424567991468.78,
+        "no_step_counterfactual_ci95_half_molec_cm2": 291408659613662.8,
+        "weather_only_no2_anomaly_molec_cm2": 84295882266101.84,
+        "residual_after_trend_and_weather_molec_cm2": 433446286803451.75,
         "ws10m_anomaly_ms": -0.556
       },
       {
         "month": "2016-05",
         "no2_anomaly_molec_cm2": -323204641834283.75,
-        "weather_predicted_no2_anomaly_molec_cm2": -126212597779342.94,
-        "residual_after_trend_and_weather_molec_cm2": -245423868989877.7,
+        "weather_predicted_no2_anomaly_molec_cm2": -77780772844406.1,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -77780772844406.1,
+        "no_step_counterfactual_ci95_half_molec_cm2": 271495078342798.47,
+        "weather_only_no2_anomaly_molec_cm2": -126212597779342.94,
+        "residual_after_trend_and_weather_molec_cm2": -245423868989877.66,
         "ws10m_anomaly_ms": -0.597
       },
       {
         "month": "2016-06",
         "no2_anomaly_molec_cm2": -161755461922004.75,
-        "weather_predicted_no2_anomaly_molec_cm2": -108789411993994.38,
+        "weather_predicted_no2_anomaly_molec_cm2": -61054447849487.61,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -61054447849487.61,
+        "no_step_counterfactual_ci95_half_molec_cm2": 167132875645735.06,
+        "weather_only_no2_anomaly_molec_cm2": -108789411993994.38,
         "residual_after_trend_and_weather_molec_cm2": -100701014072517.14,
         "ws10m_anomaly_ms": -0.228
       },
       {
         "month": "2016-07",
         "no2_anomaly_molec_cm2": 49881276167294.75,
-        "weather_predicted_no2_anomaly_molec_cm2": 49732304938823.88,
+        "weather_predicted_no2_anomaly_molec_cm2": 96770408292898.62,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 96770408292898.62,
+        "no_step_counterfactual_ci95_half_molec_cm2": 203368145190345.12,
+        "weather_only_no2_anomaly_molec_cm2": 49732304938823.88,
         "residual_after_trend_and_weather_molec_cm2": -46889132125603.875,
         "ws10m_anomaly_ms": 0.176
       },
       {
         "month": "2016-08",
         "no2_anomaly_molec_cm2": -26056519973261.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -168459736108732.22,
+        "weather_predicted_no2_anomaly_molec_cm2": -122118493545087.56,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -122118493545087.56,
+        "no_step_counterfactual_ci95_half_molec_cm2": 148958468395830.6,
+        "weather_only_no2_anomaly_molec_cm2": -168459736108732.22,
         "residual_after_trend_and_weather_molec_cm2": 96061973571826.56,
         "ws10m_anomaly_ms": -0.04
       },
       {
         "month": "2016-09",
         "no2_anomaly_molec_cm2": -882231206885714.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -165328623099834.53,
+        "weather_predicted_no2_anomaly_molec_cm2": -119684241326619.97,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -119684241326619.97,
+        "no_step_counterfactual_ci95_half_molec_cm2": 263261460425011.6,
+        "weather_only_no2_anomaly_molec_cm2": -165328623099834.53,
         "residual_after_trend_and_weather_molec_cm2": -762546965559094.5,
         "ws10m_anomaly_ms": -0.761
       },
       {
         "month": "2016-10",
         "no2_anomaly_molec_cm2": 189640357218333.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -156524746673933.1,
-        "residual_after_trend_and_weather_molec_cm2": 301217582909484.06,
+        "weather_predicted_no2_anomaly_molec_cm2": -111577225691150.6,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -111577225691150.6,
+        "no_step_counterfactual_ci95_half_molec_cm2": 350256428963372.7,
+        "weather_only_no2_anomaly_molec_cm2": -156524746673933.1,
+        "residual_after_trend_and_weather_molec_cm2": 301217582909484.1,
         "ws10m_anomaly_ms": 0.386
       },
       {
         "month": "2016-11",
         "no2_anomaly_molec_cm2": -505206590047619.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -448997552341696.75,
+        "weather_predicted_no2_anomaly_molec_cm2": -404746892149344.25,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -404746892149344.25,
+        "no_step_counterfactual_ci95_half_molec_cm2": 222395826825014.06,
+        "weather_only_no2_anomaly_molec_cm2": -448997552341696.75,
         "residual_after_trend_and_weather_molec_cm2": -100459697898274.75,
         "ws10m_anomaly_ms": 0.522
       },
       {
         "month": "2016-12",
         "no2_anomaly_molec_cm2": -537713137158506.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -273296450397905.34,
+        "weather_predicted_no2_anomaly_molec_cm2": -229742650995982.97,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -229742650995982.97,
+        "no_step_counterfactual_ci95_half_molec_cm2": 207121570890718.2,
+        "weather_only_no2_anomaly_molec_cm2": -273296450397905.34,
         "residual_after_trend_and_weather_molec_cm2": -307970486162523.5,
         "ws10m_anomaly_ms": 0.295
       },
       {
         "month": "2017-01",
         "no2_anomaly_molec_cm2": 5424182656684.75,
-        "weather_predicted_no2_anomaly_molec_cm2": -135094542778474.66,
+        "weather_predicted_no2_anomaly_molec_cm2": -92237604166984.34,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -92237604166984.34,
+        "no_step_counterfactual_ci95_half_molec_cm2": 201131460615188.03,
+        "weather_only_no2_anomaly_molec_cm2": -135094542778474.66,
         "residual_after_trend_and_weather_molec_cm2": 97661786823669.1,
         "ws10m_anomaly_ms": 0.169
       },
       {
         "month": "2017-02",
         "no2_anomaly_molec_cm2": -43616256378441.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -364661138629704.1,
+        "weather_predicted_no2_anomaly_molec_cm2": -322501060808643.94,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -322501060808643.94,
+        "no_step_counterfactual_ci95_half_molec_cm2": 197800736121737.53,
+        "weather_only_no2_anomaly_molec_cm2": -364661138629704.1,
         "residual_after_trend_and_weather_molec_cm2": 278884804430202.44,
         "ws10m_anomaly_ms": 0.063
       },
       {
         "month": "2017-03",
         "no2_anomaly_molec_cm2": -241981701351754.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 290145777793128.94,
+        "weather_predicted_no2_anomaly_molec_cm2": 331608994823759.06,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 331608994823759.06,
+        "no_step_counterfactual_ci95_half_molec_cm2": 175046430651607.28,
+        "weather_only_no2_anomaly_molec_cm2": 290145777793128.94,
         "residual_after_trend_and_weather_molec_cm2": -573590696175513.5,
         "ws10m_anomaly_ms": -0.08
       },
       {
         "month": "2017-04",
         "no2_anomaly_molec_cm2": -123897364493968.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -202235702507282.12,
-        "residual_after_trend_and_weather_molec_cm2": 37571981773115.5,
+        "weather_predicted_no2_anomaly_molec_cm2": -161469346267083.97,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -161469346267083.97,
+        "no_step_counterfactual_ci95_half_molec_cm2": 188597829663558.9,
+        "weather_only_no2_anomaly_molec_cm2": -202235702507282.12,
+        "residual_after_trend_and_weather_molec_cm2": 37571981773115.47,
         "ws10m_anomaly_ms": 0.514
       },
       {
         "month": "2017-05",
         "no2_anomaly_molec_cm2": 176776170896485.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -305878530252111.6,
+        "weather_predicted_no2_anomaly_molec_cm2": -265809034802343.62,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -265809034802343.62,
+        "no_step_counterfactual_ci95_half_molec_cm2": 212271853428262.84,
+        "weather_only_no2_anomaly_molec_cm2": -305878530252111.6,
         "residual_after_trend_and_weather_molec_cm2": 442585205698829.1,
         "ws10m_anomaly_ms": 0.218
       },
       {
         "month": "2017-06",
         "no2_anomaly_molec_cm2": -634367412616574.8,
-        "weather_predicted_no2_anomaly_molec_cm2": -312928858814648.8,
+        "weather_predicted_no2_anomaly_molec_cm2": -273556224155310.9,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -273556224155310.9,
+        "no_step_counterfactual_ci95_half_molec_cm2": 205960474137692.1,
+        "weather_only_no2_anomaly_molec_cm2": -312928858814648.8,
         "residual_after_trend_and_weather_molec_cm2": -360811188461263.9,
         "ws10m_anomaly_ms": 0.645
       },
       {
         "month": "2017-07",
         "no2_anomaly_molec_cm2": 526680850615120.75,
-        "weather_predicted_no2_anomaly_molec_cm2": -45691717876218.484,
+        "weather_predicted_no2_anomaly_molec_cm2": -7015944007312.5625,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -7015944007312.5625,
+        "no_step_counterfactual_ci95_half_molec_cm2": 139119248365552.14,
+        "weather_only_no2_anomaly_molec_cm2": -45691717876218.484,
         "residual_after_trend_and_weather_molec_cm2": 533696794622433.3,
         "ws10m_anomaly_ms": 0.237
       },
       {
         "month": "2017-08",
         "no2_anomaly_molec_cm2": -12358473900579.0,
-        "weather_predicted_no2_anomaly_molec_cm2": 6502945502543.82,
-        "residual_after_trend_and_weather_molec_cm2": -56840332481598.64,
+        "weather_predicted_no2_anomaly_molec_cm2": 44481858581019.625,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 44481858581019.625,
+        "no_step_counterfactual_ci95_half_molec_cm2": 166458243662541.1,
+        "weather_only_no2_anomaly_molec_cm2": 6502945502543.82,
+        "residual_after_trend_and_weather_molec_cm2": -56840332481598.625,
         "ws10m_anomaly_ms": 0.479
       },
       {
         "month": "2017-09",
         "no2_anomaly_molec_cm2": -243219340707143.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -156682606091966.75,
+        "weather_predicted_no2_anomaly_molec_cm2": -119400553803921.05,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -119400553803921.05,
+        "no_step_counterfactual_ci95_half_molec_cm2": 194489885538099.9,
+        "weather_only_no2_anomaly_molec_cm2": -156682606091966.75,
         "residual_after_trend_and_weather_molec_cm2": -123818786903221.95,
         "ws10m_anomaly_ms": 0.606
       },
       {
         "month": "2017-10",
         "no2_anomaly_molec_cm2": -359504628128889.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -295516395141632.6,
+        "weather_predicted_no2_anomaly_molec_cm2": -258931203644018.94,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -258931203644018.94,
+        "no_step_counterfactual_ci95_half_molec_cm2": 276919859704200.38,
+        "weather_only_no2_anomaly_molec_cm2": -295516395141632.6,
         "residual_after_trend_and_weather_molec_cm2": -100573424484870.06,
         "ws10m_anomaly_ms": 0.894
       },
       {
         "month": "2017-11",
         "no2_anomaly_molec_cm2": -604892827172619.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -877214279292.0469,
+        "weather_predicted_no2_anomaly_molec_cm2": 35011116427891.56,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 35011116427891.56,
+        "no_step_counterfactual_ci95_half_molec_cm2": 184198933567871.88,
+        "weather_only_no2_anomaly_molec_cm2": -877214279292.0469,
         "residual_after_trend_and_weather_molec_cm2": -639903943600510.5,
         "ws10m_anomaly_ms": -0.441
       },
       {
         "month": "2017-12",
         "no2_anomaly_molec_cm2": 251089897287922.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -119168522897482.94,
+        "weather_predicted_no2_anomaly_molec_cm2": -83977052980729.42,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -83977052980729.42,
+        "no_step_counterfactual_ci95_half_molec_cm2": 222031679728643.97,
+        "weather_only_no2_anomaly_molec_cm2": -119168522897482.94,
         "residual_after_trend_and_weather_molec_cm2": 335066950268651.44,
         "ws10m_anomaly_ms": 0.014
       },
       {
         "month": "2018-01",
         "no2_anomaly_molec_cm2": 380599462982887.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 538723441298332.1,
+        "weather_predicted_no2_anomaly_molec_cm2": 573218050424653.6,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 573218050424653.6,
+        "no_step_counterfactual_ci95_half_molec_cm2": 225893080129371.8,
+        "weather_only_no2_anomaly_molec_cm2": 538723441298332.1,
         "residual_after_trend_and_weather_molec_cm2": -192618587441766.12,
         "ws10m_anomaly_ms": -0.172
       },
       {
         "month": "2018-02",
         "no2_anomaly_molec_cm2": 11834529264415.75,
-        "weather_predicted_no2_anomaly_molec_cm2": -290635932812370.6,
+        "weather_predicted_no2_anomaly_molec_cm2": -256838184476479.22,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -256838184476479.22,
+        "no_step_counterfactual_ci95_half_molec_cm2": 222438744006175.75,
+        "weather_only_no2_anomaly_molec_cm2": -290635932812370.6,
         "residual_after_trend_and_weather_molec_cm2": 268672713740894.97,
         "ws10m_anomaly_ms": -0.736
       },
       {
         "month": "2018-03",
         "no2_anomaly_molec_cm2": -1439140561614912.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -914591080634964.1,
+        "weather_predicted_no2_anomaly_molec_cm2": -881490193089502.8,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -881490193089502.8,
+        "no_step_counterfactual_ci95_half_molec_cm2": 306748955803934.7,
+        "weather_only_no2_anomaly_molec_cm2": -914591080634964.1,
         "residual_after_trend_and_weather_molec_cm2": -557650368525409.75,
         "ws10m_anomaly_ms": -0.226
       },
       {
         "month": "2018-04",
         "no2_anomaly_molec_cm2": -518996134046349.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 181968144984305.22,
+        "weather_predicted_no2_anomaly_molec_cm2": 214372171739334.5,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 214372171739334.5,
+        "no_step_counterfactual_ci95_half_molec_cm2": 157379944002229.34,
+        "weather_only_no2_anomaly_molec_cm2": 181968144984305.22,
         "residual_after_trend_and_weather_molec_cm2": -733368305785684.0,
         "ws10m_anomaly_ms": 0.162
       },
       {
         "month": "2018-05",
         "no2_anomaly_molec_cm2": 202469017110771.0,
-        "weather_predicted_no2_anomaly_molec_cm2": 238055414288330.12,
-        "residual_after_trend_and_weather_molec_cm2": -67293563142158.28,
+        "weather_predicted_no2_anomaly_molec_cm2": 269762580252929.3,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 269762580252929.3,
+        "no_step_counterfactual_ci95_half_molec_cm2": 207198754119875.44,
+        "weather_only_no2_anomaly_molec_cm2": 238055414288330.12,
+        "residual_after_trend_and_weather_molec_cm2": -67293563142158.31,
         "ws10m_anomaly_ms": 0.172
       },
       {
         "month": "2018-06",
         "no2_anomaly_molec_cm2": 304950053261072.25,
-        "weather_predicted_no2_anomaly_molec_cm2": -173432586396547.0,
+        "weather_predicted_no2_anomaly_molec_cm2": -142422281222377.9,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -142422281222377.9,
+        "no_step_counterfactual_ci95_half_molec_cm2": 119636435699371.84,
+        "weather_only_no2_anomaly_molec_cm2": -173432586396547.0,
         "residual_after_trend_and_weather_molec_cm2": 447372334483450.1,
         "ws10m_anomaly_ms": -0.096
       },
       {
         "month": "2018-07",
         "no2_anomaly_molec_cm2": -498230303162657.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -143444381289563.94,
+        "weather_predicted_no2_anomaly_molec_cm2": -113130936905826.84,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -113130936905826.84,
+        "no_step_counterfactual_ci95_half_molec_cm2": 166645054085578.8,
+        "weather_only_no2_anomaly_molec_cm2": -143444381289563.94,
         "residual_after_trend_and_weather_molec_cm2": -385099366256830.1,
         "ws10m_anomaly_ms": -0.235
       },
       {
         "month": "2018-08",
         "no2_anomaly_molec_cm2": -61317876123737.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -77100687681004.66,
+        "weather_predicted_no2_anomaly_molec_cm2": -47484104087697.69,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -47484104087697.69,
+        "no_step_counterfactual_ci95_half_molec_cm2": 164700887588381.88,
+        "weather_only_no2_anomaly_molec_cm2": -77100687681004.66,
         "residual_after_trend_and_weather_molec_cm2": -13833772036039.312,
         "ws10m_anomaly_ms": -0.333
       },
       {
         "month": "2018-09",
         "no2_anomaly_molec_cm2": 926842664753174.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 35990674490621.96,
+        "weather_predicted_no2_anomaly_molec_cm2": 64910397293498.83,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 64910397293498.83,
+        "no_step_counterfactual_ci95_half_molec_cm2": 158335220060981.6,
+        "weather_only_no2_anomaly_molec_cm2": 35990674490621.96,
         "residual_after_trend_and_weather_molec_cm2": 861932267459675.6,
         "ws10m_anomaly_ms": -0.141
       },
       {
         "month": "2018-10",
         "no2_anomaly_molec_cm2": 711203189996111.0,
-        "weather_predicted_no2_anomaly_molec_cm2": 156170839351803.94,
+        "weather_predicted_no2_anomaly_molec_cm2": 184393701364248.75,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 184393701364248.75,
+        "no_step_counterfactual_ci95_half_molec_cm2": 238800029627502.6,
+        "weather_only_no2_anomaly_molec_cm2": 156170839351803.94,
         "residual_after_trend_and_weather_molec_cm2": 526809488631862.25,
         "ws10m_anomaly_ms": -0.472
       },
       {
         "month": "2018-11",
         "no2_anomaly_molec_cm2": 357946971398809.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -73688592367764.62,
+        "weather_predicted_no2_anomaly_molec_cm2": -46162591145749.83,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -46162591145749.83,
+        "no_step_counterfactual_ci95_half_molec_cm2": 297101841358303.8,
+        "weather_only_no2_anomaly_molec_cm2": -73688592367764.62,
         "residual_after_trend_and_weather_molec_cm2": 404109562544559.3,
         "ws10m_anomaly_ms": -0.6
       },
       {
         "month": "2018-12",
         "no2_anomaly_molec_cm2": -1050116861587078.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -510226275844372.7,
+        "weather_predicted_no2_anomaly_molec_cm2": -483397135412788.06,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -483397135412788.06,
+        "no_step_counterfactual_ci95_half_molec_cm2": 239115980983371.88,
+        "weather_only_no2_anomaly_molec_cm2": -510226275844372.7,
         "residual_after_trend_and_weather_molec_cm2": -566719726174290.0,
         "ws10m_anomaly_ms": -0.601
       },
       {
         "month": "2019-01",
         "no2_anomaly_molec_cm2": -182224976708021.25,
-        "weather_predicted_no2_anomaly_molec_cm2": -409386585338781.0,
+        "weather_predicted_no2_anomaly_molec_cm2": -383254305697628.4,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -383254305697628.4,
+        "no_step_counterfactual_ci95_half_molec_cm2": 244639578629618.8,
+        "weather_only_no2_anomaly_molec_cm2": -409386585338781.0,
         "residual_after_trend_and_weather_molec_cm2": 201029328989607.12,
         "ws10m_anomaly_ms": -0.341
       },
       {
         "month": "2019-02",
         "no2_anomaly_molec_cm2": -133928117598441.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 136676916754193.42,
+        "weather_predicted_no2_anomaly_molec_cm2": 162112335604916.0,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 162112335604916.0,
+        "no_step_counterfactual_ci95_half_molec_cm2": 141995511095505.78,
+        "weather_only_no2_anomaly_molec_cm2": 136676916754193.42,
         "residual_after_trend_and_weather_molec_cm2": -296040453203357.5,
         "ws10m_anomaly_ms": -0.038
       },
       {
         "month": "2019-03",
         "no2_anomaly_molec_cm2": -222995054435088.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -71963583558125.17,
-        "residual_after_trend_and_weather_molec_cm2": -175770028937255.25,
+        "weather_predicted_no2_anomaly_molec_cm2": -47225025497832.72,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -47225025497832.72,
+        "no_step_counterfactual_ci95_half_molec_cm2": 175501433058427.72,
+        "weather_only_no2_anomaly_molec_cm2": -71963583558125.17,
+        "residual_after_trend_and_weather_molec_cm2": -175770028937255.28,
         "ws10m_anomaly_ms": 0.43
       },
       {
         "month": "2019-04",
         "no2_anomaly_molec_cm2": 791334122506031.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 84838921620261.86,
+        "weather_predicted_no2_anomaly_molec_cm2": 108880618890122.3,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 108880618890122.3,
+        "no_step_counterfactual_ci95_half_molec_cm2": 203863771401109.4,
+        "weather_only_no2_anomaly_molec_cm2": 84838921620261.86,
         "residual_after_trend_and_weather_molec_cm2": 682453503615909.2,
         "ws10m_anomaly_ms": -0.56
       },
       {
         "month": "2019-05",
         "no2_anomaly_molec_cm2": 375738610220015.0,
-        "weather_predicted_no2_anomaly_molec_cm2": 74511653861192.36,
-        "residual_after_trend_and_weather_molec_cm2": 277882119879392.25,
+        "weather_predicted_no2_anomaly_molec_cm2": 97856490340622.69,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 97856490340622.69,
+        "no_step_counterfactual_ci95_half_molec_cm2": 247297509010524.03,
+        "weather_only_no2_anomaly_molec_cm2": 74511653861192.36,
+        "residual_after_trend_and_weather_molec_cm2": 277882119879392.3,
         "ws10m_anomaly_ms": -0.057
       },
       {
         "month": "2019-06",
         "no2_anomaly_molec_cm2": 296457601609768.25,
-        "weather_predicted_no2_anomaly_molec_cm2": 433760173271483.44,
-        "residual_after_trend_and_weather_molec_cm2": -159950547350715.38,
+        "weather_predicted_no2_anomaly_molec_cm2": 456408148960483.56,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 456408148960483.56,
+        "no_step_counterfactual_ci95_half_molec_cm2": 214148169723777.44,
+        "weather_only_no2_anomaly_molec_cm2": 433760173271483.44,
+        "residual_after_trend_and_weather_molec_cm2": -159950547350715.3,
         "ws10m_anomaly_ms": -0.353
       },
       {
         "month": "2019-07",
         "no2_anomaly_molec_cm2": -73252203634879.25,
-        "weather_predicted_no2_anomaly_molec_cm2": -254695512908226.3,
+        "weather_predicted_no2_anomaly_molec_cm2": -232744398009658.1,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -232744398009658.1,
+        "no_step_counterfactual_ci95_half_molec_cm2": 142010269265662.56,
+        "weather_only_no2_anomaly_molec_cm2": -254695512908226.3,
         "residual_after_trend_and_weather_molec_cm2": 159492194374778.84,
         "ws10m_anomaly_ms": -0.284
       },
       {
         "month": "2019-08",
         "no2_anomaly_molec_cm2": -176366891925642.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -183420312776978.38,
+        "weather_predicted_no2_anomaly_molec_cm2": -162166058668840.25,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -162166058668840.25,
+        "no_step_counterfactual_ci95_half_molec_cm2": 135201229675581.11,
+        "weather_only_no2_anomaly_molec_cm2": -183420312776978.38,
         "residual_after_trend_and_weather_molec_cm2": -14200833256801.75,
         "ws10m_anomaly_ms": 0.139
       },
       {
         "month": "2019-09",
         "no2_anomaly_molec_cm2": 189572218753174.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -167562502182740.0,
+        "weather_predicted_no2_anomaly_molec_cm2": -147005108865032.0,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -147005108865032.0,
+        "no_step_counterfactual_ci95_half_molec_cm2": 129676377694995.16,
+        "weather_only_no2_anomaly_molec_cm2": -167562502182740.0,
         "residual_after_trend_and_weather_molec_cm2": 336577327618206.5,
         "ws10m_anomaly_ms": 0.099
       },
       {
         "month": "2019-10",
         "no2_anomaly_molec_cm2": -452418024137222.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 185509449540569.3,
+        "weather_predicted_no2_anomaly_molec_cm2": 205369982067845.25,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 205369982067845.25,
+        "no_step_counterfactual_ci95_half_molec_cm2": 242186804397746.12,
+        "weather_only_no2_anomaly_molec_cm2": 185509449540569.3,
         "residual_after_trend_and_weather_molec_cm2": -657788006205067.8,
         "ws10m_anomaly_ms": -0.433
       },
       {
         "month": "2019-11",
         "no2_anomaly_molec_cm2": 976646218494047.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 221037386288828.03,
+        "weather_predicted_no2_anomaly_molec_cm2": 240201058025674.0,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 240201058025674.0,
+        "no_step_counterfactual_ci95_half_molec_cm2": 198156272630603.84,
+        "weather_only_no2_anomaly_molec_cm2": 221037386288828.03,
         "residual_after_trend_and_weather_molec_cm2": 736445160468373.5,
         "ws10m_anomaly_ms": 0.512
       },
       {
         "month": "2019-12",
         "no2_anomaly_molec_cm2": 930857067862922.0,
-        "weather_predicted_no2_anomaly_molec_cm2": 173681084226904.47,
-        "residual_after_trend_and_weather_molec_cm2": 738709172689601.6,
+        "weather_predicted_no2_anomaly_molec_cm2": 192147895173320.3,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 192147895173320.3,
+        "no_step_counterfactual_ci95_half_molec_cm2": 220406819142409.06,
+        "weather_only_no2_anomaly_molec_cm2": 173681084226904.47,
+        "residual_after_trend_and_weather_molec_cm2": 738709172689601.8,
         "ws10m_anomaly_ms": -0.193
       },
       {
         "month": "2020-01",
         "no2_anomaly_molec_cm2": 1579585920114200.8,
-        "weather_predicted_no2_anomaly_molec_cm2": 1024001720091344.2,
-        "residual_after_trend_and_weather_molec_cm2": 537814249866872.75,
+        "weather_predicted_no2_anomaly_molec_cm2": 1041771670247328.1,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 1041771670247328.1,
+        "no_step_counterfactual_ci95_half_molec_cm2": 397482941228133.06,
+        "weather_only_no2_anomaly_molec_cm2": 1024001720091344.2,
+        "residual_after_trend_and_weather_molec_cm2": 537814249866872.6,
         "ws10m_anomaly_ms": 0.054
       },
       {
         "month": "2020-02",
         "no2_anomaly_molec_cm2": 511272811954891.75,
-        "weather_predicted_no2_anomaly_molec_cm2": 144653960958212.44,
+        "weather_predicted_no2_anomaly_molec_cm2": 161727050323766.06,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 161727050323766.06,
+        "no_step_counterfactual_ci95_half_molec_cm2": 301548296230383.7,
+        "weather_only_no2_anomaly_molec_cm2": 144653960958212.44,
         "residual_after_trend_and_weather_molec_cm2": 349545761631125.7,
         "ws10m_anomaly_ms": 0.424
       },
       {
         "month": "2020-03",
         "no2_anomaly_molec_cm2": 29916018514912.0,
-        "weather_predicted_no2_anomaly_molec_cm2": 429662874931193.2,
+        "weather_predicted_no2_anomaly_molec_cm2": 446039103506316.75,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 446039103506316.75,
+        "no_step_counterfactual_ci95_half_molec_cm2": 218346358193238.66,
+        "weather_only_no2_anomaly_molec_cm2": 429662874931193.2,
         "residual_after_trend_and_weather_molec_cm2": -416123084991404.75,
         "ws10m_anomaly_ms": -0.06
       },
       {
         "month": "2020-04",
         "no2_anomaly_molec_cm2": -1139668471284444.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -430481907109416.3,
+        "weather_predicted_no2_anomaly_molec_cm2": -414802539324724.75,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -414802539324724.75,
+        "no_step_counterfactual_ci95_half_molec_cm2": 302784583946486.7,
+        "weather_only_no2_anomaly_molec_cm2": -430481907109416.3,
         "residual_after_trend_and_weather_molec_cm2": -724865931959719.8,
         "ws10m_anomaly_ms": 0.07
       },
       {
         "month": "2020-05",
         "no2_anomaly_molec_cm2": -124313474526591.25,
-        "weather_predicted_no2_anomaly_molec_cm2": -577945862612787.2,
+        "weather_predicted_no2_anomaly_molec_cm2": -562963355618525.9,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -562963355618525.9,
+        "no_step_counterfactual_ci95_half_molec_cm2": 309883695727201.44,
+        "weather_only_no2_anomaly_molec_cm2": -577945862612787.2,
         "residual_after_trend_and_weather_molec_cm2": 438649881091934.6,
         "ws10m_anomaly_ms": 0.224
       },
       {
         "month": "2020-06",
         "no2_anomaly_molec_cm2": 84670012374985.25,
-        "weather_predicted_no2_anomaly_molec_cm2": -196656953410216.8,
+        "weather_predicted_no2_anomaly_molec_cm2": -182371307206385.44,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -182371307206385.44,
+        "no_step_counterfactual_ci95_half_molec_cm2": 174858443197545.97,
+        "weather_only_no2_anomaly_molec_cm2": -196656953410216.8,
         "residual_after_trend_and_weather_molec_cm2": 267041319581370.7,
         "ws10m_anomaly_ms": 0.123
       },
       {
         "month": "2020-07",
         "no2_anomaly_molec_cm2": -30524017084879.25,
-        "weather_predicted_no2_anomaly_molec_cm2": 90895243832338.6,
-        "residual_after_trend_and_weather_molec_cm2": -135008046330617.22,
+        "weather_predicted_no2_anomaly_molec_cm2": 104484029245737.98,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 104484029245737.98,
+        "no_step_counterfactual_ci95_half_molec_cm2": 181451625232676.47,
+        "weather_only_no2_anomaly_molec_cm2": 90895243832338.6,
+        "residual_after_trend_and_weather_molec_cm2": -135008046330617.23,
         "ws10m_anomaly_ms": -0.443
       },
       {
         "month": "2020-08",
         "no2_anomaly_molec_cm2": -132301390845555.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -264802968442856.78,
+        "weather_predicted_no2_anomaly_molec_cm2": -251911043819887.5,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -251911043819887.5,
+        "no_step_counterfactual_ci95_half_molec_cm2": 173354922464826.22,
+        "weather_only_no2_anomaly_molec_cm2": -264802968442856.78,
         "residual_after_trend_and_weather_molec_cm2": 119609652974332.5,
         "ws10m_anomaly_ms": 0.007
       },
       {
         "month": "2020-09",
         "no2_anomaly_molec_cm2": -193262637483540.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 22770300166505.965,
-        "residual_after_trend_and_weather_molec_cm2": -228228001482585.66,
+        "weather_predicted_no2_anomaly_molec_cm2": 34965363999045.125,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 34965363999045.125,
+        "no_step_counterfactual_ci95_half_molec_cm2": 223579791646869.66,
+        "weather_only_no2_anomaly_molec_cm2": 22770300166505.965,
+        "residual_after_trend_and_weather_molec_cm2": -228228001482585.62,
         "ws10m_anomaly_ms": 0.057
       },
       {
         "month": "2020-10",
         "no2_anomaly_molec_cm2": 799692744853254.0,
-        "weather_predicted_no2_anomaly_molec_cm2": 455193789773975.5,
-        "residual_after_trend_and_weather_molec_cm2": 333000752037171.25,
+        "weather_predicted_no2_anomaly_molec_cm2": 466691992816082.6,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 466691992816082.6,
+        "no_step_counterfactual_ci95_half_molec_cm2": 307539089132964.2,
+        "weather_only_no2_anomaly_molec_cm2": 455193789773975.5,
+        "residual_after_trend_and_weather_molec_cm2": 333000752037171.4,
         "ws10m_anomaly_ms": -0.0
       },
       {
         "month": "2020-11",
         "no2_anomaly_molec_cm2": -726425539672619.0,
-        "weather_predicted_no2_anomaly_molec_cm2": 384235711559781.0,
+        "weather_predicted_no2_anomaly_molec_cm2": 395037053811458.0,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 395037053811458.0,
+        "no_step_counterfactual_ci95_half_molec_cm2": 323710142705443.25,
+        "weather_only_no2_anomaly_molec_cm2": 384235711559781.0,
         "residual_after_trend_and_weather_molec_cm2": -1121462593484077.0,
         "ws10m_anomaly_ms": -0.52
       },
       {
         "month": "2020-12",
         "no2_anomaly_molec_cm2": -615586455158506.6,
-        "weather_predicted_no2_anomaly_molec_cm2": 1231042398734.0,
+        "weather_predicted_no2_anomaly_molec_cm2": 11335523859980.953,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 11335523859980.953,
+        "no_step_counterfactual_ci95_half_molec_cm2": 233355006722672.56,
+        "weather_only_no2_anomaly_molec_cm2": 1231042398734.0,
         "residual_after_trend_and_weather_molec_cm2": -626921979018487.6,
         "ws10m_anomaly_ms": -0.332
       },
       {
         "month": "2021-01",
         "no2_anomaly_molec_cm2": 83530244591978.75,
-        "weather_predicted_no2_anomaly_molec_cm2": 33100191549500.438,
-        "residual_after_trend_and_weather_molec_cm2": 41022432371663.375,
+        "weather_predicted_no2_anomaly_molec_cm2": 42507812220315.41,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 42507812220315.41,
+        "no_step_counterfactual_ci95_half_molec_cm2": 243592913168702.12,
+        "weather_only_no2_anomaly_molec_cm2": 33100191549500.438,
+        "residual_after_trend_and_weather_molec_cm2": 41022432371663.34,
         "ws10m_anomaly_ms": -0.133
       },
       {
         "month": "2021-02",
         "no2_anomaly_molec_cm2": -416538438511774.9,
-        "weather_predicted_no2_anomaly_molec_cm2": -771163386084743.6,
-        "residual_after_trend_and_weather_molec_cm2": 345914187692583.9,
+        "weather_predicted_no2_anomaly_molec_cm2": -762452626204358.9,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -762452626204358.9,
+        "no_step_counterfactual_ci95_half_molec_cm2": 315264122401084.8,
+        "weather_only_no2_anomaly_molec_cm2": -771163386084743.6,
+        "residual_after_trend_and_weather_molec_cm2": 345914187692584.0,
         "ws10m_anomaly_ms": -0.058
       },
       {
         "month": "2021-03",
         "no2_anomaly_molec_cm2": -1218543978218421.2,
-        "weather_predicted_no2_anomaly_molec_cm2": -150474013932241.2,
+        "weather_predicted_no2_anomaly_molec_cm2": -142460114842286.44,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -142460114842286.44,
+        "no_step_counterfactual_ci95_half_molec_cm2": 197464084194931.78,
+        "weather_only_no2_anomaly_molec_cm2": -150474013932241.2,
         "residual_after_trend_and_weather_molec_cm2": -1076083863376134.8,
         "ws10m_anomaly_ms": -0.114
       },
       {
         "month": "2021-04",
         "no2_anomaly_molec_cm2": -149670477190635.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -476247254193776.25,
-        "residual_after_trend_and_weather_molec_cm2": 319259738703618.56,
+        "weather_predicted_no2_anomaly_molec_cm2": -468930215894253.5,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -468930215894253.5,
+        "no_step_counterfactual_ci95_half_molec_cm2": 324097933023538.56,
+        "weather_only_no2_anomaly_molec_cm2": -476247254193776.25,
+        "residual_after_trend_and_weather_molec_cm2": 319259738703618.5,
         "ws10m_anomaly_ms": -1.114
       },
       {
         "month": "2021-05",
         "no2_anomaly_molec_cm2": -468330717721161.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -406744988868662.1,
+        "weather_predicted_no2_anomaly_molec_cm2": -400124811359569.5,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -400124811359569.5,
+        "no_step_counterfactual_ci95_half_molec_cm2": 253480630538549.94,
+        "weather_only_no2_anomaly_molec_cm2": -406744988868662.1,
         "residual_after_trend_and_weather_molec_cm2": -68205906361592.0,
         "ws10m_anomaly_ms": 0.213
       },
       {
         "month": "2021-06",
         "no2_anomaly_molec_cm2": -222210770017109.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -96272638611982.28,
-        "residual_after_trend_and_weather_molec_cm2": -131861448123789.75,
+        "weather_predicted_no2_anomaly_molec_cm2": -90349321893319.77,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -90349321893319.77,
+        "no_step_counterfactual_ci95_half_molec_cm2": 255213004490267.94,
+        "weather_only_no2_anomaly_molec_cm2": -96272638611982.28,
+        "residual_after_trend_and_weather_molec_cm2": -131861448123789.73,
         "ws10m_anomaly_ms": 0.229
       },
       {
         "month": "2021-07",
         "no2_anomaly_molec_cm2": -233963903100263.75,
-        "weather_predicted_no2_anomaly_molec_cm2": 359377762988029.06,
+        "weather_predicted_no2_anomaly_molec_cm2": 364604218916259.6,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 364604218916259.6,
+        "no_step_counterfactual_ci95_half_molec_cm2": 313124199835621.56,
+        "weather_only_no2_anomaly_molec_cm2": 359377762988029.06,
         "residual_after_trend_and_weather_molec_cm2": -598568122016523.4,
         "ws10m_anomaly_ms": -1.017
       },
       {
         "month": "2021-08",
         "no2_anomaly_molec_cm2": -652086247641997.8,
-        "weather_predicted_no2_anomaly_molec_cm2": -308407926499749.6,
+        "weather_predicted_no2_anomaly_molec_cm2": -303878331361949.2,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -303878331361949.2,
+        "no_step_counterfactual_ci95_half_molec_cm2": 215319670521060.0,
+        "weather_only_no2_anomaly_molec_cm2": -308407926499749.6,
         "residual_after_trend_and_weather_molec_cm2": -348207916280048.56,
         "ws10m_anomaly_ms": -0.129
       },
       {
         "month": "2021-09",
         "no2_anomaly_molec_cm2": 186072947248901.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -570757220542188.6,
+        "weather_predicted_no2_anomaly_molec_cm2": -566924486194818.2,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -566924486194818.2,
+        "no_step_counterfactual_ci95_half_molec_cm2": 254537331849225.47,
+        "weather_only_no2_anomaly_molec_cm2": -570757220542188.6,
         "residual_after_trend_and_weather_molec_cm2": 752997433443719.2,
         "ws10m_anomaly_ms": -0.307
       },
       {
         "month": "2021-10",
         "no2_anomaly_molec_cm2": 226132303996111.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -111550352410442.0,
+        "weather_predicted_no2_anomaly_molec_cm2": -108414478853503.66,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -108414478853503.66,
+        "no_step_counterfactual_ci95_half_molec_cm2": 309810646554012.94,
+        "weather_only_no2_anomaly_molec_cm2": -111550352410442.0,
         "residual_after_trend_and_weather_molec_cm2": 334546782849614.6,
         "ws10m_anomaly_ms": -0.071
       },
       {
         "month": "2021-11",
         "no2_anomaly_molec_cm2": 1312448429049603.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -5168609529382.625,
+        "weather_predicted_no2_anomaly_molec_cm2": -2729596762874.4375,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -2729596762874.4375,
+        "no_step_counterfactual_ci95_half_molec_cm2": 246758287263673.9,
+        "weather_only_no2_anomaly_molec_cm2": -5168609529382.625,
         "residual_after_trend_and_weather_molec_cm2": 1315178025812478.0,
         "ws10m_anomaly_ms": 0.179
       },
       {
         "month": "2021-12",
         "no2_anomaly_molec_cm2": -526461736253744.75,
-        "weather_predicted_no2_anomaly_molec_cm2": -417977433519910.56,
-        "residual_after_trend_and_weather_molec_cm2": -110226454709912.31,
+        "weather_predicted_no2_anomaly_molec_cm2": -416235281543832.4,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -416235281543832.4,
+        "no_step_counterfactual_ci95_half_molec_cm2": 244819148665118.12,
+        "weather_only_no2_anomaly_molec_cm2": -417977433519910.56,
+        "residual_after_trend_and_weather_molec_cm2": -110226454709912.38,
         "ws10m_anomaly_ms": -0.195
       },
       {
         "month": "2022-01",
         "no2_anomaly_molec_cm2": -509490366808021.25,
-        "weather_predicted_no2_anomaly_molec_cm2": 241879359074576.22,
+        "weather_predicted_no2_anomaly_molec_cm2": 242924650260222.38,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 242924650260222.38,
+        "no_step_counterfactual_ci95_half_molec_cm2": 451772571194396.56,
+        "weather_only_no2_anomaly_molec_cm2": 241879359074576.22,
         "residual_after_trend_and_weather_molec_cm2": -752415017068243.6,
         "ws10m_anomaly_ms": 1.567
       },
       {
         "month": "2022-02",
         "no2_anomaly_molec_cm2": 106019625954891.75,
-        "weather_predicted_no2_anomaly_molec_cm2": 104205811829425.53,
-        "residual_after_trend_and_weather_molec_cm2": 1465383730250.2188,
+        "weather_predicted_no2_anomaly_molec_cm2": 104554242224641.55,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 104554242224641.55,
+        "no_step_counterfactual_ci95_half_molec_cm2": 268831692454879.56,
+        "weather_only_no2_anomaly_molec_cm2": 104205811829425.53,
+        "residual_after_trend_and_weather_molec_cm2": 1465383730250.2031,
         "ws10m_anomaly_ms": 0.236
       },
       {
         "month": "2022-03",
         "no2_anomaly_molec_cm2": -668648661088596.5,
-        "weather_predicted_no2_anomaly_molec_cm2": 55560208407819.69,
-        "residual_after_trend_and_weather_molec_cm2": -723860439101202.1,
+        "weather_predicted_no2_anomaly_molec_cm2": 55211778012605.56,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": 55211778012605.56,
+        "no_step_counterfactual_ci95_half_molec_cm2": 389572751231367.5,
+        "weather_only_no2_anomaly_molec_cm2": 55560208407819.69,
+        "residual_after_trend_and_weather_molec_cm2": -723860439101202.0,
         "ws10m_anomaly_ms": -0.097
       },
       {
         "month": "2022-04",
         "no2_anomaly_molec_cm2": -1070070877260635.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -465964669758492.25,
-        "residual_after_trend_and_weather_molec_cm2": -603060916316496.8,
+        "weather_predicted_no2_anomaly_molec_cm2": -467009960944138.4,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -467009960944138.4,
+        "no_step_counterfactual_ci95_half_molec_cm2": 359029536141306.3,
+        "weather_only_no2_anomaly_molec_cm2": -465964669758492.25,
+        "residual_after_trend_and_weather_molec_cm2": -603060916316496.6,
         "ws10m_anomaly_ms": 0.214
       },
       {
         "month": "2022-05",
         "no2_anomaly_molec_cm2": -567959123547959.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -366953192282659.75,
+        "weather_predicted_no2_anomaly_molec_cm2": -368695344258736.0,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -368695344258736.0,
+        "no_step_counterfactual_ci95_half_molec_cm2": 350314925484752.3,
+        "weather_only_no2_anomaly_molec_cm2": -366953192282659.75,
         "residual_after_trend_and_weather_molec_cm2": -199263779289223.0,
         "ws10m_anomaly_ms": 0.613
       },
       {
         "month": "2022-06",
         "no2_anomaly_molec_cm2": -296119378126200.5,
-        "weather_predicted_no2_anomaly_molec_cm2": -70863742111018.73,
+        "weather_predicted_no2_anomaly_molec_cm2": -73302754877525.05,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -73302754877525.05,
+        "no_step_counterfactual_ci95_half_molec_cm2": 228224597453073.12,
+        "weather_only_no2_anomaly_molec_cm2": -70863742111018.73,
         "residual_after_trend_and_weather_molec_cm2": -222816623248675.44,
         "ws10m_anomaly_ms": -0.267
       },
       {
         "month": "2022-07",
         "no2_anomaly_molec_cm2": -529024718397922.75,
-        "weather_predicted_no2_anomaly_molec_cm2": -50493262225648.53,
+        "weather_predicted_no2_anomaly_molec_cm2": -53629135782586.875,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -53629135782586.875,
+        "no_step_counterfactual_ci95_half_molec_cm2": 269005176481984.28,
+        "weather_only_no2_anomaly_molec_cm2": -50493262225648.53,
         "residual_after_trend_and_weather_molec_cm2": -475395582615335.9,
         "ws10m_anomaly_ms": 0.025
       },
       {
         "month": "2022-08",
         "no2_anomaly_molec_cm2": -827357681601237.0,
-        "weather_predicted_no2_anomaly_molec_cm2": -78582371526607.23,
+        "weather_predicted_no2_anomaly_molec_cm2": -82415105873975.62,
+        "no_step_counterfactual_no2_anomaly_molec_cm2": -82415105873975.62,
+        "no_step_counterfactual_ci95_half_molec_cm2": 371944832341707.7,
+        "weather_only_no2_anomaly_molec_cm2": -78582371526607.23,
         "residual_after_trend_and_weather_molec_cm2": -744942575727261.4,
         "ws10m_anomaly_ms": 0.632
       }
     ]
   },
   "regional_fire_water_earth_contrast": {
-    "interpretation": "Fire-weather mismatch: Western and Central interior benchmarks experienced stronger 2022 evaporative drying (higher VPD, lower surface soil moisture) yet saw vegetation-type fire detections fall markedly, whereas the Donbas-Kharkiv frontline corridor had near-baseline VPD/soil moisture while type0 detections rose +72.4% and type2 static industrial anomalies collapsed -83.3%.",
+    "interpretation": "Fire-weather context: Candidate Western and Central comparison boxes recorded stronger 2022 box-mean evaporative drying (higher VPD, lower surface soil moisture) alongside lower FIRMS type0 presumed vegetation detection rates, whereas the proposed Donbas-Kharkiv corridor showed smaller box-mean VPD/soil shifts while type0 detection rates changed +72.4% and type2 other static land hotspot detections changed -83.3%. Note: Coarse 0.5 deg regional box averages provide background context and do not rule out localized or sub-monthly drought.",
+    "candidate_role_qualification": "Regions labeled 'proposed study' and 'candidate reference' are analytical spatial comparisons only; no Ukrainian oblast is an un-impacted causal control (airspace closures, displacement, power disruptions, and missile strikes affected western and central regions as well).",
     "external_eu_weather_context_2015_2019_vs_2022": [
       {
         "region_id": "poland_krakow",
@@ -1364,6 +1635,302 @@
         "vpd_2022_kpa": 0.764
       }
     ],
+    "firms_cmr_matched_outage_sensitivity": {
+      "donbas_kharkiv_east": {
+        "type0_nh": {
+          "base_raw_count": 33311,
+          "target_2022_raw_count": 16714,
+          "pct_change_cmr_obs_days_box_area": 63.89,
+          "pct_change_matched_dates_169d": 104.3,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.4669,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.9539
+        },
+        "type0_all": {
+          "base_raw_count": 35607,
+          "target_2022_raw_count": 18072,
+          "pct_change_cmr_obs_days_box_area": 65.78,
+          "pct_change_matched_dates_169d": 107.53,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.497,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 1.0314
+        },
+        "type2_all": {
+          "base_raw_count": 16750,
+          "target_2022_raw_count": 859,
+          "pct_change_cmr_obs_days_box_area": -83.25,
+          "pct_change_matched_dates_169d": -82.91,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.2868,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.049
+        }
+      },
+      "south_steppe_belt": {
+        "type0_nh": {
+          "base_raw_count": 13232,
+          "target_2022_raw_count": 5334,
+          "pct_change_cmr_obs_days_box_area": 31.67,
+          "pct_change_matched_dates_169d": 59.53,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.1834,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.2926
+        },
+        "type0_all": {
+          "base_raw_count": 14928,
+          "target_2022_raw_count": 5946,
+          "pct_change_cmr_obs_days_box_area": 30.1,
+          "pct_change_matched_dates_169d": 57.94,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.2065,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.3262
+        },
+        "type2_all": {
+          "base_raw_count": 736,
+          "target_2022_raw_count": 92,
+          "pct_change_cmr_obs_days_box_area": -59.17,
+          "pct_change_matched_dates_169d": -58.18,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.0121,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.005
+        }
+      },
+      "kyiv_north_belt": {
+        "type0_nh": {
+          "base_raw_count": 25511,
+          "target_2022_raw_count": 6087,
+          "pct_change_cmr_obs_days_box_area": -22.07,
+          "pct_change_matched_dates_169d": -26.85,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.5604,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.4099
+        },
+        "type0_all": {
+          "base_raw_count": 26103,
+          "target_2022_raw_count": 6253,
+          "pct_change_cmr_obs_days_box_area": -21.76,
+          "pct_change_matched_dates_169d": -26.52,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.5731,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.4211
+        },
+        "type2_all": {
+          "base_raw_count": 63,
+          "target_2022_raw_count": 0,
+          "pct_change_cmr_obs_days_box_area": -100.0,
+          "pct_change_matched_dates_169d": -100.0,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.0012,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.0
+        }
+      },
+      "kyiv_no2_box": {
+        "type0_nh": {
+          "base_raw_count": 272,
+          "target_2022_raw_count": 162,
+          "pct_change_cmr_obs_days_box_area": 94.54,
+          "pct_change_matched_dates_169d": 84.09,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.2646,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.487
+        },
+        "type0_all": {
+          "base_raw_count": 280,
+          "target_2022_raw_count": 166,
+          "pct_change_cmr_obs_days_box_area": 93.64,
+          "pct_change_matched_dates_169d": 83.09,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.2726,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.499
+        },
+        "type2_all": {
+          "base_raw_count": 0,
+          "target_2022_raw_count": 0,
+          "pct_change_cmr_obs_days_box_area": null,
+          "pct_change_matched_dates_169d": null,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.0,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.0
+        }
+      },
+      "central_interior_cand": {
+        "type0_nh": {
+          "base_raw_count": 27983,
+          "target_2022_raw_count": 3816,
+          "pct_change_cmr_obs_days_box_area": -55.46,
+          "pct_change_matched_dates_169d": -50.63,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.2996,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.1479
+        },
+        "type0_all": {
+          "base_raw_count": 29318,
+          "target_2022_raw_count": 4004,
+          "pct_change_cmr_obs_days_box_area": -55.39,
+          "pct_change_matched_dates_169d": -50.44,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.3132,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.1552
+        },
+        "type2_all": {
+          "base_raw_count": 11916,
+          "target_2022_raw_count": 1106,
+          "pct_change_cmr_obs_days_box_area": -69.68,
+          "pct_change_matched_dates_169d": -69.11,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.1388,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.0429
+        }
+      },
+      "west_ukraine_cand": {
+        "type0_nh": {
+          "base_raw_count": 23501,
+          "target_2022_raw_count": 5915,
+          "pct_change_cmr_obs_days_box_area": -17.79,
+          "pct_change_matched_dates_169d": -21.44,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.3514,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.276
+        },
+        "type0_all": {
+          "base_raw_count": 24138,
+          "target_2022_raw_count": 6075,
+          "pct_change_cmr_obs_days_box_area": -17.8,
+          "pct_change_matched_dates_169d": -21.29,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.3602,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.2835
+        },
+        "type2_all": {
+          "base_raw_count": 1561,
+          "target_2022_raw_count": 272,
+          "pct_change_cmr_obs_days_box_area": -43.09,
+          "pct_change_matched_dates_169d": -39.73,
+          "rate_base_matched_ukr_land_per_1k_km2_day": 0.0211,
+          "rate_2022_matched_ukr_land_per_1k_km2_day": 0.0127
+        }
+      }
+    },
+    "spatial_mask_audit": {
+      "donbas_kharkiv_east": {
+        "box_bounds": [
+          46.8,
+          50.3,
+          35.5,
+          40.2
+        ],
+        "box_area_km2": 134618.6841303623,
+        "pct_box_inside_ukr_adm0": 77.02,
+        "estimated_ukr_land_km2": 103678.05,
+        "lattice_points_inside_ukr_adm0": 4,
+        "lattice_points_total": 9,
+        "firms_detections_in_box": 71722,
+        "firms_detections_inside_ukr_adm0": 71636,
+        "pct_firms_inside_ukr_adm0": 99.88,
+        "area_ratio_inflation_factor": 1.2984
+      },
+      "south_steppe_belt": {
+        "box_bounds": [
+          44.4,
+          47.5,
+          30.0,
+          35.5
+        ],
+        "box_area_km2": 146556.7900959597,
+        "pct_box_inside_ukr_adm0": 73.6,
+        "estimated_ukr_land_km2": 107858.68,
+        "lattice_points_inside_ukr_adm0": 5,
+        "lattice_points_total": 9,
+        "firms_detections_in_box": 21807,
+        "firms_detections_inside_ukr_adm0": 21791,
+        "pct_firms_inside_ukr_adm0": 99.93,
+        "area_ratio_inflation_factor": 1.3588
+      },
+      "kyiv_north_belt": {
+        "box_bounds": [
+          50.0,
+          52.4,
+          28.5,
+          34.5
+        ],
+        "box_area_km2": 111556.5098316104,
+        "pct_box_inside_ukr_adm0": 78.76,
+        "estimated_ukr_land_km2": 87862.28,
+        "lattice_points_inside_ukr_adm0": 6,
+        "lattice_points_total": 9,
+        "firms_detections_in_box": 32437,
+        "firms_detections_inside_ukr_adm0": 32403,
+        "pct_firms_inside_ukr_adm0": 99.9,
+        "area_ratio_inflation_factor": 1.2697
+      },
+      "kyiv_no2_box": {
+        "box_bounds": [
+          50.2,
+          50.7,
+          30.273,
+          30.773
+        ],
+        "box_area_km2": 1968.2472275761477,
+        "pct_box_inside_ukr_adm0": 100.0,
+        "estimated_ukr_land_km2": 1968.25,
+        "lattice_points_inside_ukr_adm0": 9,
+        "lattice_points_total": 9,
+        "firms_detections_in_box": 446,
+        "firms_detections_inside_ukr_adm0": 446,
+        "pct_firms_inside_ukr_adm0": 100.0,
+        "area_ratio_inflation_factor": 1.0
+      },
+      "central_interior_cand": {
+        "box_bounds": [
+          47.5,
+          50.0,
+          27.5,
+          35.5
+        ],
+        "box_area_km2": 163034.6602496204,
+        "pct_box_inside_ukr_adm0": 93.63,
+        "estimated_ukr_land_km2": 152641.31,
+        "lattice_points_inside_ukr_adm0": 8,
+        "lattice_points_total": 9,
+        "firms_detections_in_box": 51092,
+        "firms_detections_inside_ukr_adm0": 51046,
+        "pct_firms_inside_ukr_adm0": 99.91,
+        "area_ratio_inflation_factor": 1.0681
+      },
+      "west_ukraine_cand": {
+        "box_bounds": [
+          47.7,
+          51.8,
+          22.1,
+          27.5
+        ],
+        "box_area_km2": 176836.51860690696,
+        "pct_box_inside_ukr_adm0": 71.7,
+        "estimated_ukr_land_km2": 126792.44,
+        "lattice_points_inside_ukr_adm0": 3,
+        "lattice_points_total": 9,
+        "firms_detections_in_box": 32062,
+        "firms_detections_inside_ukr_adm0": 31910,
+        "pct_firms_inside_ukr_adm0": 99.53,
+        "area_ratio_inflation_factor": 1.3947
+      },
+      "poland_krakow": {
+        "box_bounds": [
+          49.8147,
+          50.3147,
+          19.695,
+          20.195
+        ],
+        "box_area_km2": 1984.2306091685516,
+        "pct_box_inside_ukr_adm0": 0.0,
+        "estimated_ukr_land_km2": 0.0,
+        "lattice_points_inside_ukr_adm0": 0,
+        "lattice_points_total": 9,
+        "firms_detections_in_box": 0,
+        "firms_detections_inside_ukr_adm0": 0,
+        "pct_firms_inside_ukr_adm0": null,
+        "area_ratio_inflation_factor": null
+      },
+      "czechia_prague": {
+        "box_bounds": [
+          49.8255,
+          50.3255,
+          14.1878,
+          14.6878
+        ],
+        "box_area_km2": 1983.7838122536225,
+        "pct_box_inside_ukr_adm0": 0.0,
+        "estimated_ukr_land_km2": 0.0,
+        "lattice_points_inside_ukr_adm0": 0,
+        "lattice_points_total": 9,
+        "firms_detections_in_box": 0,
+        "firms_detections_inside_ukr_adm0": 0,
+        "pct_firms_inside_ukr_adm0": null,
+        "area_ratio_inflation_factor": null
+      }
+    },
     "regions": [
       {
         "region_id": "donbas_kharkiv_east",
@@ -1384,7 +1951,7 @@
         "gwettop_2022": 0.522,
         "gwettop_diff": 0.0048,
         "prectotcorr_diff_mm_day": -0.31,
-        "pet_diff_mm_day": 0.117,
+        "pet_diff_mm_day": 0.131,
         "t2m_diff_c": -0.388,
         "ts_minus_t2m_diff_c": 0.071
       },
@@ -1407,7 +1974,7 @@
         "gwettop_2022": 0.691,
         "gwettop_diff": -0.0151,
         "prectotcorr_diff_mm_day": -0.298,
-        "pet_diff_mm_day": 0.061,
+        "pet_diff_mm_day": 0.079,
         "t2m_diff_c": -0.314,
         "ts_minus_t2m_diff_c": 0.156
       },
@@ -1430,7 +1997,7 @@
         "gwettop_2022": 0.5759,
         "gwettop_diff": 0.0267,
         "prectotcorr_diff_mm_day": 0.113,
-        "pet_diff_mm_day": -0.158,
+        "pet_diff_mm_day": -0.16,
         "t2m_diff_c": -0.785,
         "ts_minus_t2m_diff_c": 0.011
       },
@@ -1453,7 +2020,7 @@
         "gwettop_2022": 0.5131,
         "gwettop_diff": -0.008,
         "prectotcorr_diff_mm_day": -0.164,
-        "pet_diff_mm_day": -0.082,
+        "pet_diff_mm_day": -0.086,
         "t2m_diff_c": -0.726,
         "ts_minus_t2m_diff_c": 0.078
       },
@@ -1476,7 +2043,7 @@
         "gwettop_2022": 0.4874,
         "gwettop_diff": -0.0278,
         "prectotcorr_diff_mm_day": -0.305,
-        "pet_diff_mm_day": 0.152,
+        "pet_diff_mm_day": 0.142,
         "t2m_diff_c": -0.284,
         "ts_minus_t2m_diff_c": 0.181
       },
@@ -1499,7 +2066,7 @@
         "gwettop_2022": 0.5243,
         "gwettop_diff": -0.0432,
         "prectotcorr_diff_mm_day": -0.616,
-        "pet_diff_mm_day": 0.328,
+        "pet_diff_mm_day": 0.304,
         "t2m_diff_c": 0.111,
         "ts_minus_t2m_diff_c": 0.146
       }
@@ -1674,7 +2241,7 @@
         "hamed_rao_anomaly_p_value": 0.571971,
         "hamed_rao_vif": 1.168,
         "ar1_bc": 0.078,
-        "seasonal_divergence_p": 0.994869,
+        "seasonal_divergence_p": 0.99487,
         "bh_fdr_q_value": 0.884766,
         "by_fdr_q_value": 1.0,
         "bh_fdr_significant_05": false
@@ -1686,14 +2253,14 @@
         "units": "mm/day",
         "n_months": 96,
         "span": "2015-01..2022-12",
-        "hirsch_slack_sen_slope_per_decade": -0.22084,
-        "ci95_low_per_decade": -0.87215,
-        "ci95_high_per_decade": 0.1843,
-        "seasonal_p_value": 0.216391,
-        "hamed_rao_anomaly_p_value": 0.028582,
-        "hamed_rao_vif": 2.128,
-        "ar1_bc": 0.364,
-        "seasonal_divergence_p": 0.727377,
+        "hirsch_slack_sen_slope_per_decade": -0.23313,
+        "ci95_low_per_decade": -0.9648,
+        "ci95_high_per_decade": 0.2213,
+        "seasonal_p_value": 0.307313,
+        "hamed_rao_anomaly_p_value": 0.056265,
+        "hamed_rao_vif": 2.272,
+        "ar1_bc": 0.393,
+        "seasonal_divergence_p": 0.794184,
         "bh_fdr_q_value": 0.614735,
         "by_fdr_q_value": 1.0,
         "bh_fdr_significant_05": false
@@ -1769,7 +2336,7 @@
         "hamed_rao_anomaly_p_value": 0.064986,
         "hamed_rao_vif": 2.728,
         "ar1_bc": 0.469,
-        "seasonal_divergence_p": 0.890496,
+        "seasonal_divergence_p": 0.89049,
         "bh_fdr_q_value": 0.614735,
         "by_fdr_q_value": 1.0,
         "bh_fdr_significant_05": false
@@ -1800,15 +2367,15 @@
         "units": "mm/day",
         "n_months": 96,
         "span": "2015-01..2022-12",
-        "hirsch_slack_sen_slope_per_decade": 0.67169,
-        "ci95_low_per_decade": -1.08703,
-        "ci95_high_per_decade": 2.51102,
-        "seasonal_p_value": 0.520565,
-        "hamed_rao_anomaly_p_value": 0.179568,
-        "hamed_rao_vif": 1.396,
-        "ar1_bc": 0.157,
-        "seasonal_divergence_p": 0.993185,
-        "bh_fdr_q_value": 0.684205,
+        "hirsch_slack_sen_slope_per_decade": 0.62146,
+        "ci95_low_per_decade": -1.12647,
+        "ci95_high_per_decade": 2.54625,
+        "seasonal_p_value": 0.604087,
+        "hamed_rao_anomaly_p_value": 0.197462,
+        "hamed_rao_vif": 1.395,
+        "ar1_bc": 0.164,
+        "seasonal_divergence_p": 0.988196,
+        "bh_fdr_q_value": 0.753366,
         "by_fdr_q_value": 1.0,
         "bh_fdr_significant_05": false
       },
@@ -1922,7 +2489,7 @@
         "hamed_rao_vif": 2.276,
         "ar1_bc": 0.394,
         "seasonal_divergence_p": 0.996947,
-        "bh_fdr_q_value": 0.684205,
+        "bh_fdr_q_value": 0.726968,
         "by_fdr_q_value": 1.0,
         "bh_fdr_significant_05": false
       }
@@ -2057,18 +2624,18 @@
     },
     "weather_no2_sensitivity": {
       "png_path": "reports/kyiv_weather_no2_sensitivity.png",
-      "title": "Kyiv NO2 Wind/Cloud Stratification and Weather-Controlled Box-Tiao Step"
+      "title": "Kyiv NO2 Wind/Cloud Stratification and Counterfactual Box-Tiao Step"
     },
     "fire_drought_contrast": {
       "png_path": "reports/ukraine_fire_drought_contrast.png",
-      "title": "Ukraine Regional Fire-vs-VPD Drought Contrast and Industrial Collapse (2022)"
+      "title": "Ukraine Regional Fire-Weather vs. VIIRS type0/type2 Detection Contrasts (2022)"
     }
   },
   "limitations": [
     "Only one post-invasion spring-summer war season (Mar-Aug 2022) is present; formal before/after seasonal inference remains not_assessed.",
-    "April 2022 OMI NO2 contains only 8/30 valid days (26.67% coverage); sensitivity checks excluding 2022-04 are reported explicitly.",
-    "FIRMS VIIRS S-NPP has known orbit gaps in 2022-07-27..2022-08-10 and 2022-03-05; rates normalize by observed satellite days.",
-    "NASA POWER MERRA-2 resolution (0.5 deg x 0.625 deg) captures synoptic/regional hydrology and meteorology rather than urban street microclimates.",
+    "April 2022 OMI NO2 contains only 8/30 valid days (26.67% coverage); sensitivity checks excluding 2022-04 and restricting to Mar-Aug are reported explicitly.",
+    "FIRMS VIIRS S-NPP has a verified 15-day CMR VNP14IMG orbit/data outage in 2022-07-27..2022-08-10 (0 granules), whereas 2022-03-05 had 8 VNP14IMG granules over Ukraine (valid zero-detection day). Identical calendar-date matched rates excluding Jul 27-Aug 10 across 2019-2022 are reported in spatial/CMR sensitivity metadata.",
+    "NASA POWER MERRA-2 (0.5 deg x 0.625 deg) and CERES SYN1deg (1.0 deg) capture synoptic meteorology over full rectangular bounding boxes; border and coastal boxes include out-of-country/Black Sea grid points whereas FIRMS country exports clip to Ukraine borders.",
     "External Krakow/Prague boxes supply meteorological context only (NO2 comparability requires matched OMI/TROPOMI retrievals)."
   ]
 }

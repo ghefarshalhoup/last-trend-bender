@@ -21,6 +21,7 @@ from src.stats_rigor import (
     fit_box_tiao_step_intervention,
     hamed_rao_modified_mk,
     hirsch_slack_seasonal_mk_and_slope,
+    kendall_tau_b_bivariate,
     partial_trend_controlling_covariate,
     spherical_area_weighted_mean,
     structural_hinge_breakpoint_analysis,
@@ -183,6 +184,102 @@ class StatsRigorTests(unittest.TestCase):
         self.assertTrue(bp.detected)
         self.assertTrue(bp.regime_reversal)
         self.assertLess(bp.davies_p_value, 0.01)
+
+    def test_scale_invariance_across_sixteen_orders_of_magnitude(self) -> None:
+        rng = np.random.default_rng(77)
+        t = [2015.0 + i / 12.0 for i in range(48)]
+        yrs = [2015 + i // 12 for i in range(48)]
+        mos = [(i % 12) + 1 for i in range(48)]
+        x = [0.2 * (ti - 2015.0) + float(rng.normal(0.0, 0.4)) for ti in t]
+        cov = rng.normal(0.0, 1.0, size=48).tolist()
+        y = [x[i] + 0.3 * cov[i] for i in range(48)]
+
+        ref_tau = kendall_tau_b_bivariate(x, y)
+        ref_hr = hamed_rao_modified_mk(t, x)
+        ref_hs = hirsch_slack_seasonal_mk_and_slope(yrs, mos, x)
+        ref_bt = fit_box_tiao_step_intervention(t, x, intervention_year=2018.0, covariates={"c": cov})
+        ref_pt = partial_trend_controlling_covariate(t, x, cov)
+        ref_bp = structural_hinge_breakpoint_analysis(t, x, min_segment=6)
+        _, ref_z, _, _, ref_act = compute_baseline_climatology_anomalies(yrs, mos, x, baseline_start=2015, baseline_end=2017)
+
+        for scale in (1e-8, 1e8):
+            xs = [v * scale for v in x]
+            ys = [v * scale for v in y]
+            cs = [v * scale for v in cov]
+            self.assertAlmostEqual(kendall_tau_b_bivariate(xs, ys)[0], ref_tau[0], places=12)
+            self.assertAlmostEqual(kendall_tau_b_bivariate(xs, ys)[1], ref_tau[1], places=12)
+            self.assertAlmostEqual(hamed_rao_modified_mk(t, xs)[5], ref_hr[5], places=10)
+            hs = hirsch_slack_seasonal_mk_and_slope(yrs, mos, xs)
+            self.assertAlmostEqual(hs["p_value_seasonal"], ref_hs["p_value_seasonal"], places=10)
+            self.assertAlmostEqual(hs["van_belle_hughes"]["chi2_homogeneity"], ref_hs["van_belle_hughes"]["chi2_homogeneity"], places=6)
+            bt = fit_box_tiao_step_intervention(t, xs, intervention_year=2018.0, covariates={"c": cs})
+            self.assertAlmostEqual(bt["p_value_ar1"], ref_bt["p_value_ar1"], places=5)
+            self.assertAlmostEqual(bt["delta_step"] / scale, ref_bt["delta_step"], places=6)
+            pt = partial_trend_controlling_covariate(t, xs, cs)
+            self.assertAlmostEqual(pt[1], ref_pt[1], places=10)
+            bp = structural_hinge_breakpoint_analysis(t, xs, min_segment=6)
+            self.assertAlmostEqual(bp.f_statistic, ref_bp.f_statistic, places=3)
+            _, zs, _, _, act = compute_baseline_climatology_anomalies(yrs, mos, xs, baseline_start=2015, baseline_end=2017)
+            self.assertEqual(act, ref_act)
+            self.assertAlmostEqual(zs[0], ref_z[0], places=6)
+
+    def test_baseline_climatology_withholds_missing_baseline_and_fao56_uses_023_albedo(self) -> None:
+        # 2019-2022 series has only 1 year in 2015-2019 -> min_baseline_years=2 must withhold!
+        yrs = [y for y in range(2019, 2023) for _ in (3, 4)]
+        mos = [m for _ in range(2019, 2023) for m in (3, 4)]
+        vals = [10.0, 20.0, 12.0, 22.0, 11.0, 21.0, 30.0, 40.0]
+        anoms, zs, clim_m, clim_s, _ = compute_baseline_climatology_anomalies(
+            yrs, mos, vals, baseline_start=2015, baseline_end=2019, min_baseline_years=2
+        )
+        self.assertTrue(all(math.isnan(clim_m[m]) for m in range(1, 13)))
+        self.assertTrue(all(math.isnan(clim_s[m]) for m in range(1, 13)))
+        self.assertTrue(all(math.isnan(a) for a in anoms))
+        self.assertTrue(all(math.isnan(z) for z in zs))
+
+        # FAO-56 ET0 must enforce reference grass albedo 0.23 and Eq. 37 R_so by default
+        n = 6
+        base = compute_fao56_vpd_and_pet_series(
+            [18.0] * n, [24.0] * n, [12.0] * n, [60.0] * n, [18.0] * n, [2.5] * n,
+            lat_deg=50.45, elevation_m=179.0, months=[3, 4, 5, 6, 7, 8],
+        )
+        with_ext = compute_fao56_vpd_and_pet_series(
+            [18.0] * n, [24.0] * n, [12.0] * n, [60.0] * n, [18.0] * n, [2.5] * n,
+            lat_deg=50.45, elevation_m=179.0, months=[3, 4, 5, 6, 7, 8],
+            clrsky_sw_dwn_mj_m2_day=[28.0] * n, albedo_series=[0.05] * n,
+        )
+        self.assertEqual(base["pet_mm_day"], with_ext["pet_mm_day"])
+
+    def test_reference_benchmark_matches_scipy_and_documents_ulp_sensitivity(self) -> None:
+        from pathlib import Path
+        import json
+        from src.reference_benchmark import run_benchmark
+
+        bench_path = Path(__file__).resolve().parents[1] / "reports" / "stats_reference_benchmark.json"
+        self.assertTrue(bench_path.is_file(), f"Missing {bench_path}")
+        committed = json.loads(bench_path.read_text(encoding="utf-8"))
+        b = committed["benchmarks"]
+        self.assertLess(b["kendall_tau_b_vs_scipy_max_abs_diff"], 1e-4)
+        self.assertLess(b["kendall_tau_b_scale_invariance_1e8_max_diff"], 1e-12)
+        self.assertLess(b["theil_sen_slope_vs_scipy_max_abs_diff_per_yr"], 1e-12)
+        self.assertLess(b["bh_fdr_vs_scipy_max_abs_diff"], 1e-12)
+        self.assertLess(b["by_fdr_vs_scipy_max_abs_diff"], 1e-12)
+        self.assertLess(b["student_t_two_sided_p_max_abs_diff"], 1e-12)
+        self.assertLess(b["box_tiao_step_vs_ols_max_abs_diff"], 1e-11)
+        # Re-running live against temporary path produces matching benchmark values within numerical tolerances
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fresh = run_benchmark(out_json=Path(tmpdir) / "bench.json")
+            fb = fresh["benchmarks"]
+            cb = committed["benchmarks"]
+            self.assertEqual(set(fb.keys()), set(cb.keys()))
+            for key, val in fb.items():
+                if isinstance(val, dict):
+                    self.assertEqual(set(val.keys()), set(cb[key].keys()))
+                    for subk, subv in val.items():
+                        self.assertAlmostEqual(float(subv), float(cb[key][subk]), delta=1e-6)
+                else:
+                    tol = 1e-4 if "kendall_tau_b_vs_scipy" in key else 1e-9
+                    self.assertAlmostEqual(float(val), float(cb[key]), delta=tol)
 
 
 if __name__ == "__main__":
