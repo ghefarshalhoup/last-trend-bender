@@ -1,0 +1,44 @@
+.app { padding: var(--space-4); min-height: 100dvh; display: flex; }
+.frame { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.header {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--space-3) var(--space-6); padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-line-strong);
+}
+.main { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr); min-height: 0; }
+.mapColumn { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+
+/* The map area is a size container; the atlas frame inside it keeps the viewBox's 16:10 shape. */
+.mapArea { container-type: size; width: 100%; aspect-ratio: 16 / 10; display: grid; place-items: center; background: #b9ad97; }
+.atlas { position: relative; width: min(100cqw, 160cqh); aspect-ratio: 16 / 10; }
+.svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.overlays { display: grid; gap: var(--space-3); padding: var(--space-3) var(--space-4); }
+.guide { display: grid; gap: var(--space-2); max-width: 26rem; }
+.keyCard, .errorCard {
+  padding: var(--space-3); background: var(--color-surface); border: 1.5px solid var(--color-line-strong);
+  border-radius: var(--radius-md);
+}
+.keyCard { margin-bottom: var(--space-5); }
+.errorCard { background: var(--status-error-bg); color: var(--status-error-ink); border-color: var(--status-error-line); font-size: var(--text-sm); display: grid; gap: var(--space-2); }
+.button {
+  min-height: 40px; padding: 0 var(--space-4); justify-self: start; cursor: pointer; font: inherit; font-weight: 600;
+  background: var(--color-parchment); color: var(--color-ink); border: 1.5px solid var(--color-gilt); border-radius: var(--radius-md);
+}
+.evidence { background: var(--color-parchment); padding: var(--space-5); min-width: 0; border-top: 1px solid var(--color-line-strong); }
+.evidenceTitle { font-family: var(--font-display); font-size: var(--text-lg); margin: 0 0 var(--space-4); }
+.foot { margin: 0; padding: var(--space-2) var(--space-5); font-size: var(--text-xs); color: var(--color-ink-muted); border-top: 1px solid var(--color-line-strong); }
+
+@media (min-width: 62rem) {
+  .app { height: 100dvh; }
+  .frame { min-height: 0; }
+  .main[data-evidence='open'] { grid-template-columns: minmax(0, 1fr) 25rem; }
+  .mapArea { flex: 1; aspect-ratio: auto; min-height: 0; }
+  .evidence { border-top: 0; border-left: 1px solid var(--color-line-strong); overflow-y: auto; }
+}
+/* On wide screens the guide sits over the map's lower-left corner, which the frame keeps clear of Ukraine. */
+@media (min-width: 80rem) {
+  .overlays { position: absolute; left: 0; bottom: 0; pointer-events: none; }
+  .overlays > * { pointer-events: auto; }
+  .guide { max-width: 17.5rem; font-size: var(--text-sm); }
+}
