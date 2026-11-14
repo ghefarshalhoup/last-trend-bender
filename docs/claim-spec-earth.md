@@ -19,7 +19,7 @@ All Earth metrics derive from NASA POWER (`v2.10.0`, **MERRA-2 `0.5° × 0.625°
 
 ## 3. Adverse Impact Definition vs. What Can Actually Be Claimed
 - **What constitutes an adverse conflict Earth impact:** Artillery cratering, trenching, military vehicle soil compaction, unexploded ordnance (UXO)/landmine contamination, conflict burn scars, crop abandonment/unharvested field loss, and heavy-metal/propellant topsoil contamination.
-- **What our dataset supports:** Diagnosing whether background land wetness (`GWETTOP`/`GWETROOT`) explains the spatial mismatch in active fire detections (`VIIRS type0`). In `Mar–Aug 2022` vs `2019–2021`, `west_ukraine_cand` (`ΔGWETTOP = -0.0432`, `ΔVPD = +0.137 kPa`) and `central_interior_cand` (`-0.0278`) experienced clearer topsoil drying than frontline `donbas_kharkiv_east` (`+0.0048`, mild surface wetting), directly refuting topsoil desiccation as the sole explanation for Donbas–Kharkiv's `type0` surge.
+- **What our dataset supports:** Comparing coarse regional reanalysis wetness (`GWETTOP`/`GWETROOT`) alongside active fire detection shifts (`VIIRS type0`). In `Mar–Aug 2022` vs `2019–2021`, `west_ukraine_cand` (`ΔGWETTOP = -0.0432`, `ΔVPD = +0.137 kPa`) and `central_interior_cand` (`-0.0278`) showed larger box-mean topsoil drying than frontline `donbas_kharkiv_east` (`+0.0048`), indicating that `type0` shifts across these large boxes do not follow a simple uniform topsoil-drying gradient (though coarse `~50 km` box averages do not establish absence of localized or short-term drought).
 - **What is NOT claimed:** We make **no** claim of war-caused land degradation, soil pollution, or crop loss from MERRA-2/CERES metrics.
 
 ## 4. Documented Conflict Mechanism vs. Evidence Gap

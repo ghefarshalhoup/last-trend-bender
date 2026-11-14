@@ -34,7 +34,7 @@ This document responds directly to all methodological, reproducibility, provenan
 - **Single-Command Clean Regeneration (Offline-Reproducible with `data/raw/` or `data/frozen/`):**
   ```bash
   pip install -r requirements.txt
-  python -m src.four_elements_analysis && python -m src.reference_benchmark
+  python -m src.audit_exports && python -m src.four_elements_analysis && python -m src.reference_benchmark
   python -m unittest discover -s tests -p 'test_*.py'
   ```
 - **Why CSV Re-ingestion Showed 0.0001 / Two Hamed–Rao Differences (`0.573962 vs 0.571971`, `0.768293 vs 0.741607`):**
