@@ -1835,6 +1835,120 @@
       "any_flagged_month": true,
       "sampling_sensitivity_review_required": true,
       "note": "Equal 1/6 monthly weighting sensitivity check over pandemic-era 2019–2021 baseline."
+    },
+    "context_2021_valid_day": {
+      "comparison_id": "context_2021_valid_day",
+      "label": "Prior-year context: March–August 2022 vs. 2021 alone (valid-day weighted)",
+      "weighting": "valid_day_annual_equal_weight",
+      "baseline_years_requested": [
+        2021
+      ],
+      "available_baseline_years": [
+        2021
+      ],
+      "unavailable_baseline_years": [],
+      "target_year": 2022,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "baseline_mean_molec_cm2": 1819489392893596.8,
+      "baseline_annual_min_molec_cm2": 1819489392893596.8,
+      "baseline_annual_max_molec_cm2": 1819489392893596.8,
+      "target_mean_molec_cm2": 1698443510624528.2,
+      "absolute_change_molec_cm2": -121045882269068.5,
+      "pct_change": -6.6527,
+      "pct_change_status": "computed",
+      "baseline_valid_days": 114,
+      "baseline_calendar_days": 184,
+      "target_valid_days": 106,
+      "target_calendar_days": 184,
+      "flagged_months_in_baseline": [
+        {
+          "month": "2021-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839
+        },
+        {
+          "month": "2021-04",
+          "valid_days": 11,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3667
+        }
+      ],
+      "flagged_months_in_target": [
+        {
+          "month": "2022-04",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667
+        }
+      ],
+      "any_flagged_month": true,
+      "sampling_sensitivity_review_required": true,
+      "note": "Documents pre-war low 2021 levels (year-over-year contrast is much smaller than multi-year baseline drops)."
+    },
+    "context_2021_equal_month": {
+      "comparison_id": "context_2021_equal_month",
+      "label": "Prior-year context: March–August 2022 vs. 2021 alone (equal-month weighted)",
+      "weighting": "equal_month_annual_equal_weight",
+      "baseline_years_requested": [
+        2021
+      ],
+      "available_baseline_years": [
+        2021
+      ],
+      "unavailable_baseline_years": [],
+      "target_year": 2022,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "baseline_mean_molec_cm2": 1896901450245643.2,
+      "baseline_annual_min_molec_cm2": 1896901450245643.2,
+      "baseline_annual_max_molec_cm2": 1896901450245643.2,
+      "target_mean_molec_cm2": 1727839059223483.0,
+      "absolute_change_molec_cm2": -169062391022160.25,
+      "pct_change": -8.9126,
+      "pct_change_status": "computed",
+      "baseline_valid_days": 114,
+      "baseline_calendar_days": 184,
+      "target_valid_days": 106,
+      "target_calendar_days": 184,
+      "flagged_months_in_baseline": [
+        {
+          "month": "2021-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839
+        },
+        {
+          "month": "2021-04",
+          "valid_days": 11,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3667
+        }
+      ],
+      "flagged_months_in_target": [
+        {
+          "month": "2022-04",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667
+        }
+      ],
+      "any_flagged_month": true,
+      "sampling_sensitivity_review_required": true,
+      "note": "Equal 1/6 monthly weighting companion for the March–August 2022 vs. 2021 prior-year comparison."
     }
   },
   "coverage_sensitivity": {
@@ -2810,8 +2924,8 @@
     "Classified as related_comparison to Ialongo et al. (2023) OMI component; coarser 0.25-degree OMNO2d grid and unresolved paper mask/screening details preclude claiming exact replication.",
     "Tropospheric vertical column NO2 (molecules/cm^2) measures lower-atmosphere column density, not surface air-quality concentration or personal exposure.",
     "April 2022 contains only 8 valid observations out of 30 days (26.67% coverage, below the 50% proposed project threshold), requiring explicit coverage sensitivity checks.",
-    "Observed March–August NO2 declined prior to February 2022 (notably 2020–2021), so raw 2022 drops cannot be attributed causally to war without comparator cities and weather covariates.",
-    "No reference/comparator regions (e.g., Krakow, Prague, or lower-conflict Ukrainian regions) are yet present in this single-region export."
+    "Observed March–August NO2 was already low in 2020 (2.115e15) and especially 2021 (1.819e15, leaving 2022 only -6.65% below 2021 under valid-day weighting), so raw 2022 drops cannot be attributed causally to war without comparator areas and weather covariates.",
+    "No validated reference/comparator regions are yet included in this single-region export; candidate reference areas still need to be formally selected, justified in docs/study-spec.md, and checked for pre-2022 trajectory alignment."
   ],
   "reproducibility": {
     "regenerate_all_command": "python -m src.air_analysis",

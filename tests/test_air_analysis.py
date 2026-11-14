@@ -390,6 +390,8 @@ class TestAirAnalysis(unittest.TestCase):
 
             self.assertEqual(air_payload["status"]["overall"], "validated_descriptive_with_limitations")
             self.assertEqual(air_payload["status"]["paper_replication_classification"], "related_comparison")
+            self.assertIn("context_2021_valid_day", air_payload["comparisons"])
+            self.assertIn("context_2021_equal_month", air_payload["comparisons"])
             self.assertEqual(air_payload["statistics"]["before_after_seasonal_inference"]["status"], "not_assessed")
             self.assertEqual(air_payload["charts"]["matched_months"]["flagged_target_months"], ["Apr"])
             self.assertTrue(air_payload["quality_rules"]["negative_valid_values_preserved"])

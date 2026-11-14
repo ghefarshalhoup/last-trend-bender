@@ -1,6 +1,7 @@
 # Air / Tropospheric $\text{NO}_2$ Findings — Kyiv (`OMNO2d v004`, 2015–2022)
 
 **Status:** `validated_descriptive_with_limitations` | **Paper alignment:** `related_comparison` ([Ialongo et al., 2023](https://www.nature.com/articles/s41598-023-42118-w))  
+**Canonical project scope:** Air = Tropospheric $\text{NO}_2$ (`OMNO2d v004`, current phase); Fire = hotspot activity (`VIIRS S-NPP`, next phase)  
 **Machine-readable export:** `reports/air_no2_results.json` ([schema](air-results-schema.md))  
 **Regenerate all outputs:** `python -m src.air_analysis`
 
@@ -12,6 +13,7 @@
 - **Headline March–August 2022 difference (study-spec primary weighting — equal weight across annual valid-day seasonal means):**
   - **vs. Primary Baseline (`2015–2019` March–August):** Decreased from **`2.358 × 10¹⁵`** to **`1.698 × 10¹⁵` molecules/cm²** (**`-6.592 × 10¹⁴` molecules/cm²**, **`-27.96%`**).
   - **vs. Sensitivity Baseline (`2019–2021` March–August, includes pandemic years):** Decreased from **`2.132 × 10¹⁵`** to **`1.698 × 10¹⁵` molecules/cm²** (**`-4.337 × 10¹⁴` molecules/cm²**, **`-20.34%`**).
+  - **vs. Prior Year (`2021` March–August context):** Decreased from **`1.819 × 10¹⁵`** to **`1.698 × 10¹⁵` molecules/cm²** (**`-1.210 × 10¹⁴` molecules/cm²**, **`-6.65%`** valid-day; **`-8.91%`** equal-month), showing that Kyiv March–August $\text{NO}_2$ had already dropped substantially prior to the February 2022 invasion.
 
 ### Annual Progression & Matched Calendar Months (March–August)
 
@@ -42,11 +44,12 @@ Matched monthly comparisons (`reports/no2_matched_months.png`, `reports/no2_matc
 |---|---|---:|---:|
 | **Primary weighting (`valid-day`, annual equal weight)** | Mar–Aug | **-27.96%** | **-20.34%** |
 | **Equal-month weighting (`1/6` per month)** | Mar–Aug | -27.64% | -21.68% |
+| **Prior-year year-over-year context (`2022` vs. `2021` alone)** | Mar–Aug | — | **-6.65%** (`valid-day`) / -8.91% (`eq-mo`) |
 | **Excluding `2022`-flagged `April` (`8/30d`) identically across years** | Mar, May–Aug | -24.96% (`valid-day`) / -25.27% (`eq-mo`) | -18.03% (`valid-day`) / -18.71% (`eq-mo`) |
 | **Strict intersection (`>=50%` coverage in every compared year)** | `Jul–Aug` (`15–19`), `Jun–Aug` (`19–21`) | -31.91% (`valid-day`) / -30.25% (`eq-mo`) | -23.06% (`valid-day`) / -22.04% (`eq-mo`) |
 
 Key takeaways (`reports/no2_seasonal_comparison.png`):
-1. **Baseline choice shifts magnitude by ~7.6 percentage points** (`-27.96%` vs. `-20.34%`) because `2020` (`2.115 × 10¹⁵`) and especially `2021` (`1.819 × 10¹⁵`) were already lower than `2015–2019` (`2.358 × 10¹⁵`).
+1. **Baseline choice shifts magnitude sharply (~7.6 percentage points across multi-year baselines, and >21 points vs. 2021 alone):** `-27.96%` (`2015–2019`) vs. `-20.34%` (`2019–2021`) vs. **`-6.65%`** (`2021` alone), because `2020` (`2.115 × 10¹⁵`) and especially `2021` (`1.819 × 10¹⁵`) were already much lower than `2015–2019` (`2.358 × 10¹⁵`). That makes pre-war trend context, validated reference regions, and weather checks essential.
 2. **Weighting (`valid-day` vs. `equal-month`) shifts results modestly (~0.3–1.3 percentage points).**
 3. **April 2022 (`8/30d`, `<50%` proposed project flag) accounts for ~2.3–3.0 percentage points of the raw headline drop** — excluding April lowers the reduction to `-24.96%` (`2015–2019`) and `-18.03%` (`2019–2021`). Yet when retaining only months meeting `>=50%` coverage in *every* year (`Jul–Aug` for `2015–2019`, `Jun–Aug` for `2019–2021`), well-sampled mid/late-summer reductions remain `-31.91%` and `-23.06%`.
 
@@ -74,6 +77,7 @@ Key takeaways (`reports/no2_seasonal_comparison.png`):
   - **No war causation established:** Temporal drops in one unadjusted region cannot separate armed-conflict disruption from synoptic meteorology, boundary-layer dispersion, cloud-screening selection, or the pre-existing `2020–2021` decline (`2.115 -> 1.819 -> 1.698 × 10¹⁵`).
   - **Not street-level air quality:** Column $\text{NO}_2$ ($\text{molecules/cm}^2$) is not ground-level exposure.
 - **Exact additional data needed next:**
-  1. **Comparator / reference city Giovanni exports (`OMNO2d v004`, identical `2015-03-01`–`2022-08-31` dates and `±0.25°` box size):** e.g., **Kraków, Poland** (`49.8147–50.3147°N, 19.6950–20.1950°E`) and **Prague, Czechia** (`49.8255–50.3255°N, 14.1878–14.6878°E`) — plus any lower-conflict western Ukrainian comparator or Donetsk / Dnipro–Zaporizhzhia study boxes if extending coverage. Must test pre-2022 trajectory alignment before treating any comparator as a counterfactual control.
-  2. **Meteorological covariates (daily wind speed, cloud fraction, boundary-layer height/temperature)** — e.g., NASA MERRA-2 / NASA POWER or ERA5 matched to `2015-03`–`2022-08` — to assess weather confounding and wind sensitivity.
+  1. **Validated reference / comparator regions (`OMNO2d v004`, identical `2015-03-01`–`2022-08-31` dates):** Candidate comparison areas (e.g., lower-conflict Ukrainian regions or candidate European cities, which remain unvalidated candidates until formally justified in `docs/study-spec.md`) must be selected, documented, and checked for pre-2022 trajectory alignment before obtaining matching Giovanni exports or treating any area as a counterfactual control.
+  2. **Meteorological covariates (daily wind speed, cloud fraction, boundary-layer height/temperature)** — e.g., NASA MERRA-2 / NASA POWER or ERA5 matched to `2015-03`–`2022-08` — to assess weather confounding and wind sensitivity (distinct from any separate weather-only Avatar scope).
   3. **Level-2 Sentinel-5P TROPOMI (`2018–2022`, Copernicus Data Space)** only if the team chooses to pursue fine-scale `4-km` urban replication.
+  4. **Fire phase next:** NASA FIRMS VIIRS S-NPP active-fire exports for Ukraine (`March–August 2019–2022`) after Air Phase 2 review.
