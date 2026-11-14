@@ -16,6 +16,7 @@ A NASA Earth-observation hackathon project investigating how armed conflicts cha
 - `src/` — reusable Python analysis and processing scripts
 - `notebooks/` — exploratory analysis and reproducible figures
 - `docs/` — study specification, methods, sources, and findings
+- `backend/` — read-only FastAPI service that serves validated results to the frontend
 
 ## First milestone
 Reproduce one credible NO₂ comparison using matched calendar months before/during the 2022 invasion, with dataset provenance, then evaluate reference-region differences.
@@ -27,6 +28,13 @@ python -m venv .venv
 # On macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+## Backend API
+```bash
+pip install -r backend/requirements-dev.txt
+uvicorn backend.main:app --reload --port 8000
+```
+See [docs/backend-api.md](docs/backend-api.md) for configuration, endpoints and the frontend handoff.
 
 Data sources: [NASA Giovanni](https://giovanni.gsfc.nasa.gov/) and [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/).
 Reference study: [Ialongo et al. (2023), Scientific Reports](https://www.nature.com/articles/s41598-023-42118-w).
