@@ -7,7 +7,14 @@ const ELEMENT_META = {
   earth: { label: "Earth", color: "#7c5812" },
 };
 
-const INTERVAL_SCALE_METRICS = new Set(["t2m", "ts_minus_t2m_c"]);
+const INTERVAL_SCALE_FALLBACK = new Set([
+  "t2m",
+  "t2m_max",
+  "ts",
+  "ts_minus_t2m_c",
+  "precip_minus_pet_mm_day",
+  "cloud_radiative_attenuation_wm2",
+]);
 
 const STRATUM_SHORT_LABELS = {
   all_valid_days: "All Valid Days",
@@ -62,6 +69,27 @@ function fmtSigned(v, digits = 3, suffix = "") {
 function fmtSci(v) {
   if (v === null || v === undefined || !Number.isFinite(Number(v))) return "n/a";
   return Number(v).toExponential(2);
+}
+
+function fmtCompact(v, digits = 3, signed = false) {
+  if (v === null || v === undefined || !Number.isFinite(Number(v))) return "n/a";
+  const num = Number(v);
+  const abs = Math.abs(num);
+  if (abs >= 1e5) {
+    const exp = num.toExponential(2);
+    return signed && num > 0 ? `+${exp}` : exp;
+  }
+  return signed ? fmtSigned(num, digits) : fmtNum(num, digits);
+}
+
+function isMetricIntervalScale(metricId) {
+  if (state.bundle && Array.isArray(state.bundle.variable_catalog)) {
+    const entry = state.bundle.variable_catalog.find((v) => v.metric_id === metricId);
+    if (entry && typeof entry.is_interval_scale === "boolean") {
+      return entry.is_interval_scale;
+    }
+  }
+  return INTERVAL_SCALE_FALLBACK.has(metricId);
 }
 
 function setCanvasSize(canvas) {
@@ -168,10 +196,20 @@ function syncMetricOptions() {
   }
   dom.selectMetric.value = state.metricId;
 
-  // VIIRS fire starts in 2019; automatically align baseline when 2015-2019 anomaly is absent
-  if (state.metricId.startsWith("fire_") && state.baseline === "2015_2019") {
-    state.baseline = "2019_2021";
-    dom.selectBaseline.value = state.baseline;
+  // VIIRS fire starts in 2019; disable 2015-2019 option when invalid (<2 baseline years)
+  const opt15 = dom.selectBaseline.querySelector('option[value="2015_2019"]');
+  if (state.metricId.startsWith("fire_")) {
+    if (opt15) {
+      opt15.disabled = true;
+      opt15.textContent = "2015–2019 (N/A — VIIRS starts 2019)";
+    }
+    if (state.baseline === "2015_2019") {
+      state.baseline = "2019_2021";
+      dom.selectBaseline.value = state.baseline;
+    }
+  } else if (opt15) {
+    opt15.disabled = false;
+    opt15.textContent = "2015–2019 (5-yr OMI pre-COVID)";
   }
 }
 
@@ -226,20 +264,24 @@ function computeMarAugComparisonFromSeries(reg, ser) {
   const baseYears = state.baseline === "2015_2019" ? [2015, 2019] : [2019, 2021];
   const bVals = [];
   const tVals = [];
+  const distinctBaseYears = new Set();
   for (let i = 0; i < reg.months.length; i += 1) {
     const mo = reg.month_nums[i];
     const yr = reg.years[i];
     const v = ser.raw[i];
     if (mo < 3 || mo > 8 || v === null || !Number.isFinite(v)) continue;
-    if (yr >= baseYears[0] && yr <= baseYears[1]) bVals.push(v);
+    if (yr >= baseYears[0] && yr <= baseYears[1]) {
+      bVals.push(v);
+      distinctBaseYears.add(yr);
+    }
     if (yr === 2022) tVals.push(v);
   }
-  if (bVals.length === 0 || tVals.length === 0) return null;
+  if (bVals.length === 0 || tVals.length === 0 || distinctBaseYears.size < 2) return null;
   const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
   const baseMean = mean(bVals);
   const t22Mean = mean(tVals);
   const diff = t22Mean - baseMean;
-  const isInterval = INTERVAL_SCALE_METRICS.has(state.metricId);
+  const isInterval = isMetricIntervalScale(state.metricId);
   let pct = null;
   if (!isInterval && Math.abs(baseMean) > 1e-9) {
     pct = (diff / Math.abs(baseMean)) * 100.0;
@@ -485,7 +527,7 @@ function renderExplorer() {
   }
   if (trendRow) {
     readingParts.push(
-      `Over 2015–2022 (${trendRow.n_months} months), Kyiv Hirsch–Slack Seasonal Sen slope is ${fmtSigned(trendRow.hirsch_slack_sen_slope_per_decade, 3)} ${trendRow.units}/decade [95% CI: ${fmtNum(trendRow.ci95_low_per_decade, 3)} to ${fmtNum(trendRow.ci95_high_per_decade, 3)}], BH-FDR q = ${fmtNum(trendRow.bh_fdr_q_value, 3)}.`
+      `Over 2015–2022 (${trendRow.n_months} months), Kyiv Hirsch–Slack Seasonal Sen slope is ${fmtCompact(trendRow.hirsch_slack_sen_slope_per_decade, 3, true)} ${trendRow.units}/decade [95% CI: ${fmtCompact(trendRow.ci95_low_per_decade, 3, true)} to ${fmtCompact(trendRow.ci95_high_per_decade, 3, true)}], BH-FDR q = ${fmtNum(trendRow.bh_fdr_q_value, 3)}.`
     );
   } else if (state.metricId.startsWith("fire_")) {
     readingParts.push(
@@ -505,8 +547,8 @@ function renderExplorer() {
     cautionParts.push("April 2022 OMI contains only 8/30 valid days (hollow diamond marker); verify sensitivity excluding 2022-04 and <3 m/s calm wind in Section 2.");
   } else if (state.metricId.startsWith("fire_")) {
     cautionParts.push("VIIRS S-NPP suffered orbit outage days in March and July–August 2022; rates normalize by observed satellite days.");
-  } else if (INTERVAL_SCALE_METRICS.has(state.metricId)) {
-    cautionParts.push("Temperature & Ts-T2m sit on an interval scale with arbitrary 0 °C, so absolute differences (°C) are valid while % changes are invalid.");
+  } else if (isMetricIntervalScale(state.metricId)) {
+    cautionParts.push("This series sits on an interval/signed balance scale without a true zero, so absolute physical shifts are valid while % changes are withheld.");
   } else {
     cautionParts.push("MERRA-2 / CERES grid resolution (~50 km) captures regional synoptic regimes rather than micro-local street conditions; an 8-year record is shorter than WMO 30-year climatology.");
   }
@@ -618,8 +660,26 @@ function renderWeatherSection() {
       ctx.moveTo(xi, pad.top);
       ctx.lineTo(xi, height - pad.bottom);
       ctx.stroke();
+      ctx.fillStyle = "#9b2226";
+      ctx.font = "700 9.5px sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText("2022-02-24", Math.max(xi - 3, pad.left + 64), pad.top + 20);
       ctx.restore();
     }
+
+    // X year labels
+    ctx.fillStyle = "#5b6472";
+    ctx.font = "10px ui-monospace, monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    const wYears = new Set();
+    series.forEach((r, idx) => {
+      const yr = String(r.month).slice(0, 4);
+      if (!wYears.has(yr)) {
+        wYears.add(yr);
+        ctx.fillText(yr, xFor(idx), height - pad.bottom + 7);
+      }
+    });
 
     // Observed NO2
     ctx.strokeStyle = "#185a8c";
@@ -676,8 +736,8 @@ function renderContrastSection() {
 
   const xs = rows.map((r) => Number(r.vpd_diff_kpa));
   const ys = rows.map((r) => Number(r.fire_type0_pct_change));
-  const xMin = Math.min(-0.1, ...xs) - 0.04;
-  const xMax = Math.max(0.25, ...xs) + 0.05;
+  const xMin = Math.min(-0.08, ...xs) - 0.025;
+  const xMax = Math.max(0.15, ...xs) + 0.03;
   const yMin = Math.min(-70, ...ys) - 12;
   const yMax = Math.max(95, ...ys) + 14;
 
@@ -707,8 +767,8 @@ function renderContrastSection() {
   });
   ctx.textAlign = "center";
   ctx.textBaseline = "top";
-  [0, 0.1, 0.2].forEach((xv) => {
-    ctx.fillText(`${xv >= 0 ? "+" : ""}${xv.toFixed(1)} kPa`, xFor(xv), height - pad.bottom + 8);
+  [0, 0.05, 0.1, 0.15].forEach((xv) => {
+    ctx.fillText(`${xv >= 0 ? "+" : ""}${xv.toFixed(2)} kPa`, xFor(xv), height - pad.bottom + 8);
   });
 
   const pointsMeta = [];
@@ -827,8 +887,8 @@ function renderStatsTableSection() {
       tr.appendChild(th);
       const vals = [
         row.element.toUpperCase(),
-        fmtSigned(row.hirsch_slack_sen_slope_per_decade, 3),
-        `[${fmtNum(row.ci95_low_per_decade, 3)}, ${fmtNum(row.ci95_high_per_decade, 3)}]`,
+        fmtCompact(row.hirsch_slack_sen_slope_per_decade, 3, true),
+        `[${fmtCompact(row.ci95_low_per_decade, 3, true)}, ${fmtCompact(row.ci95_high_per_decade, 3, true)}]`,
         fmtNum(row.seasonal_p_value, 4),
         fmtNum(row.bh_fdr_q_value, 4),
         row.bh_fdr_significant_05 ? "YES" : "No",
@@ -1109,6 +1169,34 @@ function bindEvents() {
     if (hit) {
       state.regionId = hit.region_id;
       dom.selectRegion.value = hit.region_id;
+      activateElementTab("fire", false);
+      renderContrastSection();
+    }
+  });
+
+  dom.fireVpdCanvas.addEventListener("keydown", (event) => {
+    if (!state.scatterGeom || state.scatterGeom.pointsMeta.length === 0) return;
+    const metas = state.scatterGeom.pointsMeta;
+    const curIdx = metas.findIndex((m) => m.row.region_id === (state.hoverScatterRegionId || state.regionId));
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      const nxt = metas[(curIdx + 1) % metas.length].row;
+      state.hoverScatterRegionId = nxt.region_id;
+      dom.scatterHoverReadout.textContent =
+        `${nxt.region_name}: Fire type0 ${fmtSigned(nxt.fire_type0_pct_change, 1, "%")} | Flare type2 ${nxt.fire_type2_pct_change === null ? "n/a" : fmtSigned(nxt.fire_type2_pct_change, 1, "%")} | dVPD ${fmtSigned(nxt.vpd_diff_kpa, 3, " kPa")} | dSoil ${fmtSigned(nxt.gwettop_diff, 3)} | dT2M ${fmtSigned(nxt.t2m_diff_c, 2, " C")} (press Enter to load)`;
+      renderContrastSection();
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      const prvIdx = curIdx <= 0 ? metas.length - 1 : curIdx - 1;
+      const prv = metas[prvIdx].row;
+      state.hoverScatterRegionId = prv.region_id;
+      dom.scatterHoverReadout.textContent =
+        `${prv.region_name}: Fire type0 ${fmtSigned(prv.fire_type0_pct_change, 1, "%")} | Flare type2 ${prv.fire_type2_pct_change === null ? "n/a" : fmtSigned(prv.fire_type2_pct_change, 1, "%")} | dVPD ${fmtSigned(prv.vpd_diff_kpa, 3, " kPa")} | dSoil ${fmtSigned(prv.gwettop_diff, 3)} | dT2M ${fmtSigned(prv.t2m_diff_c, 2, " C")} (press Enter to load)`;
+      renderContrastSection();
+    } else if (event.key === "Enter" && state.hoverScatterRegionId) {
+      event.preventDefault();
+      state.regionId = state.hoverScatterRegionId;
+      dom.selectRegion.value = state.hoverScatterRegionId;
       activateElementTab("fire", false);
       renderContrastSection();
     }

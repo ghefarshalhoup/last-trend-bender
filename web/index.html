@@ -215,14 +215,14 @@
         <div class="subpanel">
           <h3>Atmospheric Drying (+&Delta;VPD) vs Vegetation Fire Shift (% vs 2019&ndash;2021)</h3>
           <p class="muted-meta">
-            Click any region marker to load it in Section 1. Western &amp; Central Ukraine dried sharply (+0.14 to +0.23 kPa VPD) yet burned <em>less</em> (-22% to -56%),
-            while near-baseline VPD Donbas surged (+72.4% <code>type0</code>) alongside an -83.3% collapse in static industrial <code>type2</code> flares.
+            Click any region marker to load it in Section 1. Western &amp; Central Ukraine dried (+0.06 to +0.14 kPa VPD, topsoil -0.028 to -0.043) yet burned <em>less</em> (-22% to -56%),
+            while Donbas surged (+72.4% <code>type0</code>) with only +0.052 kPa VPD shift alongside an -83.3% collapse in static industrial <code>type2</code> flares.
           </p>
           <div class="canvas-stage canvas-stage-md">
-            <canvas id="fire-vpd-scatter" aria-label="Scatter chart of 2022 VPD drought shift vs vegetation fire density change across 6 Ukraine regions"></canvas>
+            <canvas id="fire-vpd-scatter" tabindex="0" aria-label="Interactive scatter chart of 2022 VPD drought shift vs vegetation fire density change across 6 Ukraine regions. Use Left and Right arrows to step through regions and Enter to inspect in Section 1."></canvas>
           </div>
           <div id="scatter-hover-readout" class="month-inspector" aria-live="polite">
-            Click or hover any region point to inspect paired Fire, Water (VPD), and Earth (soil moisture) shifts.
+            Click, hover, or focus chart + Left/Right arrows &amp; Enter to inspect any region point.
           </div>
         </div>
 

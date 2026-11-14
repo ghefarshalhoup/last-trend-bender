@@ -36,7 +36,7 @@ All JSON outputs emitted by [`src/four_elements_analysis.py`](../src/four_elemen
 - `limitations`: Mandatory scientific caveats list.
 
 ## 3. Standalone Trend Observatory Bundle (`web/data/ukraine_4elements_bundle.json`)
-Built by `python -m src.build_web_bundle`, containing the analytical summaries above plus precomputed `2015–2019` and `2019–2021` deseasonalized monthly anomaly arrays and data-quality flags across all 8 study boxes and 16 core variables across Air, Fire, Water, and Earth.
+Built by `python -m src.build_web_bundle`, containing the analytical summaries above plus precomputed `2015–2019` and `2019–2021` deseasonalized monthly anomaly arrays and data-quality flags across all 8 study boxes and 23 core variables across Air, Fire, Water, and Earth.
 
 Serve locally via HTTP (because browsers block `fetch()` over `file://`):
 ```bash

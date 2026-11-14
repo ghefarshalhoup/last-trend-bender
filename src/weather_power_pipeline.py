@@ -57,6 +57,7 @@ POWER_MONTHLY_BATCH_1: Tuple[str, ...] = (
 )
 POWER_MONTHLY_BATCH_2: Tuple[str, ...] = (
     "T2M",
+    "T2M_RANGE",
     "T2M_MAX",
     "T2M_MIN",
     "ALLSKY_SFC_SW_DWN",
@@ -72,6 +73,8 @@ KYIV_DAILY_PARAMETERS: Tuple[str, ...] = (
     "PS",
     "CLOUD_AMT",
     "T2M",
+    "T2M_MAX",
+    "T2M_MIN",
     "PRECTOTCORR",
     "RH2M",
     "QV2M",
@@ -412,10 +415,30 @@ def parse_monthly_power_cache(cache_path: Path) -> Tuple[pd.DataFrame, Dict[str,
         if not raw_rows:
             continue
         reg_df = pd.DataFrame(raw_rows).sort_values(["year", "month_num"]).reset_index(drop=True)
+
+        # NASA POWER monthly T2M_MAX/T2M_MIN are monthly extremes rather than mean daily highs/lows.
+        # Use T2M_RANGE (mean daily diurnal range) when available so FAO-56 saturation vapor pressure
+        # avoids extreme-tail Jensen blowup.
+        t2m_arr = reg_df["t2m"].to_numpy(dtype=float)
+        if "t2m_range" in reg_df.columns and reg_df["t2m_range"].notna().any():
+            dtr_arr = np.where(
+                reg_df["t2m_range"].notna(),
+                reg_df["t2m_range"].to_numpy(dtype=float),
+                np.nan,
+            )
+            tmax_eff = np.where(np.isfinite(dtr_arr), t2m_arr + 0.5 * dtr_arr, t2m_arr)
+            tmin_eff = np.where(np.isfinite(dtr_arr), t2m_arr - 0.5 * dtr_arr, t2m_arr)
+        else:
+            raw_spread = reg_df["t2m_max"].to_numpy(dtype=float) - reg_df["t2m_min"].to_numpy(dtype=float)
+            use_bounds = np.isfinite(raw_spread) & (raw_spread <= 18.0)
+            tmax_eff = np.where(use_bounds, reg_df["t2m_max"].to_numpy(dtype=float), t2m_arr)
+            tmin_eff = np.where(use_bounds, reg_df["t2m_min"].to_numpy(dtype=float), t2m_arr)
+            dtr_arr = np.where(use_bounds, raw_spread, np.nan)
+
         derived = compute_fao56_vpd_and_pet_series(
-            t2m_c=reg_df["t2m"].tolist(),
-            t2m_max_c=reg_df["t2m_max"].tolist(),
-            t2m_min_c=reg_df["t2m_min"].tolist(),
+            t2m_c=t2m_arr.tolist(),
+            t2m_max_c=tmax_eff.tolist(),
+            t2m_min_c=tmin_eff.tolist(),
             rh2m_pct=reg_df["rh2m"].tolist(),
             sw_dwn_mj_m2_day=reg_df["allsky_sfc_sw_dwn"].tolist(),
             ws10m_m_s=reg_df["ws10m"].tolist(),
@@ -432,10 +455,10 @@ def parse_monthly_power_cache(cache_path: Path) -> Tuple[pd.DataFrame, Dict[str,
         reg_df["pet_rad_mm_day"] = derived["pet_rad_mm_day"]
         reg_df["pet_aero_mm_day"] = derived["pet_aero_mm_day"]
 
-        lambda_vec = np.maximum(2.2, 2.501 - 0.002361 * reg_df["t2m"].to_numpy(dtype=float))
+        lambda_vec = np.maximum(2.2, 2.501 - 0.002361 * t2m_arr)
         reg_df["evptrns_mm_day"] = reg_df["evptrns"].to_numpy(dtype=float) / lambda_vec
         reg_df["ts_minus_t2m_c"] = reg_df["ts"] - reg_df["t2m"]
-        reg_df["dtr_c"] = reg_df["t2m_max"] - reg_df["t2m_min"]
+        reg_df["dtr_c"] = dtr_arr
         reg_df["precip_minus_pet_mm_day"] = reg_df["prectotcorr"] - reg_df["pet_fao56_mm_day"]
         reg_df["cloud_radiative_attenuation_wm2"] = (
             reg_df["clrsky_sfc_sw_dwn"] - reg_df["allsky_sfc_sw_dwn"]

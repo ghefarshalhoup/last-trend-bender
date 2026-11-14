@@ -35,8 +35,9 @@ def _sample_monthly_params(year_start: int = 2015, year_end: int = 2022) -> dict
         "ALLSKY_SRF_ALB": 0.18,
         "TS": 12.5,
         "T2M": 11.0,
-        "T2M_MAX": 16.0,
-        "T2M_MIN": 6.0,
+        "T2M_RANGE": 10.0,
+        "T2M_MAX": 32.0,
+        "T2M_MIN": -2.0,
         "ALLSKY_SFC_SW_DWN": 14.0,
         "CLRSKY_SFC_SW_DWN": 20.0,
         "CLOUD_AMT": 52.0,
@@ -118,6 +119,7 @@ class WeatherPowerPipelineTests(unittest.TestCase):
             self.assertTrue(math.isnan(feb20["vpd_kpa"]))
             mar22 = m_df[m_df["month"] == "2022-03"].iloc[0]
             self.assertGreater(mar22["vpd_kpa"], 0.0)
+            self.assertLess(mar22["vpd_kpa"], 0.7)  # Regression guard: extreme monthly T2M_MAX=32C must not inflate VPD
             self.assertGreater(mar22["pet_fao56_mm_day"], 0.0)
             self.assertAlmostEqual(mar22["ts_minus_t2m_c"], 1.5, places=4)
             self.assertAlmostEqual(mar22["dtr_c"], 10.0, places=4)

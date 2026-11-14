@@ -36,9 +36,11 @@ class WebBundleTests(unittest.TestCase):
 
         expected_metric_ids = {v[1] for v in WEB_VARIABLES}
         self.assertEqual({v["metric_id"] for v in bundle["variable_catalog"]}, expected_metric_ids)
+        self.assertTrue(all("is_interval_scale" in v for v in bundle["variable_catalog"]))
         kyiv_series = bundle["regions"]["kyiv_no2_box"]["series"]
         self.assertTrue(expected_metric_ids.issubset(set(kyiv_series.keys())))
         self.assertTrue(any(kyiv_series["no2_mean_molec_cm2"]["flags"]))
+        self.assertTrue(any("orbit gap" in f for f in kyiv_series["fire_type0_per_1k_km2_day"]["flags"]))
 
     def test_build_web_bundle_writes_to_custom_output(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

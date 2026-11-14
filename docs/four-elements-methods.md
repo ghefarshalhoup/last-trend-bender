@@ -22,8 +22,9 @@ To bridge atmospheric composition, active thermal anomalies, hydrology, and land
   - Monthly (`2015–2022`) sampled across a `3 x 3` latitude/longitude lattice inside each study box and aggregated using **`cos(lat)` spherical cosine weighting**.
   - Daily (`2015-01-01..2022-12-31`) fetched at the Kyiv center (`50.45 N, 30.525 E`) for direct day-level alignment with OMI overpasses.
   - Derived physical quantities implemented in [`src/stats_rigor.py`](../src/stats_rigor.py) & [`src/weather_power_pipeline.py`](../src/weather_power_pipeline.py):
-    - **Vapor Pressure Deficit (`vpd_kpa`)**: Tetens saturation vapor pressure minus actual vapor pressure derived from MERRA-2 `T2M` and `RH2M`/`QV2M`.
-    - **FAO-56 Reference Evapotranspiration (`pet_fao56_mm_day`)**: ASCE/Allen FAO-56 Penman–Monteith equation using net radiation proxy from `ALLSKY_SFC_SW_DWN`, `T2M_MAX`, `T2M_MIN`, `WS10M`, `PS`, and box elevation.
+    - **Mean Daily Diurnal Bounds (`T2M_RANGE`)**: NASA POWER's monthly `T2M_MAX` / `T2M_MIN` report single-month extremes rather than monthly means of daily highs/lows (`~24 °C` extreme spread vs `~10.5 °C` daily range). We therefore fetch monthly `T2M_RANGE` and reconstruct effective mean daily bounds (`T2M ± 0.5 * T2M_RANGE`) for Tetens VPD and FAO-56 PET, preventing convex saturation-vapor inflation (`0.93 kPa` vs exact daily-mean `0.91 kPa` in July 2022 Kyiv).
+    - **Vapor Pressure Deficit (`vpd_kpa`)**: Tetens saturation vapor pressure `0.5 * (e_s(Tmax_day_mean) + e_s(Tmin_day_mean))` minus actual vapor pressure derived from MERRA-2 `QV2M`/`PS` (fallback `RH2M`).
+    - **FAO-56 Reference Evapotranspiration (`pet_fao56_mm_day`)**: ASCE/Allen FAO-56 Penman–Monteith equation using net radiation proxy from `ALLSKY_SFC_SW_DWN`, `T2M ± 0.5 * T2M_RANGE`, `WS10M`, `PS`, and box elevation.
     - **Climatic Water Balance (`precip_minus_pet_mm_day`)**: `PRECTOTCORR - PET_FAO56`.
     - **Transpiration Flux Conversion (`evptrns_mm_day`)**: NASA POWER `AG` returns `EVPTRNS` in `MJ/m^2/day`; converted via Bolton latent heat of vaporization `lambda(T) = 2.501 - 0.002361 * T2M`.
     - **Skin–Air Thermal Decoupling (`ts_minus_t2m_c`)**: `TS - T2M`.

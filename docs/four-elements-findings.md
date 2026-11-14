@@ -14,28 +14,28 @@
   - **Adding MERRA-2 Meteorology (`WS10M`, `CLOUD_AMT`, `T2M`, `PS`)** raises explained variance **4.5x** (`R^2 = 0.3627`), eliminates residual autocorrelation (`resid AR(1) = 0.0000`), and retains a step drop of `delta = -4.949e14 molec/cm^2` (`p_ar1 = 0.0373`).
   - Excluding `2022-04` (`n = 89`): `delta = -4.709e14`, `R^2 = 0.3398`, `p_ar1 = 0.0653`.
   - Restricted strictly to matched `Mar–Aug` months (`n = 48`): `delta = -3.268e14`, `R^2 = 0.5064`, `p_ar1 = 0.1810` — showing clearly why `n = 1` war season lacks power for stand-alone significance even after weather control.
-- **External EU Weather Context:** Over `Mar–Aug 2022` vs `2015–2019`, Krakow (`cloud 64.6 -> 59.5%`, `vpd 1.090 -> 1.348 kPa`, `ws10m 3.73 -> 3.47 m/s`) and Prague (`cloud 66.5 -> 59.8%`, `vpd 1.275 -> 1.407 kPa`) were sunnier, calmer, and drier while Kyiv became cooler and cloudier — underscoring why local meteorological adjustment cannot be skipped.
+- **External EU Weather Context:** Over `Mar–Aug 2022` vs `2015–2019`, Krakow (`cloud 64.6 -> 59.5%`, `vpd 0.631 -> 0.680 kPa`, `ws10m 3.73 -> 3.47 m/s`) and Prague (`cloud 66.5 -> 59.8%`, `vpd 0.730 -> 0.764 kPa`) were sunnier, calmer, and slightly drier while Kyiv became cooler and cloudier (`vpd 0.774 -> 0.665 kPa`, `-14.1%`) — underscoring why local meteorological adjustment cannot be skipped.
 
 ## 2. Sub-National Fire × Water × Earth Drought-Mismatch (`Mar–Aug 2022` vs `2019–2021`)
 Standard drought theory predicts hotter, drier regions burn *more* vegetation. The 6-region Ukraine synthesis shows the opposite spatial pattern:
 
 | Region | Area (`km^2`) | Fire `type0` Shift | Static Flare `type2` Shift | `ΔVPD` (`kPa`) | `ΔGWETTOP` | `ΔT2M` (`°C`) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Donbas–Kharkiv East (`donbas_kharkiv_east`) | 134,618.7 | **+72.44%** (`0.446 -> 0.769`) | **-83.27%** (`0.225 -> 0.038`) | +0.045 | +0.005 | -0.39 |
-| South Steppe Belt (`south_steppe_belt`) | 146,556.8 | **+42.90%** (`0.162 -> 0.232`) | **-57.87%** (`0.009 -> 0.004`) | +0.109 | -0.015 | -0.31 |
-| Kyiv North Belt (`kyiv_north_belt`) | 111,556.5 | -25.12% (`0.419 -> 0.314`) | -100.00% (`0.001 -> 0.000`) | -0.066 | +0.027 | -0.79 |
-| Kyiv NO2 Box (`kyiv_no2_box`) | 1,968.2 | +83.03% (`0.252 -> 0.461`) | `n/a` (`0.000 -> 0.000`) | +0.032 | -0.008 | -0.73 |
-| Central Interior Ref (`central_interior_cand`) | 163,034.7 | **-55.83%** (`0.310 -> 0.137`) | -69.62% (`0.132 -> 0.040`) | **+0.137** | -0.028 | -0.28 |
-| West Ukraine Ref (`west_ukraine_cand`) | 176,836.5 | **-22.18%** (`0.242 -> 0.188`) | -42.45% (`0.016 -> 0.009`) | **+0.225** | -0.043 | +0.11 |
+| Donbas–Kharkiv East (`donbas_kharkiv_east`) | 134,618.7 | **+72.44%** (`0.446 -> 0.769`) | **-83.27%** (`0.225 -> 0.038`) | +0.052 | +0.005 | -0.39 |
+| South Steppe Belt (`south_steppe_belt`) | 146,556.8 | **+42.90%** (`0.162 -> 0.232`) | **-57.87%** (`0.009 -> 0.004`) | +0.054 | -0.015 | -0.31 |
+| Kyiv North Belt (`kyiv_north_belt`) | 111,556.5 | -25.12% (`0.419 -> 0.314`) | -100.00% (`0.001 -> 0.000`) | -0.067 | +0.027 | -0.79 |
+| Kyiv NO2 Box (`kyiv_no2_box`) | 1,968.2 | +83.03% (`0.252 -> 0.461`) | `n/a` (`0.000 -> 0.000`) | -0.030 | -0.008 | -0.73 |
+| Central Interior Ref (`central_interior_cand`) | 163,034.7 | **-55.83%** (`0.310 -> 0.137`) | -69.62% (`0.132 -> 0.040`) | **+0.058** | -0.028 | -0.28 |
+| West Ukraine Ref (`west_ukraine_cand`) | 176,836.5 | **-22.18%** (`0.242 -> 0.188`) | -42.45% (`0.016 -> 0.009`) | **+0.137** | -0.043 | +0.11 |
 
-- **Interpretation:** Western & Central Ukraine experienced strong evaporative drying (`+0.137` to `+0.225 kPa` VPD, topsoil loss `-0.028` to `-0.043`) yet vegetation fire detections (`type0`) *declined* (`-22.2%` and `-55.8%`). Meanwhile, the Donbas–Kharkiv frontline experienced near-baseline VPD (`+0.045 kPa`, slight soil wetting `+0.005`, cooler air `-0.39 C`), yet `type0` fires rose **`+72.44%`** while heavy industrial hotspots (`type2`) collapsed **`-83.27%`**.
+- **Interpretation:** Western & Central Ukraine experienced evaporative drying (`+0.058` to `+0.137 kPa` VPD, topsoil loss `-0.028` to `-0.043`) yet vegetation fire detections (`type0`) *declined* (`-22.2%` and `-55.8%`). Meanwhile, the Donbas–Kharkiv frontline experienced only `+0.052 kPa` VPD (`z = +0.087 SD`, slight soil wetting `+0.005`, cooler air `-0.39 C`), yet `type0` fires rose **`+72.44%`** while heavy industrial hotspots (`type2`) collapsed **`-83.27%`**.
 
 ## 3. Multiple-Testing Guardrails & Physical Couplings (`2015–2022`)
-- **8-Year Kyiv Seasonal MK Trends:** Across all 22 non-fire metrics, Benjamini–Hochberg FDR `q >= 0.576` (`0` false-discovery multi-year climate trend claims over an 8-year window).
+- **8-Year Kyiv Seasonal MK Trends:** Across all non-fire metrics, Benjamini–Hochberg FDR `q >= 0.5` (`0` false-discovery multi-year climate trend claims over an 8-year window).
 - **Verified Prewhitened Cross-Element Couplings (`BH-FDR <= 0.05`):**
   - Kyiv `prectotcorr -> gwettop` (lag `0` mo): `tau = +0.4446`, `q = 0.0000`
   - Kyiv `prectotcorr -> gwetroot` (lag `0` mo): `tau = +0.3554`, `q = 0.0000`
-  - Kyiv `gwettop -> vpd_kpa` (lag `0` mo): `tau = -0.3362`, `q = 0.00002`
+  - Kyiv `gwettop -> vpd_kpa` (lag `0` mo): `tau = -0.4262`, `q = 0.0000`
   - Kyiv `t2m -> no2_mean_molec_cm2` (lag `0` mo): `tau = +0.2875`, `q = 0.0005`
   - Donbas `prectotcorr -> gwetroot` (lag `0` mo): `tau = +0.3241`, `q = 0.000024`
-  - West Ukraine `gwettop -> vpd_kpa` (lag `0` mo): `tau = -0.4316`, `q = 0.0000`
+  - West Ukraine `gwettop -> vpd_kpa` (lag `0` mo): `tau = -0.4352`, `q = 0.0000`

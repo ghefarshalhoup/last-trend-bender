@@ -229,8 +229,14 @@ class CommittedFourElementsReportTests(unittest.TestCase):
         reg_map = {r["region_id"]: r for r in results["regional_fire_water_earth_contrast"]["regions"]}
         self.assertGreater(reg_map["donbas_kharkiv_east"]["fire_type0_pct_change"], 50.0)
         self.assertLess(reg_map["donbas_kharkiv_east"]["fire_type2_pct_change"], -70.0)
-        self.assertGreater(reg_map["west_ukraine_cand"]["vpd_diff_kpa"], 0.15)
+        self.assertGreater(reg_map["west_ukraine_cand"]["vpd_diff_kpa"], 0.10)
         self.assertLess(reg_map["west_ukraine_cand"]["fire_type0_pct_change"], -10.0)
+
+        # Ensure T2M_RANGE diurnal temperature range is physical (<16 C), not monthly extreme spread (>20 C)
+        kyiv_comps = {c["metric_id"]: c for c in results["kyiv_four_element_comparisons"]}
+        self.assertLess(kyiv_comps["dtr_c"]["target_2022_mean"], 15.0)
+        self.assertGreater(kyiv_comps["dtr_c"]["target_2022_mean"], 5.0)
+        self.assertLess(kyiv_comps["vpd_kpa"]["target_2022_mean"], 0.90)
 
         for chart in results["charts"].values():
             p = REPO_ROOT / chart["png_path"]

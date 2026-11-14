@@ -87,8 +87,8 @@ FOUR_ELEMENT_METRICS: Tuple[ElementMetricSpec, ...] = (
     ElementMetricSpec("fire_type0_per_1k_km2_day", "fire", "VIIRS Vegetation Fire Density (type0)", "det / 1000 km^2 / day", False, "FIRMS VIIRS S-NPP"),
     ElementMetricSpec("fire_type2_per_1k_km2_day", "fire", "VIIRS Static Industrial Anomaly Density (type2)", "det / 1000 km^2 / day", False, "FIRMS VIIRS S-NPP"),
     ElementMetricSpec("t2m", "fire", "2m Air Temperature", "°C", True, "NASA POWER MERRA-2"),
-    ElementMetricSpec("t2m_max", "fire", "2m Daily Max Temperature", "°C", True, "NASA POWER MERRA-2"),
-    ElementMetricSpec("dtr_c", "fire", "Diurnal Temperature Range (Tmax - Tmin)", "°C", True, "Derived MERRA-2"),
+    ElementMetricSpec("t2m_max", "fire", "Monthly Peak 2m Temperature (T2M_MAX)", "°C", True, "NASA POWER MERRA-2"),
+    ElementMetricSpec("dtr_c", "fire", "Mean Daily Diurnal Temp Range (T2M_RANGE)", "°C", False, "NASA POWER MERRA-2"),
     ElementMetricSpec("allsky_sfc_sw_dwn", "fire", "All-Sky Downward Shortwave Flux", "MJ/m^2/day", False, "NASA POWER CERES"),
     ElementMetricSpec("pet_fao56_mm_day", "fire", "FAO-56 Penman-Monteith PET", "mm/day", False, "Derived FAO-56 PM"),
     ElementMetricSpec("prectotcorr", "water", "Bias-Corrected Precipitation", "mm/day", False, "NASA POWER MERRA-2"),
@@ -623,7 +623,7 @@ def _plot_dashboard(kyiv_df: pd.DataFrame, out_path: Path) -> None:
             if not apr22.empty:
                 idx_apr = sub.index.get_loc(apr22.index[0])
                 ax.scatter([s_dates.iloc[idx_apr]], [y_vals[idx_apr]], color="#e67e22", edgecolor="black", zorder=5, s=48, label="Apr 2022 (8/30 valid days)")
-                ax.legend(loc="upper left", fontsize=8.0, frameon=True, facecolor="white")
+                ax.legend(loc="upper center", fontsize=8.0, frameon=True, facecolor="white")
         ax.set_title(title, loc="left", fontsize=9.8, fontweight="bold")
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
@@ -722,11 +722,11 @@ def _plot_fire_drought_contrast(regional_rows: Sequence[Mapping[str, object]], o
     }
 
     label_offsets = {
-        "kyiv_no2_box": (-8, 5, "right"),
+        "kyiv_no2_box": (7, -2, "left"),
         "donbas_kharkiv_east": (7, -11, "left"),
         "south_steppe_belt": (7, 5, "left"),
         "kyiv_north_belt": (7, 6, "left"),
-        "central_interior_cand": (-6, 8, "center"),
+        "central_interior_cand": (-4, 8, "center"),
         "west_ukraine_cand": (-8, 8, "right"),
     }
     for row in regional_rows:
@@ -740,7 +740,7 @@ def _plot_fire_drought_contrast(regional_rows: Sequence[Mapping[str, object]], o
 
     ax1.axhline(0.0, color="#566573", linewidth=0.9, linestyle="--")
     ax1.axvline(0.0, color="#566573", linewidth=0.9, linestyle="--")
-    ax1.set_xlim(-0.09, 0.255)
+    ax1.set_xlim(-0.095, 0.175)
     ax1.set_ylim(-68, 96)
     ax1.set_xlabel("2022 vs. 2019–2021 VPD Drought Shift (kPa, + = drier air)", fontsize=8.8)
     ax1.set_ylabel("VIIRS Vegetation-Type Fire Shift (%)", fontsize=8.8)
@@ -769,7 +769,7 @@ def _plot_fire_drought_contrast(regional_rows: Sequence[Mapping[str, object]], o
     fig.text(
         0.015,
         0.01,
-        "Sources: FIRMS VIIRS S-NPP SV-C2 + NASA POWER MERRA-2. West & Central Ukraine dried (+0.14 to +0.22 kPa VPD) while burning fell; Donbas burned +72.4% with minimal VPD shift.",
+        "Sources: FIRMS VIIRS S-NPP SV-C2 + NASA POWER MERRA-2. West & Central Ukraine dried (+0.06 to +0.14 kPa VPD, soil -0.03 to -0.04) while burning fell; Donbas burned +72.4% with +0.05 kPa VPD.",
         fontsize=7.3,
         color="#566573",
     )

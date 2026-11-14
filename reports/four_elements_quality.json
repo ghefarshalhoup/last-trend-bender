@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at_utc": "2026-11-14T18:38:45.964128+00:00",
+  "generated_at_utc": "2026-11-14T19:49:52.620355+00:00",
   "provenance": {
     "giovanni_no2_csv": {
       "file": "NASA_Giovanni_NO2_2015-03-01_to_2022-08-31.csv",
@@ -8,11 +8,11 @@
     },
     "power_monthly_json": {
       "file": "ukraine_power_monthly_2015_2022.json",
-      "sha256": "47c4a33dc621bafda24ebf5b2c220541527880404f46ed5fa2f042116c9b60b2"
+      "sha256": "ab4dc36efd2fcb3cbb01fb9e67b96698f7806d1fa72c402413d3d7f3b2a51084"
     },
     "power_daily_json": {
       "file": "kyiv_power_daily_2015_2022.json",
-      "sha256": "131960f7e0ddaf66deca396a6ca7788baea77651e8304800d5feab4371795503"
+      "sha256": "5447b5b4ee619b9e2a160b64e8a3ebc2787391cebe3623f4b66f05a1699c28f6"
     },
     "no2_monthly_csv_sha256": "b6004972e3908359a5192945b3fb0979a84684db3abc2a40e7edf3b2199015c3",
     "fire_monthly_csv_sha256": "eff964c71db604009867dd9a857d69128045f3b898f831c72a58685a9ad00aa7"

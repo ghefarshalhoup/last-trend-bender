@@ -10,6 +10,7 @@ from typing import Dict, List
 
 import pandas as pd
 
+from src.four_elements_analysis import METRIC_SPEC_BY_ID
 from src.stats_rigor import clean_float, compute_baseline_climatology_anomalies, write_strict_json
 from src.weather_power_pipeline import STUDY_BOXES
 
@@ -21,17 +22,24 @@ WEB_VARIABLES = (
     ("air", "no2_mean_molec_cm2", "OMI Tropospheric NO2", "molec/cm^2", 1e-15, "1e15 molec/cm^2"),
     ("air", "ws10m", "10m Wind Speed", "m/s", 1.0, "m/s"),
     ("air", "cloud_amt", "Total Cloud Amount", "%", 1.0, "%"),
+    ("air", "ps", "Surface Barometric Pressure", "kPa", 1.0, "kPa"),
+    ("air", "clrsky_sfc_sw_dwn", "Clear-Sky Shortwave (Aerosol/Haze Tracer)", "MJ/m^2/day", 1.0, "MJ/m^2/day"),
     ("air", "cloud_radiative_attenuation_wm2", "Cloud Radiative Attenuation", "W/m^2", 1.0, "W/m^2"),
     ("fire", "fire_type0_per_1k_km2_day", "VIIRS Vegetation Fires (type0)", "det / 1000 km^2 / d", 1.0, "det/1k km^2/d"),
     ("fire", "fire_type2_per_1k_km2_day", "VIIRS Industrial Flares (type2)", "det / 1000 km^2 / d", 1.0, "det/1k km^2/d"),
     ("fire", "t2m", "2m Air Temperature", "°C", 1.0, "°C"),
+    ("fire", "dtr_c", "Mean Daily Diurnal Temp Range (T2M_RANGE)", "°C", 1.0, "°C"),
+    ("fire", "allsky_sfc_sw_dwn", "All-Sky Surface Shortwave Flux", "MJ/m^2/day", 1.0, "MJ/m^2/day"),
     ("fire", "pet_fao56_mm_day", "FAO-56 Reference ET (PET)", "mm/day", 1.0, "mm/day"),
     ("water", "prectotcorr", "Precipitation", "mm/day", 1.0, "mm/day"),
     ("water", "vpd_kpa", "Vapor Pressure Deficit (VPD)", "kPa", 1.0, "kPa"),
     ("water", "rh2m", "Relative Humidity (2m)", "%", 1.0, "%"),
+    ("water", "evptrns_mm_day", "Vegetation Transpiration Flux", "mm/day", 1.0, "mm/day"),
     ("water", "precip_minus_pet_mm_day", "Water Balance (P - PET)", "mm/day", 1.0, "mm/day"),
     ("earth", "gwettop", "Surface Soil Wetness (0-5 cm)", "fraction", 1.0, "fraction"),
     ("earth", "gwetroot", "Root-Zone Soil Wetness (0-100 cm)", "fraction", 1.0, "fraction"),
+    ("earth", "gwetprof", "Profile Soil Moisture (Surface-Bedrock)", "fraction", 1.0, "fraction"),
+    ("earth", "ts", "Earth Skin Temperature (Ts)", "°C", 1.0, "°C"),
     ("earth", "ts_minus_t2m_c", "Skin-Air Coupling (Ts - T2m)", "°C", 1.0, "°C"),
     ("earth", "allsky_srf_alb", "Surface Albedo", "dimensionless", 1.0, "dimensionless"),
 )
@@ -81,16 +89,22 @@ def build_web_bundle(
                     cd = int(sub["no2_calendar_days"].iloc[idx])
                     if vd / max(1, cd) < 0.50:
                         flag = f"Low OMI coverage: {vd}/{cd} valid days (<50%)"
-                elif col.startswith("fire_") and m_str in {"2022-07", "2022-08", "2022-03"} and pd.notna(sub[col].iloc[idx]):
-                    flag = "VIIRS S-NPP orbit outage noted in 2022 (rate normalized per observed day)"
+                elif col.startswith("fire_") and pd.notna(sub[col].iloc[idx]):
+                    sat_col = "fire_type0_sat_cov" if col.startswith("fire_type0") else "fire_type2_sat_cov"
+                    if sat_col in sub.columns and pd.notna(sub[sat_col].iloc[idx]):
+                        sat_cov = float(sub[sat_col].iloc[idx])
+                        if sat_cov < 0.99:
+                            flag = f"VIIRS S-NPP orbit gap: {100.0 * sat_cov:.1f}% satellite days observed"
                 cov_flags.append(flag)
 
+            is_interval = bool(METRIC_SPEC_BY_ID[col].is_interval_scale) if col in METRIC_SPEC_BY_ID else False
             series_by_var[col] = {
                 "element": element,
                 "label": label,
                 "display_unit": disp_unit,
                 "raw_unit": raw_unit,
                 "scale_factor": scale,
+                "is_interval_scale": is_interval,
                 "raw": _vec(vals),
                 "anom_2015_2019": _vec(anom_15),
                 "anom_2019_2021": _vec(anom_19),
@@ -120,7 +134,13 @@ def build_web_bundle(
         "conflict_start": results["conflict_start"],
         "status": results["status"],
         "variable_catalog": [
-            {"element": el, "metric_id": mid, "label": lbl, "unit": du}
+            {
+                "element": el,
+                "metric_id": mid,
+                "label": lbl,
+                "unit": du,
+                "is_interval_scale": bool(METRIC_SPEC_BY_ID[mid].is_interval_scale) if mid in METRIC_SPEC_BY_ID else False,
+            }
             for el, mid, lbl, _, _, du in WEB_VARIABLES
         ],
         "kyiv_comparisons": results["kyiv_four_element_comparisons"],
