@@ -518,10 +518,11 @@ def compute_regional_fire_water_earth_matrix(panel_df: pd.DataFrame) -> Tuple[Li
 
     summary = {
         "interpretation": (
-            "Fire-weather contrast: Candidate Western and Central comparison regions experienced stronger 2022 evaporative "
-            "drying (higher VPD, lower surface soil moisture) yet recorded lower FIRMS type0 presumed vegetation detection rates, "
-            f"whereas the proposed Donbas-Kharkiv frontline corridor had smaller mean VPD/soil shifts while type0 detection rates "
-            f"changed {d_f0} and type2 other static land hotspot detections changed {d_f2}."
+            "Fire-weather context: Candidate Western and Central comparison boxes recorded stronger 2022 box-mean "
+            "evaporative drying (higher VPD, lower surface soil moisture) alongside lower FIRMS type0 presumed vegetation "
+            "detection rates, whereas the proposed Donbas-Kharkiv corridor showed smaller box-mean VPD/soil shifts while "
+            f"type0 detection rates changed {d_f0} and type2 other static land hotspot detections changed {d_f2}. "
+            "Note: Coarse 0.5 deg regional box averages provide background context and do not rule out localized or sub-monthly drought."
         ),
         "candidate_role_qualification": (
             "Regions labeled 'proposed study' and 'candidate reference' are analytical spatial comparisons only; "
