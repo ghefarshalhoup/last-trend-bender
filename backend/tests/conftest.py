@@ -10,7 +10,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from backend.catalog import AIR_KYIV_CHARTS
-from backend.config import REPO_ROOT, Settings
+from backend.config import ATLAS_ARTIFACT_FILENAMES, REPO_ROOT, Settings
 from backend.main import create_app
 
 REPORTS_DIR = REPO_ROOT / "reports"
@@ -48,6 +48,10 @@ def make_client(tmp_path: Path, raw_contract: Dict[str, Any]) -> Callable[..., T
         for spec in AIR_KYIV_CHARTS.values():
             if spec.chart_id not in drop_charts:
                 shutil.copy(REPORTS_DIR / spec.filename, reports / spec.filename)
+        for fname in ATLAS_ARTIFACT_FILENAMES:
+            src_atlas = REPORTS_DIR / fname
+            if src_atlas.is_file():
+                shutil.copy(src_atlas, reports / fname)
         results = reports / "air_no2_results.json"
         if write_results:
             if text is not None:

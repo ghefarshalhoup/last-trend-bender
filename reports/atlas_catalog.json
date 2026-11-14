@@ -1,0 +1,2573 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-14T22:33:31.931244+00:00",
+  "case_id": "ukraine",
+  "conflict_start": "2022-02-24",
+  "metric_count": 25,
+  "primary_indicators_by_element": {
+    "air": "no2_mean_molec_cm2",
+    "fire": "fire_type0_per_1k_km2_day",
+    "water": "prectotcorr",
+    "land": "gwettop"
+  },
+  "variable_ids_by_element": {
+    "air": [
+      "no2_mean_molec_cm2",
+      "ws10m",
+      "cloud_amt",
+      "ps",
+      "clrsky_sfc_sw_dwn",
+      "cloud_radiative_attenuation_wm2"
+    ],
+    "fire": [
+      "fire_type0_per_1k_km2_day",
+      "fire_type2_per_1k_km2_day",
+      "t2m",
+      "t2m_max",
+      "dtr_c",
+      "allsky_sfc_sw_dwn",
+      "pet_fao56_mm_day"
+    ],
+    "land": [
+      "gwettop",
+      "gwetroot",
+      "gwetprof",
+      "ts",
+      "ts_minus_t2m_c",
+      "allsky_srf_alb"
+    ],
+    "water": [
+      "prectotcorr",
+      "vpd_kpa",
+      "qv2m",
+      "rh2m",
+      "evptrns_mm_day",
+      "precip_minus_pet_mm_day"
+    ]
+  },
+  "recommended_starter_flow": [
+    {
+      "element_id": "air",
+      "element_label": "Air",
+      "metric_id": "no2_mean_molec_cm2",
+      "endpoint": "/api/air/kyiv"
+    },
+    {
+      "element_id": "fire",
+      "element_label": "Fire",
+      "metric_id": "fire_type0_per_1k_km2_day",
+      "endpoint": "/api/fire/ukraine"
+    },
+    {
+      "element_id": "water",
+      "element_label": "Water",
+      "metric_id": "prectotcorr",
+      "endpoint": "/api/water/ukraine"
+    },
+    {
+      "element_id": "land",
+      "element_label": "Earth",
+      "metric_id": "gwettop",
+      "endpoint": "/api/land/ukraine"
+    }
+  ],
+  "variables": [
+    {
+      "metric_id": "no2_mean_molec_cm2",
+      "element_id": "air",
+      "element_label": "Air",
+      "label": "Tropospheric NO2 Column (OMNO2d v004)",
+      "short_label": "NO2",
+      "units": "molecules/cm^2",
+      "is_interval_scale": false,
+      "is_primary_indicator": true,
+      "display_order": 1,
+      "dates": {
+        "start": "2015-03",
+        "end": "2022-08",
+        "seasonal_window": "March-August",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "kyiv_study_box",
+        "resolution": "0.25 deg OMI grid averaged over Kyiv 0.5 deg box",
+        "sampling_method": "Area mean across snapped 0.25 deg pixel centers inside Kyiv box (30.273-30.773E, 50.2-50.7N)",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "kyiv_no2_box"
+        ],
+        "external_weather_region_ids": []
+      },
+      "method_id": "omi_omno2d_v004_box_mean_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA Aura OMI OMNO2d v004 via Giovanni"
+      ],
+      "limitations": [
+        "Only Kyiv study box has NO2 retrievals in this archive; not a city street-level map.",
+        "April 2022 has low valid retrieval coverage (8/30 days; 26.7%) due to cloud cover.",
+        "Observed 2022 drop reflects combined weather ventilation and emission shifts; single-season record does not establish war causation."
+      ]
+    },
+    {
+      "metric_id": "ws10m",
+      "element_id": "air",
+      "element_label": "Air",
+      "label": "10m Wind Speed",
+      "short_label": "Wind speed",
+      "units": "m/s",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 2,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Coarse 0.5 deg x 0.625 deg reanalysis regional context; cannot resolve urban canyon wind dispersion.",
+        "Used as an atmospheric-ventilation confounder check alongside OMI NO2, not as war-damage evidence."
+      ]
+    },
+    {
+      "metric_id": "cloud_amt",
+      "element_id": "air",
+      "element_label": "Air",
+      "label": "Total Cloud Amount",
+      "short_label": "Cloud amount",
+      "units": "%",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 3,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "1.0 deg CERES sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_ceres_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER CERES SYN1deg"
+      ],
+      "limitations": [
+        "Coarse 1.0 deg regional box average explaining OMI cloud screening gaps (e.g., April 2022).",
+        "Represents synoptic cloudiness context rather than direct anthropogenic plumes."
+      ]
+    },
+    {
+      "metric_id": "ps",
+      "element_id": "air",
+      "element_label": "Air",
+      "label": "Surface Barometric Pressure",
+      "short_label": "Pressure",
+      "units": "kPa",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 4,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Regional synoptic pressure context only; small relative % fluctuations reflect atmospheric pressure baselines (~99 kPa)."
+      ]
+    },
+    {
+      "metric_id": "clrsky_sfc_sw_dwn",
+      "element_id": "air",
+      "element_label": "Air",
+      "label": "Clear-Sky Downward Shortwave Radiation",
+      "short_label": "Clear-sky sunlight",
+      "units": "MJ/m^2/day",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 5,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "1.0 deg CERES sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_ceres_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER CERES SYN1deg"
+      ],
+      "limitations": [
+        "Clear-sky radiative baseline from 1.0 deg CERES model estimates; does not directly isolate localized smoke aerosols."
+      ]
+    },
+    {
+      "metric_id": "cloud_radiative_attenuation_wm2",
+      "element_id": "air",
+      "element_label": "Air",
+      "label": "Cloud-Related Sunlight Reduction (SWclr - SWall)",
+      "short_label": "Cloud sunlight reduction",
+      "units": "W/m^2",
+      "is_interval_scale": true,
+      "is_primary_indicator": false,
+      "display_order": 6,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "1.0 deg CERES difference derived over 3x3 cos(lat) lattice",
+        "sampling_method": "(CLRSKY_SFC_SW_DWN - ALLSKY_SFC_SW_DWN) * 1e6 / 86400",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_ceres_attenuation_diff_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": true,
+        "pct_change_allowed": false,
+        "pct_change_withheld_reason": "Interval-scale or signed quantity crossing zero; report abs_diff instead of % change.",
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER CERES SYN1deg (derived)"
+      ],
+      "limitations": [
+        "Derived signed radiative difference (W/m^2); relative % change is strictly withheld as non-meaningful across near-zero values.",
+        "Coarse 1.0 deg context only; cannot isolate local dust/smoke plumes from clouds."
+      ]
+    },
+    {
+      "metric_id": "fire_type0_per_1k_km2_day",
+      "element_id": "fire",
+      "element_label": "Fire",
+      "label": "VIIRS Presumed Vegetation Fire Density (type 0)",
+      "short_label": "Vegetation fire density",
+      "units": "det / 1000 km^2 / day",
+      "is_interval_scale": false,
+      "is_primary_indicator": true,
+      "display_order": 1,
+      "dates": {
+        "start": "2019-03",
+        "end": "2022-08",
+        "seasonal_window": "March-August only",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 4
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": false,
+          "role": "unsupported",
+          "status": "withheld_insufficient_baseline",
+          "unsupported_reason": "VIIRS S-NPP Archive Export in this repository starts in 2019-03; 2015-2018 data is absent so 2015-2019 baseline must stay disabled."
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "spatial_cells_and_regional_boxes",
+        "resolution": "375 m VIIRS S-NPP pixels summarized over study boxes and 0.25 deg grid cells",
+        "sampling_method": "Type-0 detection count divided by (box_area_km2 / 1000) and CMR VNP14IMG observed satellite days",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": true,
+        "ukraine_region_ids": [
+          "ukraine_national",
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": []
+      },
+      "method_id": "firms_type0_per_1k_km2_cmr_obsday_box_area_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA FIRMS VIIRS S-NPP Archive Export (SV-C2)",
+        "NASA CMR VNP14IMG coverage"
+      ],
+      "limitations": [
+        "2015-2019 baseline is strictly unsupported/disabled because this archive begins in 2019-03 (only 2019-2021 pre-war baseline is valid).",
+        "Hotspot pixel counts are not burned area in km^2: repeated overpasses and multi-pixel fire fronts cluster detections (~1.42 det/cell-day).",
+        "2022 contains a 16-day satellite observation gap (notably 2022-07-27 through 2022-08-10 orbit outage, plus 2022-03-05).",
+        "Matched-date (169d/yr) UKR-ADM0 polygon clipping shifts absolute ratios (~63.9% vs 104.3% in Donbas) and is kept strictly separate."
+      ]
+    },
+    {
+      "metric_id": "fire_type2_per_1k_km2_day",
+      "element_id": "fire",
+      "element_label": "Fire",
+      "label": "VIIRS Other Static Land Source Density (type 2)",
+      "short_label": "Static heat sources",
+      "units": "det / 1000 km^2 / day",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 2,
+      "dates": {
+        "start": "2019-03",
+        "end": "2022-08",
+        "seasonal_window": "March-August only",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 4
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": false,
+          "role": "unsupported",
+          "status": "withheld_insufficient_baseline",
+          "unsupported_reason": "VIIRS S-NPP Archive Export in this repository starts in 2019-03; 2015-2018 data is absent so 2015-2019 baseline must stay disabled."
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "spatial_cells_and_regional_boxes",
+        "resolution": "375 m VIIRS S-NPP pixels summarized over study boxes and 0.25 deg grid cells",
+        "sampling_method": "Type-2 static land source count divided by (box_area_km2 / 1000) and CMR VNP14IMG observed satellite days",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": true,
+        "ukraine_region_ids": [
+          "ukraine_national",
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": []
+      },
+      "method_id": "firms_type2_per_1k_km2_cmr_obsday_box_area_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA FIRMS VIIRS S-NPP Archive Export (SV-C2)",
+        "NASA CMR VNP14IMG coverage"
+      ],
+      "limitations": [
+        "2015-2019 baseline is strictly unsupported/disabled (archive begins 2019-03).",
+        "Tracks stationary industrial/metallurgical/gas-flare hotspots; sharp 2022 drops in frontline corridors (e.g. -83% in Donbas-Kharkiv) reflect facility shutdowns/destruction rather than fire absence.",
+        "Boxes with zero baseline type-2 detections (e.g. Kyiv 0.5 deg box) withhold % change."
+      ]
+    },
+    {
+      "metric_id": "t2m",
+      "element_id": "fire",
+      "element_label": "Fire",
+      "label": "2m Air Temperature",
+      "short_label": "Air temperature",
+      "units": "\u00b0C",
+      "is_interval_scale": true,
+      "is_primary_indicator": false,
+      "display_order": 3,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": true,
+        "pct_change_allowed": false,
+        "pct_change_withheld_reason": "Interval-scale or signed quantity crossing zero; report abs_diff instead of % change.",
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Interval-scale \u00b0C unit: absolute difference is reported while relative % change is strictly withheld (null).",
+        "Regional fire-weather context only (0.5 deg box average), not local flame temperature."
+      ]
+    },
+    {
+      "metric_id": "t2m_max",
+      "element_id": "fire",
+      "element_label": "Fire",
+      "label": "Peak Daily 2m Air Temperature (T2M_MAX)",
+      "short_label": "Peak temperature",
+      "units": "\u00b0C",
+      "is_interval_scale": true,
+      "is_primary_indicator": false,
+      "display_order": 4,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of monthly maximum 2m air temperature",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": true,
+        "pct_change_allowed": false,
+        "pct_change_withheld_reason": "Interval-scale or signed quantity crossing zero; report abs_diff instead of % change.",
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Interval-scale \u00b0C unit: relative % change is strictly withheld (null).",
+        "Coarse 0.5 deg box average cannot capture fine-scale heat domes."
+      ]
+    },
+    {
+      "metric_id": "dtr_c",
+      "element_id": "fire",
+      "element_label": "Fire",
+      "label": "Diurnal Temperature Range (T2M_RANGE)",
+      "short_label": "Temperature range",
+      "units": "\u00b0C",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 5,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of daily Tmax - Tmin magnitude",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Regional synoptic dryness/clear-sky context indicator; coarse 0.5 deg resolution."
+      ]
+    },
+    {
+      "metric_id": "allsky_sfc_sw_dwn",
+      "element_id": "fire",
+      "element_label": "Fire",
+      "label": "All-Sky Downward Shortwave Sunlight",
+      "short_label": "All-sky sunlight",
+      "units": "MJ/m^2/day",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 6,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "1.0 deg CERES sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_ceres_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER CERES SYN1deg"
+      ],
+      "limitations": [
+        "Coarse 1.0 deg surface insolation context used in radiation/PET fire-weather checks."
+      ]
+    },
+    {
+      "metric_id": "pet_fao56_mm_day",
+      "element_id": "fire",
+      "element_label": "Fire",
+      "label": "FAO-56 Penman-Monteith Potential Evapotranspiration (PET)",
+      "short_label": "Evaporation demand (PET)",
+      "units": "mm/day",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 7,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg MERRA-2 / 1.0 deg CERES derived over 3x3 cos(lat) lattice",
+        "sampling_method": "Monthly FAO-56 Penman-Monteith reference ET using regional box elevation; strict daily PM sensitivity checked (RMSE 0.119 mm/day)",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_fao56_pm_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_noncausal_observation",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER MERRA-2/CERES (derived FAO-56 PM)"
+      ],
+      "limitations": [
+        "Measures atmospheric evaporative demand over coarse regional boxes, not actual irrigation or localized drought stress."
+      ]
+    },
+    {
+      "metric_id": "prectotcorr",
+      "element_id": "water",
+      "element_label": "Water",
+      "label": "Bias-Corrected Total Precipitation (PRECTOTCORR)",
+      "short_label": "Rainfall",
+      "units": "mm/day",
+      "is_interval_scale": false,
+      "is_primary_indicator": true,
+      "display_order": 1,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Regional 0.5 deg environmental context ONLY: averages smooth localized storm deficits and do NOT rule out sub-regional or short-term drought.",
+        "Does not measure reservoir levels, drinking-water infrastructure damage, or contamination."
+      ]
+    },
+    {
+      "metric_id": "vpd_kpa",
+      "element_id": "water",
+      "element_label": "Water",
+      "label": "Vapor Pressure Deficit (VPD)",
+      "short_label": "VPD (drying demand)",
+      "units": "kPa",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 2,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 derived over 3x3 cos(lat) lattice",
+        "sampling_method": "e_s(T2M) * (1 - RH2M / 100) using Tetens saturation vapor pressure formula",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_vpd_tetens_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2 (derived)"
+      ],
+      "limitations": [
+        "Regional atmospheric drying-demand context only; coarse 0.5 deg boxes cannot produce local drought heatmaps or rule out local soil/water stress."
+      ]
+    },
+    {
+      "metric_id": "qv2m",
+      "element_id": "water",
+      "element_label": "Water",
+      "label": "2m Specific Humidity",
+      "short_label": "Specific humidity",
+      "units": "g/kg",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 3,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Coarse 0.5 deg regional moisture context only; not direct hydrological damage evidence."
+      ]
+    },
+    {
+      "metric_id": "rh2m",
+      "element_id": "water",
+      "element_label": "Water",
+      "label": "2m Relative Humidity",
+      "short_label": "Relative humidity",
+      "units": "%",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 4,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Coarse 0.5 deg regional atmospheric humidity context only; cannot substitute for catchment drought or water quality data."
+      ]
+    },
+    {
+      "metric_id": "evptrns_mm_day",
+      "element_id": "water",
+      "element_label": "Water",
+      "label": "Vegetation Transpiration Flux (EVPTRNS)",
+      "short_label": "Transpiration",
+      "units": "mm/day",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 5,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean converted from W/m^2 latent heat flux using lambda=2.45 MJ/kg",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Reanalysis land-surface model estimate at 0.5 deg resolution; does not directly observe field-scale crop stress or destroyed irrigation."
+      ]
+    },
+    {
+      "metric_id": "precip_minus_pet_mm_day",
+      "element_id": "water",
+      "element_label": "Water",
+      "label": "Climatic Water Balance (Rainfall minus PET)",
+      "short_label": "Water balance (P - PET)",
+      "units": "mm/day",
+      "is_interval_scale": true,
+      "is_primary_indicator": false,
+      "display_order": 6,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg MERRA-2 / 1.0 deg CERES derived over 3x3 cos(lat) lattice",
+        "sampling_method": "PRECTOTCORR - PET_FAO56 in mm/day",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_water_balance_diff_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": true,
+        "pct_change_allowed": false,
+        "pct_change_withheld_reason": "Interval-scale or signed quantity crossing zero; report abs_diff instead of % change.",
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER MERRA-2/CERES (derived)"
+      ],
+      "limitations": [
+        "Signed interval difference crossing zero: relative % change is strictly withheld (null); inspect abs_diff (mm/day) instead.",
+        "Coarse regional context only; does not rule out localized seasonal drought or measure water-system damage."
+      ]
+    },
+    {
+      "metric_id": "gwettop",
+      "element_id": "land",
+      "element_label": "Earth",
+      "label": "Surface Soil Wetness (0-5 cm, GWETTOP)",
+      "short_label": "Surface soil wetness",
+      "units": "fraction",
+      "is_interval_scale": false,
+      "is_primary_indicator": true,
+      "display_order": 1,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Regional 0.5 deg environmental context ONLY: broad box means do not rule out localized drought and do NOT directly observe cratering, landmines, or soil contamination."
+      ]
+    },
+    {
+      "metric_id": "gwetroot",
+      "element_id": "land",
+      "element_label": "Earth",
+      "label": "Root-Zone Soil Wetness (0-100 cm, GWETROOT)",
+      "short_label": "Root-zone wetness",
+      "units": "fraction",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 2,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "0.5 deg reanalysis soil moisture context; cannot resolve farm-level soil disruption or war land degradation."
+      ]
+    },
+    {
+      "metric_id": "gwetprof",
+      "element_id": "land",
+      "element_label": "Earth",
+      "label": "Full-Profile Soil Wetness (GWETPROF)",
+      "short_label": "Full-profile wetness",
+      "units": "fraction",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 3,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "0.5 deg deep soil moisture context; seasonal box means do not establish or rule out localized agricultural stress."
+      ]
+    },
+    {
+      "metric_id": "ts",
+      "element_id": "land",
+      "element_label": "Earth",
+      "label": "Earth Skin Surface Temperature (TS)",
+      "short_label": "Surface temperature",
+      "units": "\u00b0C",
+      "is_interval_scale": true,
+      "is_primary_indicator": false,
+      "display_order": 4,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": true,
+        "pct_change_allowed": false,
+        "pct_change_withheld_reason": "Interval-scale or signed quantity crossing zero; report abs_diff instead of % change.",
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2"
+      ],
+      "limitations": [
+        "Interval-scale \u00b0C unit: relative % change is strictly withheld (null); use abs_diff (\u00b0C).",
+        "Coarse 0.5 deg thermal context only; cannot produce sub-kilometer land-surface temperature heatmaps."
+      ]
+    },
+    {
+      "metric_id": "ts_minus_t2m_c",
+      "element_id": "land",
+      "element_label": "Earth",
+      "label": "Surface-minus-Air Temperature Difference (Ts - T2m)",
+      "short_label": "Surface-air diff",
+      "units": "\u00b0C",
+      "is_interval_scale": true,
+      "is_primary_indicator": false,
+      "display_order": 5,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "0.5 deg x 0.625 deg MERRA-2 derived over 3x3 cos(lat) lattice",
+        "sampling_method": "TS - T2M in \u00b0C",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_merra2_thermal_decoupling_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": true,
+        "pct_change_allowed": false,
+        "pct_change_withheld_reason": "Interval-scale or signed quantity crossing zero; report abs_diff instead of % change.",
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER v9.x MERRA-2 (derived)"
+      ],
+      "limitations": [
+        "Signed difference near zero: relative % change is strictly withheld (null).",
+        "Coarse regional surface-energy context only."
+      ]
+    },
+    {
+      "metric_id": "allsky_srf_alb",
+      "element_id": "land",
+      "element_label": "Earth",
+      "label": "All-Sky Surface Albedo",
+      "short_label": "Albedo",
+      "units": "dimensionless",
+      "is_interval_scale": false,
+      "is_primary_indicator": false,
+      "display_order": 6,
+      "dates": {
+        "start": "2015-01",
+        "end": "2022-12",
+        "seasonal_window": "March-August (monthly series full-year)",
+        "monthly_granularity": "YYYY-MM",
+        "n_years_available": 8
+      },
+      "supported_baselines": [
+        {
+          "baseline_id": "2015-2019",
+          "label": "2015\u20132019",
+          "years": [
+            2015,
+            2016,
+            2017,
+            2018,
+            2019
+          ],
+          "supported": true,
+          "role": "primary",
+          "status": "supported",
+          "unsupported_reason": null
+        },
+        {
+          "baseline_id": "2019-2021",
+          "label": "2019\u20132021",
+          "years": [
+            2019,
+            2020,
+            2021
+          ],
+          "supported": true,
+          "role": "sensitivity_recent",
+          "status": "supported",
+          "unsupported_reason": null
+        }
+      ],
+      "spatial_support": {
+        "presentation_type": "regional_study_boxes",
+        "resolution": "1.0 deg CERES sampled over 3x3 cos(lat) lattice",
+        "sampling_method": "Cos(lat)-weighted mean of 3x3 box-spanning NASA POWER grid points",
+        "supports_fine_heatmap": false,
+        "supports_spatial_cells": false,
+        "ukraine_region_ids": [
+          "donbas_kharkiv_east",
+          "south_steppe_belt",
+          "kyiv_north_belt",
+          "kyiv_no2_box",
+          "central_interior_cand",
+          "west_ukraine_cand"
+        ],
+        "external_weather_region_ids": [
+          "poland_krakow",
+          "czechia_prague"
+        ]
+      },
+      "method_id": "nasa_power_ceres_3x3_coslat_v1",
+      "uncertainty_and_status": {
+        "claim_status": "descriptive_regional_context_noncausal",
+        "is_interval_scale": false,
+        "pct_change_allowed": true,
+        "pct_change_withheld_reason": null,
+        "statistical_significance_assessed": false
+      },
+      "sources": [
+        "NASA POWER CERES SYN1deg"
+      ],
+      "limitations": [
+        "Coarse 1.0 deg surface reflectance indicator; snow cover, cloudiness, and regional crop phenology dominate box averages."
+      ]
+    }
+  ],
+  "study_regions": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                35.5,
+                46.8
+              ],
+              [
+                40.2,
+                46.8
+              ],
+              [
+                40.2,
+                50.3
+              ],
+              [
+                35.5,
+                50.3
+              ],
+              [
+                35.5,
+                46.8
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "region_id": "donbas_kharkiv_east",
+          "name": "East Frontline Corridor (Donbas\u2013Kharkiv, proposed study)",
+          "role": "war_theater_study",
+          "area_km2": 134618.68,
+          "elevation_m": 160.0,
+          "center": {
+            "lat": 48.55,
+            "lon": 37.85
+          },
+          "bounds": [
+            [
+              46.8,
+              35.5
+            ],
+            [
+              50.3,
+              40.2
+            ]
+          ],
+          "is_ukraine_study_area": true,
+          "pct_box_inside_ukr_adm0": 77.02,
+          "estimated_ukr_land_km2": 103678.05,
+          "lattice_points_inside_ukr_adm0": 4,
+          "lattice_points_total": 9,
+          "description": "Proposed active-conflict eastern belt spanning Kharkiv, Luhansk, Donetsk, and eastern Zaporizhzhia."
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                30.0,
+                44.4
+              ],
+              [
+                35.5,
+                44.4
+              ],
+              [
+                35.5,
+                47.5
+              ],
+              [
+                30.0,
+                47.5
+              ],
+              [
+                30.0,
+                44.4
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "region_id": "south_steppe_belt",
+          "name": "South Steppe Corridor (Kherson\u2013Mykolaiv\u2013Crimea edge, proposed study)",
+          "role": "war_theater_study",
+          "area_km2": 146556.79,
+          "elevation_m": 55.0,
+          "center": {
+            "lat": 45.95,
+            "lon": 32.75
+          },
+          "bounds": [
+            [
+              44.4,
+              30.0
+            ],
+            [
+              47.5,
+              35.5
+            ]
+          ],
+          "is_ukraine_study_area": true,
+          "pct_box_inside_ukr_adm0": 73.6,
+          "estimated_ukr_land_km2": 107858.68,
+          "lattice_points_inside_ukr_adm0": 5,
+          "lattice_points_total": 9,
+          "description": "Proposed southern steppe and coastal frontline corridor west of 35.5E."
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                28.5,
+                50.0
+              ],
+              [
+                34.5,
+                50.0
+              ],
+              [
+                34.5,
+                52.4
+              ],
+              [
+                28.5,
+                52.4
+              ],
+              [
+                28.5,
+                50.0
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "region_id": "kyiv_north_belt",
+          "name": "North Corridor (Kyiv\u2013Chernihiv belt, proposed study)",
+          "role": "war_theater_study",
+          "area_km2": 111556.51,
+          "elevation_m": 145.0,
+          "center": {
+            "lat": 51.2,
+            "lon": 31.5
+          },
+          "bounds": [
+            [
+              50.0,
+              28.5
+            ],
+            [
+              52.4,
+              34.5
+            ]
+          ],
+          "is_ukraine_study_area": true,
+          "pct_box_inside_ukr_adm0": 78.76,
+          "estimated_ukr_land_km2": 87862.28,
+          "lattice_points_inside_ukr_adm0": 6,
+          "lattice_points_total": 9,
+          "description": "Proposed northern forest/agricultural corridor covering Kyiv and Chernihiv oblasts (February\u2013March invasion axis)."
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                30.273,
+                50.2
+              ],
+              [
+                30.773,
+                50.2
+              ],
+              [
+                30.773,
+                50.7
+              ],
+              [
+                30.273,
+                50.7
+              ],
+              [
+                30.273,
+                50.2
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "region_id": "kyiv_no2_box",
+          "name": "Kyiv Air-Matched Box (0.5 deg, cross-layer check)",
+          "role": "primary_urban_study",
+          "area_km2": 1968.25,
+          "elevation_m": 179.0,
+          "center": {
+            "lat": 50.45,
+            "lon": 30.523
+          },
+          "bounds": [
+            [
+              50.2,
+              30.273
+            ],
+            [
+              50.7,
+              30.773
+            ]
+          ],
+          "is_ukraine_study_area": true,
+          "pct_box_inside_ukr_adm0": 100.0,
+          "estimated_ukr_land_km2": 1968.25,
+          "lattice_points_inside_ukr_adm0": 9,
+          "lattice_points_total": 9,
+          "description": "Exact bounding box used in the Air/NO2 OMNO2d analysis for Kyiv cross-element context."
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                27.5,
+                47.5
+              ],
+              [
+                35.5,
+                47.5
+              ],
+              [
+                35.5,
+                50.0
+              ],
+              [
+                27.5,
+                50.0
+              ],
+              [
+                27.5,
+                47.5
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "region_id": "central_interior_cand",
+          "name": "Central Interior Steppe (proposed reference for East/South)",
+          "role": "ukraine_reference_region",
+          "area_km2": 163034.66,
+          "elevation_m": 230.0,
+          "center": {
+            "lat": 48.75,
+            "lon": 31.5
+          },
+          "bounds": [
+            [
+              47.5,
+              27.5
+            ],
+            [
+              50.0,
+              35.5
+            ]
+          ],
+          "is_ukraine_study_area": true,
+          "pct_box_inside_ukr_adm0": 93.63,
+          "estimated_ukr_land_km2": 152641.31,
+          "lattice_points_inside_ukr_adm0": 8,
+          "lattice_points_total": 9,
+          "description": "Proposed lower-ground-combat central agricultural/steppe comparator matched by climate belt to East/South."
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                22.1,
+                47.7
+              ],
+              [
+                27.5,
+                47.7
+              ],
+              [
+                27.5,
+                51.8
+              ],
+              [
+                22.1,
+                51.8
+              ],
+              [
+                22.1,
+                47.7
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "region_id": "west_ukraine_cand",
+          "name": "Western Ukraine (proposed reference for North/Kyiv)",
+          "role": "ukraine_reference_region",
+          "area_km2": 176836.52,
+          "elevation_m": 300.0,
+          "center": {
+            "lat": 49.75,
+            "lon": 24.8
+          },
+          "bounds": [
+            [
+              47.7,
+              22.1
+            ],
+            [
+              51.8,
+              27.5
+            ]
+          ],
+          "is_ukraine_study_area": true,
+          "pct_box_inside_ukr_adm0": 71.7,
+          "estimated_ukr_land_km2": 126792.44,
+          "lattice_points_inside_ukr_adm0": 3,
+          "lattice_points_total": 9,
+          "description": "Proposed western lower-ground-combat comparator matched by spring fire seasonality to Kyiv/North."
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                19.695,
+                49.8147
+              ],
+              [
+                20.195,
+                49.8147
+              ],
+              [
+                20.195,
+                50.3147
+              ],
+              [
+                19.695,
+                50.3147
+              ],
+              [
+                19.695,
+                49.8147
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "region_id": "poland_krakow",
+          "name": "Krakow Box (Poland, meteorological context)",
+          "role": "external_comparator_weather_only",
+          "area_km2": 1984.23,
+          "elevation_m": 219.0,
+          "center": {
+            "lat": 50.0647,
+            "lon": 19.945
+          },
+          "bounds": [
+            [
+              49.8147,
+              19.695
+            ],
+            [
+              50.3147,
+              20.195
+            ]
+          ],
+          "is_ukraine_study_area": false,
+          "pct_box_inside_ukr_adm0": 0.0,
+          "estimated_ukr_land_km2": 0.0,
+          "lattice_points_inside_ukr_adm0": 0,
+          "lattice_points_total": 9,
+          "description": "0.5 deg external EU reference city box for synoptic climate comparison."
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                14.1878,
+                49.8255
+              ],
+              [
+                14.6878,
+                49.8255
+              ],
+              [
+                14.6878,
+                50.3255
+              ],
+              [
+                14.1878,
+                50.3255
+              ],
+              [
+                14.1878,
+                49.8255
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "region_id": "czechia_prague",
+          "name": "Prague Box (Czechia, meteorological context)",
+          "role": "external_comparator_weather_only",
+          "area_km2": 1983.78,
+          "elevation_m": 235.0,
+          "center": {
+            "lat": 50.0755,
+            "lon": 14.4378
+          },
+          "bounds": [
+            [
+              49.8255,
+              14.1878
+            ],
+            [
+              50.3255,
+              14.6878
+            ]
+          ],
+          "is_ukraine_study_area": false,
+          "pct_box_inside_ukr_adm0": 0.0,
+          "estimated_ukr_land_km2": 0.0,
+          "lattice_points_inside_ukr_adm0": 0,
+          "lattice_points_total": 9,
+          "description": "0.5 deg external EU reference city box for synoptic climate comparison."
+        }
+      }
+    ]
+  },
+  "global_limitations": [
+    "Regional MERRA-2 (0.5 deg x 0.625 deg) and CERES (1.0 deg) box means describe synoptic environmental context, cannot generate local pollution/drought heatmaps, and do not rule out localized drought or prove war-caused damage.",
+    "Fire hotspot counts are satellite thermal pixel detections (type 0 vs type 2), not burned area in km^2; 2015-2019 baseline is unavailable and must stay disabled.",
+    "Single-season 2022 before-after comparisons are descriptive and cannot isolate causal war attribution without validated counterfactuals."
+  ]
+}
