@@ -21,7 +21,7 @@ Panel: location/variable/period, map note, baseline selector, seasonal headline,
 `npm run typecheck`, `npm run build`, `npm test` (31), `npm run test:e2e` against the real backend (14): neutral state and Ukraine framing (checked from the map tiles requested: Crimea's south to Ukraine's west/east extremes), Air selection and Kyiv discovery, marker click and keyboard Enter, panel open/close, both baselines, April 8/30 warning, missing values, study and catalog failure with retry, missing/failed figures, desktop and mobile layout (no sideways scroll, 44px targets).
 
 ## Known limitations
-- Basemap tiles need internet (CARTO/OSM). In the sandbox they were blocked, so screenshots show a grey basemap; the outline, label and UI are real. **Look at it once locally with tiles before presenting.**
+- Basemap tiles need internet (OpenStreetMap standard tiles; set `VITE_TILE_URL` for a keyed provider). In the sandbox they were blocked, so screenshots show a grey basemap; the outline, label and UI are real. **Look at it once locally with tiles before presenting.**
 - Basemap is a standard light map, not the illustrated basemap or a 3D globe (out of scope).
 - Kyiv box is small at country scale; the marker, label and Explore Kyiv button make it discoverable.
 - Mobile uses a stacked panel under the map, not a bottom sheet.

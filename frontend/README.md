@@ -84,3 +84,7 @@ Element labels: the catalog calls the fourth element `land`; the UI shows it as 
 - Seasonal before/after status and the multi-year trend are shown in separate blocks. "Causal attribution: not established" stays visible.
 - The shaded band is min–max across baseline years (variability), labelled as not a confidence interval.
 - The map is a study-area outline, not a heatmap; panning, zooming and reset change the view only. The label on the Kyiv box shows the seasonal headline (labelled March–August) until a month is chosen, then that month, labelled as the month.
+
+## Basemap tiles
+
+Default: OpenStreetMap standard tiles (`tile.openstreetmap.org`), no key needed, attribution shown. The previous CARTO tiles now require an API key. OSM's usage policy is for light use; for a public deployment set `VITE_TILE_URL` and `VITE_TILE_ATTRIBUTION` (see `.env.example`).

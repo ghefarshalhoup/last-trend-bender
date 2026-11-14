@@ -2,6 +2,7 @@ import L, { type LatLngBoundsExpression } from 'leaflet'
 import { useEffect } from 'react'
 import { GeoJSON, MapContainer, Marker, TileLayer, Tooltip, useMap } from 'react-leaflet'
 import type { MapPayload } from '../../api/types'
+import { BASEMAP } from './basemap'
 import styles from './UkraineMap.module.css'
 
 /** Country view including Crimea with some surrounding geography. This is a camera, not data. */
@@ -58,12 +59,7 @@ export function UkraineMap({ map, command, resultLabel, onExplore }: Props) {
         attributionControl
         aria-label="Map of Ukraine"
       >
-        <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          subdomains="abcd"
-          maxZoom={18}
-        />
+        <TileLayer url={BASEMAP.url} attribution={BASEMAP.attribution} maxZoom={BASEMAP.maxZoom} />
         <Controller command={command} kyivBounds={kyivBounds} />
         {map ? (
           <>

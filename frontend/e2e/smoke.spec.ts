@@ -4,7 +4,7 @@ import { expect, test, type Page } from '@playwright/test'
 const tiles: string[] = []
 test.beforeEach(async ({ page }) => {
   tiles.length = 0
-  await page.route(/basemaps\.cartocdn\.com/, (route) => {
+  await page.route(/tile\.openstreetmap\.org/, (route) => {
     tiles.push(route.request().url())
     return route.fulfill({ status: 204 })
   })
@@ -224,7 +224,7 @@ test('supplementary figures: only returned charts; graceful when none or when an
   await expect(page.getByTestId('figures').getByRole('listitem')).toHaveCount(3)
 
   const empty = await context.newPage()
-  await empty.route(/basemaps\.cartocdn\.com/, (r) => r.fulfill({ status: 204 }))
+  await empty.route(/tile\.openstreetmap\.org/, (r) => r.fulfill({ status: 204 }))
   await serveModifiedStudy(empty, (body) => { body.charts = [] })
   await empty.goto('/')
   await selectAirAndExplore(empty)
@@ -232,7 +232,7 @@ test('supplementary figures: only returned charts; graceful when none or when an
   await expect(empty.getByTestId('figures-empty')).toBeVisible()
 
   const broken = await context.newPage()
-  await broken.route(/basemaps\.cartocdn\.com/, (r) => r.fulfill({ status: 204 }))
+  await broken.route(/tile\.openstreetmap\.org/, (r) => r.fulfill({ status: 204 }))
   await broken.route('**/api/air/kyiv/charts/matched_months', (r) => r.fulfill({ status: 404, json: { error: { code: 'chart_unavailable', message: 'gone' } } }))
   await broken.goto('/')
   await selectAirAndExplore(broken)
