@@ -7,6 +7,12 @@ Requires Node ≥ 20.19 and, for the backend, Python with `pip install -r backen
 
 **Illustrated-atlas preview:** `http://127.0.0.1:5173/#/atlas` (fixed illustrated map with evidence layers). See [`docs/illustrated-atlas-poc.md`](../docs/illustrated-atlas-poc.md).
 
+On Windows use `python` (not `python3`) for the backend and open `http://localhost:5173/#/atlas`.
+
+**Atlas flow:** choose an element (top right) → open its scroll (bottom right) → *Long-term trend* shows the timeline, invasion date, plain verdict and rate with 95% interval (test and p-value under "How this was tested"); *2022 comparison* shows the seasonal change; *About* gives definition, source and limits. Analysis period (Full record / Before the invasion) sits above the map. Elements without a reviewed result stay "Coming later".
+
+Who does what next: [`docs/team-handoff.md`](../docs/team-handoff.md). Plain definitions of the 25 variables: [`docs/variable-definitions.md`](../docs/variable-definitions.md).
+
 ## Install
 
 ```bash
