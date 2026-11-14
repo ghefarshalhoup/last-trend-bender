@@ -7,6 +7,10 @@ import type { ElementId } from '../../explorer/elements'
  * Ids are opaque strings that only the active layer interprets.
  */
 export interface AtlasSelection {
+  /** Which question is being asked of the data (a layer's view id), e.g. long-term trend or 2022 comparison. */
+  view: string | null
+  /** Selected analysis period for trend results (only periods with a reviewed result are offered). */
+  window: string | null
   /** Selected time period, or null for the layer's whole-period view. */
   period: string | null
   /** Selected comparison / baseline / display mode, or null when the layer has none. */
@@ -31,11 +35,23 @@ export interface ControlGroup {
 
 /** A layer lists only the controls it supports. Absent groups are not rendered. */
 export interface LayerControls {
+  /** Analysis periods for the trend verdict. */
+  windows?: ControlGroup
   periods?: ControlGroup & { wholePeriodLabel?: string }
   comparisons?: ControlGroup
 }
 
+/** One question a layer can answer. Each becomes a tab in the investigation scroll. */
+export interface LayerView {
+  id: string
+  label: string
+  /** The question in plain words, shown under the tabs. */
+  question: string
+}
+
 export interface LayerActions {
+  selectView: (id: string) => void
+  selectWindow: (id: string) => void
   selectPeriod: (id: string | null) => void
   selectComparison: (id: string) => void
   selectFeature: (id: string | null) => void
@@ -43,6 +59,9 @@ export interface LayerActions {
 
 /** Everything a layer contributes to the screen for one selection. */
 export interface LayerPresentation {
+  /** The questions this layer answers, in tab order. The active one is `selection.view`. */
+  views: LayerView[]
+  /** Controls for the active view only. */
   controls: LayerControls
   /**
    * SVG content in atlas units. Positions must come from `projectLonLat`.
@@ -51,10 +70,10 @@ export interface LayerPresentation {
   mapSvg: ReactNode
   /** HTML anchored over the map (labels). Positioned with `atlasPercent`. */
   mapHtml?: ReactNode
-  /** Fixed visual key for the map encoding. The shell shows it at the top of the evidence widget. */
-  mapKey: ReactNode
-  /** Evidence widget body: summary, plots, sources and quality notices. */
+  /** Investigation body for the active view: timeline or comparison, verdict, quality notices. */
   evidence: ReactNode
+  /** "About" tab: what the variable measures, where it comes from, what it cannot tell you. */
+  about: ReactNode
   /** Guide text for the current period, comparison and feature. */
   guide: string
 }

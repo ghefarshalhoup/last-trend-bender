@@ -30,7 +30,7 @@ function Atlas({ catalog }: { catalog: CatalogBundle }) {
   const [active, setActive] = useState<ElementId | null>(null)
   const [scrollOpen, setScrollOpen] = useState(false)
   const [unread, setUnread] = useState(false)
-  const elements = useMemo(() => resolveElements(catalog.elements), [catalog.elements])
+  const elements = useMemo(() => resolveElements(catalog.elements, Object.keys(LAYERS) as ElementId[]), [catalog.elements])
   const layer = active ? (LAYERS[active] ?? null) : null
   const endpoint = active ? studyEndpointFor(catalog.elements, active) : null
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -84,6 +84,8 @@ function LayerHost({ layer, endpoint, ...chrome }: ChromeProps & { layer: Eviden
 
   const actions = useMemo<LayerActions>(
     () => ({
+      selectView: (view) => setSelection((s) => ({ ...s, view })),
+      selectWindow: (window) => setSelection((s) => ({ ...s, window })),
       selectPeriod: (period) => setSelection((s) => ({ ...s, period })),
       selectComparison: (comparison) => setSelection((s) => ({ ...s, comparison })),
       selectFeature: (feature) => setSelection((s) => ({ ...s, feature })),
@@ -155,8 +157,8 @@ function NeutralHelp() {
       <p>Each element shows a different kind of satellite evidence on the same fixed map of Ukraine.</p>
       <ol>
         <li>Choose an element with the medallions in the top-right corner.</li>
-        <li>Pick a month and a comparison period in the bar above the map.</li>
-        <li>Open this scroll to read the legend and the analysis.</li>
+        <li>Pick the analysis period in the bar above the map.</li>
+        <li>Open this scroll: read the timeline and the verdict, or switch to the 2022 comparison.</li>
       </ol>
       <p>Elements marked “Coming later” have no evidence yet.</p>
     </div>
@@ -173,12 +175,21 @@ function AtlasLayout(props: LayoutProps) {
   const current = elements.find((e) => e.id === active)
   const art = current ? current.id : 'none'
 
+  // Tabs are the layer's questions plus About. The active question is part of the shared selection.
+  const [aboutOpen, setAboutOpen] = useState(false)
+  const views = presentation?.views ?? []
+  const activeView = views.find((v) => v.id === selection?.view) ?? views[0]
   const tabs: ScrollTab[] = presentation
     ? [
-        { id: 'evidence', label: 'Evidence', content: presentation.evidence },
-        { id: 'legend', label: 'Legend', content: presentation.mapKey },
+        ...views.map((v) => ({ id: v.id, label: v.label, content: v.id === activeView?.id ? presentation.evidence : null })),
+        { id: 'about', label: 'About', content: presentation.about },
       ]
     : [{ id: 'help', label: 'How to read', content: <NeutralHelp /> }]
+  const activeId = presentation ? (aboutOpen ? 'about' : (activeView?.id ?? 'about')) : 'help'
+  const onSelectTab = (id: string) => {
+    setAboutOpen(id === 'about')
+    if (id !== 'about') actions?.selectView(id)
+  }
   const title = layer?.title ?? 'How to read this atlas'
   const scrollLabel = current ? `${current.label} scroll` : 'Atlas scroll'
 
@@ -195,7 +206,7 @@ function AtlasLayout(props: LayoutProps) {
             <LayerControlsBar controls={presentation.controls} selection={selection} actions={actions} />
           ) : (
             <p className={styles.controlsHint} data-testid="controls-hint">
-              Months and comparison periods appear here once you choose an element.
+              Analysis periods appear here once you choose an element.
             </p>
           )}
         </div>
@@ -226,7 +237,7 @@ function AtlasLayout(props: LayoutProps) {
 
           {scrollOpen ? (
             <div className={styles.overlaySlot} style={overlayStyle} data-overlay-slot="">
-              <ScrollOverlay key={art} id={overlayId} title={title} art={art} tabs={tabs} onClose={onCloseScroll} />
+              <ScrollOverlay key={art} id={overlayId} title={title} art={art} tabs={tabs} activeId={activeId} onSelectTab={onSelectTab} question={activeId === 'about' ? undefined : activeView?.question} onClose={onCloseScroll} />
             </div>
           ) : null}
         </div>

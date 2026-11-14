@@ -1,5 +1,6 @@
 import type { StudyPackage } from '../../../../api/types'
 import { ComparisonChart } from '../../../air/ComparisonChart'
+import { AirKey } from './AirKey'
 import { CoverageWarnings } from '../../../air/CoverageWarnings'
 import type { AirReading } from './airReading'
 import styles from './AirLayer.module.css'
@@ -35,6 +36,11 @@ export function AirEvidence({ study, reading, onSelectMonth }: Props) {
           <p>{study.map.note}</p>
         </section>
       ) : null}
+
+      <section aria-label="Map key">
+        <h3>Reading the map colour</h3>
+        <AirKey />
+      </section>
 
       <section>
         <h3>Monthly NO₂: 2022 and the baseline</h3>

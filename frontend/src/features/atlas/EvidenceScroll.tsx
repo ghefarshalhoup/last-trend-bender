@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useId, useRef, type ReactNode } from 'react'
 import type { ArtId } from './elementArt'
 import { ScrollArt } from './elementArt'
 import styles from './EvidenceScroll.module.css'
@@ -45,15 +45,19 @@ interface OverlayProps {
   title: string
   art: ArtId
   tabs: ScrollTab[]
+  /** The selected tab. The shell owns it, so the map and controls can follow it. */
+  activeId: string
+  onSelectTab: (id: string) => void
+  /** The question the active tab answers, in plain words. */
+  question?: string
   onClose: () => void
 }
 
-/** The opened scroll: a panel over the map with tabs (evidence, legend). The map underneath never moves. */
-export function ScrollOverlay({ id, title, art, tabs, onClose }: OverlayProps) {
-  const [tab, setTab] = useState(tabs[0]?.id ?? '')
+/** The opened scroll: a panel over the map with tabs (one per question, plus About). The map underneath never moves. */
+export function ScrollOverlay({ id, title, art, tabs, activeId, onSelectTab, question, onClose }: OverlayProps) {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const base = useId()
-  const activeTab = tabs.find((t) => t.id === tab) ?? tabs[0]
+  const activeTab = tabs.find((t) => t.id === activeId) ?? tabs[0]
 
   useEffect(() => {
     headingRef.current?.focus()
@@ -87,7 +91,7 @@ export function ScrollOverlay({ id, title, art, tabs, onClose }: OverlayProps) {
               aria-selected={t.id === activeTab?.id}
               aria-controls={`${base}-panel`}
               className={styles.tab}
-              onClick={() => setTab(t.id)}
+              onClick={() => onSelectTab(t.id)}
               data-testid={`scroll-tab-${t.id}`}
             >
               {t.label}
@@ -102,6 +106,7 @@ export function ScrollOverlay({ id, title, art, tabs, onClose }: OverlayProps) {
         className={styles.body}
         data-testid={`scroll-panel-${activeTab?.id}`}
       >
+        {question ? <p className={styles.question} data-testid="scroll-question">{question}</p> : null}
         {activeTab?.content}
       </div>
     </section>

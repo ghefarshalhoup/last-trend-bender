@@ -9,6 +9,12 @@ async function openAir(page: Page) {
   await page.getByTestId('element-air').click()
   await expect(page.getByTestId('kyiv-polygon')).toBeVisible()
 }
+/** The 2022 comparison is the second tab of the scroll; its month and baseline controls appear with it. */
+async function openComparison(page: Page) {
+  await openScroll(page)
+  await page.getByTestId('scroll-tab-comparison').click()
+  await expect(page.getByTestId('period-4')).toBeVisible()
+}
 async function openScroll(page: Page) {
   await page.getByTestId('evidence-scroll').click()
   await expect(page.getByTestId('evidence-widget')).toBeVisible()
@@ -51,32 +57,41 @@ test('neutral atlas: fixed illustrated map, no tiles, no layer', async ({ page }
   await page.screenshot({ path: `${SHOTS}/1-neutral-desktop.png` })
 })
 
-test('Air: season, April and baseline update map, evidence and guide together', async ({ page }) => {
+test('Air: the trend verdict comes first, then the 2022 comparison', async ({ page }) => {
   await openAir(page)
-  await expect(page.getByTestId('kyiv-value')).toContainText('−28.0% vs 2015–2019')
-  await page.screenshot({ path: `${SHOTS}/2-air-season-desktop.png` })
-
-  await page.getByTestId('period-4').click()
-  await expect(page.getByTestId('kyiv-value')).toContainText('−37.0% vs 2015–2019')
-  await expect(page.getByTestId('kyiv-label')).toContainText('8/30 days')
-  await expect(page.getByTestId('kyiv-label-warning')).toBeVisible()
-  await page.screenshot({ path: `${SHOTS}/3-air-april-desktop.png` })
+  await expect(page.getByTestId('kyiv-value')).toContainText('No significant trend')
   await openScroll(page)
-  await expect(page.getByTestId('evidence-low-coverage')).toContainText('8 of 30 days')
-  await expect(page.getByTestId('guide-bubble')).toContainText('only 8 of 30 days')
+  await expect(page.getByTestId('trend-chart')).toBeVisible()
+  await expect(page.getByTestId('trend-verdict-text')).toHaveText('The estimate points downward, but the trend is not statistically significant.')
+  await expect(page.getByTestId('trend-rate')).toContainText('−0.042')
+  await page.screenshot({ path: `${SHOTS}/2-air-trend-desktop.png` })
+
+  await page.getByTestId('window-pre_invasion').click()
+  await expect(page.getByTestId('trend-verdict')).toContainText('Before the invasion')
+  await expect(page.getByTestId('kyiv-label')).toContainText('Before the invasion')
+
   // the open scroll must not hide the Kyiv box at this size
   const box = (await page.getByTestId('kyiv-polygon').boundingBox())!
   const scroll = (await page.getByTestId('evidence-widget').boundingBox())!
   expect(box.x + box.width).toBeLessThan(scroll.x)
-  await page.screenshot({ path: `${SHOTS}/4-air-april-scroll-open-desktop.png` })
-  await page.getByTestId('scroll-tab-legend').click()
+
+  await page.getByTestId('scroll-tab-comparison').click()
+  await expect(page.getByTestId('kyiv-value')).toContainText('−28.0% vs 2015–2019')
+  await page.getByTestId('period-4').click()
+  await expect(page.getByTestId('kyiv-value')).toContainText('−37.0% vs 2015–2019')
+  await expect(page.getByTestId('kyiv-label')).toContainText('8/30 days')
+  await expect(page.getByTestId('kyiv-label-warning')).toBeVisible()
+  await expect(page.getByTestId('evidence-low-coverage')).toContainText('8 of 30 days')
+  await expect(page.getByTestId('guide-bubble')).toContainText('only 8 of 30 days')
   await expect(page.getByTestId('air-key')).toBeVisible()
-  await page.screenshot({ path: `${SHOTS}/5-air-april-legend-desktop.png` })
-  await page.getByTestId('scroll-tab-evidence').click()
+  await page.screenshot({ path: `${SHOTS}/4-air-april-scroll-open-desktop.png` })
 
   await page.getByTestId('comparison-sensitivity_2019_2021_valid_day').click()
   await expect(page.getByTestId('kyiv-value')).toContainText('−33.2% vs 2019–2021')
   await expect(page.getByTestId('evidence-value')).toContainText('−33.2%')
+
+  await page.getByTestId('scroll-tab-about').click()
+  await expect(page.getByTestId('air-about')).toBeVisible()
 
   await page.getByTestId('clear-element').click()
   await expect(page.getByTestId('kyiv-polygon')).toHaveCount(0)
@@ -93,8 +108,8 @@ test('the map does not move when Air is selected or a month changes', async ({ p
   await expect(page.getByTestId('kyiv-polygon')).toBeVisible()
   const withAir = await outline()
   const polygon = await page.getByTestId('kyiv-polygon').getAttribute('d')
+  await openComparison(page)
   await page.getByTestId('period-6').click()
-  await openScroll(page)
   expect(await viewBox()).toBe(before)
   expect(await outline()).toEqual(withAir)
   expect(await page.getByTestId('kyiv-polygon').getAttribute('d')).toBe(polygon)
@@ -102,7 +117,6 @@ test('the map does not move when Air is selected or a month changes', async ({ p
 
 test('artwork, polygon and label stay aligned when the screen resizes', async ({ page }) => {
   await openAir(page)
-  await page.getByTestId('period-4').click()
   const sizes = [[1440, 900], [1100, 800], [820, 1100], [390, 844]] as const
   const seen: Awaited<ReturnType<typeof geometry>>[] = []
   for (const [width, height] of sizes) {
@@ -135,8 +149,6 @@ test('the study area can be selected from the keyboard', async ({ page }) => {
   await page.getByTestId('kyiv-label').focus()
   await page.keyboard.press('Enter')
   await expect(page.getByTestId('kyiv-label')).toHaveAttribute('aria-pressed', 'true')
-  await openScroll(page)
-  await expect(page.getByTestId('evidence-area')).toBeVisible()
   await expect(page.getByTestId('guide-bubble')).toContainText('whole Kyiv study area')
 })
 

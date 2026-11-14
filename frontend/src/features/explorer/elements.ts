@@ -33,10 +33,16 @@ const NOTE_BY_REASON: Record<string, string> = {
   data_not_ready: 'Data not ready',
 }
 
-export function resolveElements(catalog: ElementEntry[]): ElementView[] {
+/**
+ * `supported` lists the elements this screen can actually show. The API may
+ * already serve data for an element before the screen has a view for it; such
+ * an element stays "Coming later" instead of opening an empty state.
+ */
+export function resolveElements(catalog: ElementEntry[], supported?: readonly string[]): ElementView[] {
   return THEMES.map((theme) => {
     const entry = catalog.find((e) => e.element_id === theme.id)
-    const available = entry?.status === 'available' && (entry.studies?.length ?? 0) > 0
+    const hasView = supported ? supported.includes(theme.id) : true
+    const available = hasView && entry?.status === 'available' && (entry.studies?.length ?? 0) > 0
     return {
       ...theme,
       available,

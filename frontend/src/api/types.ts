@@ -187,6 +187,12 @@ export interface TrendWindow {
   p_value: number | null
   significant_at_alpha_0_05: boolean | null
   assumptions_and_caveats: string[]
+  /** Rank-based check of the same trend (seasonal Theil–Sen slope, modified Mann–Kendall). */
+  nonparametric_sensitivity?: {
+    method: string
+    seasonal_theil_sen_molec_cm2_per_year: number | null
+    hamed_rao_mk?: { n_months: number; p_value_unadjusted: number | null; p_value_hamed_rao: number | null }
+  }
 }
 
 export interface MonthlyPoint {

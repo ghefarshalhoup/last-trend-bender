@@ -31,10 +31,29 @@ function OptionText({ option }: { option: ControlOption }) {
 /** Time and comparison controls. Generic: it renders whichever groups the active layer supports. */
 export function LayerControlsBar({ controls, selection, actions }: Props) {
   const radioName = useId()
-  const { periods, comparisons } = controls
-  if (!periods && !comparisons) return null
+  const { windows, periods, comparisons } = controls
+  if (!windows && !periods && !comparisons) return null
   return (
     <div className={styles.bar} data-testid="layer-controls">
+      {windows ? (
+        <div role="group" aria-label={windows.label} className={styles.group}>
+          <span className={styles.groupLabel}>{windows.label}</span>
+          <div className={styles.options}>
+            {windows.options.map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                className={styles.option}
+                aria-pressed={selection.window === option.id}
+                onClick={() => actions.selectWindow(option.id)}
+                data-testid={`window-${option.id}`}
+              >
+                <OptionText option={option} />
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
       {periods ? (
         <div role="group" aria-label={periods.label} className={styles.group}>
           <span className={styles.groupLabel}>{periods.label}</span>

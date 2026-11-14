@@ -33,7 +33,7 @@ function Explorer({ catalog }: { catalog: CatalogBundle }) {
   const [command, setCommand] = useState<MapCommand>({ kind: 'ukraine', nonce: 0 }) // camera requests only
   const [explored, setExplored] = useState(false) //               has the reader opened Kyiv yet
 
-  const elements = useMemo(() => resolveElements(catalog.elements), [catalog.elements])
+  const elements = useMemo(() => resolveElements(catalog.elements, [AIR_ELEMENT_ID]), [catalog.elements])
   const airEndpoint = studyEndpointFor(catalog.elements, AIR_ELEMENT_ID)
 
   // The study is requested the first time Air is selected, then kept.
