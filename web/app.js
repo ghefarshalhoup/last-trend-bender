@@ -531,11 +531,11 @@ function renderExplorer() {
     );
   } else if (state.metricId.startsWith("fire_")) {
     readingParts.push(
-      "VIIRS S-NPP fire density normalizes detections by area (1,000 km²) and observed satellite days; contrast Vegetation/Conflict type0 against static Industrial Flare type2."
+      "VIIRS S-NPP detection density normalizes thermal anomalies by area (1,000 km²) and observed days; contrast presumed vegetation (type0) against other static land sources (type2). Hotspots do not measure burned hectares."
     );
   } else {
     readingParts.push(
-      "Positive anomalies sit above the seasonal 0 baseline; compare regional anomalies in Section 3 to separate climate drying from conflict activity."
+      "Positive anomalies sit above the seasonal 0 baseline; compare regional anomalies in Section 3 to separate climate drying from local shifts."
     );
   }
   dom.interpReadingText.textContent = readingParts.join(" ");
@@ -546,11 +546,11 @@ function renderExplorer() {
   if (state.metricId === "no2_mean_molec_cm2") {
     cautionParts.push("April 2022 OMI contains only 8/30 valid days (hollow diamond marker); verify sensitivity excluding 2022-04 and <3 m/s calm wind in Section 2.");
   } else if (state.metricId.startsWith("fire_")) {
-    cautionParts.push("VIIRS S-NPP suffered orbit outage days in March and July–August 2022; rates normalize by observed satellite days.");
+    cautionParts.push("VIIRS S-NPP has a CMR-verified 15-day outage in Jul 27–Aug 10, 2022 (0 granules), while Mar 5 had 8 granules (valid zero-detection day). Rectangular borders exceed Ukraine land by 1.0–1.4x (see matched 169d/yr UKR-clipped audit in docs/reports).");
   } else if (isMetricIntervalScale(state.metricId)) {
-    cautionParts.push("This series sits on an interval/signed balance scale without a true zero, so absolute physical shifts are valid while % changes are withheld.");
+    cautionParts.push("This series sits on an interval/signed balance scale without a true zero, so absolute physical shifts are valid while % changes are withheld. MERRA-2/CERES fields provide background hydroclimate context, not river-gauge contamination or physical land damage.");
   } else {
-    cautionParts.push("MERRA-2 / CERES grid resolution (~50 km) captures regional synoptic regimes rather than micro-local street conditions; an 8-year record is shorter than WMO 30-year climatology.");
+    cautionParts.push("MERRA-2 / CERES (~50 km, 3x3 sampled grid) measures regional background meteorology & hydrology rather than war-caused water quality, SAR cratering, or burn-scar damage; an 8-year record is shorter than WMO 30-year climatology.");
   }
   dom.interpCautionText.textContent = cautionParts.join(" ");
 }
@@ -605,17 +605,22 @@ function renderWeatherSection() {
     dom.euWeatherStrip.appendChild(card);
   }
 
-  // Render Observed vs Weather-Expected NO2 canvas
+  // Render Observed vs Full No-Step Counterfactual (Trend + Weather ± 95% AR(1) CI)
   const series = bt.weather_residual_monthly_series || [];
   const { ctx, width, height } = setCanvasSize(dom.weatherCanvas);
   ctx.clearRect(0, 0, width, height);
   if (series.length > 0) {
-    const pad = { left: 54, right: 16, top: 18, bottom: 28 };
+    const pad = { left: 54, right: 16, top: 22, bottom: 28 };
     const plotW = Math.max(40, width - pad.left - pad.right);
     const plotH = Math.max(40, height - pad.top - pad.bottom);
     const obs = series.map((r) => Number(r.no2_anomaly_molec_cm2) * 1e-15);
-    const wth = series.map((r) => Number(r.weather_predicted_no2_anomaly_molec_cm2) * 1e-15);
-    const allY = [...obs, ...wth, 0];
+    const cf = series.map(
+      (r) => Number(r.no_step_counterfactual_no2_anomaly_molec_cm2 ?? r.weather_predicted_no2_anomaly_molec_cm2) * 1e-15
+    );
+    const cfCi = series.map((r) => Number(r.no_step_counterfactual_ci95_half_molec_cm2 || 0) * 1e-15);
+    const cfUp = cf.map((v, i) => v + cfCi[i]);
+    const cfDn = cf.map((v, i) => v - cfCi[i]);
+    const allY = [...obs, ...cf, ...cfUp, ...cfDn, 0];
     let yMin = Math.min(...allY);
     let yMax = Math.max(...allY);
     const span = Math.max(0.5, yMax - yMin);
@@ -681,6 +686,20 @@ function renderWeatherSection() {
       }
     });
 
+    // 95% AR(1) uncertainty band around no-step counterfactual (trend + weather)
+    if (cfCi.some((h) => h > 0)) {
+      ctx.save();
+      ctx.fillStyle = "rgba(180, 83, 9, 0.16)";
+      ctx.beginPath();
+      cfUp.forEach((v, i) => (i === 0 ? ctx.moveTo(xFor(i), yFor(v)) : ctx.lineTo(xFor(i), yFor(v))));
+      for (let i = cfDn.length - 1; i >= 0; i -= 1) {
+        ctx.lineTo(xFor(i), yFor(cfDn[i]));
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
     // Observed NO2
     ctx.strokeStyle = "#185a8c";
     ctx.lineWidth = 1.9;
@@ -688,28 +707,28 @@ function renderWeatherSection() {
     obs.forEach((v, i) => (i === 0 ? ctx.moveTo(xFor(i), yFor(v)) : ctx.lineTo(xFor(i), yFor(v))));
     ctx.stroke();
 
-    // Weather-expected counterfactual
+    // Full No-Step Counterfactual (trend + local weather)
     ctx.strokeStyle = "#b45309";
     ctx.lineWidth = 1.7;
     ctx.beginPath();
-    wth.forEach((v, i) => (i === 0 ? ctx.moveTo(xFor(i), yFor(v)) : ctx.lineTo(xFor(i), yFor(v))));
+    cf.forEach((v, i) => (i === 0 ? ctx.moveTo(xFor(i), yFor(v)) : ctx.lineTo(xFor(i), yFor(v))));
     ctx.stroke();
 
     // Compact legend
-    ctx.font = "600 10px sans-serif";
+    ctx.font = "600 9.5px sans-serif";
     ctx.textAlign = "left";
     ctx.fillStyle = "#185a8c";
-    ctx.fillText("— Observed NO2 Anom", pad.left + 6, pad.top + 8);
+    ctx.fillText("— Observed NO2 Anom", pad.left + 6, pad.top - 10);
     ctx.fillStyle = "#b45309";
-    ctx.fillText("— Expected from Local Weather", pad.left + 135, pad.top + 8);
+    ctx.fillText("— No-Step Counterfactual (Trend+Met ±95% CI)", pad.left + 135, pad.top - 10);
   }
 
   clearNode(dom.boxTiaoGrid);
   const models = [
-    ["Unadjusted Step", bt.box_tiao_unadjusted_all_months],
-    ["+ Meteorology (All Mo)", bt.box_tiao_weather_controlled_all_months],
-    ["+ Met Excl. Apr 2022", bt.box_tiao_weather_controlled_excl_apr2022],
-    ["+ Met Mar–Aug Only", bt.box_tiao_weather_controlled_mar_aug_only],
+    ["Unadjusted Step (n=90)", bt.box_tiao_unadjusted_all_months],
+    ["+ Meteorology (All Mo, n=90)", bt.box_tiao_weather_controlled_all_months],
+    ["+ Met Excl. Apr 2022 (n=89)", bt.box_tiao_weather_controlled_excl_apr2022],
+    ["+ Met Mar–Aug Only (n=48)", bt.box_tiao_weather_controlled_mar_aug_only],
   ];
   for (const [label, m] of models) {
     const box = el("div", "mini-stat");
@@ -718,7 +737,7 @@ function renderWeatherSection() {
       el(
         "strong",
         null,
-        `delta ${fmtSci(m.delta_step)} | R²=${fmtNum(m.r_squared, 3)} | p=${fmtNum(m.p_value_ar1, 3)}`
+        `delta ${fmtSci(m.delta_step)} | R²=${fmtNum(m.r_squared, 3)} | p_AR1=${fmtNum(m.p_value_ar1, 4)}`
       )
     );
     dom.boxTiaoGrid.appendChild(box);
@@ -802,8 +821,8 @@ function renderContrastSection() {
   clearNode(tbody);
   const colLabels = [
     "Region",
-    "Fire type0 %",
-    "Flare type2 %",
+    "Veg type0 %",
+    "Static type2 %",
     "Delta VPD (kPa)",
     "Delta Soil Wet",
     "Delta T2M (C)",
@@ -997,13 +1016,15 @@ function exportMarkdownBrief() {
     `- Causal Attribution: ${state.bundle.status.causal_attribution}`,
     "",
     "## Kyiv Air Meteorology Control (NO2 + MERRA-2)",
-    `- Unadjusted Box-Tiao step: delta=${fmtSci(bt.box_tiao_unadjusted_all_months.delta_step)}, R²=${fmtNum(bt.box_tiao_unadjusted_all_months.r_squared, 4)}`,
-    `- Weather-controlled Box-Tiao step: delta=${fmtSci(bt.box_tiao_weather_controlled_all_months.delta_step)}, R²=${fmtNum(bt.box_tiao_weather_controlled_all_months.r_squared, 4)}, p_ar1=${fmtNum(bt.box_tiao_weather_controlled_all_months.p_value_ar1, 4)}`,
+    `- Unadjusted Box-Tiao step (n=${bt.box_tiao_unadjusted_all_months.n_obs}): delta=${fmtSci(bt.box_tiao_unadjusted_all_months.delta_step)}, R²=${fmtNum(bt.box_tiao_unadjusted_all_months.r_squared, 4)}, p_ar1=${fmtNum(bt.box_tiao_unadjusted_all_months.p_value_ar1, 6)}`,
+    `- + Meteorology All Months (n=${bt.box_tiao_weather_controlled_all_months.n_obs}): delta=${fmtSci(bt.box_tiao_weather_controlled_all_months.delta_step)}, R²=${fmtNum(bt.box_tiao_weather_controlled_all_months.r_squared, 4)}, p_ar1=${fmtNum(bt.box_tiao_weather_controlled_all_months.p_value_ar1, 6)}`,
+    `- + Meteorology Excl. Apr 2022 (n=${bt.box_tiao_weather_controlled_excl_apr2022.n_obs}): delta=${fmtSci(bt.box_tiao_weather_controlled_excl_apr2022.delta_step)}, R²=${fmtNum(bt.box_tiao_weather_controlled_excl_apr2022.r_squared, 4)}, p_ar1=${fmtNum(bt.box_tiao_weather_controlled_excl_apr2022.p_value_ar1, 6)}`,
+    `- + Meteorology Mar-Aug Only (n=${bt.box_tiao_weather_controlled_mar_aug_only.n_obs}): delta=${fmtSci(bt.box_tiao_weather_controlled_mar_aug_only.delta_step)}, R²=${fmtNum(bt.box_tiao_weather_controlled_mar_aug_only.r_squared, 4)}, p_ar1=${fmtNum(bt.box_tiao_weather_controlled_mar_aug_only.p_value_ar1, 6)}`,
     "",
-    "## Regional Fire x Water x Earth Contrast (Mar-Aug 2022 vs 2019-2021)",
+    "## Regional Fire-Weather x Detection-Rate Contrast (Mar-Aug 2022 vs 2019-2021)",
     ...fwe.map(
       (r) =>
-        `- ${r.region_name}: type0 ${fmtSigned(r.fire_type0_pct_change, 1, "%")}, type2 ${r.fire_type2_pct_change === null ? "n/a" : fmtSigned(r.fire_type2_pct_change, 1, "%")}, dVPD ${fmtSigned(r.vpd_diff_kpa, 3, " kPa")}, dGWETTOP ${fmtSigned(r.gwettop_diff, 3)}`
+        `- ${r.region_name}: presumed-veg type0 ${fmtSigned(r.fire_type0_pct_change, 1, "%")}, static-land type2 ${r.fire_type2_pct_change === null ? "n/a" : fmtSigned(r.fire_type2_pct_change, 1, "%")}, dVPD ${fmtSigned(r.vpd_diff_kpa, 3, " kPa")}, dGWETTOP ${fmtSigned(r.gwettop_diff, 3)}`
     ),
     "",
     "## Investigator Case Ledger Notes",
@@ -1160,7 +1181,7 @@ function bindEvents() {
     dom.fireVpdCanvas.style.cursor = hit ? "pointer" : "default";
     if (hit) {
       dom.scatterHoverReadout.textContent =
-        `${hit.region_name}: Fire type0 ${fmtSigned(hit.fire_type0_pct_change, 1, "%")} | Flare type2 ${hit.fire_type2_pct_change === null ? "n/a" : fmtSigned(hit.fire_type2_pct_change, 1, "%")} | dVPD ${fmtSigned(hit.vpd_diff_kpa, 3, " kPa")} | dSoil ${fmtSigned(hit.gwettop_diff, 3)} | dT2M ${fmtSigned(hit.t2m_diff_c, 2, " C")}`;
+        `${hit.region_name}: Veg type0 ${fmtSigned(hit.fire_type0_pct_change, 1, "%")} | Static type2 ${hit.fire_type2_pct_change === null ? "n/a" : fmtSigned(hit.fire_type2_pct_change, 1, "%")} | dVPD ${fmtSigned(hit.vpd_diff_kpa, 3, " kPa")} | dSoil ${fmtSigned(hit.gwettop_diff, 3)} | dT2M ${fmtSigned(hit.t2m_diff_c, 2, " C")}`;
     }
   });
 
@@ -1183,7 +1204,7 @@ function bindEvents() {
       const nxt = metas[(curIdx + 1) % metas.length].row;
       state.hoverScatterRegionId = nxt.region_id;
       dom.scatterHoverReadout.textContent =
-        `${nxt.region_name}: Fire type0 ${fmtSigned(nxt.fire_type0_pct_change, 1, "%")} | Flare type2 ${nxt.fire_type2_pct_change === null ? "n/a" : fmtSigned(nxt.fire_type2_pct_change, 1, "%")} | dVPD ${fmtSigned(nxt.vpd_diff_kpa, 3, " kPa")} | dSoil ${fmtSigned(nxt.gwettop_diff, 3)} | dT2M ${fmtSigned(nxt.t2m_diff_c, 2, " C")} (press Enter to load)`;
+        `${nxt.region_name}: Veg type0 ${fmtSigned(nxt.fire_type0_pct_change, 1, "%")} | Static type2 ${nxt.fire_type2_pct_change === null ? "n/a" : fmtSigned(nxt.fire_type2_pct_change, 1, "%")} | dVPD ${fmtSigned(nxt.vpd_diff_kpa, 3, " kPa")} | dSoil ${fmtSigned(nxt.gwettop_diff, 3)} | dT2M ${fmtSigned(nxt.t2m_diff_c, 2, " C")} (press Enter to load)`;
       renderContrastSection();
     } else if (event.key === "ArrowLeft") {
       event.preventDefault();
@@ -1191,7 +1212,7 @@ function bindEvents() {
       const prv = metas[prvIdx].row;
       state.hoverScatterRegionId = prv.region_id;
       dom.scatterHoverReadout.textContent =
-        `${prv.region_name}: Fire type0 ${fmtSigned(prv.fire_type0_pct_change, 1, "%")} | Flare type2 ${prv.fire_type2_pct_change === null ? "n/a" : fmtSigned(prv.fire_type2_pct_change, 1, "%")} | dVPD ${fmtSigned(prv.vpd_diff_kpa, 3, " kPa")} | dSoil ${fmtSigned(prv.gwettop_diff, 3)} | dT2M ${fmtSigned(prv.t2m_diff_c, 2, " C")} (press Enter to load)`;
+        `${prv.region_name}: Veg type0 ${fmtSigned(prv.fire_type0_pct_change, 1, "%")} | Static type2 ${prv.fire_type2_pct_change === null ? "n/a" : fmtSigned(prv.fire_type2_pct_change, 1, "%")} | dVPD ${fmtSigned(prv.vpd_diff_kpa, 3, " kPa")} | dSoil ${fmtSigned(prv.gwettop_diff, 3)} | dT2M ${fmtSigned(prv.t2m_diff_c, 2, " C")} (press Enter to load)`;
       renderContrastSection();
     } else if (event.key === "Enter" && state.hoverScatterRegionId) {
       event.preventDefault();
