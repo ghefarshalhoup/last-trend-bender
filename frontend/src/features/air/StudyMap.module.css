@@ -1,0 +1,22 @@
+.figure { display: flex; flex-direction: column; gap: var(--space-3); }
+.frame {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-night-line);
+  background: #dfe6ee;
+}
+.map { height: clamp(20rem, 46vw, 34rem); width: 100%; z-index: 0; }
+.reset {
+  position: absolute; z-index: 1000; top: 10px; right: 10px;
+  min-height: 36px; padding: 0 var(--space-3);
+  background: var(--color-surface); color: var(--color-ink);
+  border: 1px solid var(--color-line-strong); border-radius: var(--radius-sm);
+  font-size: var(--text-xs); font-weight: 600; cursor: pointer;
+}
+.reset:hover { background: var(--color-paper); }
+.caption { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); font-size: var(--text-xs); color: var(--color-on-night-muted); }
+.legend { display: inline-flex; align-items: center; gap: var(--space-2); }
+.swatchSolid { width: 1.4rem; height: 0; border-top: 3px solid #eb6834; }
+.swatchDashed { width: 1.4rem; height: 0; border-top: 2px dashed #9db0c7; }
+.note { flex-basis: 100%; max-width: 60ch; line-height: 1.45; }

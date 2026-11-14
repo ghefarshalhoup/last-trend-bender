@@ -1,0 +1,9 @@
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: var(--space-5); }
+.item { display: grid; gap: var(--space-2); align-content: start; }
+.thumb { display: block; border: 1px solid var(--color-line-strong); border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); }
+.thumb img { width: 100%; height: auto; }
+.thumb:hover { border-color: var(--color-ink-muted); }
+.title { font-size: var(--text-sm); color: var(--color-ink-muted); }
+.fallback { padding: var(--space-4); border: 1px dashed var(--color-line-strong); border-radius: var(--radius-md); background: var(--status-neutral-bg); display: grid; gap: var(--space-1); font-size: var(--text-sm); }
+.fallback a { color: var(--series-baseline-ink); }
+.empty { padding: var(--space-4); border: 1px dashed var(--color-line-strong); border-radius: var(--radius-md); color: var(--color-ink-muted); max-width: var(--measure); }
