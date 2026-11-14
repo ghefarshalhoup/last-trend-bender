@@ -1,30 +1,35 @@
-# Frontend handoff (milestone 1)
+# Frontend handoff (map-first Air journey)
 
-Run and structure: see `frontend/README.md`. Screenshots: `docs/screenshots/frontend/`.
+Run and structure: `frontend/README.md`. Screenshots: `docs/screenshots/frontend/`.
 
-## What is built
-One screen, Ukraine → Air/NO₂ → Kyiv: header and breadcrumb, the opening question, the study-boundary map, the seasonal summary with a baseline selector, a March–August 2022-vs-baseline chart (with a table view), a keyboard- and touch-usable month inspector, permanent coverage and scientific notices, an evidence area (sources, methods, limitations, statistical status), supplementary figures, and a placeholder guide whose narration follows the selected element, baseline and month.
+## Built
+Ukraine map → choose Air → Kyiv study box revealed → select Kyiv → NO₂ evidence panel, in a parchment/gilt, Avatar-inspired interface (art-direction only; the map is real geography from React Leaflet).
+Neutral state, element controls (Air available; Fire, Earth, Water "Coming later" from the catalog), "L Legend", guide bubble, Reset Ukraine view, Explore Kyiv (button, boundary click, keyboard marker), Close panel, Clear element.
+Panel: location/variable/period, map note, baseline selector, seasonal headline, persistent coverage warnings and scientific notices, interactive chart (+ table), month buttons, month inspector, guide narration, expandable sources/methods/limitations/statistics, supplementary figures.
 
-## How it consumes the API
+## API use
 | Need | Field |
 |---|---|
-| Is Air available? Which endpoint? | `/api/cases` → `elements[air].studies[0].endpoint` |
-| Map frame and outline | `map.bounds`, `map.study_boundary`, `map.sampled_grid_center_extent`, `map.note` |
-| Seasonal headline | `result.comparisons[<baseline id>]` |
-| "Excluding low-coverage months" line | `result.coverage_sensitivity.excluding_target_flagged_months[<baseline id>]` |
-| Chart and inspector | `result.matched_months[]` (`target_2022`, `<baseline>`, `vs_<baseline>`) |
-| Coverage warnings, notices | `highlights.coverage_warnings`, `highlights.notices` |
-| Statistics | `result.statistics.*` (before/after and multi-year trend kept apart) |
-| Figures | `charts[]` only; image URL = `chart.url` |
+| Availability and study endpoint | `/api/cases` → `elements[].status`, `studies[0].endpoint` (study loaded only when Air is first selected) |
+| Kyiv boundary, marker, focus bounds | `map.study_boundary`, `map.center`, `map.bounds` (never redrawn) |
+| Headline | `result.comparisons[<baseline id>]` |
+| Chart, inspector, label on the box | `result.matched_months[]` |
+| Warnings and notices | `highlights.*` |
+| Figures | `charts[]` only |
+
+## Verified (this branch)
+`npm run typecheck`, `npm run build`, `npm test` (31), `npm run test:e2e` against the real backend (14): neutral state and Ukraine framing (checked from the map tiles requested: Crimea's south to Ukraine's west/east extremes), Air selection and Kyiv discovery, marker click and keyboard Enter, panel open/close, both baselines, April 8/30 warning, missing values, study and catalog failure with retry, missing/failed figures, desktop and mobile layout (no sideways scroll, 44px targets).
 
 ## Known limitations
-- The basemap is CARTO light tiles via OpenStreetMap data. It needs internet at runtime; with tiles blocked the outline still shows on a plain background. Attribution is shown.
-- The production bundle is about 930 kB (280 kB gzipped) because Leaflet and Recharts are in one chunk. Route-level code splitting is a follow-up.
-- Only Air/Kyiv exists. Fire, Land and Water show as "not yet available" from the catalog.
-- The guide is a placeholder abstract mark; final character art is pending.
-- Visual design is a considered draft, not yet matched to Figma.
-- Playwright uses system Chrome (`channel: 'chrome'`), not a bundled browser.
-- The map has no keyboard-driven data layer: it carries no per-location data by design.
+- Basemap tiles need internet (CARTO/OSM). In the sandbox they were blocked, so screenshots show a grey basemap; the outline, label and UI are real. **Look at it once locally with tiles before presenting.**
+- Basemap is a standard light map, not the illustrated basemap or a 3D globe (out of scope).
+- Kyiv box is small at country scale; the marker, label and Explore Kyiv button make it discoverable.
+- Mobile uses a stacked panel under the map, not a bottom sheet.
+- Guide is a placeholder mark with short API-derived text; no AI chat.
+- Element label "Earth" is a frontend display mapping of the catalog's `land`; decide whether the catalog should say Earth.
+- Bundle ≈ 930 kB (280 kB gzip); code splitting is a follow-up.
+- Decoration is CSS-only; the generated illustration is not used as an asset.
+- E2E uses system Chrome.
 
-## Backend notes (flagged, not changed)
-None blocking. The contract matched `docs/backend-api.md` throughout.
+## Backend notes
+None blocking; no backend changes.

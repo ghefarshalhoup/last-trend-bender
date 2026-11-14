@@ -48,15 +48,32 @@ The built app calls relative `/api/...` URLs. Pick one:
 ## Layout
 
 ```
-src/api/          typed client (ApiError kinds, retry-able), contract types, shape check, useApiResource
-src/adapters/     pure helpers: formatting, baselines, month rows, chart points, "absence" kinds
-src/components/   shared pieces (AbsenceMark, Disclosure)
-src/features/air/ the Air screen, one component per concern, each with a CSS Module
-src/styles/       tokens.css (colour, type, space) + global.css
-e2e/              Playwright smoke test
+src/api/               typed client (ApiError kinds, retry-able), contract types, shape check, useApiResource (lazy via `enabled`)
+src/adapters/          pure helpers: formatting, baselines, month rows, chart points, "absence" kinds
+src/components/        shared pieces: AbsenceMark, Disclosure, AvatarMark, DecorativeFrame
+src/features/explorer/ map-first shell: AirExplorer (state), UkraineMap, ElementControls, MapLegend, GuideBubble, TitleBadge, elements.ts, kyivLabel.ts
+src/features/air/      Kyiv · NO₂ study panel and its parts (chart, picker, inspector, warnings, evidence, figures, guide)
+src/styles/            tokens.css (palette, type, space) + global.css
+e2e/                   Playwright smoke test
 ```
 
-For the Figma pass: colours, type scale, spacing and radii live in `src/styles/tokens.css`; layout lives in `features/air/AirScreen.module.css`; each component owns its own module.
+For the Figma pass: parchment/ink/element colours, type scale and spacing live in `src/styles/tokens.css`; each component owns a CSS Module. Buttons, labels, avatar and frame are separate components (`ElementControls`, `GuideBubble`, `AvatarMark`, `DecorativeFrame`).
+
+## Interaction model
+
+Journey: **Ukraine map → choose Air → Kyiv study box revealed → select Kyiv → explore NO₂ results.**
+Four pieces of state are independent: selected element, panel open/closed, baseline + month, and map camera (a command, never data).
+
+| Action | Effect |
+|---|---|
+| open | catalog loaded (`/api/cases`); Ukraine framed; nothing scientific shown; study not requested |
+| choose Air | study package loaded from the catalog's endpoint; Kyiv boundary, marker and label shown; view stays on Ukraine |
+| click boundary / marker, press Enter on the marker, or **Explore Kyiv** | camera focuses on the API bounds; panel opens |
+| **Close panel** | panel hides; Air, baseline, month, camera stay |
+| **Reset Ukraine view** | camera only |
+| **Clear element** | back to the neutral state (camera returns to Ukraine) |
+
+Element labels: the catalog calls the fourth element `land`; the UI shows it as **Earth** (label mapping in `elements.ts`; availability always comes from the catalog).
 
 ## Scientific behaviour (what the UI guarantees)
 
@@ -66,4 +83,4 @@ For the Figma pass: colours, type scale, spacing and radii live in `src/styles/t
 - `null` is never drawn as zero and chart lines are not joined across it. Three absences are named differently: *No valid measurement* (missing data), *Not assessed* (statistic not computed), *Unavailable* (figure withheld).
 - Seasonal before/after status and the multi-year trend are shown in separate blocks. "Causal attribution: not established" stays visible.
 - The shaded band is min–max across baseline years (variability), labelled as not a confidence interval.
-- The map is a study-area outline, not a heatmap; panning changes the view only.
+- The map is a study-area outline, not a heatmap; panning, zooming and reset change the view only. The label on the Kyiv box shows the seasonal headline (labelled March–August) until a month is chosen, then that month, labelled as the month.

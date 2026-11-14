@@ -1,0 +1,9 @@
+.bubble {
+  display: flex; gap: var(--space-3); align-items: center;
+  max-width: 21rem; padding: var(--space-3) var(--space-4);
+  background: var(--color-parchment);
+  border: 1.5px solid var(--color-gilt); border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(43, 33, 23, 0.18);
+  font-size: var(--text-sm);
+}
+.text { line-height: 1.4; }

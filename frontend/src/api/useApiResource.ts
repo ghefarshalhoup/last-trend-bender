@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { ApiError } from './client'
 
 export type ResourceState<T> =
+  | { status: 'idle' }
   | { status: 'loading' }
   | { status: 'success'; data: T }
   | { status: 'error'; error: ApiError }
@@ -12,16 +13,18 @@ function toApiError(cause: unknown): ApiError {
 }
 
 /**
- * Load a resource once on mount, abort on unmount, and expose `retry`.
+ * Load a resource once on mount (or once `enabled` becomes true), abort on unmount, and expose `retry`.
  * `loader` should be stable (defined at module level or memoised).
  */
-export function useApiResource<T>(loader: (signal: AbortSignal) => Promise<T>) {
-  const [state, setState] = useState<ResourceState<T>>({ status: 'loading' })
+export function useApiResource<T>(loader: (signal: AbortSignal) => Promise<T>, options: { enabled?: boolean } = {}) {
+  const enabled = options.enabled ?? true
+  const [state, setState] = useState<ResourceState<T>>(enabled ? { status: 'loading' } : { status: 'idle' })
   const [attempt, setAttempt] = useState(0)
   const latest = useRef(loader)
   latest.current = loader
 
   useEffect(() => {
+    if (!enabled) return
     const controller = new AbortController()
     setState({ status: 'loading' })
     latest.current(controller.signal).then(
@@ -34,7 +37,7 @@ export function useApiResource<T>(loader: (signal: AbortSignal) => Promise<T>) {
       },
     )
     return () => controller.abort()
-  }, [attempt])
+  }, [attempt, enabled])
 
   const retry = useCallback(() => setAttempt((n) => n + 1), [])
   return { state, retry }

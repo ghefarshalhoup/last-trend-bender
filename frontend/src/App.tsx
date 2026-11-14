@@ -1,5 +1,5 @@
-import { AirPage } from './features/air/AirPage'
+import { ExplorerPage } from './features/explorer/AirExplorer'
 
 export function App() {
-  return <AirPage />
+  return <ExplorerPage />
 }

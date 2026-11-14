@@ -1,0 +1,41 @@
+.app { padding: var(--space-4); min-height: 100dvh; display: flex; }
+.frame { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.header {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-line-strong);
+}
+.main { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr); min-height: 0; }
+.mapArea { position: relative; min-height: 26rem; height: 62dvh; isolation: isolate; border-bottom: 1px solid var(--color-line-strong); }
+.panelArea { background: var(--color-parchment); min-width: 0; }
+
+/* Overlays sit above Leaflet's own panes (which go up to z-index 1000). */
+.topRight { position: absolute; top: var(--space-3); right: var(--space-3); z-index: 1100; display: grid; gap: var(--space-2); justify-items: end; }
+.bottomLeft { position: absolute; left: var(--space-3); bottom: var(--space-5); z-index: 1100; display: grid; gap: var(--space-2); max-width: calc(100% - var(--space-5)); }
+.mapButton {
+  min-height: 40px; padding: 0 var(--space-4);
+  background: var(--color-parchment); color: var(--color-ink);
+  border: 1.5px solid var(--color-gilt); border-radius: var(--radius-md);
+  font-size: var(--text-sm); font-weight: 600; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(43, 33, 23, 0.18);
+}
+.mapButton:hover { background: var(--color-surface); }
+.primary { background: var(--element-air); color: #fff; border-color: var(--color-ink); }
+.primary:hover { background: #9d7415; }
+.errorCard, .loadingNote {
+  padding: var(--space-3) var(--space-4);
+  background: var(--status-error-bg); color: var(--status-error-ink);
+  border: 1.5px solid var(--status-error-line); border-radius: var(--radius-md);
+  font-size: var(--text-sm); max-width: 22rem; display: grid; gap: var(--space-2);
+}
+.loadingNote { background: var(--color-parchment); color: var(--color-ink); border-color: var(--color-gilt); }
+.errorActions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+@media (min-width: 62rem) {
+  .app { height: 100dvh; }
+  .frame { min-height: 0; }
+  .mapArea { height: auto; min-height: 0; border-bottom: 0; }
+  .app[data-panel='open'] .main { grid-template-columns: minmax(0, 1fr) var(--panel-width); }
+  .app[data-panel='open'] .panelArea { border-left: 1px solid var(--color-line-strong); overflow-y: auto; }
+}

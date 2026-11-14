@@ -1,7 +1,9 @@
 import type { ElementEntry } from '../../api/types'
+import { resolveElements } from '../explorer/elements'
 import type { SeasonalSummary } from '../../adapters/baselines'
 import { formatDays, formatFraction, formatPercent, monthsRangeLabel, yearsRangeLabel } from '../../adapters/format'
 import type { MonthRow } from '../../adapters/months'
+import { AvatarMark } from '../../components/Avatar/AvatarMark'
 import styles from './AvatarGuide.module.css'
 
 interface Props {
@@ -21,23 +23,18 @@ export function AvatarGuide({ summary, month, elements }: Props) {
   const { comparison } = summary
   const months = monthsRangeLabel(comparison.months_included)
   const baseline = yearsRangeLabel(comparison.baseline_years_requested)
-  const waiting = elements.filter((e) => e.status !== 'available').map((e) => e.label)
+  const waiting = resolveElements(elements).filter((e) => !e.available).map((e) => e.label)
 
   return (
     <aside className={styles.wrap} aria-label="Guide narration" data-testid="avatar-intro">
-      <svg className={styles.mark} viewBox="0 0 64 64" role="img" aria-label="Guide placeholder (final character art pending)">
-        <circle cx="32" cy="32" r="30" fill="#17283f" />
-        <circle cx="32" cy="26" r="9" fill="none" stroke="#9db0c7" strokeWidth="2.5" />
-        <path d="M14 52c2-11 10-16 18-16s16 5 18 16" fill="none" stroke="#9db0c7" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M20 14c6-5 18-5 24 0" fill="none" stroke="#eb6834" strokeWidth="2.5" strokeLinecap="round" />
-      </svg>
+      <AvatarMark />
       <div className={styles.text}>
         <p className={styles.name}>
           Your guide <span className={styles.pending}>(character art pending)</span>
         </p>
 
         <p data-testid="guide-element">
-          I came to read what Ukraine's air, fire, water and land recorded. Today I am reading <strong>Air</strong>:{' '}
+          I came to read what Ukraine's air, fire, water and earth recorded. Today I am reading <strong>Air</strong>:{' '}
           {comparison.pct_change === null ? (
             <>the percentage difference for {months} {summary.targetYear} against {baseline} cannot be shown.</>
           ) : (

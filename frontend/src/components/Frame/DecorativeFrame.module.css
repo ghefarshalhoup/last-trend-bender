@@ -1,0 +1,11 @@
+.frame {
+  position: relative;
+  border: 3px double var(--color-gilt);
+  background: var(--color-parchment);
+  box-shadow: inset 0 0 0 4px var(--color-parchment), inset 0 0 0 5px var(--color-line-strong);
+}
+.corner { position: absolute; width: 14px; height: 14px; border: 2px solid var(--color-gilt); background: var(--color-parchment); z-index: 2; pointer-events: none; }
+.tl { top: -8px; left: -8px; border-radius: 0 50% 0 50%; }
+.tr { top: -8px; right: -8px; border-radius: 50% 0 50% 0; }
+.bl { bottom: -8px; left: -8px; border-radius: 50% 0 50% 0; }
+.br { bottom: -8px; right: -8px; border-radius: 0 50% 0 50%; }

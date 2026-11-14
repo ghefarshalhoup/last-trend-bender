@@ -1,4 +1,4 @@
-import type { AirStudyBundle } from '../api/airStudy'
+import type { CatalogBundle } from '../api/airStudy'
 import type { CasesResponse, StudyPackage } from '../api/types'
 import casesJson from './fixtures/cases.json'
 import studyJson from './fixtures/air-kyiv.json'
@@ -11,9 +11,13 @@ export function clone<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T
 }
 
-export function makeBundle(mutate?: (study: StudyPackage) => void): AirStudyBundle {
+export function makeStudy(mutate?: (study: StudyPackage) => void): StudyPackage {
   const study = clone(studyFixture)
   mutate?.(study)
-  const caseEntry = (clone(casesFixture)).cases[0]!
-  return { caseEntry, elements: caseEntry.elements, study }
+  return study
+}
+
+export function makeCatalog(): CatalogBundle {
+  const caseEntry = clone(casesFixture).cases[0]!
+  return { caseEntry, elements: caseEntry.elements }
 }

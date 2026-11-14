@@ -3,20 +3,33 @@
  * should mostly be a change to this file.
  */
 :root {
-  /* ink and paper: night-sky navy against a cool, slightly blue-grey paper */
-  --color-night: #0f1c2e;
-  --color-night-raised: #17283f;
-  --color-night-line: #2b4160;
-  --color-on-night: #e8eef6;
-  --color-on-night-muted: #9db0c7;
+  /* parchment, ink and gilt. Page and panel surfaces are warm; chart plots stay near-white so data reads cleanly */
+  --color-paper: #eadfc3;
+  --color-parchment: #f5ecd6;
+  --color-surface: #fbf7ea;
+  --color-plot: #fdfbf4;
+  --color-ink: #2b2117;
+  --color-ink-muted: #5a4a38;
+  --color-ink-faint: #7a6a55;
+  --color-line: #dccfae;
+  --color-line-strong: #b9a678;
+  --color-gilt: #8a6a2f;
 
-  --color-paper: #f4f6f8;
-  --color-surface: #fcfcfb;
-  --color-ink: #14212f;
-  --color-ink-muted: #4a5a6c;
-  --color-ink-faint: #6b7a8b;
-  --color-line: #d7dee6;
-  --color-line-strong: #b4c0cd;
+  /* dark ink used for pressed/selected controls */
+  --color-night: #2b2117;
+  --color-night-raised: #3a2e20;
+  --color-on-night: #f7f0df;
+  --color-on-night-muted: #d6c7a3;
+
+  /* elemental accents (each element gets one) */
+  --element-air: #b8891a;
+  --element-air-soft: #fff4d0;
+  --element-fire: #c4471d;
+  --element-fire-soft: #fbe3d8;
+  --element-earth: #5f7a2a;
+  --element-earth-soft: #e6ecd2;
+  --element-water: #2f6fa8;
+  --element-water-soft: #dce9f5;
 
   /* data series. Validated as a categorical pair (scripts/validate_palette.js) */
   --series-baseline: #2a78d6;
@@ -65,6 +78,7 @@
   --radius-md: 8px;
 
   --page-max: 78rem;
+  --panel-width: 35rem;
   --page-pad: clamp(1rem, 4vw, 3rem);
   --measure: 62ch;
 

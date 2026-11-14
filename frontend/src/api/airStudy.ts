@@ -1,33 +1,34 @@
 import { ApiError, getJson } from './client'
 import type { CaseEntry, CasesResponse, ElementEntry, StudyPackage } from './types'
 
-const AIR_ELEMENT_ID = 'air'
+export const AIR_ELEMENT_ID = 'air'
 const CASE_ID = 'ukraine'
 
-export interface AirStudyBundle {
+export interface CatalogBundle {
   caseEntry: CaseEntry
-  /** Every element of the case, in catalog order, so the UI can show what is unavailable. */
+  /** Every element of the case, in catalog order. */
   elements: ElementEntry[]
-  study: StudyPackage
 }
 
-export async function fetchAirStudy(signal?: AbortSignal): Promise<AirStudyBundle> {
+/** Availability only: which elements exist and where each study lives. */
+export async function fetchCatalog(signal?: AbortSignal): Promise<CatalogBundle> {
   const catalog = await getJson<CasesResponse>('/api/cases', { signal })
   const caseEntry = catalog.cases?.find((entry) => entry.case_id === CASE_ID)
   if (!caseEntry) {
     throw new ApiError('unavailable', 'The case catalog does not include Ukraine.', { code: 'case_not_found' })
   }
+  return { caseEntry, elements: caseEntry.elements }
+}
 
-  const air = caseEntry.elements.find((element) => element.element_id === AIR_ELEMENT_ID)
-  const study = air?.studies?.[0]
-  if (!air || air.status !== 'available' || !study) {
-    throw new ApiError('unavailable', 'Air data for Ukraine is not ready yet.', {
-      code: air?.reason ?? 'element_unavailable',
-    })
-  }
+/** The endpoint the catalog names for the element's first study, or null when not available. */
+export function studyEndpointFor(elements: ElementEntry[], elementId: string): string | null {
+  const element = elements.find((e) => e.element_id === elementId)
+  const study = element?.studies?.[0]
+  return element && element.status === 'available' && study ? study.endpoint : null
+}
 
-  const payload = await getJson<unknown>(study.endpoint, { signal })
-  return { caseEntry, elements: caseEntry.elements, study: parseStudyPackage(payload) }
+export async function fetchStudy(endpoint: string, signal?: AbortSignal): Promise<StudyPackage> {
+  return parseStudyPackage(await getJson<unknown>(endpoint, { signal }))
 }
 
 // ---------------------------------------------------------------------------

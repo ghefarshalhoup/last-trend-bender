@@ -147,7 +147,7 @@ export function ComparisonChart({ rows, baselineYears, selectedMonth, onSelectMo
                 width={52}
                 tick={{ fill: '#4a5a6c', fontSize: 12 }}
                 tickFormatter={(v: number) => v.toFixed(1)}
-                label={{ value: `Tropospheric NO₂ column (${SCALE_LABEL})`, angle: -90, position: 'insideLeft', offset: 8, style: { textAnchor: 'middle', fill: '#4a5a6c', fontSize: 12 } }}
+                label={{ value: `NO₂ column (${SCALE_LABEL})`, angle: -90, position: 'insideLeft', offset: 8, style: { textAnchor: 'middle', fill: '#4a5a6c', fontSize: 12 } }}
               />
               <Tooltip content={tooltip} cursor={{ stroke: '#14212f', strokeOpacity: 0.25 }} />
               <Area dataKey="band" type="linear" stroke="none" fill={C_BASE} fillOpacity={0.14} isAnimationActive={false} connectNulls={false} activeDot={false} legendType="none" />
