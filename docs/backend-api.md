@@ -111,8 +111,7 @@ request or in the JSON can point the server at another file.
 }
 ```
 
-The pending elements are placeholders defined in `backend/catalog.py`;
-confirm the final list and labels with G.
+All four elements are now documented in [`atlas-api-schema.md`](atlas-api-schema.md); Milestone 1 Air endpoints below remain backward-compatible.
 
 ### `GET /api/air/kyiv`
 
@@ -258,3 +257,9 @@ Large numbers are in molecules/cm² (`~10¹⁵`); format them in the UI.
 python -m pytest backend/tests -q                 # backend (54 tests)
 python -m unittest discover -s tests -v           # existing analysis tests
 ```
+
+---
+
+## Four-Element Atlas Extension
+
+See [`docs/atlas-api-schema.md`](atlas-api-schema.md) for the additive endpoints integrated after Milestone 1 (`GET /api/variables`, `GET /api/fire/ukraine`, `GET /api/fire/ukraine/cells`, `GET /api/water/ukraine`, `GET /api/land/ukraine`, `GET /api/air/weather`) and the `GET /api/cases` / `GET /api/health` updates.

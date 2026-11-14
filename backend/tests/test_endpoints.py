@@ -19,19 +19,24 @@ def test_health_ready(client):
     assert air["problems"] == []
 
 
-def test_cases_ukraine_air_available_others_unavailable(client):
+def test_cases_ukraine_all_four_elements_available(client):
     body = client.get("/api/cases").json()
     [ukraine] = body["cases"]
     assert ukraine["case_id"] == "ukraine"
     elements = {e["element_id"]: e for e in ukraine["elements"]}
     assert elements["air"]["status"] == "available"
     assert elements["air"]["studies"] == [{"study_id": "kyiv", "name": "Kyiv, Ukraine", "endpoint": "/api/air/kyiv"}]
-    others = [e for key, e in elements.items() if key != "air"]
-    assert others, "pending elements should be listed explicitly"
-    for element in others:
-        assert element["status"] == "unavailable"
-        assert element["reason"] == "not_yet_integrated"
-        assert element["studies"] == []
+    expected = {
+        "fire": ("Fire", "/api/fire/ukraine"),
+        "land": ("Earth", "/api/land/ukraine"),
+        "water": ("Water", "/api/water/ukraine"),
+    }
+    for key, (label, endpoint) in expected.items():
+        assert elements[key]["label"] == label
+        assert elements[key]["status"] == "available"
+        assert elements[key]["studies"] == [
+            {"study_id": "ukraine", "name": elements[key]["studies"][0]["name"], "endpoint": endpoint}
+        ]
 
 
 def test_air_kyiv_serves_contract_unchanged(client, raw_contract):
