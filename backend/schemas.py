@@ -22,7 +22,10 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, model_validator
 
 
 class ContractModel(BaseModel):
-    model_config = ConfigDict(extra="allow", allow_inf_nan=False)
+    # strict=True: the API serves the original JSON, so validation must not
+    # coerce. A numeric string such as "123" is rejected rather than accepted
+    # as 123 and then served as a string. JSON integers remain valid floats.
+    model_config = ConfigDict(extra="allow", allow_inf_nan=False, strict=True)
 
 
 MonthStr = Field(pattern=r"^\d{4}-(0[1-9]|1[0-2])$")
@@ -83,9 +86,51 @@ class Dataset(ContractModel):
     version: str
     variable: str
     units: str
+    declared_fill_value: float
+    spatial_resolution_deg: float = Field(gt=0.0)
+    raw_input_bytes: int = Count
+    header_line_number_1based: int = Field(ge=1)
+
+
+class MonthStat(ContractModel):
+    month: str = MonthStr
+    valid_days: int = Count
+    calendar_days: int = Field(ge=1, le=31)
+    coverage_fraction: float = Fraction
+    no2_mean_molec_cm2: Optional[float]
+
+
+class DailyCounts(ContractModel):
+    calendar_days: int = Count
+    raw_dated_rows: int = Count
+    fill_value_rows: int = Count
+    other_missing_rows: int = Count
+    absent_dates_count: int = Count
+    valid_observations: int = Count
+    negative_valid_observations: int = Count
+    min_valid_value: Optional[float]
+    max_valid_value: Optional[float]
+    overall_daily_coverage_fraction: float = Fraction
+    absent_dates: List[str]
+
+
+class MonthlySummary(ContractModel):
+    total_months: int = Count
+    months_with_any_valid_obs: int = Count
+    months_with_zero_valid_obs: List[str]
+    proposed_coverage_threshold: float = Fraction
+    low_coverage_months_count: int = Count
+    low_coverage_months: List[MonthStat]
+    sparse_threshold_valid_days: int = Count
+    very_sparse_threshold_valid_days: int = Count
+    sparse_months_count: int = Count
+    very_sparse_months_count: int = Count
+    sparse_months: List[MonthStat]
 
 
 class QualityRules(ContractModel):
+    daily_counts: DailyCounts
+    monthly_summary: MonthlySummary
     validation_checks: Dict[str, StrictBool]
 
 
@@ -116,12 +161,15 @@ class FlaggedMonth(ContractModel):
 
 class AnnualSeason(ContractModel):
     year: int
+    months_included: List[int]
     valid_days: int = Count
     calendar_days: int = Count
     coverage_fraction: float = Fraction
+    observed_months_count: int = Count
     valid_day_mean_molec_cm2: Optional[float]
     equal_month_mean_molec_cm2: Optional[float]
-    flagged_months: List[Any]
+    flagged_months_count: int = Count
+    flagged_months: List[FlaggedMonth]
     any_flagged_month: StrictBool
 
 
@@ -187,11 +235,26 @@ class TargetMonth(ContractModel):
     flagged_below_50_pct: StrictBool
 
 
+class BaselineMonth(ContractModel):
+    mean_molec_cm2: Optional[float]
+    min_molec_cm2: Optional[float]
+    max_molec_cm2: Optional[float]
+    sd_molec_cm2: Optional[float]
+    available_years: List[int]
+    unavailable_years: List[int]
+    mean_coverage_fraction: Optional[float] = Fraction
+    valid_days_total: int = Count
+    calendar_days_total: int = Count
+    flagged_years_count: int = Count
+    flagged_years_detail: List[str]
+
+
 class MatchedMonth(ContractModel):
     calendar_month: int = Field(ge=1, le=12)
     month_name: str
-    primary_2015_2019: Dict[str, Any]
-    sensitivity_2019_2021: Dict[str, Any]
+    primary_2015_2019: BaselineMonth
+    sensitivity_2019_2021: BaselineMonth
+    year_2021_mean_molec_cm2: Optional[float]
     target_2022: TargetMonth
     vs_primary_2015_2019: MonthChange
     vs_sensitivity_2019_2021: MonthChange
@@ -220,6 +283,29 @@ class BeforeAfterInference(ContractModel):
         return self
 
 
+class RankLag(ContractModel):
+    lag_months: int = Field(ge=1)
+    rank_autocorr: float
+
+
+class HamedRaoMK(ContractModel):
+    n_months: int = Count
+    mann_kendall_S: int
+    variance_inflation_factor: Optional[float]
+    significant_rank_lags: List[RankLag]
+    z_unadjusted: Optional[float]
+    p_value_unadjusted: Optional[float] = Field(ge=0.0, le=1.0)
+    z_hamed_rao: Optional[float]
+    p_value_hamed_rao: Optional[float] = Field(ge=0.0, le=1.0)
+
+
+class NonparametricSensitivity(ContractModel):
+    method: str
+    seasonal_theil_sen_molec_cm2_per_year: Optional[float]
+    seasonal_theil_sen_molec_cm2_per_decade: Optional[float]
+    hamed_rao_mk: Optional[HamedRaoMK]
+
+
 class TrendWindow(ContractModel):
     window_id: str
     label: str
@@ -227,12 +313,19 @@ class TrendWindow(ContractModel):
     start_month: str = MonthStr
     end_month: str = MonthStr
     n_months: int = Count
+    degrees_of_freedom: Optional[int]
     primary_method: str
+    hac_max_lag_months: int = Count
     slope_molec_cm2_per_year: Optional[float]
+    slope_molec_cm2_per_decade: Optional[float]
+    hac_se_molec_cm2_per_year: Optional[float]
     ci_95_lower_molec_cm2_per_year: Optional[float]
     ci_95_upper_molec_cm2_per_year: Optional[float]
+    t_statistic: Optional[float]
     p_value: Optional[float] = Field(ge=0.0, le=1.0)
     significant_at_alpha_0_05: Optional[StrictBool]
+    residual_lag1_autocorrelation: Optional[float]
+    nonparametric_sensitivity: Optional[NonparametricSensitivity]
     assumptions_and_caveats: List[str]
 
     @model_validator(mode="after")
@@ -247,10 +340,20 @@ class TrendWindows(ContractModel):
     full_record: TrendWindow
 
 
+class LagDiagnostic(ContractModel):
+    autocorr_r: Optional[float]
+    valid_pairs: int = Count
+
+
+class DailyAutocorrelation(ContractModel):
+    note: str
+    lags: Dict[str, LagDiagnostic]
+
+
 class Statistics(ContractModel):
     before_after_seasonal_inference: BeforeAfterInference
     multi_year_seasonality_aware_trend: TrendWindows
-    daily_autocorrelation_diagnostics: Dict[str, Any]
+    daily_autocorrelation_diagnostics: DailyAutocorrelation
 
 
 class ChartEntry(ContractModel):
