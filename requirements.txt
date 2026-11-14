@@ -1,5 +1,6 @@
-numpy
-pandas
-matplotlib
-scipy
-jupyter
+# Pinned exact versions used to generate frozen reports and audit benchmarks (Python 3.10.19)
+numpy==2.2.6
+pandas==2.3.3
+matplotlib==3.10.8
+scipy==1.15.3
+jupyter>=1.0.0

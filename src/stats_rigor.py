@@ -183,10 +183,13 @@ def autocorrelation_function(series: Sequence[float], max_lag: int) -> List[floa
     n = len(series)
     if n < 3:
         return [0.0] * max_lag
+    if max(series) == min(series):
+        return [0.0] * max_lag
     mean_val = sum(series) / n
     centered = [x - mean_val for x in series]
     var_0 = sum(c * c for c in centered)
-    if var_0 <= 1e-15:
+    scale_sq = max(x * x for x in series)
+    if var_0 <= 0.0 or (scale_sq > 0.0 and var_0 <= 1e-26 * scale_sq * n):
         return [0.0] * max_lag
     acf: List[float] = []
     for k in range(1, max_lag + 1):
@@ -266,7 +269,7 @@ def compute_baseline_climatology_anomalies(
         all_m_vals = [
             float(v)
             for mo, v in zip(months, values)
-            if mo == m and math.isfinite(v) and v > -900.0
+            if mo == m and math.isfinite(v)
         ]
         base_vals = [
             float(v)
@@ -274,22 +277,22 @@ def compute_baseline_climatology_anomalies(
             if mo == m
             and baseline_start <= y <= baseline_end
             and math.isfinite(v)
-            and v > -900.0
         ]
-        if len(base_vals) < min_baseline_years:
-            base_vals = all_m_vals
+        zero_frac = (
+            sum(1 for v in all_m_vals if v == 0.0) / len(all_m_vals)
+            if all_m_vals
+            else 1.0
+        )
+        if all_m_vals and zero_frac < 0.50:
+            active_months.append(m)
 
-        if base_vals:
+        # Strict withholding: never fall back to all-year/2022 values when baseline years are missing.
+        if len(base_vals) >= min_baseline_years:
             clim_means[m] = sum(base_vals) / len(base_vals)
-            clim_stds[m] = statistics.stdev(base_vals) if len(base_vals) > 1 else 1.0
-            if clim_stds[m] < 1e-12:
-                clim_stds[m] = 1.0
-            zero_frac = sum(1 for v in all_m_vals if abs(v) < 1e-9) / len(all_m_vals)
-            if zero_frac < 0.50:
-                active_months.append(m)
+            clim_stds[m] = statistics.stdev(base_vals) if len(base_vals) > 1 else float("nan")
         else:
-            clim_means[m] = 0.0
-            clim_stds[m] = 1.0
+            clim_means[m] = float("nan")
+            clim_stds[m] = float("nan")
 
     if not active_months:
         active_months = list(range(1, 13))
@@ -297,13 +300,20 @@ def compute_baseline_climatology_anomalies(
     anomalies: List[float] = []
     z_scores: List[float] = []
     for mo, v in zip(months, values):
-        if not math.isfinite(v) or v <= -900.0:
+        c_mean = clim_means[mo]
+        c_std = clim_stds[mo]
+        if not math.isfinite(v) or not math.isfinite(c_mean):
             anomalies.append(float("nan"))
             z_scores.append(float("nan"))
         else:
-            anom = float(v) - clim_means[mo]
+            anom = float(v) - c_mean
             anomalies.append(anom)
-            z_scores.append(anom / clim_stds[mo])
+            if math.isfinite(c_std) and c_std > 0.0:
+                z_scores.append(anom / c_std)
+            elif anom == 0.0:
+                z_scores.append(0.0)
+            else:
+                z_scores.append(float("nan"))
 
     return anomalies, z_scores, clim_means, clim_stds, active_months
 
@@ -358,7 +368,7 @@ def mk_s_and_var0(values: Sequence[float]) -> Tuple[int, float, float]:
             tie_term += t_g * (t_g - 1) * (2 * t_g + 5)
         i = j + 1
 
-    var0 = max(1e-9, (n * (n - 1) * (2 * n + 5) - tie_term) / 18.0)
+    var0 = max(0.0, (n * (n - 1) * (2 * n + 5) - tie_term) / 18.0)
     tau = s / (0.5 * n * (n - 1))
     return s, var0, tau
 
@@ -418,8 +428,8 @@ def duality_locked_ci_from_slopes(
 
     ci_excludes_zero = (ci_low_dec > 0.0) or (ci_high_dec < 0.0)
     if p_hr < alpha and not ci_excludes_zero:
-        n_neg = sum(1 for sl in sorted_slopes_yr if sl < -1e-12)
-        n_pos = sum(1 for sl in sorted_slopes_yr if sl > 1e-12)
+        n_neg = sum(1 for sl in sorted_slopes_yr if sl < 0.0)
+        n_pos = sum(1 for sl in sorted_slopes_yr if sl > 0.0)
         s_strict = n_pos - n_neg
         n_zero = m - n_pos - n_neg
         s_tie_penalized = max(0.0, abs(s_strict) - n_zero)
@@ -451,7 +461,7 @@ def theil_sen_estimator(
         ti, vi = time_years[i], values[i]
         for j in range(i + 1, n):
             dt = time_years[j] - ti
-            if abs(dt) > 1e-9:
+            if dt != 0.0:
                 slopes_per_yr.append((values[j] - vi) / dt)
 
     if not slopes_per_yr:
@@ -588,7 +598,7 @@ def hirsch_slack_seasonal_mk_and_slope(
         pts = [
             (int(y), float(v))
             for y, mo, v in zip(years, months, values)
-            if mo == m and math.isfinite(v) and v > -900.0
+            if mo == m and math.isfinite(v)
         ]
         if len(pts) < min_years_per_month:
             continue
@@ -627,9 +637,9 @@ def hirsch_slack_seasonal_mk_and_slope(
                 month_name=MONTH_NAMES[m - 1],
                 n_years=len(m_vals),
                 dormant_zero_locked=is_dormant,
-                sen_slope_per_decade=round(slope_dec, 5),
-                ci_low_per_decade=round(ci_lo, 5),
-                ci_high_per_decade=round(ci_hi, 5),
+                sen_slope_per_decade=float(slope_dec),
+                ci_low_per_decade=float(ci_lo),
+                ci_high_per_decade=float(ci_hi),
                 mk_z_adjusted=round(z_m_dual, 3),
                 p_value_adjusted=round(p_m_dual, 5),
                 significant_05=(p_m_dual < 0.05) and (not is_dormant),
@@ -702,13 +712,9 @@ def compute_van_belle_hughes_seasonal_homogeneity(
     non_degen_ses = sorted(
         se
         for se in ((m.ci_high_per_decade - m.ci_low_per_decade) / 3.919928 for m in by_mo.values())
-        if se > 1e-7
+        if se > 0.0
     )
-    if non_degen_ses:
-        med_se = statistics.median(non_degen_ses)
-        var_floor = max(1e-10, (0.35 * med_se) ** 2)
-    else:
-        var_floor = 1e-10
+    var_floor: Optional[float] = (0.35 * statistics.median(non_degen_ses)) ** 2 if non_degen_ses else None
 
     for s_name, mos in season_map.items():
         ms = [by_mo[m] for m in mos if m in by_mo]
@@ -717,13 +723,17 @@ def compute_van_belle_hughes_seasonal_homogeneity(
             continue
         k = len(ms)
         b_s = sum(m.sen_slope_per_decade for m in ms) / k
-        subregime_slopes[s_name] = round(b_s, 5)
-        m_var_map = {
-            m.month: max(var_floor, ((m.ci_high_per_decade - m.ci_low_per_decade) / 3.919928) ** 2)
-            for m in ms
-        }
+        subregime_slopes[s_name] = float(b_s)
         sum_r_intra = 0.0
         cov_beta_intra = 0.0
+        m_var_map = (
+            {
+                m.month: max(var_floor, ((m.ci_high_per_decade - m.ci_low_per_decade) / 3.919928) ** 2)
+                for m in ms
+            }
+            if var_floor is not None
+            else None
+        )
         if month_pair_corr and k > 1:
             for idx_i in range(k):
                 for idx_j in range(idx_i + 1, k):
@@ -731,11 +741,13 @@ def compute_van_belle_hughes_seasonal_homogeneity(
                     pair_key = (gi, hj) if gi < hj else (hj, gi)
                     rij = max(-0.4, min(0.95, month_pair_corr.get(pair_key, 0.0)))
                     sum_r_intra += 2.0 * rij
-                    cov_beta_intra += 2.0 * rij * math.sqrt(m_var_map[gi] * m_var_map[hj])
+                    if m_var_map is not None:
+                        cov_beta_intra += 2.0 * rij * math.sqrt(m_var_map[gi] * m_var_map[hj])
         zs_4.append(sum(m.mk_z_adjusted for m in ms) / math.sqrt(max(float(k), float(k) + sum_r_intra)))
         s_betas.append(b_s)
-        sum_m_vars = sum(m_var_map.values())
-        s_vars.append(max(sum_m_vars, sum_m_vars + cov_beta_intra) / (float(k) ** 2))
+        if m_var_map is not None:
+            sum_m_vars = sum(m_var_map.values())
+            s_vars.append(max(sum_m_vars, sum_m_vars + cov_beta_intra) / (float(k) ** 2))
 
     k_seas = len(zs_4)
     if k_seas < 2:
@@ -748,10 +760,13 @@ def compute_van_belle_hughes_seasonal_homogeneity(
 
     z_bar4 = sum(zs_4) / k_seas
     chi2_z4 = max(0.0, sum(z * z for z in zs_4) - k_seas * (z_bar4 * z_bar4))
-    ws = [1.0 / v for v in s_vars]
-    w_sum = sum(ws)
-    b_bar = sum(w * b for w, b in zip(ws, s_betas)) / w_sum if w_sum > 0.0 else 0.0
-    q_slope4 = max(0.0, sum(w * ((b - b_bar) ** 2) for w, b in zip(ws, s_betas)))
+    if len(s_vars) == k_seas and all(v > 0.0 for v in s_vars):
+        ws = [1.0 / v for v in s_vars]
+        w_sum = sum(ws)
+        b_bar = sum(w * b for w, b in zip(ws, s_betas)) / w_sum if w_sum > 0.0 else 0.0
+        q_slope4 = max(0.0, sum(w * ((b - b_bar) ** 2) for w, b in zip(ws, s_betas)))
+    else:
+        q_slope4 = 0.0
 
     chi2_homog = max(chi2_z4, q_slope4)
     p_raw = chi2_upper_tail_p(chi2_homog, k_seas - 1)
@@ -850,7 +865,7 @@ def fit_box_tiao_step_intervention(
     resids = y_arr - (X @ beta_hat)
     rss = float(np.sum(resids ** 2))
     tss = float(np.sum((y_arr - float(np.mean(y_arr))) ** 2))
-    r_squared = max(0.0, min(1.0, 1.0 - rss / tss)) if tss > 1e-15 else 0.0
+    r_squared = max(0.0, min(1.0, 1.0 - rss / tss)) if tss > 0.0 else 0.0
 
     r1_raw = autocorrelation_function(resids.tolist(), 1)[0]
     r1_bc = max(0.0, min(0.85, marriott_pope_bias_corrected_r1(r1_raw, n, detrended=True)))
@@ -859,8 +874,8 @@ def fit_box_tiao_step_intervention(
     df_eff = max(2.0, n_eff - float(p))
 
     xtx_inv = np.linalg.inv(X.T @ X)
-    s2_ar1 = max(1e-24, (rss / max(2.0, float(n - p))) * vif_ar1)
-    se_delta = math.sqrt(max(1e-24, s2_ar1 * float(xtx_inv[2, 2])))
+    s2_ar1 = max(0.0, (rss / max(2.0, float(n - p))) * vif_ar1)
+    se_delta = math.sqrt(max(0.0, s2_ar1 * float(xtx_inv[2, 2])))
     delta_step = float(beta_hat[2])
     beta_dec = float(beta_hat[1]) * 10.0
     t_stat = delta_step / se_delta if se_delta > 0 else 0.0
@@ -877,7 +892,7 @@ def fit_box_tiao_step_intervention(
             hi_t = mid_t
     t_crit = 0.5 * (lo_t + hi_t) if df_eff < 200 else z_95
 
-    cov_betas = {name: round(float(beta_hat[3 + idx]), 6) for idx, name in enumerate(cov_names)}
+    cov_betas = {name: float(beta_hat[3 + idx]) for idx, name in enumerate(cov_names)}
     return {
         "status": "assessed",
         "n_obs": n,
@@ -924,7 +939,7 @@ def partial_trend_controlling_covariate(
     scy = sum(c * y for c, y in zip(c_c, y_c))
 
     det = stt * scc - stc * stc
-    if abs(det) <= 1e-12:
+    if stt <= 0.0 or scc <= 0.0 or det <= 1e-24 * stt * scc:
         return 0.0, 1.0, 0.0
 
     beta_t_yr = (scc * sty - stc * scy) / det
@@ -937,7 +952,7 @@ def partial_trend_controlling_covariate(
     df_eff = max(2.0, n_eff - 3.0)
 
     s2 = rss / df_eff
-    se_beta_t = math.sqrt(max(1e-24, s2 * (scc / det)))
+    se_beta_t = math.sqrt(max(0.0, s2 * (scc / det)))
     t_stat = beta_t_yr / se_beta_t if se_beta_t > 0 else 0.0
     p_val = student_t_two_sided_p(t_stat, df_eff)
     return beta_t_yr * 10.0, p_val, gamma_c
@@ -1032,19 +1047,38 @@ def structural_hinge_breakpoint_analysis(
     y_mean = sum(values) / n
     sxx = sum((t - t_mean) ** 2 for t in time_years)
     sxy = sum((t - t_mean) * (y - y_mean) for t, y in zip(time_years, values))
-    a1 = sxy / sxx if sxx > 1e-12 else 0.0
+    a1 = sxy / sxx if sxx > 0.0 else 0.0
     a0 = y_mean - a1 * t_mean
     resids_m0 = [y - (a0 + a1 * t) for t, y in zip(time_years, values)]
-    rss_0 = max(1e-12, sum(e * e for e in resids_m0))
+    scale_ss = max(sum(v * v for v in values), 0.0)
+    rss_0 = max(0.0, sum(e * e for e in resids_m0))
 
     step_yr, step_p = pettitt_on_detrended_residuals(time_years, resids_m0, min_segment)
 
+    if rss_0 <= 0.0 or (scale_ss > 0.0 and rss_0 <= 1e-28 * scale_ss):
+        return BreakpointResult(
+            detected=False,
+            break_year=None,
+            break_index=None,
+            supremum_t_statistic=0.0,
+            f_statistic=0.0,
+            davies_p_value=1.0,
+            delta_bic=0.0,
+            pre_break_slope_per_decade=float(a1 * 10.0),
+            post_break_slope_per_decade=float(a1 * 10.0),
+            regime_reversal=False,
+            residual_step_jump_year=step_yr if step_p < 0.05 else None,
+            residual_pettitt_p=step_p,
+            interpretation="Exact single linear fit; piecewise breakpoint not warranted.",
+        )
+
+    rss_floor = rss_0 * 1e-15
     best_rss1 = float("inf")
     best_idx = min_segment
     knot_records: List[Tuple[int, float, float]] = []
     for idx in range(min_segment, n - min_segment):
         rss_1, _, _, b2 = _fit_continuous_hinge_ols(time_years, values, time_years[idx])
-        rss_1 = max(1e-12, rss_1)
+        rss_1 = max(rss_floor, rss_1)
         knot_records.append((idx, rss_1, b2))
         if rss_1 < best_rss1:
             best_rss1 = rss_1
@@ -1088,7 +1122,7 @@ def structural_hinge_breakpoint_analysis(
     reversal = (
         detected
         and (pre_slope_dec * post_slope_dec < 0.0)
-        and (max_abs_seg > 1e-9)
+        and (max_abs_seg > 0.0)
         and (min_abs_seg >= 0.15 * max_abs_seg)
     )
     break_yr = round(knot_star, 3)
@@ -1105,8 +1139,8 @@ def structural_hinge_breakpoint_analysis(
         f_statistic=round(f1_sup, 3),
         davies_p_value=round(davies_p, 5),
         delta_bic=round(delta_bic, 2),
-        pre_break_slope_per_decade=round(pre_slope_dec, 5),
-        post_break_slope_per_decade=round(post_slope_dec, 5),
+        pre_break_slope_per_decade=float(pre_slope_dec),
+        post_break_slope_per_decade=float(post_slope_dec),
         regime_reversal=reversal,
         residual_step_jump_year=step_yr if step_p < 0.05 else None,
         residual_pettitt_p=step_p,
@@ -1119,15 +1153,19 @@ def structural_hinge_breakpoint_analysis(
 # ---------------------------------------------------------------------------
 
 
-def _count_tie_groups(values: Sequence[float], tol: float = 1e-12) -> List[int]:
+def _count_tie_groups(values: Sequence[float], tol: float = 0.0) -> List[int]:
     sorted_vals = sorted(values)
     n = len(sorted_vals)
     ties: List[int] = []
     i = 0
     while i < n:
         j = i
-        while j + 1 < n and abs(sorted_vals[j + 1] - sorted_vals[i]) <= tol:
-            j += 1
+        if tol <= 0.0:
+            while j + 1 < n and sorted_vals[j + 1] == sorted_vals[i]:
+                j += 1
+        else:
+            while j + 1 < n and abs(sorted_vals[j + 1] - sorted_vals[i]) <= tol:
+                j += 1
         t_g = j - i + 1
         if t_g > 1:
             ties.append(t_g)
@@ -1140,7 +1178,7 @@ def kendall_tau_b_bivariate(
     y: Sequence[float],
     cross_vif: float = 1.0,
 ) -> Tuple[float, float, float]:
-    """Kendall's tau-b with tie corrections and cross-persistence VIF scaling."""
+    """Scale-invariant Kendall's tau-b with tie corrections and cross-persistence VIF scaling."""
     n = len(x)
     if n < 5 or len(y) != n:
         return 0.0, 0.0, 1.0
@@ -1150,18 +1188,18 @@ def kendall_tau_b_bivariate(
     for i in range(n - 1):
         xi, yi = x[i], y[i]
         for j in range(i + 1, n):
-            prod = (x[j] - xi) * (y[j] - yi)
-            if prod > 1e-12:
-                s_xy += 1
-            elif prod < -1e-12:
-                s_xy -= 1
+            dx = 1 if x[j] > xi else (-1 if x[j] < xi else 0)
+            dy = 1 if y[j] > yi else (-1 if y[j] < yi else 0)
+            s_xy += dx * dy
 
     ties_x = _count_tie_groups(x)
     ties_y = _count_tie_groups(y)
     t_x = sum(t * (t - 1) // 2 for t in ties_x)
     t_y = sum(t * (t - 1) // 2 for t in ties_y)
-    denom = math.sqrt(max(1.0, float(n_pairs - t_x) * float(n_pairs - t_y)))
-    tau_b = s_xy / denom if denom > 0 else 0.0
+    denom_sq = float(n_pairs - t_x) * float(n_pairs - t_y)
+    if denom_sq <= 0.0:
+        return 0.0, 0.0, 1.0
+    tau_b = s_xy / math.sqrt(denom_sq)
 
     v0 = n * (n - 1) * (2 * n + 5)
     vt_x = sum(t * (t - 1) * (2 * t + 5) for t in ties_x)
@@ -1176,7 +1214,9 @@ def kendall_tau_b_bivariate(
         * sum(t * (t - 1) for t in ties_y)
         / max(1.0, 2.0 * n * (n - 1))
     )
-    var_s = max(1e-9, ((v0 - vt_x - vt_y) / 18.0 + v1 + v2) * max(1.0, cross_vif))
+    var_s = ((v0 - vt_x - vt_y) / 18.0 + v1 + v2) * max(1.0, cross_vif)
+    if var_s <= 0.0:
+        return round(tau_b, 4), 0.0, 1.0
     z = (s_xy - 1.0) / math.sqrt(var_s) if s_xy > 0 else ((s_xy + 1.0) / math.sqrt(var_s) if s_xy < 0 else 0.0)
     return round(tau_b, 4), round(z, 3), round(normal_two_sided_p(z), 6)
 
@@ -1194,8 +1234,8 @@ def compute_lagged_monthly_impulse_coupling(
     min_common_months: int = 20,
 ) -> Dict[str, object]:
     """Deseasonalized, detrended, AR(1)-prewhitened lagged monthly Kendall coupling."""
-    vx = [(int(y), int(m), float(v)) for y, m, v in zip(years_x, months_x, values_x) if math.isfinite(v) and v > -900.0]
-    vy = [(int(y), int(m), float(v)) for y, m, v in zip(years_y, months_y, values_y) if math.isfinite(v) and v > -900.0]
+    vx = [(int(y), int(m), float(v)) for y, m, v in zip(years_x, months_x, values_x) if math.isfinite(v)]
+    vy = [(int(y), int(m), float(v)) for y, m, v in zip(years_y, months_y, values_y) if math.isfinite(v)]
     empty = {
         "n_common_months": 0,
         "lag_0_monthly_pw_tau": None,
@@ -1231,7 +1271,9 @@ def compute_lagged_monthly_impulse_coupling(
     tm_bar = sum(t_m) / n_m
     xm_bar = sum(xm) / n_m
     ym_bar = sum(ym_vec) / n_m
-    stt = max(1e-12, sum((t - tm_bar) ** 2 for t in t_m))
+    stt = sum((t - tm_bar) ** 2 for t in t_m)
+    if stt <= 0.0:
+        return empty
     bx = sum((t - tm_bar) * (x - xm_bar) for t, x in zip(t_m, xm)) / stt
     by = sum((t - tm_bar) * (y - ym_bar) for t, y in zip(t_m, ym_vec)) / stt
     xd = [x - (xm_bar + bx * (t - tm_bar)) for t, x in zip(t_m, xm)]
@@ -1386,8 +1428,17 @@ def compute_fao56_vpd_and_pet_series(
     qv2m_g_kg_series: Optional[Sequence[float]] = None,
     clrsky_sw_dwn_mj_m2_day: Optional[Sequence[float]] = None,
     albedo_series: Optional[Sequence[float]] = None,
+    use_reference_albedo: bool = True,
+    use_fao56_clear_sky_rso: bool = True,
+    is_daily: bool = False,
 ) -> Dict[str, List[float]]:
-    """Compute physical VPD (kPa), FAO-56 PET (mm/day), and radiative/aero terms."""
+    """Compute physical VPD (kPa), FAO-56 Penman-Monteith ET0 (mm/day), and radiative/aero terms.
+
+    Strict FAO-56 reference surface convention (Allen et al., 1998):
+    - Reference clipped grass albedo alpha = 0.23 (Eq. 38) unless `use_reference_albedo=False`
+    - Clear-sky solar radiation R_so = (0.75 + 2e-5 * z) * R_a (Eq. 37) unless `use_fao56_clear_sky_rso=False`
+    - Soil heat flux G = 0 for daily steps (Eq. 42) or Eq. (43)/(44) for monthly steps.
+    """
     n = len(t2m_c)
     vpd_series: List[float] = []
     pet_series: List[float] = []
@@ -1404,7 +1455,7 @@ def compute_fao56_vpd_and_pet_series(
         rh = float(rh2m_pct[idx])
         rs = float(sw_dwn_mj_m2_day[idx])
         u10 = float(ws10m_m_s[idx])
-        if any(not math.isfinite(x) or x <= -900.0 for x in (t, tmax, tmin, rh, rs, u10)):
+        if any(not math.isfinite(x) for x in (t, tmax, tmin, rh, rs, u10)):
             vpd_series.append(float("nan"))
             pet_series.append(float("nan"))
             pet_rad_series.append(float("nan"))
@@ -1443,40 +1494,49 @@ def compute_fao56_vpd_and_pet_series(
         u2 = max(0.15, u10 * (4.87 / math.log(67.8 * 10.0 - 5.42)))
 
         ra = extraterrestrial_solar_ra_mj_m2_day(lat_deg, mo)
-        r_so = (
-            max(0.5, float(clrsky_sw_dwn_mj_m2_day[idx]))
-            if (
-                clrsky_sw_dwn_mj_m2_day is not None
-                and idx < len(clrsky_sw_dwn_mj_m2_day)
-                and math.isfinite(clrsky_sw_dwn_mj_m2_day[idx])
-                and clrsky_sw_dwn_mj_m2_day[idx] > 0.5
-            )
-            else max(0.5, (0.75 + 2.0e-5 * elevation_m) * ra)
-        )
+        r_so_fao = max(0.5, (0.75 + 2.0e-5 * elevation_m) * ra)
+        if (
+            not use_fao56_clear_sky_rso
+            and clrsky_sw_dwn_mj_m2_day is not None
+            and idx < len(clrsky_sw_dwn_mj_m2_day)
+            and math.isfinite(clrsky_sw_dwn_mj_m2_day[idx])
+            and clrsky_sw_dwn_mj_m2_day[idx] > 0.5
+        ):
+            r_so = max(0.5, float(clrsky_sw_dwn_mj_m2_day[idx]))
+        else:
+            r_so = r_so_fao
         rel_sw = min(1.0, max(0.3, max(0.0, rs) / r_so))
         cloud_factor = max(0.05, 1.35 * rel_sw - 0.35)
 
-        alb_eff = (
-            float(albedo_series[idx])
-            if (albedo_series is not None and idx < len(albedo_series) and math.isfinite(albedo_series[idx]) and 0.0 <= albedo_series[idx] <= 1.0)
-            else 0.23
-        )
+        if (
+            not use_reference_albedo
+            and albedo_series is not None
+            and idx < len(albedo_series)
+            and math.isfinite(albedo_series[idx])
+            and 0.0 <= albedo_series[idx] <= 1.0
+        ):
+            alb_eff = float(albedo_series[idx])
+        else:
+            alb_eff = 0.23
         r_ns = (1.0 - alb_eff) * max(0.0, rs)
         t_k4 = 0.5 * (((tmax + 273.16) ** 4) + ((tmin + 273.16) ** 4))
         vapor_factor = max(0.05, 0.34 - 0.14 * math.sqrt(max(0.01, ea)))
         r_nl = sigma_sb * t_k4 * vapor_factor * cloud_factor
         r_n_raw = r_ns - r_nl
 
-        t_prev = float(t2m_c[idx - 1]) if (idx > 0 and math.isfinite(t2m_c[idx - 1]) and t2m_c[idx - 1] > -900.0) else None
-        t_next = float(t2m_c[idx + 1]) if (idx < n - 1 and math.isfinite(t2m_c[idx + 1]) and t2m_c[idx + 1] > -900.0) else None
-        if t_prev is not None and t_next is not None:
-            g_soil = 0.07 * (t_next - t_prev)
-        elif t_next is not None:
-            g_soil = 0.14 * (t_next - t)
-        elif t_prev is not None:
-            g_soil = 0.14 * (t - t_prev)
-        else:
+        if is_daily:
             g_soil = 0.0
+        else:
+            t_prev = float(t2m_c[idx - 1]) if (idx > 0 and math.isfinite(t2m_c[idx - 1])) else None
+            t_next = float(t2m_c[idx + 1]) if (idx < n - 1 and math.isfinite(t2m_c[idx + 1])) else None
+            if t_prev is not None and t_next is not None:
+                g_soil = 0.07 * (t_next - t_prev)
+            elif t_next is not None:
+                g_soil = 0.14 * (t_next - t)
+            elif t_prev is not None:
+                g_soil = 0.14 * (t - t_prev)
+            else:
+                g_soil = 0.0
 
         lambda_t = max(2.2, 2.501 - 0.002361 * t)
         inv_lambda = 1.0 / lambda_t

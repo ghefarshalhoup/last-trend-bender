@@ -1,0 +1,651 @@
+{
+  "schema_version": "1.0.0",
+  "monthly_cache_file": "data/frozen/nasa_power/ukraine_power_monthly_2015_2022.json",
+  "monthly_cache_sha256": "ab4dc36efd2fcb3cbb01fb9e67b96698f7806d1fa72c402413d3d7f3b2a51084",
+  "daily_cache_file": "data/frozen/nasa_power/kyiv_power_daily_2015_2022.json",
+  "daily_cache_sha256": "5447b5b4ee619b9e2a160b64e8a3ebc2787391cebe3623f4b66f05a1699c28f6",
+  "upstream_api_header": {
+    "title": "NASA/POWER Source Native Resolution Monthly and Annual",
+    "api": {
+      "version": "v2.10.0",
+      "name": "POWER Monthly and Annual API"
+    },
+    "sources": [
+      "MERRA2",
+      "SYN1DEG",
+      "POWER"
+    ],
+    "fill_value": -999.0,
+    "time_standard": "LST",
+    "start": "20150101",
+    "end": "20221231"
+  },
+  "timestamps": {
+    "monthly_fetched_at_utc": "2026-11-14T19:47:52.262904+00:00",
+    "daily_fetched_at_utc": "2026-11-14T19:48:37.266599+00:00",
+    "power_time_standard": "LST"
+  },
+  "parameter_units": {
+    "ALLSKY_SFC_SW_DWN": "MJ/m^2/day",
+    "ALLSKY_SRF_ALB": "dimensionless",
+    "CLRSKY_SFC_SW_DWN": "MJ/m^2/day",
+    "PRECTOTCORR": "mm/day",
+    "T2M": "C",
+    "T2M_MAX": "C",
+    "T2M_MIN": "C",
+    "EVPTRNS": "MJ/m^2/day",
+    "GWETROOT": "1",
+    "GWETTOP": "1",
+    "PS": "kPa",
+    "QV2M": "g/kg",
+    "RH2M": "%",
+    "WS2M": "m/s"
+  },
+  "kyiv_daily_request": {
+    "url": "https://power.larc.nasa.gov/api/temporal/daily/point?parameters=WS10M,PS,CLOUD_AMT,T2M,T2M_MAX,T2M_MIN,PRECTOTCORR,RH2M,QV2M,GWETTOP,TS,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN&community=AG&longitude=30.5230&latitude=50.4500&start=20150101&end=20221231&format=JSON",
+    "power_dem_elevation_m": 128.71,
+    "configured_elevation_m": 179.0
+  },
+  "regions": {
+    "donbas_kharkiv_east": {
+      "bounds": [
+        46.8,
+        50.3,
+        35.5,
+        40.2
+      ],
+      "elevation_m_configured": 160.0,
+      "spatial_aggregation": "cos(latitude)-weighted mean across 3x3 lattice; fill_value=-999.0 excluded per point before weighting",
+      "points": [
+        {
+          "lat": 46.8,
+          "lon": 35.5,
+          "cos_lat_weight": 0.11493705598348063,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=35.5000&latitude=46.8000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=35.5000&latitude=46.8000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 46.8,
+          "lon": 37.85,
+          "cos_lat_weight": 0.11493705598348063,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=37.8500&latitude=46.8000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=37.8500&latitude=46.8000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 46.8,
+          "lon": 40.2,
+          "cos_lat_weight": 0.11493705598348063,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=40.2000&latitude=46.8000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=40.2000&latitude=46.8000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 48.55,
+          "lon": 35.5,
+          "cos_lat_weight": 0.11114567068395556,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=35.5000&latitude=48.5500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=35.5000&latitude=48.5500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 48.55,
+          "lon": 37.85,
+          "cos_lat_weight": 0.11114567068395556,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=37.8500&latitude=48.5500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=37.8500&latitude=48.5500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 48.55,
+          "lon": 40.2,
+          "cos_lat_weight": 0.11114567068395556,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=40.2000&latitude=48.5500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=40.2000&latitude=48.5500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.3,
+          "lon": 35.5,
+          "cos_lat_weight": 0.1072506066658971,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=35.5000&latitude=50.3000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=35.5000&latitude=50.3000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.3,
+          "lon": 37.85,
+          "cos_lat_weight": 0.1072506066658971,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=37.8500&latitude=50.3000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=37.8500&latitude=50.3000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.3,
+          "lon": 40.2,
+          "cos_lat_weight": 0.1072506066658971,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=40.2000&latitude=50.3000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=40.2000&latitude=50.3000&start=2015&end=2022&format=JSON"
+        }
+      ]
+    },
+    "south_steppe_belt": {
+      "bounds": [
+        44.4,
+        47.5,
+        30.0,
+        35.5
+      ],
+      "elevation_m_configured": 55.0,
+      "spatial_aggregation": "cos(latitude)-weighted mean across 3x3 lattice; fill_value=-999.0 excluded per point before weighting",
+      "points": [
+        {
+          "lat": 44.4,
+          "lon": 30.0,
+          "cos_lat_weight": 0.11420514747538908,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.0000&latitude=44.4000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.0000&latitude=44.4000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 44.4,
+          "lon": 32.75,
+          "cos_lat_weight": 0.11420514747538908,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=32.7500&latitude=44.4000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=32.7500&latitude=44.4000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 44.4,
+          "lon": 35.5,
+          "cos_lat_weight": 0.11420514747538908,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=35.5000&latitude=44.4000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=35.5000&latitude=44.4000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 45.95,
+          "lon": 30.0,
+          "cos_lat_weight": 0.11113822138046588,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.0000&latitude=45.9500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.0000&latitude=45.9500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 45.95,
+          "lon": 32.75,
+          "cos_lat_weight": 0.11113822138046588,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=32.7500&latitude=45.9500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=32.7500&latitude=45.9500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 45.95,
+          "lon": 35.5,
+          "cos_lat_weight": 0.11113822138046588,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=35.5000&latitude=45.9500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=35.5000&latitude=45.9500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 47.5,
+          "lon": 30.0,
+          "cos_lat_weight": 0.10798996447747836,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.0000&latitude=47.5000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.0000&latitude=47.5000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 47.5,
+          "lon": 32.75,
+          "cos_lat_weight": 0.10798996447747836,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=32.7500&latitude=47.5000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=32.7500&latitude=47.5000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 47.5,
+          "lon": 35.5,
+          "cos_lat_weight": 0.10798996447747836,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=35.5000&latitude=47.5000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=35.5000&latitude=47.5000&start=2015&end=2022&format=JSON"
+        }
+      ]
+    },
+    "kyiv_north_belt": {
+      "bounds": [
+        50.0,
+        52.4,
+        28.5,
+        34.5
+      ],
+      "elevation_m_configured": 145.0,
+      "spatial_aggregation": "cos(latitude)-weighted mean across 3x3 lattice; fill_value=-999.0 excluded per point before weighting",
+      "points": [
+        {
+          "lat": 50.0,
+          "lon": 28.5,
+          "cos_lat_weight": 0.11399753443353228,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=28.5000&latitude=50.0000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=28.5000&latitude=50.0000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0,
+          "lon": 31.5,
+          "cos_lat_weight": 0.11399753443353228,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=31.5000&latitude=50.0000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=31.5000&latitude=50.0000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0,
+          "lon": 34.5,
+          "cos_lat_weight": 0.11399753443353228,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=34.5000&latitude=50.0000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=34.5000&latitude=50.0000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 51.2,
+          "lon": 28.5,
+          "cos_lat_weight": 0.11112735915528413,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=28.5000&latitude=51.2000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=28.5000&latitude=51.2000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 51.2,
+          "lon": 31.5,
+          "cos_lat_weight": 0.11112735915528413,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=31.5000&latitude=51.2000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=31.5000&latitude=51.2000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 51.2,
+          "lon": 34.5,
+          "cos_lat_weight": 0.11112735915528413,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=34.5000&latitude=51.2000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=34.5000&latitude=51.2000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 52.4,
+          "lon": 28.5,
+          "cos_lat_weight": 0.10820843974451694,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=28.5000&latitude=52.4000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=28.5000&latitude=52.4000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 52.4,
+          "lon": 31.5,
+          "cos_lat_weight": 0.10820843974451694,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=31.5000&latitude=52.4000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=31.5000&latitude=52.4000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 52.4,
+          "lon": 34.5,
+          "cos_lat_weight": 0.10820843974451694,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=34.5000&latitude=52.4000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=34.5000&latitude=52.4000&start=2015&end=2022&format=JSON"
+        }
+      ]
+    },
+    "kyiv_no2_box": {
+      "bounds": [
+        50.2,
+        50.7,
+        30.273,
+        30.773
+      ],
+      "elevation_m_configured": 179.0,
+      "spatial_aggregation": "cos(latitude)-weighted mean across 3x3 lattice; fill_value=-999.0 excluded per point before weighting",
+      "points": [
+        {
+          "lat": 50.2,
+          "lon": 30.273,
+          "cos_lat_weight": 0.11169784184975623,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.2730&latitude=50.2000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.2730&latitude=50.2000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.2,
+          "lon": 30.523,
+          "cos_lat_weight": 0.11169784184975623,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.5230&latitude=50.2000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.5230&latitude=50.2000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.2,
+          "lon": 30.773,
+          "cos_lat_weight": 0.11169784184975623,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.7730&latitude=50.2000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.7730&latitude=50.2000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.45,
+          "lon": 30.273,
+          "cos_lat_weight": 0.11111181624738348,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.2730&latitude=50.4500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.2730&latitude=50.4500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.45,
+          "lon": 30.523,
+          "cos_lat_weight": 0.11111181624738348,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.5230&latitude=50.4500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.5230&latitude=50.4500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.45,
+          "lon": 30.773,
+          "cos_lat_weight": 0.11111181624738348,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.7730&latitude=50.4500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.7730&latitude=50.4500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.7,
+          "lon": 30.273,
+          "cos_lat_weight": 0.1105236752361936,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.2730&latitude=50.7000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.2730&latitude=50.7000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.7,
+          "lon": 30.523,
+          "cos_lat_weight": 0.1105236752361936,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.5230&latitude=50.7000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.5230&latitude=50.7000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.7,
+          "lon": 30.773,
+          "cos_lat_weight": 0.1105236752361936,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=30.7730&latitude=50.7000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=30.7730&latitude=50.7000&start=2015&end=2022&format=JSON"
+        }
+      ]
+    },
+    "central_interior_cand": {
+      "bounds": [
+        47.5,
+        50.0,
+        27.5,
+        35.5
+      ],
+      "elevation_m_configured": 230.0,
+      "spatial_aggregation": "cos(latitude)-weighted mean across 3x3 lattice; fill_value=-999.0 excluded per point before weighting",
+      "points": [
+        {
+          "lat": 47.5,
+          "lon": 27.5,
+          "cos_lat_weight": 0.11386663545014553,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=27.5000&latitude=47.5000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=27.5000&latitude=47.5000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 47.5,
+          "lon": 31.5,
+          "cos_lat_weight": 0.11386663545014553,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=31.5000&latitude=47.5000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=31.5000&latitude=47.5000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 47.5,
+          "lon": 35.5,
+          "cos_lat_weight": 0.11386663545014553,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=35.5000&latitude=47.5000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=35.5000&latitude=47.5000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 48.75,
+          "lon": 27.5,
+          "cos_lat_weight": 0.11112874153186333,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=27.5000&latitude=48.7500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=27.5000&latitude=48.7500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 48.75,
+          "lon": 31.5,
+          "cos_lat_weight": 0.11112874153186333,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=31.5000&latitude=48.7500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=31.5000&latitude=48.7500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 48.75,
+          "lon": 35.5,
+          "cos_lat_weight": 0.11112874153186333,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=35.5000&latitude=48.7500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=35.5000&latitude=48.7500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0,
+          "lon": 27.5,
+          "cos_lat_weight": 0.10833795635132443,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=27.5000&latitude=50.0000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=27.5000&latitude=50.0000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0,
+          "lon": 31.5,
+          "cos_lat_weight": 0.10833795635132443,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=31.5000&latitude=50.0000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=31.5000&latitude=50.0000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0,
+          "lon": 35.5,
+          "cos_lat_weight": 0.10833795635132443,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=35.5000&latitude=50.0000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=35.5000&latitude=50.0000&start=2015&end=2022&format=JSON"
+        }
+      ]
+    },
+    "west_ukraine_cand": {
+      "bounds": [
+        47.7,
+        51.8,
+        22.1,
+        27.5
+      ],
+      "elevation_m_configured": 300.0,
+      "spatial_aggregation": "cos(latitude)-weighted mean across 3x3 lattice; fill_value=-999.0 excluded per point before weighting",
+      "points": [
+        {
+          "lat": 47.7,
+          "lon": 22.1,
+          "cos_lat_weight": 0.11578441657459757,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=22.1000&latitude=47.7000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=22.1000&latitude=47.7000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 47.7,
+          "lon": 24.8,
+          "cos_lat_weight": 0.11578441657459757,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=24.8000&latitude=47.7000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=24.8000&latitude=47.7000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 47.7,
+          "lon": 27.5,
+          "cos_lat_weight": 0.11578441657459757,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=27.5000&latitude=47.7000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=27.5000&latitude=47.7000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 49.75,
+          "lon": 22.1,
+          "cos_lat_weight": 0.11115853942696614,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=22.1000&latitude=49.7500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=22.1000&latitude=49.7500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 49.75,
+          "lon": 24.8,
+          "cos_lat_weight": 0.11115853942696614,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=24.8000&latitude=49.7500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=24.8000&latitude=49.7500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 49.75,
+          "lon": 27.5,
+          "cos_lat_weight": 0.11115853942696614,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=27.5000&latitude=49.7500&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=27.5000&latitude=49.7500&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 51.8,
+          "lon": 22.1,
+          "cos_lat_weight": 0.10639037733176962,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=22.1000&latitude=51.8000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=22.1000&latitude=51.8000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 51.8,
+          "lon": 24.8,
+          "cos_lat_weight": 0.10639037733176962,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=24.8000&latitude=51.8000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=24.8000&latitude=51.8000&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 51.8,
+          "lon": 27.5,
+          "cos_lat_weight": 0.10639037733176962,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=27.5000&latitude=51.8000&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=27.5000&latitude=51.8000&start=2015&end=2022&format=JSON"
+        }
+      ]
+    },
+    "poland_krakow": {
+      "bounds": [
+        49.8147,
+        50.3147,
+        19.695,
+        20.195
+      ],
+      "elevation_m_configured": 219.0,
+      "spatial_aggregation": "cos(latitude)-weighted mean across 3x3 lattice; fill_value=-999.0 excluded per point before weighting",
+      "points": [
+        {
+          "lat": 49.8147,
+          "lon": 19.695,
+          "cos_lat_weight": 0.11168986563008373,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=19.6950&latitude=49.8147&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=19.6950&latitude=49.8147&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 49.8147,
+          "lon": 19.945,
+          "cos_lat_weight": 0.11168986563008373,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=19.9450&latitude=49.8147&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=19.9450&latitude=49.8147&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 49.8147,
+          "lon": 20.195,
+          "cos_lat_weight": 0.11168986563008373,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=20.1950&latitude=49.8147&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=20.1950&latitude=49.8147&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0647,
+          "lon": 19.695,
+          "cos_lat_weight": 0.1111118162473835,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=19.6950&latitude=50.0647&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=19.6950&latitude=50.0647&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0647,
+          "lon": 19.945,
+          "cos_lat_weight": 0.1111118162473835,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=19.9450&latitude=50.0647&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=19.9450&latitude=50.0647&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0647,
+          "lon": 20.195,
+          "cos_lat_weight": 0.1111118162473835,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=20.1950&latitude=50.0647&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=20.1950&latitude=50.0647&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.3147,
+          "lon": 19.695,
+          "cos_lat_weight": 0.11053165145586616,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=19.6950&latitude=50.3147&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=19.6950&latitude=50.3147&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.3147,
+          "lon": 19.945,
+          "cos_lat_weight": 0.11053165145586616,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=19.9450&latitude=50.3147&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=19.9450&latitude=50.3147&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.3147,
+          "lon": 20.195,
+          "cos_lat_weight": 0.11053165145586616,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=20.1950&latitude=50.3147&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=20.1950&latitude=50.3147&start=2015&end=2022&format=JSON"
+        }
+      ]
+    },
+    "czechia_prague": {
+      "bounds": [
+        49.8255,
+        50.3255,
+        14.1878,
+        14.6878
+      ],
+      "elevation_m_configured": 235.0,
+      "spatial_aggregation": "cos(latitude)-weighted mean across 3x3 lattice; fill_value=-999.0 excluded per point before weighting",
+      "points": [
+        {
+          "lat": 49.8255,
+          "lon": 14.1878,
+          "cos_lat_weight": 0.1116900874550529,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=14.1878&latitude=49.8255&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=14.1878&latitude=49.8255&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 49.8255,
+          "lon": 14.4378,
+          "cos_lat_weight": 0.1116900874550529,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=14.4378&latitude=49.8255&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=14.4378&latitude=49.8255&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 49.8255,
+          "lon": 14.6878,
+          "cos_lat_weight": 0.1116900874550529,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=14.6878&latitude=49.8255&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=14.6878&latitude=49.8255&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0755,
+          "lon": 14.1878,
+          "cos_lat_weight": 0.1111118162473835,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=14.1878&latitude=50.0755&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=14.1878&latitude=50.0755&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0755,
+          "lon": 14.4378,
+          "cos_lat_weight": 0.1111118162473835,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=14.4378&latitude=50.0755&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=14.4378&latitude=50.0755&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.0755,
+          "lon": 14.6878,
+          "cos_lat_weight": 0.1111118162473835,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=14.6878&latitude=50.0755&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=14.6878&latitude=50.0755&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.3255,
+          "lon": 14.1878,
+          "cos_lat_weight": 0.11053142963089697,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=14.1878&latitude=50.3255&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=14.1878&latitude=50.3255&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.3255,
+          "lon": 14.4378,
+          "cos_lat_weight": 0.11053142963089697,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=14.4378&latitude=50.3255&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=14.4378&latitude=50.3255&start=2015&end=2022&format=JSON"
+        },
+        {
+          "lat": 50.3255,
+          "lon": 14.6878,
+          "cos_lat_weight": 0.11053142963089697,
+          "monthly_batch1_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=PRECTOTCORR,QV2M,RH2M,EVPTRNS,GWETTOP,GWETROOT,GWETPROF,ALLSKY_SRF_ALB,TS&community=AG&longitude=14.6878&latitude=50.3255&start=2015&end=2022&format=JSON",
+          "monthly_batch2_url": "https://power.larc.nasa.gov/api/temporal/monthly/point?parameters=T2M,T2M_RANGE,T2M_MAX,T2M_MIN,ALLSKY_SFC_SW_DWN,CLRSKY_SFC_SW_DWN,CLOUD_AMT,WS10M,PS&community=AG&longitude=14.6878&latitude=50.3255&start=2015&end=2022&format=JSON"
+        }
+      ]
+    }
+  }
+}

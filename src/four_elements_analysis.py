@@ -14,6 +14,7 @@ prewhitened lagged couplings, and BH/BY FDR quantify confounders transparently.
 from __future__ import annotations
 
 import argparse
+import json
 import math
 import os
 import tempfile
@@ -84,8 +85,8 @@ FOUR_ELEMENT_METRICS: Tuple[ElementMetricSpec, ...] = (
     ElementMetricSpec("cloud_amt", "air", "Total Cloud Amount", "%", False, "NASA POWER CERES/MERRA-2"),
     ElementMetricSpec("ps", "air", "Surface Barometric Pressure", "kPa", False, "NASA POWER MERRA-2"),
     ElementMetricSpec("cloud_radiative_attenuation_wm2", "air", "Cloud Radiative Attenuation (SWclr - SWall)", "W/m^2", True, "Derived CERES"),
-    ElementMetricSpec("fire_type0_per_1k_km2_day", "fire", "VIIRS Vegetation Fire Density (type0)", "det / 1000 km^2 / day", False, "FIRMS VIIRS S-NPP"),
-    ElementMetricSpec("fire_type2_per_1k_km2_day", "fire", "VIIRS Static Industrial Anomaly Density (type2)", "det / 1000 km^2 / day", False, "FIRMS VIIRS S-NPP"),
+    ElementMetricSpec("fire_type0_per_1k_km2_day", "fire", "VIIRS Presumed Vegetation Fire Density (type0)", "det / 1000 km^2 / day", False, "FIRMS VIIRS S-NPP"),
+    ElementMetricSpec("fire_type2_per_1k_km2_day", "fire", "VIIRS Other Static Land Source Density (type2)", "det / 1000 km^2 / day", False, "FIRMS VIIRS S-NPP"),
     ElementMetricSpec("t2m", "fire", "2m Air Temperature", "°C", True, "NASA POWER MERRA-2"),
     ElementMetricSpec("t2m_max", "fire", "Monthly Peak 2m Temperature (T2M_MAX)", "°C", True, "NASA POWER MERRA-2"),
     ElementMetricSpec("dtr_c", "fire", "Mean Daily Diurnal Temp Range (T2M_RANGE)", "°C", False, "NASA POWER MERRA-2"),
@@ -227,7 +228,10 @@ def compute_kyiv_daily_wind_cloud_sensitivity(
     return merged, summary
 
 
-def compute_kyiv_monthly_four_element_summaries(kyiv_df: pd.DataFrame) -> List[Dict[str, object]]:
+def compute_kyiv_monthly_four_element_summaries(
+    kyiv_df: pd.DataFrame,
+    min_baseline_years: int = 2,
+) -> List[Dict[str, object]]:
     """Compute Mar-Aug 2022 vs 2015-2019 and 2019-2021 seasonal comparisons across all 4 elements."""
     ma = kyiv_df[kyiv_df["month_num"].isin(MARCH_AUGUST_MONTHS)].copy()
     records: List[Dict[str, object]] = []
@@ -235,14 +239,27 @@ def compute_kyiv_monthly_four_element_summaries(kyiv_df: pd.DataFrame) -> List[D
         col = spec.metric_id
         if col not in ma.columns:
             continue
-        b15 = ma[ma["year"].between(2015, 2019)][col].dropna().tolist()
-        b19 = ma[ma["year"].between(2019, 2021)][col].dropna().tolist()
-        t22 = ma[ma["year"] == 2022][col].dropna().tolist()
+        b15_df = ma[ma["year"].between(2015, 2019) & ma[col].notna()]
+        b19_df = ma[ma["year"].between(2019, 2021) & ma[col].notna()]
+        t22_df = ma[(ma["year"] == 2022) & ma[col].notna()]
+        t22 = t22_df[col].tolist()
         if not t22:
             continue
-        m15, m19, m22 = _finite_mean(b15), _finite_mean(b19), _finite_mean(t22)
-        d15, p15, s15 = safe_pct_change(m22, m15, is_interval_scale=spec.is_interval_scale)
-        d19, p19, s19 = safe_pct_change(m22, m19, is_interval_scale=spec.is_interval_scale)
+        m22 = _finite_mean(t22)
+        b15_yrs = int(b15_df["year"].nunique())
+        b19_yrs = int(b19_df["year"].nunique())
+        if b15_yrs >= min_baseline_years:
+            m15 = _finite_mean(b15_df[col].tolist())
+            d15, p15, s15 = safe_pct_change(m22, m15, is_interval_scale=spec.is_interval_scale)
+        else:
+            m15, d15, p15, s15 = None, None, None, "withheld_insufficient_baseline"
+
+        if b19_yrs >= min_baseline_years:
+            m19 = _finite_mean(b19_df[col].tolist())
+            d19, p19, s19 = safe_pct_change(m22, m19, is_interval_scale=spec.is_interval_scale)
+        else:
+            m19, d19, p19, s19 = None, None, None, "withheld_insufficient_baseline"
+
         digits = None if spec.metric_id == "no2_mean_molec_cm2" else 4
         records.append(
             {
@@ -329,12 +346,8 @@ def compute_kyiv_intervention_and_weather_controls(kyiv_df: pd.DataFrame) -> Dic
     # Empirical Davies continuous hinge breakpoint on full deseasonalized NO2 series
     bp = structural_hinge_breakpoint_analysis(t_dec, no2_anom, min_segment=6).to_dict()
 
-    # Pre-compute weather-predicted vs actual NO2 monthly series for visualization
+    # Pre-compute full trend+weather counterfactual (without step jump) + AR(1) 95% uncertainty & residual series
     if wth_all["status"] == "assessed":
-        b_cov = wth_all["covariate_betas"]
-        delta_hat = float(wth_all["delta_step"])
-        beta_dec = float(wth_all["beta_within_per_decade"])
-        # Reconstruct mean-centered OLS linear + weather fit cleanly using np.linalg.lstsq
         t_arr = np.asarray(t_dec, dtype=float)
         y_arr = np.asarray(no2_anom, dtype=float)
         X = np.column_stack(
@@ -349,6 +362,15 @@ def compute_kyiv_intervention_and_weather_controls(kyiv_df: pd.DataFrame) -> Dic
             ]
         )
         coef, _, _, _ = np.linalg.lstsq(X, y_arr, rcond=None)
+        resids_fit = y_arr - X @ coef
+        rss_fit = float(np.sum(resids_fit ** 2))
+        vif_ar1 = float(wth_all.get("vif_ar1", 1.0))
+        s2_ar1 = max(0.0, (rss_fit / max(2.0, float(len(t_dec) - X.shape[1]))) * vif_ar1)
+        xtx_inv = np.linalg.inv(X.T @ X)
+
+        X_cf = X.copy()
+        X_cf[:, 2] = 0.0
+        counterfactual_no_step = X_cf @ coef
         weather_only = (
             coef[0]
             + coef[3] * X[:, 3]
@@ -356,16 +378,25 @@ def compute_kyiv_intervention_and_weather_controls(kyiv_df: pd.DataFrame) -> Dic
             + coef[5] * X[:, 5]
             + coef[6] * X[:, 6]
         )
-        residual_no2 = y_arr - (coef[0] + coef[1] * X[:, 1] + coef[3] * X[:, 3] + coef[4] * X[:, 4] + coef[5] * X[:, 5] + coef[6] * X[:, 6])
+        cf_ci95_half = np.array(
+            [1.96 * math.sqrt(max(0.0, s2_ar1 * float(X_cf[i] @ xtx_inv @ X_cf[i]))) for i in range(len(t_dec))],
+            dtype=float,
+        )
+        residual_no2 = y_arr - counterfactual_no_step
     else:
+        counterfactual_no_step = np.zeros(len(t_dec))
         weather_only = np.zeros(len(t_dec))
+        cf_ci95_half = np.zeros(len(t_dec))
         residual_no2 = np.asarray(no2_anom, dtype=float)
 
     series_rows = [
         {
             "month": sub["month"].iloc[i],
             "no2_anomaly_molec_cm2": clean_float(no2_anom[i]),
-            "weather_predicted_no2_anomaly_molec_cm2": clean_float(weather_only[i]),
+            "weather_predicted_no2_anomaly_molec_cm2": clean_float(counterfactual_no_step[i]),
+            "no_step_counterfactual_no2_anomaly_molec_cm2": clean_float(counterfactual_no_step[i]),
+            "no_step_counterfactual_ci95_half_molec_cm2": clean_float(cf_ci95_half[i]),
+            "weather_only_no2_anomaly_molec_cm2": clean_float(weather_only[i]),
             "residual_after_trend_and_weather_molec_cm2": clean_float(residual_no2[i]),
             "ws10m_anomaly_ms": clean_float(ws_anom[i], 3),
         }
@@ -473,12 +504,29 @@ def compute_regional_fire_water_earth_matrix(panel_df: pd.DataFrame) -> Tuple[Li
             }
         )
 
+    donbas_row = next((r for r in rows if r["region_id"] == "donbas_kharkiv_east"), None)
+    d_f0 = (
+        f"{donbas_row['fire_type0_pct_change']:+.1f}%"
+        if (donbas_row and donbas_row.get("fire_type0_pct_change") is not None)
+        else "N/A"
+    )
+    d_f2 = (
+        f"{donbas_row['fire_type2_pct_change']:+.1f}%"
+        if (donbas_row and donbas_row.get("fire_type2_pct_change") is not None)
+        else "N/A"
+    )
+
     summary = {
         "interpretation": (
-            "Fire-weather mismatch: Western and Central interior benchmarks experienced stronger 2022 evaporative "
-            "drying (higher VPD, lower surface soil moisture) yet saw vegetation-type fire detections fall markedly, "
-            "whereas the Donbas-Kharkiv frontline corridor had near-baseline VPD/soil moisture while type0 detections "
-            "rose +72.4% and type2 static industrial anomalies collapsed -83.3%."
+            "Fire-weather contrast: Candidate Western and Central comparison regions experienced stronger 2022 evaporative "
+            "drying (higher VPD, lower surface soil moisture) yet recorded lower FIRMS type0 presumed vegetation detection rates, "
+            f"whereas the proposed Donbas-Kharkiv frontline corridor had smaller mean VPD/soil shifts while type0 detection rates "
+            f"changed {d_f0} and type2 other static land hotspot detections changed {d_f2}."
+        ),
+        "candidate_role_qualification": (
+            "Regions labeled 'proposed study' and 'candidate reference' are analytical spatial comparisons only; "
+            "no Ukrainian oblast is an un-impacted causal control (airspace closures, displacement, power disruptions, "
+            "and missile strikes affected western and central regions as well)."
         ),
         "external_eu_weather_context_2015_2019_vs_2022": ext_rows,
     }
@@ -674,29 +722,73 @@ def _plot_weather_no2_sensitivity(daily_summary: Dict[str, object], intervention
 
     s_rows = intervention["weather_residual_monthly_series"]
     dates = pd.to_datetime([r["month"] + "-15" for r in s_rows])
-    actual = [r["no2_anomaly_molec_cm2"] / 1e15 for r in s_rows]
-    pred = [r["weather_predicted_no2_anomaly_molec_cm2"] / 1e15 for r in s_rows]
+    actual = np.asarray([r["no2_anomaly_molec_cm2"] / 1e15 for r in s_rows], dtype=float)
+    pred = np.asarray(
+        [
+            (r.get("no_step_counterfactual_no2_anomaly_molec_cm2") or r["weather_predicted_no2_anomaly_molec_cm2"]) / 1e15
+            for r in s_rows
+        ],
+        dtype=float,
+    )
+    ci_half = np.asarray(
+        [(r.get("no_step_counterfactual_ci95_half_molec_cm2") or 0.0) / 1e15 for r in s_rows],
+        dtype=float,
+    )
     ax2.axhline(0.0, color="#7f8c8d", linewidth=0.8, linestyle="--")
     ax2.axvline(pd.Timestamp(CONFLICT_START_DATE), color="#922b21", linewidth=1.2, linestyle=":")
+    if np.any(ci_half > 0.0):
+        ax2.fill_between(
+            dates,
+            pred - ci_half,
+            pred + ci_half,
+            color="#d35400",
+            alpha=0.16,
+            label="Counterfactual 95% AR(1) CI",
+        )
     ax2.plot(dates, actual, color="#1f618d", linewidth=1.4, label="Observed NO2 Anomaly")
-    ax2.plot(dates, pred, color="#d35400", linewidth=1.3, linestyle="--", label="Weather-Expected Anomaly (WS10M, PS, T2M, Cloud)")
-    bt = intervention["box_tiao_weather_controlled_all_months"]
-    step_e14 = (bt["delta_step"] / 1e14) if bt["delta_step"] is not None else 0.0
-    ax2.set_title(f"Weather Control: Box-Tiao Mar 2022 Step = {step_e14:+.2f}e14 (p={bt['p_value_ar1']:.3f})", loc="left", fontsize=10.0, fontweight="bold")
+    ax2.plot(
+        dates,
+        pred,
+        color="#d35400",
+        linewidth=1.35,
+        linestyle="--",
+        label="No-Step Counterfactual (Secular Trend + Weather)",
+    )
+    bt_all = intervention["box_tiao_weather_controlled_all_months"]
+    bt_no_apr = intervention["box_tiao_weather_controlled_excl_apr2022"]
+    bt_ma = intervention["box_tiao_weather_controlled_mar_aug_only"]
+    bt_unadj = intervention["box_tiao_unadjusted_all_months"]
+    step_e14 = (bt_all["delta_step"] / 1e14) if bt_all.get("delta_step") is not None else 0.0
+    p_all = bt_all.get("p_value_ar1")
+    p_apr = bt_no_apr.get("p_value_ar1")
+    p_ma = bt_ma.get("p_value_ar1")
+    p_str = (
+        f"p={p_all:.3f} (all) | p={p_apr:.3f} (excl. Apr 2022) | p={p_ma:.3f} (Mar–Aug)"
+        if (p_all is not None and p_apr is not None and p_ma is not None)
+        else f"p={p_all:.3f}"
+    )
+    ax2.set_title(
+        f"No-Step Counterfactual: Mar 2022 Step = {step_e14:+.2f}e14\n{p_str}",
+        loc="left",
+        fontsize=8.8,
+        fontweight="bold",
+    )
     ax2.set_ylabel("NO2 Anomaly (1e15 molec/cm^2)", fontsize=9.0)
     ax2.set_ylim(-1.65, 2.05)
     ax2.xaxis.set_major_locator(mdates.YearLocator(2))
     ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-    ax2.legend(loc="upper left", fontsize=7.6, frameon=True, facecolor="white")
+    ax2.legend(loc="upper left", fontsize=7.2, frameon=True, facecolor="white")
     ax2.spines["top"].set_visible(False)
     ax2.spines["right"].set_visible(False)
     ax2.grid(axis="y", linestyle=":", alpha=0.45)
 
+    r2_w = bt_all.get("r_squared", 0.0)
+    r2_u = bt_unadj.get("r_squared", 0.0)
     fig.text(
         0.015,
         0.01,
-        "Exploratory weather-controlled regression (R^2=0.36 vs 0.08 unadjusted). Calm (<3 m/s) NO2 drop persists; n=1 war season cannot isolate causality alone.",
-        fontsize=7.4,
+        f"Exploratory weather-controlled regression (R^2={r2_w:.2f} vs {r2_u:.2f} unadjusted); significance depends on sample scope ({p_str}). Single war season cannot establish causality.",
+        fontsize=7.2,
         color="#566573",
     )
     plt.tight_layout(rect=[0, 0.04, 1, 1])
@@ -712,8 +804,8 @@ def _plot_fire_drought_contrast(regional_rows: Sequence[Mapping[str, object]], o
         "south_steppe_belt": "South Steppe\n(Corridor)",
         "kyiv_no2_box": "Kyiv NO2 Box\n(Urban)",
         "kyiv_north_belt": "Kyiv–North\n(Corridor)",
-        "central_interior_cand": "Central Interior\n(Reference)",
-        "west_ukraine_cand": "West Ukraine\n(Reference)",
+        "central_interior_cand": "Central Interior\n(Cand. Ref)",
+        "west_ukraine_cand": "West Ukraine\n(Cand. Ref)",
     }
     colors = {
         "primary_urban_study": "#2e86c1",
@@ -743,8 +835,8 @@ def _plot_fire_drought_contrast(regional_rows: Sequence[Mapping[str, object]], o
     ax1.set_xlim(-0.095, 0.175)
     ax1.set_ylim(-68, 96)
     ax1.set_xlabel("2022 vs. 2019–2021 VPD Drought Shift (kPa, + = drier air)", fontsize=8.8)
-    ax1.set_ylabel("VIIRS Vegetation-Type Fire Shift (%)", fontsize=8.8)
-    ax1.set_title("Fire Response vs. Atmospheric Drying (Mar–Aug 2022)", loc="left", fontsize=9.8, fontweight="bold")
+    ax1.set_ylabel("VIIRS type0 Detection-Rate Shift (%)", fontsize=8.8)
+    ax1.set_title("Detection-Rate Shift vs. Atmospheric Drying (Mar–Aug 2022)", loc="left", fontsize=9.8, fontweight="bold")
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
     ax1.grid(linestyle=":", alpha=0.45)
@@ -755,22 +847,25 @@ def _plot_fire_drought_contrast(regional_rows: Sequence[Mapping[str, object]], o
     f2_pcts = [float(r["fire_type2_pct_change"] or 0.0) for r in ordered]
     h = 0.36
     ax2.axvline(0.0, color="#566573", linewidth=0.9)
-    ax2.barh(y_pos - h / 2, f0_pcts, height=h, color="#d35400", label="type0 Vegetation / Unclassified")
-    ax2.barh(y_pos + h / 2, f2_pcts, height=h, color="#5b2c6f", label="type2 Static Industrial (Flares/Plants)")
+    ax2.barh(y_pos - h / 2, f0_pcts, height=h, color="#d35400", label="type0 Presumed Vegetation (FIRMS C2)")
+    ax2.barh(y_pos + h / 2, f2_pcts, height=h, color="#5b2c6f", label="type2 Other Static Land Sources (FIRMS C2)")
     ax2.set_yticks(y_pos)
     ax2.set_yticklabels([short_names.get(str(r["region_id"]), str(r["region_id"])) for r in ordered], fontsize=8.0)
-    ax2.set_xlabel("2022 vs. 2019–2021 Area-Normalized Rate Change (%)", fontsize=8.8)
-    ax2.set_title("Vegetation Surge vs. Static Industrial Collapse", loc="left", fontsize=9.8, fontweight="bold")
-    ax2.legend(loc="upper right", fontsize=7.6, frameon=True, facecolor="white")
+    ax2.set_xlabel("2022 vs. 2019–2021 Area-Normalized Detection Rate Change (%)", fontsize=8.8)
+    ax2.set_title("VIIRS Detection-Rate Shifts (type0 vs. type2)", loc="left", fontsize=9.8, fontweight="bold")
+    ax2.legend(loc="upper right", fontsize=7.4, frameon=True, facecolor="white")
     ax2.spines["top"].set_visible(False)
     ax2.spines["right"].set_visible(False)
     ax2.grid(axis="x", linestyle=":", alpha=0.45)
 
+    donbas_r = next((r for r in regional_rows if r["region_id"] == "donbas_kharkiv_east"), None)
+    d_f0 = f"{donbas_r['fire_type0_pct_change']:+.1f}%" if (donbas_r and donbas_r.get("fire_type0_pct_change") is not None) else "N/A"
+    d_vpd = f"{donbas_r['vpd_diff_kpa']:+.2f} kPa" if (donbas_r and donbas_r.get("vpd_diff_kpa") is not None) else "N/A"
     fig.text(
         0.015,
         0.01,
-        "Sources: FIRMS VIIRS S-NPP SV-C2 + NASA POWER MERRA-2. West & Central Ukraine dried (+0.06 to +0.14 kPa VPD, soil -0.03 to -0.04) while burning fell; Donbas burned +72.4% with +0.05 kPa VPD.",
-        fontsize=7.3,
+        f"Sources: FIRMS VIIRS S-NPP SV-C2 + NASA POWER MERRA-2. Candidate West & Central boxes dried while type0 detection rates fell; Donbas-Kharkiv type0 detection rate shifted {d_f0} ({d_vpd} VPD).",
+        fontsize=7.2,
         color="#566573",
     )
     plt.tight_layout(rect=[0, 0.04, 1, 1])
@@ -835,6 +930,16 @@ def run_four_elements_analysis(
     _plot_weather_no2_sensitivity(kyiv_daily_sensitivity, kyiv_intervention, chart_sens)
     _plot_fire_drought_contrast(regional_fwe_rows, chart_fire)
 
+    frozen_dir = Path(__file__).resolve().parents[1] / "data" / "frozen"
+    cmr_audit_path = frozen_dir / "firms_cmr_matched_audit.json"
+    mask_audit_path = frozen_dir / "spatial_mask_audit.json"
+    extra_contrast: Dict[str, object] = {}
+    if cmr_audit_path.is_file():
+        cmr_payload = json.loads(cmr_audit_path.read_text(encoding="utf-8"))
+        extra_contrast["firms_cmr_matched_outage_sensitivity"] = cmr_payload.get("regional_matched_outage")
+    if mask_audit_path.is_file():
+        extra_contrast["spatial_mask_audit"] = json.loads(mask_audit_path.read_text(encoding="utf-8"))
+
     kyiv_box = next(b for b in STUDY_BOXES if b.region_id == "kyiv_no2_box")
     results_payload: Dict[str, object] = {
         "schema_version": SCHEMA_VERSION,
@@ -871,6 +976,7 @@ def run_four_elements_analysis(
         "kyiv_intervention_and_weather_controls": kyiv_intervention,
         "regional_fire_water_earth_contrast": {
             **regional_fwe_summary,
+            **extra_contrast,
             "regions": regional_fwe_rows,
         },
         "multi_element_trends_and_couplings": multi_trends,
@@ -881,18 +987,18 @@ def run_four_elements_analysis(
             },
             "weather_no2_sensitivity": {
                 "png_path": f"reports/{chart_sens.name}",
-                "title": "Kyiv NO2 Wind/Cloud Stratification and Weather-Controlled Box-Tiao Step",
+                "title": "Kyiv NO2 Wind/Cloud Stratification and Counterfactual Box-Tiao Step",
             },
             "fire_drought_contrast": {
                 "png_path": f"reports/{chart_fire.name}",
-                "title": "Ukraine Regional Fire-vs-VPD Drought Contrast and Industrial Collapse (2022)",
+                "title": "Ukraine Regional Fire-Weather vs. VIIRS type0/type2 Detection Contrasts (2022)",
             },
         },
         "limitations": [
             "Only one post-invasion spring-summer war season (Mar-Aug 2022) is present; formal before/after seasonal inference remains not_assessed.",
-            "April 2022 OMI NO2 contains only 8/30 valid days (26.67% coverage); sensitivity checks excluding 2022-04 are reported explicitly.",
-            "FIRMS VIIRS S-NPP has known orbit gaps in 2022-07-27..2022-08-10 and 2022-03-05; rates normalize by observed satellite days.",
-            "NASA POWER MERRA-2 resolution (0.5 deg x 0.625 deg) captures synoptic/regional hydrology and meteorology rather than urban street microclimates.",
+            "April 2022 OMI NO2 contains only 8/30 valid days (26.67% coverage); sensitivity checks excluding 2022-04 and restricting to Mar-Aug are reported explicitly.",
+            "FIRMS VIIRS S-NPP has a verified 15-day CMR VNP14IMG orbit/data outage in 2022-07-27..2022-08-10 (0 granules), whereas 2022-03-05 had 8 VNP14IMG granules over Ukraine (valid zero-detection day). Identical calendar-date matched rates excluding Jul 27-Aug 10 across 2019-2022 are reported in spatial/CMR sensitivity metadata.",
+            "NASA POWER MERRA-2 (0.5 deg x 0.625 deg) and CERES SYN1deg (1.0 deg) capture synoptic meteorology over full rectangular bounding boxes; border and coastal boxes include out-of-country/Black Sea grid points whereas FIRMS country exports clip to Ukraine borders.",
             "External Krakow/Prague boxes supply meteorological context only (NO2 comparability requires matched OMI/TROPOMI retrievals).",
         ],
     }

@@ -1,0 +1,138 @@
+{
+  "donbas_kharkiv_east": {
+    "box_bounds": [
+      46.8,
+      50.3,
+      35.5,
+      40.2
+    ],
+    "box_area_km2": 134618.6841303623,
+    "pct_box_inside_ukr_adm0": 77.02,
+    "estimated_ukr_land_km2": 103678.05,
+    "lattice_points_inside_ukr_adm0": 4,
+    "lattice_points_total": 9,
+    "firms_detections_in_box": 71722,
+    "firms_detections_inside_ukr_adm0": 71636,
+    "pct_firms_inside_ukr_adm0": 99.88,
+    "area_ratio_inflation_factor": 1.2984
+  },
+  "south_steppe_belt": {
+    "box_bounds": [
+      44.4,
+      47.5,
+      30.0,
+      35.5
+    ],
+    "box_area_km2": 146556.7900959597,
+    "pct_box_inside_ukr_adm0": 73.6,
+    "estimated_ukr_land_km2": 107858.68,
+    "lattice_points_inside_ukr_adm0": 5,
+    "lattice_points_total": 9,
+    "firms_detections_in_box": 21807,
+    "firms_detections_inside_ukr_adm0": 21791,
+    "pct_firms_inside_ukr_adm0": 99.93,
+    "area_ratio_inflation_factor": 1.3588
+  },
+  "kyiv_north_belt": {
+    "box_bounds": [
+      50.0,
+      52.4,
+      28.5,
+      34.5
+    ],
+    "box_area_km2": 111556.5098316104,
+    "pct_box_inside_ukr_adm0": 78.76,
+    "estimated_ukr_land_km2": 87862.28,
+    "lattice_points_inside_ukr_adm0": 6,
+    "lattice_points_total": 9,
+    "firms_detections_in_box": 32437,
+    "firms_detections_inside_ukr_adm0": 32403,
+    "pct_firms_inside_ukr_adm0": 99.9,
+    "area_ratio_inflation_factor": 1.2697
+  },
+  "kyiv_no2_box": {
+    "box_bounds": [
+      50.2,
+      50.7,
+      30.273,
+      30.773
+    ],
+    "box_area_km2": 1968.2472275761477,
+    "pct_box_inside_ukr_adm0": 100.0,
+    "estimated_ukr_land_km2": 1968.25,
+    "lattice_points_inside_ukr_adm0": 9,
+    "lattice_points_total": 9,
+    "firms_detections_in_box": 446,
+    "firms_detections_inside_ukr_adm0": 446,
+    "pct_firms_inside_ukr_adm0": 100.0,
+    "area_ratio_inflation_factor": 1.0
+  },
+  "central_interior_cand": {
+    "box_bounds": [
+      47.5,
+      50.0,
+      27.5,
+      35.5
+    ],
+    "box_area_km2": 163034.6602496204,
+    "pct_box_inside_ukr_adm0": 93.63,
+    "estimated_ukr_land_km2": 152641.31,
+    "lattice_points_inside_ukr_adm0": 8,
+    "lattice_points_total": 9,
+    "firms_detections_in_box": 51092,
+    "firms_detections_inside_ukr_adm0": 51046,
+    "pct_firms_inside_ukr_adm0": 99.91,
+    "area_ratio_inflation_factor": 1.0681
+  },
+  "west_ukraine_cand": {
+    "box_bounds": [
+      47.7,
+      51.8,
+      22.1,
+      27.5
+    ],
+    "box_area_km2": 176836.51860690696,
+    "pct_box_inside_ukr_adm0": 71.7,
+    "estimated_ukr_land_km2": 126792.44,
+    "lattice_points_inside_ukr_adm0": 3,
+    "lattice_points_total": 9,
+    "firms_detections_in_box": 32062,
+    "firms_detections_inside_ukr_adm0": 31910,
+    "pct_firms_inside_ukr_adm0": 99.53,
+    "area_ratio_inflation_factor": 1.3947
+  },
+  "poland_krakow": {
+    "box_bounds": [
+      49.8147,
+      50.3147,
+      19.695,
+      20.195
+    ],
+    "box_area_km2": 1984.2306091685516,
+    "pct_box_inside_ukr_adm0": 0.0,
+    "estimated_ukr_land_km2": 0.0,
+    "lattice_points_inside_ukr_adm0": 0,
+    "lattice_points_total": 9,
+    "firms_detections_in_box": 0,
+    "firms_detections_inside_ukr_adm0": 0,
+    "pct_firms_inside_ukr_adm0": null,
+    "area_ratio_inflation_factor": null
+  },
+  "czechia_prague": {
+    "box_bounds": [
+      49.8255,
+      50.3255,
+      14.1878,
+      14.6878
+    ],
+    "box_area_km2": 1983.7838122536225,
+    "pct_box_inside_ukr_adm0": 0.0,
+    "estimated_ukr_land_km2": 0.0,
+    "lattice_points_inside_ukr_adm0": 0,
+    "lattice_points_total": 9,
+    "firms_detections_in_box": 0,
+    "firms_detections_inside_ukr_adm0": 0,
+    "pct_firms_inside_ukr_adm0": null,
+    "area_ratio_inflation_factor": null
+  }
+}

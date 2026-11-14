@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "reference_environment": {
+    "scipy_version": "1.15.3",
+    "numpy_version": "2.2.6",
+    "pandas_version": "2.3.3"
+  },
+  "benchmarks": {
+    "kendall_tau_b_vs_scipy_max_abs_diff": 0.0,
+    "kendall_tau_b_scale_invariance_1e8_max_diff": 0.0,
+    "theil_sen_slope_vs_scipy_max_abs_diff_per_yr": 0.0,
+    "theil_sen_95ci_empirical_coverage_80trials": {
+      "ours_duality_locked": 0.975,
+      "scipy_theilslopes": 0.975
+    },
+    "student_t_two_sided_p_max_abs_diff": 5.425e-14,
+    "bh_fdr_vs_scipy_max_abs_diff": 0.0,
+    "by_fdr_vs_scipy_max_abs_diff": 0.0,
+    "box_tiao_step_vs_ols_max_abs_diff": 0.0
+  },
+  "hamed_rao_float_ulp_tie_sensitivity": {
+    "allsky_sfc_sw_dwn": {
+      "n": 96,
+      "min_adjacent_sorted_gap": 4.440892098500626e-16,
+      "unrounded_p_hr": 0.571971,
+      "unrounded_vif": 1.168412,
+      "round_5dec_p_hr": 0.573962,
+      "round_4dec_p_hr": 0.573962
+    },
+    "allsky_srf_alb": {
+      "n": 96,
+      "min_adjacent_sorted_gap": 0.0,
+      "unrounded_p_hr": 0.741607,
+      "unrounded_vif": 2.276199,
+      "round_5dec_p_hr": 0.761847,
+      "round_4dec_p_hr": 0.761847
+    },
+    "no2_mean_molec_cm2": {
+      "n": 96,
+      "min_adjacent_sorted_gap": 68138465159.0,
+      "unrounded_p_hr": 0.817545,
+      "unrounded_vif": 55.297185,
+      "round_5dec_p_hr": 0.817545,
+      "round_4dec_p_hr": 0.817545
+    },
+    "vpd_kpa": {
+      "n": 96,
+      "min_adjacent_sorted_gap": 1.2000000000008532e-05,
+      "unrounded_p_hr": 0.064986,
+      "unrounded_vif": 2.728387,
+      "round_5dec_p_hr": 0.064986,
+      "round_4dec_p_hr": 0.064442
+    },
+    "gwettop": {
+      "n": 96,
+      "min_adjacent_sorted_gap": 2.0000000000575113e-06,
+      "unrounded_p_hr": 0.259981,
+      "unrounded_vif": 8.556572,
+      "round_5dec_p_hr": 0.259981,
+      "round_4dec_p_hr": 0.259776
+    }
+  },
+  "scientific_literature_references": [
+    "Hamed, K. H., & Rao, A. R. (1998). A modified Mann-Kendall trend test for autocorrelated data. Journal of Hydrology, 204(1-4), 182-196.",
+    "Yue, S., & Wang, C. Y. (2004). The Mann-Kendall test modified by effective sample size to detect trend in serially correlated hydrological series. Water Resources Management, 18(3), 201-218.",
+    "Hirsch, R. M., & Slack, J. R. (1984). A nonparametric trend test for seasonal data with serial dependence. Water Resources Research, 20(6), 727-732.",
+    "Dietz, E. J., & Killeen, T. J. (1981). A nonparametric multivariate test for monotone trend with pharmaceutical applications. JASA, 76(373), 169-174.",
+    "van Belle, G., & Hughes, J. P. (1984). Nonparametric tests for trend in water quality. Water Resources Research, 20(1), 127-136.",
+    "Marriott, F. H. C., & Pope, J. A. (1954). Bias in the estimation of autocorrelations. Biometrika, 41(3/4), 390-402.",
+    "Box, G. E. P., & Tiao, G. C. (1975). Intervention analysis with applications to economic and environmental problems. JASA, 70(349), 70-79.",
+    "Davies, R. B. (1987). Hypothesis testing when a nuisance parameter is present only under the alternative. Biometrika, 74(1), 33-43.",
+    "Pettitt, A. N. (1979). A non-parametric approach to the change-point problem. Applied Statistics, 28(2), 126-135.",
+    "Benjamini, Y., & Hochberg, Y. (1995). Controlling the false discovery rate. JRSS-B, 57(1), 289-300.",
+    "Benjamini, Y., & Yekutieli, D. (2001). The control of the false discovery rate in multiple testing under dependency. Annals of Statistics, 29(4), 1165-1188.",
+    "Allen, R. G., Pereira, L. S., Raes, D., & Smith, M. (1998). Crop evapotranspiration: Guidelines for computing crop water requirements. FAO Irrigation and Drainage Paper 56."
+  ]
+}

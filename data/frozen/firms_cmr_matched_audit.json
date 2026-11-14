@@ -1,0 +1,402 @@
+{
+  "regional_matched_outage": {
+    "donbas_kharkiv_east": {
+      "type0_nh": {
+        "base_raw_count": 33311,
+        "target_2022_raw_count": 16714,
+        "pct_change_cmr_obs_days_box_area": 63.89,
+        "pct_change_matched_dates_169d": 104.3,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.4669,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.9539
+      },
+      "type0_all": {
+        "base_raw_count": 35607,
+        "target_2022_raw_count": 18072,
+        "pct_change_cmr_obs_days_box_area": 65.78,
+        "pct_change_matched_dates_169d": 107.53,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.497,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 1.0314
+      },
+      "type2_all": {
+        "base_raw_count": 16750,
+        "target_2022_raw_count": 859,
+        "pct_change_cmr_obs_days_box_area": -83.25,
+        "pct_change_matched_dates_169d": -82.91,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.2868,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.049
+      }
+    },
+    "south_steppe_belt": {
+      "type0_nh": {
+        "base_raw_count": 13232,
+        "target_2022_raw_count": 5334,
+        "pct_change_cmr_obs_days_box_area": 31.67,
+        "pct_change_matched_dates_169d": 59.53,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.1834,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.2926
+      },
+      "type0_all": {
+        "base_raw_count": 14928,
+        "target_2022_raw_count": 5946,
+        "pct_change_cmr_obs_days_box_area": 30.1,
+        "pct_change_matched_dates_169d": 57.94,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.2065,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.3262
+      },
+      "type2_all": {
+        "base_raw_count": 736,
+        "target_2022_raw_count": 92,
+        "pct_change_cmr_obs_days_box_area": -59.17,
+        "pct_change_matched_dates_169d": -58.18,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.0121,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.005
+      }
+    },
+    "kyiv_north_belt": {
+      "type0_nh": {
+        "base_raw_count": 25511,
+        "target_2022_raw_count": 6087,
+        "pct_change_cmr_obs_days_box_area": -22.07,
+        "pct_change_matched_dates_169d": -26.85,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.5604,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.4099
+      },
+      "type0_all": {
+        "base_raw_count": 26103,
+        "target_2022_raw_count": 6253,
+        "pct_change_cmr_obs_days_box_area": -21.76,
+        "pct_change_matched_dates_169d": -26.52,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.5731,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.4211
+      },
+      "type2_all": {
+        "base_raw_count": 63,
+        "target_2022_raw_count": 0,
+        "pct_change_cmr_obs_days_box_area": -100.0,
+        "pct_change_matched_dates_169d": -100.0,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.0012,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.0
+      }
+    },
+    "kyiv_no2_box": {
+      "type0_nh": {
+        "base_raw_count": 272,
+        "target_2022_raw_count": 162,
+        "pct_change_cmr_obs_days_box_area": 94.54,
+        "pct_change_matched_dates_169d": 84.09,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.2646,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.487
+      },
+      "type0_all": {
+        "base_raw_count": 280,
+        "target_2022_raw_count": 166,
+        "pct_change_cmr_obs_days_box_area": 93.64,
+        "pct_change_matched_dates_169d": 83.09,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.2726,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.499
+      },
+      "type2_all": {
+        "base_raw_count": 0,
+        "target_2022_raw_count": 0,
+        "pct_change_cmr_obs_days_box_area": null,
+        "pct_change_matched_dates_169d": null,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.0,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.0
+      }
+    },
+    "central_interior_cand": {
+      "type0_nh": {
+        "base_raw_count": 27983,
+        "target_2022_raw_count": 3816,
+        "pct_change_cmr_obs_days_box_area": -55.46,
+        "pct_change_matched_dates_169d": -50.63,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.2996,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.1479
+      },
+      "type0_all": {
+        "base_raw_count": 29318,
+        "target_2022_raw_count": 4004,
+        "pct_change_cmr_obs_days_box_area": -55.39,
+        "pct_change_matched_dates_169d": -50.44,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.3132,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.1552
+      },
+      "type2_all": {
+        "base_raw_count": 11916,
+        "target_2022_raw_count": 1106,
+        "pct_change_cmr_obs_days_box_area": -69.68,
+        "pct_change_matched_dates_169d": -69.11,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.1388,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.0429
+      }
+    },
+    "west_ukraine_cand": {
+      "type0_nh": {
+        "base_raw_count": 23501,
+        "target_2022_raw_count": 5915,
+        "pct_change_cmr_obs_days_box_area": -17.79,
+        "pct_change_matched_dates_169d": -21.44,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.3514,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.276
+      },
+      "type0_all": {
+        "base_raw_count": 24138,
+        "target_2022_raw_count": 6075,
+        "pct_change_cmr_obs_days_box_area": -17.8,
+        "pct_change_matched_dates_169d": -21.29,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.3602,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.2835
+      },
+      "type2_all": {
+        "base_raw_count": 1561,
+        "target_2022_raw_count": 272,
+        "pct_change_cmr_obs_days_box_area": -43.09,
+        "pct_change_matched_dates_169d": -39.73,
+        "rate_base_matched_ukr_land_per_1k_km2_day": 0.0211,
+        "rate_2022_matched_ukr_land_per_1k_km2_day": 0.0127
+      }
+    }
+  },
+  "top_static_type2_cells": [
+    {
+      "cell": [
+        48.17,
+        37.7
+      ],
+      "years": {
+        "2019": {
+          "t0": 1,
+          "t2": 688
+        },
+        "2020": {
+          "t0": 0,
+          "t2": 587
+        },
+        "2021": {
+          "t0": 2,
+          "t2": 465
+        },
+        "2022": {
+          "t0": 0,
+          "t2": 28
+        }
+      }
+    },
+    {
+      "cell": [
+        47.87,
+        33.39
+      ],
+      "years": {
+        "2019": {
+          "t0": 1,
+          "t2": 551
+        },
+        "2020": {
+          "t0": 0,
+          "t2": 426
+        },
+        "2021": {
+          "t0": 2,
+          "t2": 346
+        },
+        "2022": {
+          "t0": 0,
+          "t2": 3
+        }
+      }
+    },
+    {
+      "cell": [
+        47.16,
+        37.56
+      ],
+      "years": {
+        "2019": {
+          "t0": 6,
+          "t2": 350
+        },
+        "2020": {
+          "t0": 2,
+          "t2": 435
+        },
+        "2021": {
+          "t0": 0,
+          "t2": 362
+        },
+        "2022": {
+          "t0": 0,
+          "t2": 0
+        }
+      }
+    },
+    {
+      "cell": [
+        47.09,
+        37.6
+      ],
+      "years": {
+        "2019": {
+          "t0": 0,
+          "t2": 423
+        },
+        "2020": {
+          "t0": 1,
+          "t2": 428
+        },
+        "2021": {
+          "t0": 0,
+          "t2": 280
+        },
+        "2022": {
+          "t0": 0,
+          "t2": 1
+        }
+      }
+    },
+    {
+      "cell": [
+        47.14,
+        37.58
+      ],
+      "years": {
+        "2019": {
+          "t0": 1,
+          "t2": 300
+        },
+        "2020": {
+          "t0": 4,
+          "t2": 359
+        },
+        "2021": {
+          "t0": 1,
+          "t2": 319
+        },
+        "2022": {
+          "t0": 0,
+          "t2": 0
+        }
+      }
+    },
+    {
+      "cell": [
+        47.16,
+        37.53
+      ],
+      "years": {
+        "2019": {
+          "t0": 1,
+          "t2": 288
+        },
+        "2020": {
+          "t0": 2,
+          "t2": 309
+        },
+        "2021": {
+          "t0": 0,
+          "t2": 303
+        },
+        "2022": {
+          "t0": 0,
+          "t2": 0
+        }
+      }
+    },
+    {
+      "cell": [
+        47.1,
+        37.6
+      ],
+      "years": {
+        "2019": {
+          "t0": 1,
+          "t2": 301
+        },
+        "2020": {
+          "t0": 5,
+          "t2": 237
+        },
+        "2021": {
+          "t0": 2,
+          "t2": 224
+        },
+        "2022": {
+          "t0": 0,
+          "t2": 2
+        }
+      }
+    },
+    {
+      "cell": [
+        48.47,
+        34.63
+      ],
+      "years": {
+        "2019": {
+          "t0": 9,
+          "t2": 204
+        },
+        "2020": {
+          "t0": 3,
+          "t2": 201
+        },
+        "2021": {
+          "t0": 4,
+          "t2": 178
+        },
+        "2022": {
+          "t0": 3,
+          "t2": 176
+        }
+      }
+    },
+    {
+      "cell": [
+        48.52,
+        34.63
+      ],
+      "years": {
+        "2019": {
+          "t0": 4,
+          "t2": 248
+        },
+        "2020": {
+          "t0": 1,
+          "t2": 210
+        },
+        "2021": {
+          "t0": 1,
+          "t2": 163
+        },
+        "2022": {
+          "t0": 2,
+          "t2": 81
+        }
+      }
+    },
+    {
+      "cell": [
+        47.87,
+        33.44
+      ],
+      "years": {
+        "2019": {
+          "t0": 0,
+          "t2": 218
+        },
+        "2020": {
+          "t0": 8,
+          "t2": 187
+        },
+        "2021": {
+          "t0": 0,
+          "t2": 238
+        },
+        "2022": {
+          "t0": 0,
+          "t2": 48
+        }
+      }
+    }
+  ]
+}
