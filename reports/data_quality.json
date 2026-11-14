@@ -72,6 +72,270 @@
     "total_months": 90,
     "months_with_any_valid_obs": 90,
     "months_with_zero_valid_obs": [],
+    "proposed_coverage_threshold": 0.5,
+    "proposed_coverage_flag_rule": "coverage_fraction < 0.50 (proposed project rule)",
+    "low_coverage_months_count": 37,
+    "low_coverage_months": [
+      {
+        "month": "2015-11",
+        "valid_days": 6,
+        "calendar_days": 30,
+        "coverage_fraction": 0.2,
+        "no2_mean_molec_cm2": 2464161790500000.0
+      },
+      {
+        "month": "2015-12",
+        "valid_days": 11,
+        "calendar_days": 31,
+        "coverage_fraction": 0.3548,
+        "no2_mean_molec_cm2": 2087558779181818.2
+      },
+      {
+        "month": "2016-02",
+        "valid_days": 11,
+        "calendar_days": 29,
+        "coverage_fraction": 0.3793,
+        "no2_mean_molec_cm2": 1606212196090909.0
+      },
+      {
+        "month": "2016-03",
+        "valid_days": 4,
+        "calendar_days": 31,
+        "coverage_fraction": 0.129,
+        "no2_mean_molec_cm2": 3353302186000000.0
+      },
+      {
+        "month": "2016-05",
+        "valid_days": 13,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4194,
+        "no2_mean_molec_cm2": 1927426900769230.8
+      },
+      {
+        "month": "2016-06",
+        "valid_days": 13,
+        "calendar_days": 30,
+        "coverage_fraction": 0.4333,
+        "no2_mean_molec_cm2": 1507908938076923.0
+      },
+      {
+        "month": "2016-10",
+        "valid_days": 9,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2903,
+        "no2_mean_molec_cm2": 3707782675222222.0
+      },
+      {
+        "month": "2016-11",
+        "valid_days": 8,
+        "calendar_days": 30,
+        "coverage_fraction": 0.2667,
+        "no2_mean_molec_cm2": 2183448973125000.0
+      },
+      {
+        "month": "2016-12",
+        "valid_days": 14,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4516,
+        "no2_mean_molec_cm2": 1143962608428571.5
+      },
+      {
+        "month": "2017-03",
+        "valid_days": 13,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4194,
+        "no2_mean_molec_cm2": 2788019151000000.0
+      },
+      {
+        "month": "2017-09",
+        "valid_days": 14,
+        "calendar_days": 30,
+        "coverage_fraction": 0.4667,
+        "no2_mean_molec_cm2": 2757226886428571.5
+      },
+      {
+        "month": "2017-10",
+        "valid_days": 8,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2581,
+        "no2_mean_molec_cm2": 3158637689875000.0
+      },
+      {
+        "month": "2017-11",
+        "valid_days": 5,
+        "calendar_days": 30,
+        "coverage_fraction": 0.1667,
+        "no2_mean_molec_cm2": 2083762736000000.0
+      },
+      {
+        "month": "2017-12",
+        "valid_days": 8,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2581,
+        "no2_mean_molec_cm2": 1932765642875000.0
+      },
+      {
+        "month": "2018-01",
+        "valid_days": 11,
+        "calendar_days": 31,
+        "coverage_fraction": 0.3548,
+        "no2_mean_molec_cm2": 2214515015090909.0
+      },
+      {
+        "month": "2018-11",
+        "valid_days": 14,
+        "calendar_days": 30,
+        "coverage_fraction": 0.4667,
+        "no2_mean_molec_cm2": 3046602534571428.5
+      },
+      {
+        "month": "2018-12",
+        "valid_days": 11,
+        "calendar_days": 31,
+        "coverage_fraction": 0.3548,
+        "no2_mean_molec_cm2": 631558884000000.0
+      },
+      {
+        "month": "2019-01",
+        "valid_days": 15,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4839,
+        "no2_mean_molec_cm2": 1651690575400000.0
+      },
+      {
+        "month": "2019-03",
+        "valid_days": 12,
+        "calendar_days": 31,
+        "coverage_fraction": 0.3871,
+        "no2_mean_molec_cm2": 2807005797916666.5
+      },
+      {
+        "month": "2019-10",
+        "valid_days": 15,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4839,
+        "no2_mean_molec_cm2": 3065724293866666.5
+      },
+      {
+        "month": "2019-11",
+        "valid_days": 6,
+        "calendar_days": 30,
+        "coverage_fraction": 0.2,
+        "no2_mean_molec_cm2": 3665301781666666.5
+      },
+      {
+        "month": "2019-12",
+        "valid_days": 12,
+        "calendar_days": 31,
+        "coverage_fraction": 0.3871,
+        "no2_mean_molec_cm2": 2612532813450000.0
+      },
+      {
+        "month": "2020-01",
+        "valid_days": 9,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2903,
+        "no2_mean_molec_cm2": 3413501472222222.0
+      },
+      {
+        "month": "2020-02",
+        "valid_days": 12,
+        "calendar_days": 29,
+        "coverage_fraction": 0.4138,
+        "no2_mean_molec_cm2": 1951775163333333.2
+      },
+      {
+        "month": "2020-03",
+        "valid_days": 15,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4839,
+        "no2_mean_molec_cm2": 3059916870866666.5
+      },
+      {
+        "month": "2020-05",
+        "valid_days": 13,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4194,
+        "no2_mean_molec_cm2": 2126318068076923.0
+      },
+      {
+        "month": "2020-10",
+        "valid_days": 14,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4516,
+        "no2_mean_molec_cm2": 4317835062857143.0
+      },
+      {
+        "month": "2020-11",
+        "valid_days": 4,
+        "calendar_days": 30,
+        "coverage_fraction": 0.1333,
+        "no2_mean_molec_cm2": 1962230023500000.0
+      },
+      {
+        "month": "2020-12",
+        "valid_days": 14,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4516,
+        "no2_mean_molec_cm2": 1066089290428571.4
+      },
+      {
+        "month": "2021-01",
+        "valid_days": 10,
+        "calendar_days": 31,
+        "coverage_fraction": 0.3226,
+        "no2_mean_molec_cm2": 1917445796700000.0
+      },
+      {
+        "month": "2021-03",
+        "valid_days": 15,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4839,
+        "no2_mean_molec_cm2": 1811456874133333.2
+      },
+      {
+        "month": "2021-04",
+        "valid_days": 11,
+        "calendar_days": 30,
+        "coverage_fraction": 0.3667,
+        "no2_mean_molec_cm2": 2742431843570000.0
+      },
+      {
+        "month": "2021-09",
+        "valid_days": 13,
+        "calendar_days": 30,
+        "coverage_fraction": 0.4333,
+        "no2_mean_molec_cm2": 3186519174384615.5
+      },
+      {
+        "month": "2021-11",
+        "valid_days": 9,
+        "calendar_days": 30,
+        "coverage_fraction": 0.3,
+        "no2_mean_molec_cm2": 4001103992222222.0
+      },
+      {
+        "month": "2021-12",
+        "valid_days": 9,
+        "calendar_days": 31,
+        "coverage_fraction": 0.2903,
+        "no2_mean_molec_cm2": 1155214009333333.2
+      },
+      {
+        "month": "2022-01",
+        "valid_days": 15,
+        "calendar_days": 31,
+        "coverage_fraction": 0.4839,
+        "no2_mean_molec_cm2": 1324425185300000.0
+      },
+      {
+        "month": "2022-04",
+        "valid_days": 8,
+        "calendar_days": 30,
+        "coverage_fraction": 0.2667,
+        "no2_mean_molec_cm2": 1822031443500000.0
+      }
+    ],
     "sparse_threshold_valid_days": 10,
     "very_sparse_threshold_valid_days": 5,
     "sparse_months_count": 13,
@@ -180,7 +444,8 @@
   "processing_rules": {
     "missing_values_never_zero_filled": true,
     "negative_valid_values_preserved": true,
-    "sparse_month_rule": "valid_days < 10",
+    "proposed_coverage_flag_rule": "coverage_fraction < 0.50 (proposed project rule)",
+    "sparse_month_rule": "valid_days < 10 (legacy severe-sparsity reference)",
     "causal_claim_caveat": "Tropospheric column NO2 reflects regional atmospheric column density, not street-level exposure; temporal drops alone cannot establish war causation without matched controls and weather adjustments."
   }
 }

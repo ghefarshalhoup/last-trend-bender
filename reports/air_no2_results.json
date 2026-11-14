@@ -1,0 +1,2822 @@
+{
+  "schema_version": "1.0.0",
+  "status": {
+    "overall": "validated_descriptive_with_limitations",
+    "data_cleaning_and_accounting": "validated",
+    "baseline_comparison": "validated",
+    "before_after_significance": "not_assessed",
+    "reference_region_comparison": "not_assessed_missing_comparator_regions",
+    "causal_attribution": "not_established",
+    "paper_replication_classification": "related_comparison"
+  },
+  "region": {
+    "region_id": "ukraine_kyiv",
+    "name": "Kyiv, Ukraine",
+    "center": {
+      "lat": 50.45,
+      "lon": 30.523
+    },
+    "user_bounding_box": {
+      "west": 30.273,
+      "south": 50.2,
+      "east": 30.773,
+      "north": 50.7
+    },
+    "data_bounding_box": {
+      "west": 30.375,
+      "south": 50.375,
+      "east": 30.625,
+      "north": 50.625
+    },
+    "spatial_note": "Giovanni reports snapped 0.25-degree grid-center bounds covering peri-urban and urban area; not directly comparable to 4-km TROPOMI city-center sampling."
+  },
+  "dataset": {
+    "provider": "NASA Giovanni",
+    "instrument": "Aura/OMI",
+    "product": "OMNO2d v004",
+    "version": "004",
+    "variable": "mean_OMNO2d_004_ColumnAmountNO2TropCloudScreened",
+    "dataset_variable_token": "OMNO2d_004_ColumnAmountNO2TropCloudScreened",
+    "units": "molecules/cm^2",
+    "measurement_type": "tropospheric_vertical_column_density",
+    "cloud_screen_rule": "30% Cloud Screened",
+    "spatial_resolution_deg": 0.25,
+    "reproducibility_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2015-03-01T00:00:00Z&endtime=2022-08-31T23:59:59Z&bbox=30.273,50.2,30.773,50.7&data=OMNO2d_004_ColumnAmountNO2TropCloudScreened&portal=GIOVANNI&format=json",
+    "catalogue_url": "https://disc.gsfc.nasa.gov/datasets/OMNO2d_004/summary",
+    "raw_input_file": "NASA_Giovanni_NO2_2015-03-01_to_2022-08-31.csv",
+    "raw_input_sha256": "f6a26eece77fb2bb932d6beb3cac7460a1e8d701b22d17ed247bd776d598aee1",
+    "raw_input_bytes": 69842,
+    "header_line_number_1based": 9,
+    "declared_fill_value": -1.267651e+30
+  },
+  "quality_rules": {
+    "missing_values_never_zero_filled": true,
+    "negative_valid_values_preserved": true,
+    "proposed_coverage_flag_rule": "coverage_fraction < 0.50 (proposed project rule)",
+    "severe_sparsity_reference_rule": "valid_days < 10",
+    "daily_counts": {
+      "start_date": "2015-03-01",
+      "end_date": "2022-08-31",
+      "calendar_days": 2741,
+      "raw_dated_rows": 2714,
+      "fill_value_rows": 1282,
+      "other_missing_rows": 0,
+      "absent_dates_count": 27,
+      "valid_observations": 1432,
+      "negative_valid_observations": 43,
+      "min_valid_value": -9236627820000000.0,
+      "max_valid_value": 2.03834101e+16,
+      "overall_daily_coverage_fraction": 0.522437,
+      "absent_dates": [
+        "2016-03-05",
+        "2016-03-06",
+        "2016-03-07",
+        "2016-03-08",
+        "2016-03-09",
+        "2016-03-10",
+        "2016-03-11",
+        "2016-03-12",
+        "2016-03-13",
+        "2016-03-14",
+        "2016-05-30",
+        "2016-05-31",
+        "2016-06-01",
+        "2016-06-02",
+        "2016-06-03",
+        "2016-06-04",
+        "2016-06-05",
+        "2016-06-06",
+        "2016-06-07",
+        "2016-06-08",
+        "2016-06-09",
+        "2016-06-11",
+        "2016-06-12",
+        "2017-03-13",
+        "2017-03-14",
+        "2017-03-15",
+        "2017-03-16"
+      ]
+    },
+    "monthly_summary": {
+      "total_months": 90,
+      "months_with_any_valid_obs": 90,
+      "months_with_zero_valid_obs": [],
+      "proposed_coverage_threshold": 0.5,
+      "proposed_coverage_flag_rule": "coverage_fraction < 0.50 (proposed project rule)",
+      "low_coverage_months_count": 37,
+      "low_coverage_months": [
+        {
+          "month": "2015-11",
+          "valid_days": 6,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2,
+          "no2_mean_molec_cm2": 2464161790500000.0
+        },
+        {
+          "month": "2015-12",
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "no2_mean_molec_cm2": 2087558779181818.2
+        },
+        {
+          "month": "2016-02",
+          "valid_days": 11,
+          "calendar_days": 29,
+          "coverage_fraction": 0.3793,
+          "no2_mean_molec_cm2": 1606212196090909.0
+        },
+        {
+          "month": "2016-03",
+          "valid_days": 4,
+          "calendar_days": 31,
+          "coverage_fraction": 0.129,
+          "no2_mean_molec_cm2": 3353302186000000.0
+        },
+        {
+          "month": "2016-05",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "no2_mean_molec_cm2": 1927426900769230.8
+        },
+        {
+          "month": "2016-06",
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333,
+          "no2_mean_molec_cm2": 1507908938076923.0
+        },
+        {
+          "month": "2016-10",
+          "valid_days": 9,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2903,
+          "no2_mean_molec_cm2": 3707782675222222.0
+        },
+        {
+          "month": "2016-11",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "no2_mean_molec_cm2": 2183448973125000.0
+        },
+        {
+          "month": "2016-12",
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "no2_mean_molec_cm2": 1143962608428571.5
+        },
+        {
+          "month": "2017-03",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "no2_mean_molec_cm2": 2788019151000000.0
+        },
+        {
+          "month": "2017-09",
+          "valid_days": 14,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4667,
+          "no2_mean_molec_cm2": 2757226886428571.5
+        },
+        {
+          "month": "2017-10",
+          "valid_days": 8,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2581,
+          "no2_mean_molec_cm2": 3158637689875000.0
+        },
+        {
+          "month": "2017-11",
+          "valid_days": 5,
+          "calendar_days": 30,
+          "coverage_fraction": 0.1667,
+          "no2_mean_molec_cm2": 2083762736000000.0
+        },
+        {
+          "month": "2017-12",
+          "valid_days": 8,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2581,
+          "no2_mean_molec_cm2": 1932765642875000.0
+        },
+        {
+          "month": "2018-01",
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "no2_mean_molec_cm2": 2214515015090909.0
+        },
+        {
+          "month": "2018-11",
+          "valid_days": 14,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4667,
+          "no2_mean_molec_cm2": 3046602534571428.5
+        },
+        {
+          "month": "2018-12",
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "no2_mean_molec_cm2": 631558884000000.0
+        },
+        {
+          "month": "2019-01",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "no2_mean_molec_cm2": 1651690575400000.0
+        },
+        {
+          "month": "2019-03",
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "no2_mean_molec_cm2": 2807005797916666.5
+        },
+        {
+          "month": "2019-10",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "no2_mean_molec_cm2": 3065724293866666.5
+        },
+        {
+          "month": "2019-11",
+          "valid_days": 6,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2,
+          "no2_mean_molec_cm2": 3665301781666666.5
+        },
+        {
+          "month": "2019-12",
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "no2_mean_molec_cm2": 2612532813450000.0
+        },
+        {
+          "month": "2020-01",
+          "valid_days": 9,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2903,
+          "no2_mean_molec_cm2": 3413501472222222.0
+        },
+        {
+          "month": "2020-02",
+          "valid_days": 12,
+          "calendar_days": 29,
+          "coverage_fraction": 0.4138,
+          "no2_mean_molec_cm2": 1951775163333333.2
+        },
+        {
+          "month": "2020-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "no2_mean_molec_cm2": 3059916870866666.5
+        },
+        {
+          "month": "2020-05",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "no2_mean_molec_cm2": 2126318068076923.0
+        },
+        {
+          "month": "2020-10",
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "no2_mean_molec_cm2": 4317835062857143.0
+        },
+        {
+          "month": "2020-11",
+          "valid_days": 4,
+          "calendar_days": 30,
+          "coverage_fraction": 0.1333,
+          "no2_mean_molec_cm2": 1962230023500000.0
+        },
+        {
+          "month": "2020-12",
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "no2_mean_molec_cm2": 1066089290428571.4
+        },
+        {
+          "month": "2021-01",
+          "valid_days": 10,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3226,
+          "no2_mean_molec_cm2": 1917445796700000.0
+        },
+        {
+          "month": "2021-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "no2_mean_molec_cm2": 1811456874133333.2
+        },
+        {
+          "month": "2021-04",
+          "valid_days": 11,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3667,
+          "no2_mean_molec_cm2": 2742431843570000.0
+        },
+        {
+          "month": "2021-09",
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333,
+          "no2_mean_molec_cm2": 3186519174384615.5
+        },
+        {
+          "month": "2021-11",
+          "valid_days": 9,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3,
+          "no2_mean_molec_cm2": 4001103992222222.0
+        },
+        {
+          "month": "2021-12",
+          "valid_days": 9,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2903,
+          "no2_mean_molec_cm2": 1155214009333333.2
+        },
+        {
+          "month": "2022-01",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "no2_mean_molec_cm2": 1324425185300000.0
+        },
+        {
+          "month": "2022-04",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "no2_mean_molec_cm2": 1822031443500000.0
+        }
+      ],
+      "sparse_threshold_valid_days": 10,
+      "very_sparse_threshold_valid_days": 5,
+      "sparse_months_count": 13,
+      "very_sparse_months_count": 2,
+      "sparse_months": [
+        {
+          "month": "2015-11",
+          "valid_days": 6,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2,
+          "no2_mean_molec_cm2": 2464161790500000.0
+        },
+        {
+          "month": "2016-03",
+          "valid_days": 4,
+          "calendar_days": 31,
+          "coverage_fraction": 0.129,
+          "no2_mean_molec_cm2": 3353302186000000.0
+        },
+        {
+          "month": "2016-10",
+          "valid_days": 9,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2903,
+          "no2_mean_molec_cm2": 3707782675222222.0
+        },
+        {
+          "month": "2016-11",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "no2_mean_molec_cm2": 2183448973125000.0
+        },
+        {
+          "month": "2017-10",
+          "valid_days": 8,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2581,
+          "no2_mean_molec_cm2": 3158637689875000.0
+        },
+        {
+          "month": "2017-11",
+          "valid_days": 5,
+          "calendar_days": 30,
+          "coverage_fraction": 0.1667,
+          "no2_mean_molec_cm2": 2083762736000000.0
+        },
+        {
+          "month": "2017-12",
+          "valid_days": 8,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2581,
+          "no2_mean_molec_cm2": 1932765642875000.0
+        },
+        {
+          "month": "2019-11",
+          "valid_days": 6,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2,
+          "no2_mean_molec_cm2": 3665301781666666.5
+        },
+        {
+          "month": "2020-01",
+          "valid_days": 9,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2903,
+          "no2_mean_molec_cm2": 3413501472222222.0
+        },
+        {
+          "month": "2020-11",
+          "valid_days": 4,
+          "calendar_days": 30,
+          "coverage_fraction": 0.1333,
+          "no2_mean_molec_cm2": 1962230023500000.0
+        },
+        {
+          "month": "2021-11",
+          "valid_days": 9,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3,
+          "no2_mean_molec_cm2": 4001103992222222.0
+        },
+        {
+          "month": "2021-12",
+          "valid_days": 9,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2903,
+          "no2_mean_molec_cm2": 1155214009333333.2
+        },
+        {
+          "month": "2022-04",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "no2_mean_molec_cm2": 1822031443500000.0
+        }
+      ]
+    },
+    "validation_checks": {
+      "raw_rows_decompose_exactly": true,
+      "calendar_days_equal_raw_plus_absent": true,
+      "monthly_valid_days_sum_matches_daily": true,
+      "monthly_calendar_days_sum_matches_daily": true,
+      "coverage_fraction_within_bounds": true
+    }
+  },
+  "monthly_series": [
+    {
+      "month": "2015-03",
+      "no2_mean_molec_cm2": 4610816836105263.0,
+      "valid_days": 19,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6129,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2015-04",
+      "no2_mean_molec_cm2": 2176790842000000.0,
+      "valid_days": 16,
+      "calendar_days": 30,
+      "coverage_fraction": 0.5333,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2015-05",
+      "no2_mean_molec_cm2": 1818852386210526.2,
+      "valid_days": 19,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6129,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2015-06",
+      "no2_mean_molec_cm2": 1864379619666666.8,
+      "valid_days": 21,
+      "calendar_days": 30,
+      "coverage_fraction": 0.7,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2015-07",
+      "no2_mean_molec_cm2": 1959379733500000.0,
+      "valid_days": 20,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6452,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2015-08",
+      "no2_mean_molec_cm2": 2795456088086956.5,
+      "valid_days": 23,
+      "calendar_days": 31,
+      "coverage_fraction": 0.7419,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2015-09",
+      "no2_mean_molec_cm2": 3009481891222222.0,
+      "valid_days": 18,
+      "calendar_days": 30,
+      "coverage_fraction": 0.6,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2015-10",
+      "no2_mean_molec_cm2": 3429221423055555.5,
+      "valid_days": 18,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5806,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2015-11",
+      "no2_mean_molec_cm2": 2464161790500000.0,
+      "valid_days": 6,
+      "calendar_days": 30,
+      "coverage_fraction": 0.2,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2015-12",
+      "no2_mean_molec_cm2": 2087558779181818.2,
+      "valid_days": 11,
+      "calendar_days": 31,
+      "coverage_fraction": 0.3548,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2016-01",
+      "no2_mean_molec_cm2": 1630116883176470.5,
+      "valid_days": 17,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5484,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2016-02",
+      "no2_mean_molec_cm2": 1606212196090909.0,
+      "valid_days": 11,
+      "calendar_days": 29,
+      "coverage_fraction": 0.3793,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2016-03",
+      "no2_mean_molec_cm2": 3353302186000000.0,
+      "valid_days": 4,
+      "calendar_days": 31,
+      "coverage_fraction": 0.129,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2016-04",
+      "no2_mean_molec_cm2": 3458973175555555.5,
+      "valid_days": 18,
+      "calendar_days": 30,
+      "coverage_fraction": 0.6,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2016-05",
+      "no2_mean_molec_cm2": 1927426900769230.8,
+      "valid_days": 13,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4194,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2016-06",
+      "no2_mean_molec_cm2": 1507908938076923.0,
+      "valid_days": 13,
+      "calendar_days": 30,
+      "coverage_fraction": 0.4333,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2016-07",
+      "no2_mean_molec_cm2": 2014340629652174.0,
+      "valid_days": 23,
+      "calendar_days": 31,
+      "coverage_fraction": 0.7419,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2016-08",
+      "no2_mean_molec_cm2": 2493299806190476.0,
+      "valid_days": 21,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6774,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2016-09",
+      "no2_mean_molec_cm2": 2118215020250000.0,
+      "valid_days": 16,
+      "calendar_days": 30,
+      "coverage_fraction": 0.5333,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2016-10",
+      "no2_mean_molec_cm2": 3707782675222222.0,
+      "valid_days": 9,
+      "calendar_days": 31,
+      "coverage_fraction": 0.2903,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2016-11",
+      "no2_mean_molec_cm2": 2183448973125000.0,
+      "valid_days": 8,
+      "calendar_days": 30,
+      "coverage_fraction": 0.2667,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2016-12",
+      "no2_mean_molec_cm2": 1143962608428571.5,
+      "valid_days": 14,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4516,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-01",
+      "no2_mean_molec_cm2": 1839339734764706.0,
+      "valid_days": 17,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5484,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-02",
+      "no2_mean_molec_cm2": 1396886095000000.0,
+      "valid_days": 18,
+      "calendar_days": 28,
+      "coverage_fraction": 0.6429,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-03",
+      "no2_mean_molec_cm2": 2788019151000000.0,
+      "valid_days": 13,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4194,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-04",
+      "no2_mean_molec_cm2": 2768204956266666.5,
+      "valid_days": 15,
+      "calendar_days": 30,
+      "coverage_fraction": 0.5,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-05",
+      "no2_mean_molec_cm2": 2427407713500000.0,
+      "valid_days": 18,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5806,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-06",
+      "no2_mean_molec_cm2": 1035296987382353.0,
+      "valid_days": 17,
+      "calendar_days": 30,
+      "coverage_fraction": 0.5667,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-07",
+      "no2_mean_molec_cm2": 2491140204100000.0,
+      "valid_days": 20,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6452,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-08",
+      "no2_mean_molec_cm2": 2506997852263158.0,
+      "valid_days": 19,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6129,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-09",
+      "no2_mean_molec_cm2": 2757226886428571.5,
+      "valid_days": 14,
+      "calendar_days": 30,
+      "coverage_fraction": 0.4667,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2017-10",
+      "no2_mean_molec_cm2": 3158637689875000.0,
+      "valid_days": 8,
+      "calendar_days": 31,
+      "coverage_fraction": 0.2581,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2017-11",
+      "no2_mean_molec_cm2": 2083762736000000.0,
+      "valid_days": 5,
+      "calendar_days": 30,
+      "coverage_fraction": 0.1667,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2017-12",
+      "no2_mean_molec_cm2": 1932765642875000.0,
+      "valid_days": 8,
+      "calendar_days": 31,
+      "coverage_fraction": 0.2581,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2018-01",
+      "no2_mean_molec_cm2": 2214515015090909.0,
+      "valid_days": 11,
+      "calendar_days": 31,
+      "coverage_fraction": 0.3548,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-02",
+      "no2_mean_molec_cm2": 1452336880642857.2,
+      "valid_days": 14,
+      "calendar_days": 28,
+      "coverage_fraction": 0.5,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-03",
+      "no2_mean_molec_cm2": 1590860290736842.0,
+      "valid_days": 19,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6129,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-04",
+      "no2_mean_molec_cm2": 2373106186714285.5,
+      "valid_days": 21,
+      "calendar_days": 30,
+      "coverage_fraction": 0.7,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-05",
+      "no2_mean_molec_cm2": 2453100559714285.5,
+      "valid_days": 21,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6774,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-06",
+      "no2_mean_molec_cm2": 1974614453260000.0,
+      "valid_days": 20,
+      "calendar_days": 30,
+      "coverage_fraction": 0.6667,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-07",
+      "no2_mean_molec_cm2": 1466229050322222.2,
+      "valid_days": 18,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5806,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-08",
+      "no2_mean_molec_cm2": 2458038450040000.0,
+      "valid_days": 25,
+      "calendar_days": 31,
+      "coverage_fraction": 0.8065,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-09",
+      "no2_mean_molec_cm2": 3927288891888889.0,
+      "valid_days": 18,
+      "calendar_days": 30,
+      "coverage_fraction": 0.6,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-10",
+      "no2_mean_molec_cm2": 4229345508000000.0,
+      "valid_days": 16,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5161,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-11",
+      "no2_mean_molec_cm2": 3046602534571428.5,
+      "valid_days": 14,
+      "calendar_days": 30,
+      "coverage_fraction": 0.4667,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2018-12",
+      "no2_mean_molec_cm2": 631558884000000.0,
+      "valid_days": 11,
+      "calendar_days": 31,
+      "coverage_fraction": 0.3548,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-01",
+      "no2_mean_molec_cm2": 1651690575400000.0,
+      "valid_days": 15,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4839,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-02",
+      "no2_mean_molec_cm2": 1306574233780000.0,
+      "valid_days": 20,
+      "calendar_days": 28,
+      "coverage_fraction": 0.7143,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-03",
+      "no2_mean_molec_cm2": 2807005797916666.5,
+      "valid_days": 12,
+      "calendar_days": 31,
+      "coverage_fraction": 0.3871,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-04",
+      "no2_mean_molec_cm2": 3683436443266666.5,
+      "valid_days": 15,
+      "calendar_days": 30,
+      "coverage_fraction": 0.5,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-05",
+      "no2_mean_molec_cm2": 2626370152823529.5,
+      "valid_days": 17,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5484,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-06",
+      "no2_mean_molec_cm2": 1966122001608695.8,
+      "valid_days": 23,
+      "calendar_days": 30,
+      "coverage_fraction": 0.7667,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-07",
+      "no2_mean_molec_cm2": 1891207149850000.0,
+      "valid_days": 20,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6452,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-08",
+      "no2_mean_molec_cm2": 2342989434238095.0,
+      "valid_days": 21,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6774,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-09",
+      "no2_mean_molec_cm2": 3190018445888889.0,
+      "valid_days": 18,
+      "calendar_days": 30,
+      "coverage_fraction": 0.6,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-10",
+      "no2_mean_molec_cm2": 3065724293866666.5,
+      "valid_days": 15,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4839,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2019-11",
+      "no2_mean_molec_cm2": 3665301781666666.5,
+      "valid_days": 6,
+      "calendar_days": 30,
+      "coverage_fraction": 0.2,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2019-12",
+      "no2_mean_molec_cm2": 2612532813450000.0,
+      "valid_days": 12,
+      "calendar_days": 31,
+      "coverage_fraction": 0.3871,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-01",
+      "no2_mean_molec_cm2": 3413501472222222.0,
+      "valid_days": 9,
+      "calendar_days": 31,
+      "coverage_fraction": 0.2903,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2020-02",
+      "no2_mean_molec_cm2": 1951775163333333.2,
+      "valid_days": 12,
+      "calendar_days": 29,
+      "coverage_fraction": 0.4138,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-03",
+      "no2_mean_molec_cm2": 3059916870866666.5,
+      "valid_days": 15,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4839,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-04",
+      "no2_mean_molec_cm2": 1752433849476190.5,
+      "valid_days": 21,
+      "calendar_days": 30,
+      "coverage_fraction": 0.7,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-05",
+      "no2_mean_molec_cm2": 2126318068076923.0,
+      "valid_days": 13,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4194,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-06",
+      "no2_mean_molec_cm2": 1754334412373913.0,
+      "valid_days": 23,
+      "calendar_days": 30,
+      "coverage_fraction": 0.7667,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-07",
+      "no2_mean_molec_cm2": 1933935336400000.0,
+      "valid_days": 24,
+      "calendar_days": 31,
+      "coverage_fraction": 0.7742,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-08",
+      "no2_mean_molec_cm2": 2387054935318182.0,
+      "valid_days": 22,
+      "calendar_days": 31,
+      "coverage_fraction": 0.7097,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-09",
+      "no2_mean_molec_cm2": 2807183589652174.0,
+      "valid_days": 23,
+      "calendar_days": 30,
+      "coverage_fraction": 0.7667,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-10",
+      "no2_mean_molec_cm2": 4317835062857143.0,
+      "valid_days": 14,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4516,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2020-11",
+      "no2_mean_molec_cm2": 1962230023500000.0,
+      "valid_days": 4,
+      "calendar_days": 30,
+      "coverage_fraction": 0.1333,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2020-12",
+      "no2_mean_molec_cm2": 1066089290428571.4,
+      "valid_days": 14,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4516,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-01",
+      "no2_mean_molec_cm2": 1917445796700000.0,
+      "valid_days": 10,
+      "calendar_days": 31,
+      "coverage_fraction": 0.3226,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-02",
+      "no2_mean_molec_cm2": 1023963912866666.6,
+      "valid_days": 15,
+      "calendar_days": 28,
+      "coverage_fraction": 0.5357,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-03",
+      "no2_mean_molec_cm2": 1811456874133333.2,
+      "valid_days": 15,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4839,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-04",
+      "no2_mean_molec_cm2": 2742431843570000.0,
+      "valid_days": 11,
+      "calendar_days": 30,
+      "coverage_fraction": 0.3667,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-05",
+      "no2_mean_molec_cm2": 1782300824882353.0,
+      "valid_days": 17,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5484,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-06",
+      "no2_mean_molec_cm2": 1447453629981818.2,
+      "valid_days": 22,
+      "calendar_days": 30,
+      "coverage_fraction": 0.7333,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-07",
+      "no2_mean_molec_cm2": 1730495450384615.5,
+      "valid_days": 26,
+      "calendar_days": 31,
+      "coverage_fraction": 0.8387,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-08",
+      "no2_mean_molec_cm2": 1867270078521739.2,
+      "valid_days": 23,
+      "calendar_days": 31,
+      "coverage_fraction": 0.7419,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-09",
+      "no2_mean_molec_cm2": 3186519174384615.5,
+      "valid_days": 13,
+      "calendar_days": 30,
+      "coverage_fraction": 0.4333,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-10",
+      "no2_mean_molec_cm2": 3744274622000000.0,
+      "valid_days": 20,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6452,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2021-11",
+      "no2_mean_molec_cm2": 4001103992222222.0,
+      "valid_days": 9,
+      "calendar_days": 30,
+      "coverage_fraction": 0.3,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2021-12",
+      "no2_mean_molec_cm2": 1155214009333333.2,
+      "valid_days": 9,
+      "calendar_days": 31,
+      "coverage_fraction": 0.2903,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2022-01",
+      "no2_mean_molec_cm2": 1324425185300000.0,
+      "valid_days": 15,
+      "calendar_days": 31,
+      "coverage_fraction": 0.4839,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2022-02",
+      "no2_mean_molec_cm2": 1546521977333333.2,
+      "valid_days": 15,
+      "calendar_days": 28,
+      "coverage_fraction": 0.5357,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2022-03",
+      "no2_mean_molec_cm2": 2361352191263158.0,
+      "valid_days": 19,
+      "calendar_days": 31,
+      "coverage_fraction": 0.6129,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2022-04",
+      "no2_mean_molec_cm2": 1822031443500000.0,
+      "valid_days": 8,
+      "calendar_days": 30,
+      "coverage_fraction": 0.2667,
+      "flagged_below_50_pct": true,
+      "flagged_below_10_valid_days": true
+    },
+    {
+      "month": "2022-05",
+      "no2_mean_molec_cm2": 1682672419055555.5,
+      "valid_days": 18,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5806,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2022-06",
+      "no2_mean_molec_cm2": 1373545021872727.2,
+      "valid_days": 22,
+      "calendar_days": 30,
+      "coverage_fraction": 0.7333,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2022-07",
+      "no2_mean_molec_cm2": 1435434635086956.5,
+      "valid_days": 23,
+      "calendar_days": 31,
+      "coverage_fraction": 0.7419,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    },
+    {
+      "month": "2022-08",
+      "no2_mean_molec_cm2": 1691998644562500.0,
+      "valid_days": 16,
+      "calendar_days": 31,
+      "coverage_fraction": 0.5161,
+      "flagged_below_50_pct": false,
+      "flagged_below_10_valid_days": false
+    }
+  ],
+  "annual_march_august": [
+    {
+      "year": 2015,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "valid_days": 118,
+      "calendar_days": 184,
+      "coverage_fraction": 0.6413,
+      "observed_months_count": 6,
+      "valid_day_mean_molec_cm2": 2539215469533898.5,
+      "equal_month_mean_molec_cm2": 2537612584261568.5,
+      "flagged_months_count": 0,
+      "flagged_months": [],
+      "any_flagged_month": false
+    },
+    {
+      "year": 2016,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "valid_days": 92,
+      "calendar_days": 184,
+      "coverage_fraction": 0.5,
+      "observed_months_count": 6,
+      "valid_day_mean_molec_cm2": 2380687198054348.0,
+      "equal_month_mean_molec_cm2": 2459208606040726.5,
+      "flagged_months_count": 3,
+      "flagged_months": [
+        {
+          "month": "2016-03",
+          "valid_days": 4,
+          "calendar_days": 31,
+          "coverage_fraction": 0.129
+        },
+        {
+          "month": "2016-05",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194
+        },
+        {
+          "month": "2016-06",
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333
+        }
+      ],
+      "any_flagged_month": true
+    },
+    {
+      "year": 2017,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "valid_days": 102,
+      "calendar_days": 184,
+      "coverage_fraction": 0.5543,
+      "observed_months_count": 6,
+      "valid_day_mean_molec_cm2": 2318788962848039.0,
+      "equal_month_mean_molec_cm2": 2336177810752029.5,
+      "flagged_months_count": 1,
+      "flagged_months": [
+        {
+          "month": "2017-03",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194
+        }
+      ],
+      "any_flagged_month": true
+    },
+    {
+      "year": 2018,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "valid_days": 124,
+      "calendar_days": 184,
+      "coverage_fraction": 0.6739,
+      "observed_months_count": 6,
+      "valid_day_mean_molec_cm2": 2088000487266129.0,
+      "equal_month_mean_molec_cm2": 2052658165131272.8,
+      "flagged_months_count": 0,
+      "flagged_months": [],
+      "any_flagged_month": false
+    },
+    {
+      "year": 2019,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "valid_days": 108,
+      "calendar_days": 184,
+      "coverage_fraction": 0.587,
+      "observed_months_count": 6,
+      "valid_day_mean_molec_cm2": 2461404036805555.5,
+      "equal_month_mean_molec_cm2": 2552855163283942.0,
+      "flagged_months_count": 1,
+      "flagged_months": [
+        {
+          "month": "2019-03",
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871
+        }
+      ],
+      "any_flagged_month": true
+    },
+    {
+      "year": 2020,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "valid_days": 118,
+      "calendar_days": 184,
+      "coverage_fraction": 0.6413,
+      "observed_months_count": 6,
+      "valid_day_mean_molec_cm2": 2115435143408474.5,
+      "equal_month_mean_molec_cm2": 2168998912085312.2,
+      "flagged_months_count": 2,
+      "flagged_months": [
+        {
+          "month": "2020-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839
+        },
+        {
+          "month": "2020-05",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194
+        }
+      ],
+      "any_flagged_month": true
+    },
+    {
+      "year": 2021,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "valid_days": 114,
+      "calendar_days": 184,
+      "coverage_fraction": 0.6196,
+      "observed_months_count": 6,
+      "valid_day_mean_molec_cm2": 1819489392893596.8,
+      "equal_month_mean_molec_cm2": 1896901450245643.2,
+      "flagged_months_count": 2,
+      "flagged_months": [
+        {
+          "month": "2021-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839
+        },
+        {
+          "month": "2021-04",
+          "valid_days": 11,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3667
+        }
+      ],
+      "any_flagged_month": true
+    },
+    {
+      "year": 2022,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "valid_days": 106,
+      "calendar_days": 184,
+      "coverage_fraction": 0.5761,
+      "observed_months_count": 6,
+      "valid_day_mean_molec_cm2": 1698443510624528.2,
+      "equal_month_mean_molec_cm2": 1727839059223483.0,
+      "flagged_months_count": 1,
+      "flagged_months": [
+        {
+          "month": "2022-04",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667
+        }
+      ],
+      "any_flagged_month": true
+    }
+  ],
+  "comparisons": {
+    "primary_2015_2019_valid_day": {
+      "comparison_id": "primary_2015_2019_valid_day",
+      "label": "Primary baseline: March–August 2022 vs. 2015–2019 (study-spec valid-day annual equal weight)",
+      "weighting": "valid_day_annual_equal_weight",
+      "baseline_years_requested": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "available_baseline_years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "unavailable_baseline_years": [],
+      "target_year": 2022,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "baseline_mean_molec_cm2": 2357619230901594.0,
+      "baseline_annual_min_molec_cm2": 2088000487266129.0,
+      "baseline_annual_max_molec_cm2": 2539215469533898.5,
+      "target_mean_molec_cm2": 1698443510624528.2,
+      "absolute_change_molec_cm2": -659175720277065.8,
+      "pct_change": -27.9594,
+      "pct_change_status": "computed",
+      "baseline_valid_days": 544,
+      "baseline_calendar_days": 920,
+      "target_valid_days": 106,
+      "target_calendar_days": 184,
+      "flagged_months_in_baseline": [
+        {
+          "month": "2016-03",
+          "valid_days": 4,
+          "calendar_days": 31,
+          "coverage_fraction": 0.129
+        },
+        {
+          "month": "2016-05",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194
+        },
+        {
+          "month": "2016-06",
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333
+        },
+        {
+          "month": "2017-03",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194
+        },
+        {
+          "month": "2019-03",
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871
+        }
+      ],
+      "flagged_months_in_target": [
+        {
+          "month": "2022-04",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667
+        }
+      ],
+      "any_flagged_month": true,
+      "sampling_sensitivity_review_required": true,
+      "note": "Study specification primary method: equal weight across yearly valid-day seasonal means."
+    },
+    "sensitivity_2019_2021_valid_day": {
+      "comparison_id": "sensitivity_2019_2021_valid_day",
+      "label": "Sensitivity baseline: March–August 2022 vs. 2019–2021 (valid-day annual equal weight)",
+      "weighting": "valid_day_annual_equal_weight",
+      "baseline_years_requested": [
+        2019,
+        2020,
+        2021
+      ],
+      "available_baseline_years": [
+        2019,
+        2020,
+        2021
+      ],
+      "unavailable_baseline_years": [],
+      "target_year": 2022,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "baseline_mean_molec_cm2": 2132109524369209.0,
+      "baseline_annual_min_molec_cm2": 1819489392893596.8,
+      "baseline_annual_max_molec_cm2": 2461404036805555.5,
+      "target_mean_molec_cm2": 1698443510624528.2,
+      "absolute_change_molec_cm2": -433666013744680.75,
+      "pct_change": -20.3398,
+      "pct_change_status": "computed",
+      "baseline_valid_days": 340,
+      "baseline_calendar_days": 552,
+      "target_valid_days": 106,
+      "target_calendar_days": 184,
+      "flagged_months_in_baseline": [
+        {
+          "month": "2019-03",
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871
+        },
+        {
+          "month": "2020-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839
+        },
+        {
+          "month": "2020-05",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194
+        },
+        {
+          "month": "2021-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839
+        },
+        {
+          "month": "2021-04",
+          "valid_days": 11,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3667
+        }
+      ],
+      "flagged_months_in_target": [
+        {
+          "month": "2022-04",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667
+        }
+      ],
+      "any_flagged_month": true,
+      "sampling_sensitivity_review_required": true,
+      "note": "Includes 2020 COVID-19 pandemic period and 2021 pre-invasion decline."
+    },
+    "primary_2015_2019_equal_month": {
+      "comparison_id": "primary_2015_2019_equal_month",
+      "label": "Weighting check: March–August 2022 vs. 2015–2019 (equal weight across 6 monthly means)",
+      "weighting": "equal_month_annual_equal_weight",
+      "baseline_years_requested": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "available_baseline_years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "unavailable_baseline_years": [],
+      "target_year": 2022,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "baseline_mean_molec_cm2": 2387702465893907.5,
+      "baseline_annual_min_molec_cm2": 2052658165131272.8,
+      "baseline_annual_max_molec_cm2": 2552855163283942.0,
+      "target_mean_molec_cm2": 1727839059223483.0,
+      "absolute_change_molec_cm2": -659863406670424.5,
+      "pct_change": -27.6359,
+      "pct_change_status": "computed",
+      "baseline_valid_days": 544,
+      "baseline_calendar_days": 920,
+      "target_valid_days": 106,
+      "target_calendar_days": 184,
+      "flagged_months_in_baseline": [
+        {
+          "month": "2016-03",
+          "valid_days": 4,
+          "calendar_days": 31,
+          "coverage_fraction": 0.129
+        },
+        {
+          "month": "2016-05",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194
+        },
+        {
+          "month": "2016-06",
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333
+        },
+        {
+          "month": "2017-03",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194
+        },
+        {
+          "month": "2019-03",
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871
+        }
+      ],
+      "flagged_months_in_target": [
+        {
+          "month": "2022-04",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667
+        }
+      ],
+      "any_flagged_month": true,
+      "sampling_sensitivity_review_required": true,
+      "note": "Gives each calendar month (Mar–Aug) equal 1/6 weight regardless of cloudy-day count."
+    },
+    "sensitivity_2019_2021_equal_month": {
+      "comparison_id": "sensitivity_2019_2021_equal_month",
+      "label": "Weighting check: March–August 2022 vs. 2019–2021 (equal weight across 6 monthly means)",
+      "weighting": "equal_month_annual_equal_weight",
+      "baseline_years_requested": [
+        2019,
+        2020,
+        2021
+      ],
+      "available_baseline_years": [
+        2019,
+        2020,
+        2021
+      ],
+      "unavailable_baseline_years": [],
+      "target_year": 2022,
+      "months_included": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "baseline_mean_molec_cm2": 2206251841871632.2,
+      "baseline_annual_min_molec_cm2": 1896901450245643.2,
+      "baseline_annual_max_molec_cm2": 2552855163283942.0,
+      "target_mean_molec_cm2": 1727839059223483.0,
+      "absolute_change_molec_cm2": -478412782648149.25,
+      "pct_change": -21.6844,
+      "pct_change_status": "computed",
+      "baseline_valid_days": 340,
+      "baseline_calendar_days": 552,
+      "target_valid_days": 106,
+      "target_calendar_days": 184,
+      "flagged_months_in_baseline": [
+        {
+          "month": "2019-03",
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871
+        },
+        {
+          "month": "2020-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839
+        },
+        {
+          "month": "2020-05",
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194
+        },
+        {
+          "month": "2021-03",
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839
+        },
+        {
+          "month": "2021-04",
+          "valid_days": 11,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3667
+        }
+      ],
+      "flagged_months_in_target": [
+        {
+          "month": "2022-04",
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667
+        }
+      ],
+      "any_flagged_month": true,
+      "sampling_sensitivity_review_required": true,
+      "note": "Equal 1/6 monthly weighting sensitivity check over pandemic-era 2019–2021 baseline."
+    }
+  },
+  "coverage_sensitivity": {
+    "strict_all_years_unflagged": {
+      "primary_2015_2019_valid_day": {
+        "comparison_id": "strict_unflagged_primary_2015_2019_valid_day",
+        "label": "Primary baseline (2015–2019) — identical months >=50% in every year",
+        "weighting": "valid_day_annual_equal_weight",
+        "baseline_years_requested": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "available_baseline_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_baseline_years": [],
+        "target_year": 2022,
+        "months_included": [
+          7,
+          8
+        ],
+        "baseline_mean_molec_cm2": 2262770825292577.5,
+        "baseline_annual_min_molec_cm2": 2042862422251162.8,
+        "baseline_annual_max_molec_cm2": 2498865725000000.0,
+        "target_mean_molec_cm2": 1540691664615384.5,
+        "absolute_change_molec_cm2": -722079160677193.0,
+        "pct_change": -31.9113,
+        "pct_change_status": "computed",
+        "baseline_valid_days": 210,
+        "baseline_calendar_days": 310,
+        "target_valid_days": 39,
+        "target_calendar_days": 62,
+        "flagged_months_in_baseline": [],
+        "flagged_months_in_target": [],
+        "any_flagged_month": false,
+        "sampling_sensitivity_review_required": false,
+        "note": "Retains only calendar months passing >=50% coverage in every year of the comparison window (remaining months: ['Jul', 'Aug'])."
+      },
+      "primary_2015_2019_equal_month": {
+        "comparison_id": "strict_unflagged_primary_2015_2019_equal_month",
+        "label": "Primary baseline (2015–2019) — identical months >=50% in every year",
+        "weighting": "equal_month_annual_equal_weight",
+        "baseline_years_requested": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "available_baseline_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_baseline_years": [],
+        "target_year": 2022,
+        "months_included": [
+          7,
+          8
+        ],
+        "baseline_mean_molec_cm2": 2241907839824308.0,
+        "baseline_annual_min_molec_cm2": 1962133750181111.0,
+        "baseline_annual_max_molec_cm2": 2499069028181579.0,
+        "target_mean_molec_cm2": 1563716639824728.2,
+        "absolute_change_molec_cm2": -678191199999579.8,
+        "pct_change": -30.2506,
+        "pct_change_status": "computed",
+        "baseline_valid_days": 210,
+        "baseline_calendar_days": 310,
+        "target_valid_days": 39,
+        "target_calendar_days": 62,
+        "flagged_months_in_baseline": [],
+        "flagged_months_in_target": [],
+        "any_flagged_month": false,
+        "sampling_sensitivity_review_required": false,
+        "note": "Retains only calendar months passing >=50% coverage in every year of the comparison window (remaining months: ['Jul', 'Aug'])."
+      },
+      "sensitivity_2019_2021_valid_day": {
+        "comparison_id": "strict_unflagged_sensitivity_2019_2021_valid_day",
+        "label": "Sensitivity baseline (2019–2021) — identical months >=50% in every year",
+        "weighting": "valid_day_annual_equal_weight",
+        "baseline_years_requested": [
+          2019,
+          2020,
+          2021
+        ],
+        "available_baseline_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_baseline_years": [],
+        "target_year": 2022,
+        "months_included": [
+          6,
+          7,
+          8
+        ],
+        "baseline_mean_molec_cm2": 1924003879698605.0,
+        "baseline_annual_min_molec_cm2": 1687099625008450.8,
+        "baseline_annual_max_molec_cm2": 2066370736765625.0,
+        "target_mean_molec_cm2": 1480409268872131.2,
+        "absolute_change_molec_cm2": -443594610826473.75,
+        "pct_change": -23.0558,
+        "pct_change_status": "computed",
+        "baseline_valid_days": 204,
+        "baseline_calendar_days": 276,
+        "target_valid_days": 61,
+        "target_calendar_days": 92,
+        "flagged_months_in_baseline": [],
+        "flagged_months_in_target": [],
+        "any_flagged_month": false,
+        "sampling_sensitivity_review_required": false,
+        "note": "Retains only calendar months passing >=50% coverage in every year of the comparison window (remaining months: ['Jun', 'Jul', 'Aug'])."
+      },
+      "sensitivity_2019_2021_equal_month": {
+        "comparison_id": "strict_unflagged_sensitivity_2019_2021_equal_month",
+        "label": "Sensitivity baseline (2019–2021) — identical months >=50% in every year",
+        "weighting": "equal_month_annual_equal_weight",
+        "baseline_years_requested": [
+          2019,
+          2020,
+          2021
+        ],
+        "available_baseline_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_baseline_years": [],
+        "target_year": 2022,
+        "months_included": [
+          6,
+          7,
+          8
+        ],
+        "baseline_mean_molec_cm2": 1924540269853006.8,
+        "baseline_annual_min_molec_cm2": 1681739719629391.0,
+        "baseline_annual_max_molec_cm2": 2066772861898930.2,
+        "target_mean_molec_cm2": 1500326100507394.8,
+        "absolute_change_molec_cm2": -424214169345612.0,
+        "pct_change": -22.0424,
+        "pct_change_status": "computed",
+        "baseline_valid_days": 204,
+        "baseline_calendar_days": 276,
+        "target_valid_days": 61,
+        "target_calendar_days": 92,
+        "flagged_months_in_baseline": [],
+        "flagged_months_in_target": [],
+        "any_flagged_month": false,
+        "sampling_sensitivity_review_required": false,
+        "note": "Retains only calendar months passing >=50% coverage in every year of the comparison window (remaining months: ['Jun', 'Jul', 'Aug'])."
+      }
+    },
+    "excluding_target_flagged_months": {
+      "primary_2015_2019_valid_day": {
+        "comparison_id": "excl_2022_flagged_primary_2015_2019_valid_day",
+        "label": "Primary baseline (2015–2019) — identical months excluding 2022-flagged month(s)",
+        "weighting": "valid_day_annual_equal_weight",
+        "baseline_years_requested": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "available_baseline_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_baseline_years": [],
+        "target_year": 2022,
+        "months_included": [
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "baseline_mean_molec_cm2": 2249989086904952.5,
+        "baseline_annual_min_molec_cm2": 2029872140776699.0,
+        "baseline_annual_max_molec_cm2": 2596066391500000.0,
+        "target_mean_molec_cm2": 1688354699777551.0,
+        "absolute_change_molec_cm2": -561634387127401.5,
+        "pct_change": -24.9616,
+        "pct_change_status": "computed",
+        "baseline_valid_days": 459,
+        "baseline_calendar_days": 770,
+        "target_valid_days": 98,
+        "target_calendar_days": 154,
+        "flagged_months_in_baseline": [
+          {
+            "month": "2016-03",
+            "valid_days": 4,
+            "calendar_days": 31,
+            "coverage_fraction": 0.129
+          },
+          {
+            "month": "2016-05",
+            "valid_days": 13,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4194
+          },
+          {
+            "month": "2016-06",
+            "valid_days": 13,
+            "calendar_days": 30,
+            "coverage_fraction": 0.4333
+          },
+          {
+            "month": "2017-03",
+            "valid_days": 13,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4194
+          },
+          {
+            "month": "2019-03",
+            "valid_days": 12,
+            "calendar_days": 31,
+            "coverage_fraction": 0.3871
+          }
+        ],
+        "flagged_months_in_target": [],
+        "any_flagged_month": true,
+        "sampling_sensitivity_review_required": true,
+        "note": "Drops calendar months flagged <50% in 2022 (April 2022: 8/30d) identically from both baseline and 2022 (remaining months: ['Mar', 'May', 'Jun', 'Jul', 'Aug'])."
+      },
+      "primary_2015_2019_equal_month": {
+        "comparison_id": "excl_2022_flagged_primary_2015_2019_equal_month",
+        "label": "Primary baseline (2015–2019) — identical months excluding 2022-flagged month(s)",
+        "weighting": "equal_month_annual_equal_weight",
+        "baseline_years_requested": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "available_baseline_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_baseline_years": [],
+        "target_year": 2022,
+        "months_included": [
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "baseline_mean_molec_cm2": 2286822494920563.0,
+        "baseline_annual_min_molec_cm2": 1988568560814670.0,
+        "baseline_annual_max_molec_cm2": 2609776932713882.5,
+        "target_mean_molec_cm2": 1709000582368179.5,
+        "absolute_change_molec_cm2": -577821912552383.5,
+        "pct_change": -25.2675,
+        "pct_change_status": "computed",
+        "baseline_valid_days": 459,
+        "baseline_calendar_days": 770,
+        "target_valid_days": 98,
+        "target_calendar_days": 154,
+        "flagged_months_in_baseline": [
+          {
+            "month": "2016-03",
+            "valid_days": 4,
+            "calendar_days": 31,
+            "coverage_fraction": 0.129
+          },
+          {
+            "month": "2016-05",
+            "valid_days": 13,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4194
+          },
+          {
+            "month": "2016-06",
+            "valid_days": 13,
+            "calendar_days": 30,
+            "coverage_fraction": 0.4333
+          },
+          {
+            "month": "2017-03",
+            "valid_days": 13,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4194
+          },
+          {
+            "month": "2019-03",
+            "valid_days": 12,
+            "calendar_days": 31,
+            "coverage_fraction": 0.3871
+          }
+        ],
+        "flagged_months_in_target": [],
+        "any_flagged_month": true,
+        "sampling_sensitivity_review_required": true,
+        "note": "Drops calendar months flagged <50% in 2022 (April 2022: 8/30d) identically from both baseline and 2022 (remaining months: ['Mar', 'May', 'Jun', 'Jul', 'Aug'])."
+      },
+      "sensitivity_2019_2021_valid_day": {
+        "comparison_id": "excl_2022_flagged_sensitivity_2019_2021_valid_day",
+        "label": "Sensitivity baseline (2019–2021) — identical months excluding 2022-flagged month(s)",
+        "weighting": "valid_day_annual_equal_weight",
+        "baseline_years_requested": [
+          2019,
+          2020,
+          2021
+        ],
+        "available_baseline_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_baseline_years": [],
+        "target_year": 2022,
+        "months_included": [
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "baseline_mean_molec_cm2": 2059749270523816.0,
+        "baseline_annual_min_molec_cm2": 1720922723403883.5,
+        "baseline_annual_max_molec_cm2": 2264302035763441.0,
+        "target_mean_molec_cm2": 1688354699777551.0,
+        "absolute_change_molec_cm2": -371394570746265.0,
+        "pct_change": -18.0311,
+        "pct_change_status": "computed",
+        "baseline_valid_days": 293,
+        "baseline_calendar_days": 462,
+        "target_valid_days": 98,
+        "target_calendar_days": 154,
+        "flagged_months_in_baseline": [
+          {
+            "month": "2019-03",
+            "valid_days": 12,
+            "calendar_days": 31,
+            "coverage_fraction": 0.3871
+          },
+          {
+            "month": "2020-03",
+            "valid_days": 15,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4839
+          },
+          {
+            "month": "2020-05",
+            "valid_days": 13,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4194
+          },
+          {
+            "month": "2021-03",
+            "valid_days": 15,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4839
+          }
+        ],
+        "flagged_months_in_target": [],
+        "any_flagged_month": true,
+        "sampling_sensitivity_review_required": true,
+        "note": "Drops calendar months flagged <50% in 2022 (April 2022: 8/30d) identically from both baseline and 2022 (remaining months: ['Mar', 'May', 'Jun', 'Jul', 'Aug'])."
+      },
+      "sensitivity_2019_2021_equal_month": {
+        "comparison_id": "excl_2022_flagged_sensitivity_2019_2021_equal_month",
+        "label": "Sensitivity baseline (2019–2021) — identical months excluding 2022-flagged month(s)",
+        "weighting": "equal_month_annual_equal_weight",
+        "baseline_years_requested": [
+          2019,
+          2020,
+          2021
+        ],
+        "available_baseline_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_baseline_years": [],
+        "target_year": 2022,
+        "months_included": [
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "baseline_mean_molec_cm2": 2102282067825102.0,
+        "baseline_annual_min_molec_cm2": 1727795371580771.8,
+        "baseline_annual_max_molec_cm2": 2326738907287397.5,
+        "target_mean_molec_cm2": 1709000582368179.5,
+        "absolute_change_molec_cm2": -393281485456922.5,
+        "pct_change": -18.7074,
+        "pct_change_status": "computed",
+        "baseline_valid_days": 293,
+        "baseline_calendar_days": 462,
+        "target_valid_days": 98,
+        "target_calendar_days": 154,
+        "flagged_months_in_baseline": [
+          {
+            "month": "2019-03",
+            "valid_days": 12,
+            "calendar_days": 31,
+            "coverage_fraction": 0.3871
+          },
+          {
+            "month": "2020-03",
+            "valid_days": 15,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4839
+          },
+          {
+            "month": "2020-05",
+            "valid_days": 13,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4194
+          },
+          {
+            "month": "2021-03",
+            "valid_days": 15,
+            "calendar_days": 31,
+            "coverage_fraction": 0.4839
+          }
+        ],
+        "flagged_months_in_target": [],
+        "any_flagged_month": true,
+        "sampling_sensitivity_review_required": true,
+        "note": "Drops calendar months flagged <50% in 2022 (April 2022: 8/30d) identically from both baseline and 2022 (remaining months: ['Mar', 'May', 'Jun', 'Jul', 'Aug'])."
+      }
+    }
+  },
+  "matched_months": [
+    {
+      "calendar_month": 3,
+      "month_name": "Mar",
+      "primary_2015_2019": {
+        "mean_molec_cm2": 3030000852351754.5,
+        "min_molec_cm2": 1590860290736842.0,
+        "max_molec_cm2": 4610816836105263.0,
+        "sd_molec_cm2": 1093493303706770.5,
+        "available_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.4323,
+        "valid_days_total": 67,
+        "calendar_days_total": 155,
+        "flagged_years_count": 3,
+        "flagged_years_detail": [
+          "2016 (4/31d)",
+          "2017 (13/31d)",
+          "2019 (12/31d)"
+        ]
+      },
+      "sensitivity_2019_2021": {
+        "mean_molec_cm2": 2559459847638888.5,
+        "min_molec_cm2": 1811456874133333.2,
+        "max_molec_cm2": 3059916870866666.5,
+        "sd_molec_cm2": 660016923256551.5,
+        "available_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.4516,
+        "valid_days_total": 42,
+        "calendar_days_total": 93,
+        "flagged_years_count": 3,
+        "flagged_years_detail": [
+          "2019 (12/31d)",
+          "2020 (15/31d)",
+          "2021 (15/31d)"
+        ]
+      },
+      "year_2021_mean_molec_cm2": 1811456874133333.2,
+      "target_2022": {
+        "mean_molec_cm2": 2361352191263158.0,
+        "valid_days": 19,
+        "calendar_days": 31,
+        "coverage_fraction": 0.6129,
+        "flagged_below_50_pct": false
+      },
+      "vs_primary_2015_2019": {
+        "absolute_change_molec_cm2": -668648661088596.5,
+        "pct_change": -22.0676,
+        "pct_change_status": "computed"
+      },
+      "vs_sensitivity_2019_2021": {
+        "absolute_change_molec_cm2": -198107656375730.5,
+        "pct_change": -7.7402,
+        "pct_change_status": "computed"
+      }
+    },
+    {
+      "calendar_month": 4,
+      "month_name": "Apr",
+      "primary_2015_2019": {
+        "mean_molec_cm2": 2892102320760635.0,
+        "min_molec_cm2": 2176790842000000.0,
+        "max_molec_cm2": 3683436443266666.5,
+        "sd_molec_cm2": 660289768811513.6,
+        "available_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.5667,
+        "valid_days_total": 85,
+        "calendar_days_total": 150,
+        "flagged_years_count": 0,
+        "flagged_years_detail": []
+      },
+      "sensitivity_2019_2021": {
+        "mean_molec_cm2": 2726100712104285.5,
+        "min_molec_cm2": 1752433849476190.5,
+        "max_molec_cm2": 3683436443266666.5,
+        "sd_molec_cm2": 965604879698523.2,
+        "available_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.5222,
+        "valid_days_total": 47,
+        "calendar_days_total": 90,
+        "flagged_years_count": 1,
+        "flagged_years_detail": [
+          "2021 (11/30d)"
+        ]
+      },
+      "year_2021_mean_molec_cm2": 2742431843570000.0,
+      "target_2022": {
+        "mean_molec_cm2": 1822031443500000.0,
+        "valid_days": 8,
+        "calendar_days": 30,
+        "coverage_fraction": 0.2667,
+        "flagged_below_50_pct": true
+      },
+      "vs_primary_2015_2019": {
+        "absolute_change_molec_cm2": -1070070877260635.0,
+        "pct_change": -36.9998,
+        "pct_change_status": "computed"
+      },
+      "vs_sensitivity_2019_2021": {
+        "absolute_change_molec_cm2": -904069268604285.5,
+        "pct_change": -33.1635,
+        "pct_change_status": "computed"
+      }
+    },
+    {
+      "calendar_month": 5,
+      "month_name": "May",
+      "primary_2015_2019": {
+        "mean_molec_cm2": 2250631542603514.5,
+        "min_molec_cm2": 1818852386210526.2,
+        "max_molec_cm2": 2626370152823529.5,
+        "sd_molec_cm2": 355076576633605.06,
+        "available_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.5677,
+        "valid_days_total": 88,
+        "calendar_days_total": 155,
+        "flagged_years_count": 1,
+        "flagged_years_detail": [
+          "2016 (13/31d)"
+        ]
+      },
+      "sensitivity_2019_2021": {
+        "mean_molec_cm2": 2178329681927601.8,
+        "min_molec_cm2": 1782300824882353.0,
+        "max_molec_cm2": 2626370152823529.5,
+        "sd_molec_cm2": 424431577023059.7,
+        "available_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.5054,
+        "valid_days_total": 47,
+        "calendar_days_total": 93,
+        "flagged_years_count": 1,
+        "flagged_years_detail": [
+          "2020 (13/31d)"
+        ]
+      },
+      "year_2021_mean_molec_cm2": 1782300824882353.0,
+      "target_2022": {
+        "mean_molec_cm2": 1682672419055555.5,
+        "valid_days": 18,
+        "calendar_days": 31,
+        "coverage_fraction": 0.5806,
+        "flagged_below_50_pct": false
+      },
+      "vs_primary_2015_2019": {
+        "absolute_change_molec_cm2": -567959123547959.0,
+        "pct_change": -25.2355,
+        "pct_change_status": "computed"
+      },
+      "vs_sensitivity_2019_2021": {
+        "absolute_change_molec_cm2": -495657262872046.25,
+        "pct_change": -22.754,
+        "pct_change_status": "computed"
+      }
+    },
+    {
+      "calendar_month": 6,
+      "month_name": "Jun",
+      "primary_2015_2019": {
+        "mean_molec_cm2": 1669664399998927.8,
+        "min_molec_cm2": 1035296987382353.0,
+        "max_molec_cm2": 1974614453260000.0,
+        "sd_molec_cm2": 402300417896207.06,
+        "available_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.6267,
+        "valid_days_total": 94,
+        "calendar_days_total": 150,
+        "flagged_years_count": 1,
+        "flagged_years_detail": [
+          "2016 (13/30d)"
+        ]
+      },
+      "sensitivity_2019_2021": {
+        "mean_molec_cm2": 1722636681321475.8,
+        "min_molec_cm2": 1447453629981818.2,
+        "max_molec_cm2": 1966122001608695.8,
+        "sd_molec_cm2": 260783012381795.4,
+        "available_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.7556,
+        "valid_days_total": 68,
+        "calendar_days_total": 90,
+        "flagged_years_count": 0,
+        "flagged_years_detail": []
+      },
+      "year_2021_mean_molec_cm2": 1447453629981818.2,
+      "target_2022": {
+        "mean_molec_cm2": 1373545021872727.2,
+        "valid_days": 22,
+        "calendar_days": 30,
+        "coverage_fraction": 0.7333,
+        "flagged_below_50_pct": false
+      },
+      "vs_primary_2015_2019": {
+        "absolute_change_molec_cm2": -296119378126200.5,
+        "pct_change": -17.7353,
+        "pct_change_status": "computed"
+      },
+      "vs_sensitivity_2019_2021": {
+        "absolute_change_molec_cm2": -349091659448748.5,
+        "pct_change": -20.265,
+        "pct_change_status": "computed"
+      }
+    },
+    {
+      "calendar_month": 7,
+      "month_name": "Jul",
+      "primary_2015_2019": {
+        "mean_molec_cm2": 1964459353484879.2,
+        "min_molec_cm2": 1466229050322222.2,
+        "max_molec_cm2": 2491140204100000.0,
+        "sd_molec_cm2": 365207469454984.8,
+        "available_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.6516,
+        "valid_days_total": 101,
+        "calendar_days_total": 155,
+        "flagged_years_count": 0,
+        "flagged_years_detail": []
+      },
+      "sensitivity_2019_2021": {
+        "mean_molec_cm2": 1851879312211538.8,
+        "min_molec_cm2": 1730495450384615.5,
+        "max_molec_cm2": 1933935336400000.0,
+        "sd_molec_cm2": 107270480168012.9,
+        "available_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.7527,
+        "valid_days_total": 70,
+        "calendar_days_total": 93,
+        "flagged_years_count": 0,
+        "flagged_years_detail": []
+      },
+      "year_2021_mean_molec_cm2": 1730495450384615.5,
+      "target_2022": {
+        "mean_molec_cm2": 1435434635086956.5,
+        "valid_days": 23,
+        "calendar_days": 31,
+        "coverage_fraction": 0.7419,
+        "flagged_below_50_pct": false
+      },
+      "vs_primary_2015_2019": {
+        "absolute_change_molec_cm2": -529024718397922.75,
+        "pct_change": -26.9298,
+        "pct_change_status": "computed"
+      },
+      "vs_sensitivity_2019_2021": {
+        "absolute_change_molec_cm2": -416444677124582.25,
+        "pct_change": -22.4877,
+        "pct_change_status": "computed"
+      }
+    },
+    {
+      "calendar_month": 8,
+      "month_name": "Aug",
+      "primary_2015_2019": {
+        "mean_molec_cm2": 2519356326163737.0,
+        "min_molec_cm2": 2342989434238095.0,
+        "max_molec_cm2": 2795456088086956.5,
+        "sd_molec_cm2": 167278147963327.7,
+        "available_years": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.7032,
+        "valid_days_total": 109,
+        "calendar_days_total": 155,
+        "flagged_years_count": 0,
+        "flagged_years_detail": []
+      },
+      "sensitivity_2019_2021": {
+        "mean_molec_cm2": 2199104816026005.2,
+        "min_molec_cm2": 1867270078521739.2,
+        "max_molec_cm2": 2387054935318182.0,
+        "sd_molec_cm2": 288220682563298.56,
+        "available_years": [
+          2019,
+          2020,
+          2021
+        ],
+        "unavailable_years": [],
+        "mean_coverage_fraction": 0.7097,
+        "valid_days_total": 66,
+        "calendar_days_total": 93,
+        "flagged_years_count": 0,
+        "flagged_years_detail": []
+      },
+      "year_2021_mean_molec_cm2": 1867270078521739.2,
+      "target_2022": {
+        "mean_molec_cm2": 1691998644562500.0,
+        "valid_days": 16,
+        "calendar_days": 31,
+        "coverage_fraction": 0.5161,
+        "flagged_below_50_pct": false
+      },
+      "vs_primary_2015_2019": {
+        "absolute_change_molec_cm2": -827357681601237.0,
+        "pct_change": -32.84,
+        "pct_change_status": "computed"
+      },
+      "vs_sensitivity_2019_2021": {
+        "absolute_change_molec_cm2": -507106171463505.25,
+        "pct_change": -23.0597,
+        "pct_change_status": "computed"
+      }
+    }
+  ],
+  "statistics": {
+    "before_after_seasonal_inference": {
+      "status": "not_assessed",
+      "p_value": null,
+      "ci_95_lower_molec_cm2": null,
+      "ci_95_upper_molec_cm2": null,
+      "statistical_significance_claimed": false,
+      "reasons_not_assessed": [
+        "Only n = 1 post-invasion March–August season (2022) exists, which cannot support variance estimation or a hypothesis test for a war-period effect.",
+        "Daily retrievals exhibit positive serial correlation (see daily_autocorrelation_diagnostics), so ordinary independent-observation tests on correlated daily rows would understate standard errors.",
+        "April 2022 has low coverage (8/30 valid days, 26.67%), introducing potential clear-sky sampling bias.",
+        "No matched reference/comparator region series or meteorological covariates (wind speed, mixing height, cloud bias) are included in this single-region export."
+      ]
+    },
+    "multi_year_seasonality_aware_trend": {
+      "pre_invasion": {
+        "window_id": "pre_invasion_2015_03_to_2022_02",
+        "label": "Pre-invasion baseline period (March 2015 – February 2022)",
+        "status": "assessed",
+        "start_month": "2015-03",
+        "end_month": "2022-02",
+        "n_months": 84,
+        "degrees_of_freedom": 71,
+        "primary_method": "Month-Fixed-Effects OLS with Newey-West HAC standard errors",
+        "hac_max_lag_months": 6,
+        "slope_molec_cm2_per_year": -17322827961311.148,
+        "slope_molec_cm2_per_decade": -173228279613111.5,
+        "hac_se_molec_cm2_per_year": 29188228668556.69,
+        "ci_95_lower_molec_cm2_per_year": -75522502934141.31,
+        "ci_95_upper_molec_cm2_per_year": 40876847011519.01,
+        "t_statistic": -0.5935,
+        "p_value": 0.554741,
+        "significant_at_alpha_0_05": false,
+        "residual_lag1_autocorrelation": 0.1484,
+        "nonparametric_sensitivity": {
+          "method": "Within-month Seasonal Theil-Sen + Hamed-Rao (1998) modified Mann-Kendall on deseasonalized monthly anomalies",
+          "seasonal_theil_sen_molec_cm2_per_year": -24285129588312.125,
+          "seasonal_theil_sen_molec_cm2_per_decade": -242851295883121.25,
+          "hamed_rao_mk": {
+            "n_months": 84,
+            "mann_kendall_S": -154,
+            "variance_inflation_factor": 1.0,
+            "significant_rank_lags": [
+              {
+                "lag_months": 12,
+                "rank_autocorr": -0.244
+              }
+            ],
+            "z_unadjusted": -0.5911,
+            "p_value_unadjusted": 0.554485,
+            "z_hamed_rao": -0.5911,
+            "p_value_hamed_rao": 0.554485
+          }
+        },
+        "assumptions_and_caveats": [
+          "Treats missing-day-adjusted monthly means as equal-precision observations despite varying monthly coverage (some <50%).",
+          "Accounts for annual cycle via 12 monthly fixed intercepts and short-range serial correlation via Newey-West HAC (lags <= 6 months).",
+          "A monotonic linear rate over 2015–2022 blends pre-war variability, 2020 COVID-19 changes, and post-February 2022 disruption and should not be mistaken for a step-change war effect."
+        ]
+      },
+      "full_record": {
+        "window_id": "full_record_2015_03_to_2022_08",
+        "label": "Full study record (March 2015 – August 2022)",
+        "status": "assessed",
+        "start_month": "2015-03",
+        "end_month": "2022-08",
+        "n_months": 90,
+        "degrees_of_freedom": 77,
+        "primary_method": "Month-Fixed-Effects OLS with Newey-West HAC standard errors",
+        "hac_max_lag_months": 6,
+        "slope_molec_cm2_per_year": -41778617093514.8,
+        "slope_molec_cm2_per_decade": -417786170935148.0,
+        "hac_se_molec_cm2_per_year": 26899133140887.812,
+        "ci_95_lower_molec_cm2_per_year": -95341634192445.0,
+        "ci_95_upper_molec_cm2_per_year": 11784400005415.406,
+        "t_statistic": -1.5532,
+        "p_value": 0.124486,
+        "significant_at_alpha_0_05": false,
+        "residual_lag1_autocorrelation": 0.179,
+        "nonparametric_sensitivity": {
+          "method": "Within-month Seasonal Theil-Sen + Hamed-Rao (1998) modified Mann-Kendall on deseasonalized monthly anomalies",
+          "seasonal_theil_sen_molec_cm2_per_year": -50814265192086.83,
+          "seasonal_theil_sen_molec_cm2_per_decade": -508142651920868.25,
+          "hamed_rao_mk": {
+            "n_months": 90,
+            "mann_kendall_S": -463,
+            "variance_inflation_factor": 1.2541,
+            "significant_rank_lags": [
+              {
+                "lag_months": 16,
+                "rank_autocorr": 0.2303
+              }
+            ],
+            "z_unadjusted": -1.6102,
+            "p_value_unadjusted": 0.107357,
+            "z_hamed_rao": -1.4378,
+            "p_value_hamed_rao": 0.150484
+          }
+        },
+        "assumptions_and_caveats": [
+          "Treats missing-day-adjusted monthly means as equal-precision observations despite varying monthly coverage (some <50%).",
+          "Accounts for annual cycle via 12 monthly fixed intercepts and short-range serial correlation via Newey-West HAC (lags <= 6 months).",
+          "A monotonic linear rate over 2015–2022 blends pre-war variability, 2020 COVID-19 changes, and post-February 2022 disruption and should not be mistaken for a step-change war effect."
+        ]
+      }
+    },
+    "daily_autocorrelation_diagnostics": {
+      "note": "Daily deviations from monthly climatological means remain positively autocorrelated across adjacent days; ordinary i.i.d. tests on daily rows are intentionally omitted.",
+      "lags": {
+        "lag_1d": {
+          "autocorr_r": 0.1803,
+          "valid_pairs": 836
+        },
+        "lag_2d": {
+          "autocorr_r": 0.1061,
+          "valid_pairs": 881
+        },
+        "lag_3d": {
+          "autocorr_r": 0.1112,
+          "valid_pairs": 812
+        },
+        "lag_7d": {
+          "autocorr_r": 0.0466,
+          "valid_pairs": 913
+        }
+      }
+    }
+  },
+  "charts": {
+    "monthly_timeline": {
+      "png_path": "reports/no2_monthly.png",
+      "data_csv_path": "reports/no2_monthly.csv",
+      "baseline_displayed": "2015–2019 same-month mean and min–max range (variability, not CI)",
+      "coverage_flag_displayed": "<50% monthly coverage (proposed project rule)"
+    },
+    "seasonal_comparison": {
+      "png_path": "reports/no2_seasonal_comparison.png",
+      "data_csv_path": "reports/no2_seasonal_comparisons.csv",
+      "baselines_displayed": [
+        "2015–2019 (primary)",
+        "2019–2021 (sensitivity)"
+      ]
+    },
+    "matched_months": {
+      "png_path": "reports/no2_matched_months.png",
+      "data_csv_path": "reports/no2_matched_months.csv",
+      "months": [
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug"
+      ],
+      "flagged_target_months": [
+        "Apr"
+      ]
+    }
+  },
+  "limitations": [
+    "Classified as related_comparison to Ialongo et al. (2023) OMI component; coarser 0.25-degree OMNO2d grid and unresolved paper mask/screening details preclude claiming exact replication.",
+    "Tropospheric vertical column NO2 (molecules/cm^2) measures lower-atmosphere column density, not surface air-quality concentration or personal exposure.",
+    "April 2022 contains only 8 valid observations out of 30 days (26.67% coverage, below the 50% proposed project threshold), requiring explicit coverage sensitivity checks.",
+    "Observed March–August NO2 declined prior to February 2022 (notably 2020–2021), so raw 2022 drops cannot be attributed causally to war without comparator cities and weather covariates.",
+    "No reference/comparator regions (e.g., Krakow, Prague, or lower-conflict Ukrainian regions) are yet present in this single-region export."
+  ],
+  "reproducibility": {
+    "regenerate_all_command": "python -m src.air_analysis",
+    "test_command": "python -m unittest discover -s tests -v",
+    "schema_doc": "docs/air-results-schema.md",
+    "findings_doc": "docs/air-findings.md"
+  }
+}
