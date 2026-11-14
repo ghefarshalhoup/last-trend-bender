@@ -1,0 +1,7 @@
+.wrap { display: flex; gap: var(--space-4); align-items: flex-start; padding: var(--space-4) var(--space-5); background: var(--color-night); color: var(--color-on-night); border-radius: var(--radius-md); }
+.mark { width: 52px; height: 52px; flex: none; }
+.text { display: grid; gap: var(--space-3); font-size: var(--text-sm); min-width: 0; }
+.name { font-weight: 600; }
+.pending { font-weight: 400; color: var(--color-on-night-muted); font-size: var(--text-xs); }
+.muted { color: var(--color-on-night-muted); }
+.limits { color: var(--color-on-night-muted); font-size: var(--text-xs); }

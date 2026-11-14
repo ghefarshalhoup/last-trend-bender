@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { DEFAULT_BASELINE, getSeasonalSummary, type BaselineOption } from '../../adapters/baselines'
 import { buildMonthRows } from '../../adapters/months'
 import type { AirStudyBundle } from '../../api/airStudy'
-import { AvatarIntro } from './AvatarIntro'
+import { AvatarGuide } from './AvatarGuide'
 import { BaselineSelector } from './BaselineSelector'
 import { ComparisonChart } from './ComparisonChart'
 import { CoverageWarnings } from './CoverageWarnings'
@@ -67,7 +67,10 @@ export function AirScreen({ bundle }: { bundle: AirStudyBundle }) {
                 <ComparisonChart rows={rows} baselineYears={baselineYears} selectedMonth={selectedMonth} onSelectMonth={setSelectedMonth} />
                 <MonthPicker rows={rows} selectedMonth={selectedMonth} onSelect={setSelectedMonth} />
               </div>
-              <MonthInspector row={selectedRow} baseline={baseline} baselineYears={baselineYears} />
+              <div className={styles.sideCol}>
+                <MonthInspector row={selectedRow} baseline={baseline} baselineYears={baselineYears} />
+                <AvatarGuide summary={summary} month={selectedRow} elements={elements} />
+              </div>
             </div>
           </section>
 
@@ -80,10 +83,6 @@ export function AirScreen({ bundle }: { bundle: AirStudyBundle }) {
             <h2 id="figures-heading" className={styles.h2}>Supplementary figures</h2>
             <p className={styles.sectionLede}>Static figures from the analysis, served by the backend.</p>
             <FigureGallery charts={charts} />
-          </section>
-
-          <section className={styles.block} aria-label="Guide">
-            <AvatarIntro summary={summary} />
           </section>
         </main>
       </div>

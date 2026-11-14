@@ -3,7 +3,7 @@
 Run and structure: see `frontend/README.md`. Screenshots: `docs/screenshots/frontend/`.
 
 ## What is built
-One screen, Ukraine → Air/NO₂ → Kyiv: header and breadcrumb, the opening question, the study-boundary map, the seasonal summary with a baseline selector, a March–August 2022-vs-baseline chart (with a table view), a keyboard- and touch-usable month inspector, permanent coverage and scientific notices, an evidence area (sources, methods, limitations, statistical status), supplementary figures, and a placeholder guide.
+One screen, Ukraine → Air/NO₂ → Kyiv: header and breadcrumb, the opening question, the study-boundary map, the seasonal summary with a baseline selector, a March–August 2022-vs-baseline chart (with a table view), a keyboard- and touch-usable month inspector, permanent coverage and scientific notices, an evidence area (sources, methods, limitations, statistical status), supplementary figures, and a placeholder guide whose narration follows the selected element, baseline and month.
 
 ## How it consumes the API
 | Need | Field |

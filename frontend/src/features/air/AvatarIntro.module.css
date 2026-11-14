@@ -1,5 +1,0 @@
-.wrap { display: flex; gap: var(--space-4); align-items: flex-start; padding: var(--space-4) var(--space-5); background: var(--color-night); color: var(--color-on-night); border-radius: var(--radius-md); max-width: 46rem; }
-.mark { width: 56px; height: 56px; flex: none; }
-.text { display: grid; gap: var(--space-2); font-size: var(--text-sm); }
-.name { font-weight: 600; }
-.pending { font-weight: 400; color: var(--color-on-night-muted); font-size: var(--text-xs); }

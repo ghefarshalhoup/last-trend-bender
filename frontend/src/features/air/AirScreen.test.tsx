@@ -110,10 +110,31 @@ describe('AirScreen', () => {
     expect(screen.getByTestId('figures-empty')).toBeInTheDocument()
   })
 
-  it('shows a modest guide introduction built from API values', () => {
+  it('guide narration follows baseline and month, from API values', async () => {
+    const user = userEvent.setup()
     render(<AirScreen bundle={makeBundle()} />)
-    const intro = screen.getByTestId('avatar-intro')
-    expect(intro).toHaveTextContent('−28.0%')
-    expect(intro).toHaveTextContent(/character art pending/)
+    const guide = screen.getByTestId('avatar-intro')
+    expect(guide).toHaveTextContent('−28.0%')
+    expect(guide).toHaveTextContent(/character art pending/)
+    expect(screen.queryByTestId('guide-month')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('radio', { name: /2019–2021/ }))
+    expect(screen.getByTestId('guide-element')).toHaveTextContent('−20.3%')
+
+    await user.click(screen.getByTestId('month-4'))
+    expect(screen.getByTestId('guide-month')).toHaveTextContent(/April 2022/)
+    expect(screen.getByTestId('guide-month')).toHaveTextContent(/8 of 30 days/)
+    expect(screen.getByTestId('guide-month')).toHaveTextContent(/fewer than half/)
+    // The headline narration is not replaced by the month.
+    expect(screen.getByTestId('guide-element')).toHaveTextContent('−20.3%')
+  })
+
+  it('guide is honest about causes, significance and unavailable elements', () => {
+    render(<AirScreen bundle={makeBundle()} />)
+    const guide = screen.getByTestId('avatar-intro')
+    expect(guide).toHaveTextContent(/significance is not assessed/)
+    expect(guide).toHaveTextContent(/cause is not established/)
+    expect(screen.getByTestId('guide-waiting')).toHaveTextContent(/Fire/)
+    expect(screen.getByTestId('guide-waiting')).not.toHaveTextContent(/Air/)
   })
 })
