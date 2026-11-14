@@ -4,7 +4,7 @@ import { expect, test, type Page } from '@playwright/test'
 const tiles: string[] = []
 test.beforeEach(async ({ page }) => {
   tiles.length = 0
-  await page.route(/tile\.openstreetmap\.org/, (route) => {
+  await page.route(/tile\.openstreetmap\.org|arcgisonline\.com/, (route) => {
     tiles.push(route.request().url())
     return route.fulfill({ status: 204 })
   })
@@ -33,7 +33,11 @@ const noHorizontalOverflow = (page: Page) =>
 
 // Slippy-map tile → lon/lat of its north-west corner.
 function tileBounds(urls: string[]) {
-  const zs = urls.map((u) => u.match(/\/(\d+)\/(\d+)\/(\d+)(?:@2x)?\.png/)!.slice(1).map(Number) as [number, number, number])
+  // OSM tiles are /z/x/y.png, Esri tiles are /z/y/x
+  const zs = urls.map((u) => {
+    const [z, a, b] = u.match(/\/(\d+)\/(\d+)\/(\d+)(?:\.png)?(?:\?.*)?$/)!.slice(1).map(Number) as [number, number, number]
+    return (u.includes('arcgisonline') ? [z, b, a] : [z, a, b]) as [number, number, number]
+  })
   const lon = (x: number, z: number) => (x / 2 ** z) * 360 - 180
   const lat = (y: number, z: number) => (Math.atan(Math.sinh(Math.PI * (1 - (2 * y) / 2 ** z))) * 180) / Math.PI
   return {
@@ -224,7 +228,7 @@ test('supplementary figures: only returned charts; graceful when none or when an
   await expect(page.getByTestId('figures').getByRole('listitem')).toHaveCount(3)
 
   const empty = await context.newPage()
-  await empty.route(/tile\.openstreetmap\.org/, (r) => r.fulfill({ status: 204 }))
+  await empty.route(/tile\.openstreetmap\.org|arcgisonline\.com/, (r) => r.fulfill({ status: 204 }))
   await serveModifiedStudy(empty, (body) => { body.charts = [] })
   await empty.goto('/')
   await selectAirAndExplore(empty)
@@ -232,7 +236,7 @@ test('supplementary figures: only returned charts; graceful when none or when an
   await expect(empty.getByTestId('figures-empty')).toBeVisible()
 
   const broken = await context.newPage()
-  await broken.route(/tile\.openstreetmap\.org/, (r) => r.fulfill({ status: 204 }))
+  await broken.route(/tile\.openstreetmap\.org|arcgisonline\.com/, (r) => r.fulfill({ status: 204 }))
   await broken.route('**/api/air/kyiv/charts/matched_months', (r) => r.fulfill({ status: 404, json: { error: { code: 'chart_unavailable', message: 'gone' } } }))
   await broken.goto('/')
   await selectAirAndExplore(broken)
@@ -272,4 +276,14 @@ test('mobile: stacked layout, touch-sized controls, panel readable, no sideways 
   await expect(page.locator('.leaflet-control-attribution')).toBeAttached()
   await page.getByTestId('close-panel').click()
   await expect(page.getByTestId('study-panel')).toHaveCount(0)
+})
+
+test('basemap falls back to OpenStreetMap tiles if the primary tiles fail', async ({ page }) => {
+  await page.unroute(/tile\.openstreetmap\.org|arcgisonline\.com/)
+  const osm: string[] = []
+  await page.route(/arcgisonline\.com/, (route) => route.fulfill({ status: 500 }))
+  await page.route(/tile\.openstreetmap\.org/, (route) => { osm.push(route.request().url()); return route.fulfill({ status: 204 }) })
+  await open(page)
+  await expect.poll(() => osm.length, { timeout: 15_000 }).toBeGreaterThan(0)
+  await expect(page.locator('.leaflet-control-attribution')).toContainText('OpenStreetMap')
 })

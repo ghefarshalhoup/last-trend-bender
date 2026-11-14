@@ -87,4 +87,4 @@ Element labels: the catalog calls the fourth element `land`; the UI shows it as 
 
 ## Basemap tiles
 
-Default: OpenStreetMap standard tiles (`tile.openstreetmap.org`), no key needed, attribution shown. The previous CARTO tiles now require an API key. OSM's usage policy is for light use; for a public deployment set `VITE_TILE_URL` and `VITE_TILE_ATTRIBUTION` (see `.env.example`).
+No API key needed. Primary: Esri World Street Map (English place names). If its tiles fail to load, the map switches to OpenStreetMap standard tiles (local-language names). The previous CARTO tiles now require a key. Both are for light use; for a public deployment set `VITE_TILE_URL` and `VITE_TILE_ATTRIBUTION` (see `.env.example`). Attribution is always shown.

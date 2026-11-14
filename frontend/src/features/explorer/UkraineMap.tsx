@@ -1,8 +1,8 @@
 import L, { type LatLngBoundsExpression } from 'leaflet'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { GeoJSON, MapContainer, Marker, TileLayer, Tooltip, useMap } from 'react-leaflet'
 import type { MapPayload } from '../../api/types'
-import { BASEMAP } from './basemap'
+import { FALLBACK_BASEMAP, PRIMARY_BASEMAP, TILE_FAILURES_BEFORE_FALLBACK } from './basemap'
 import styles from './UkraineMap.module.css'
 
 /** Country view including Crimea with some surrounding geography. This is a camera, not data. */
@@ -47,6 +47,8 @@ interface Props {
 const pinIcon = L.divIcon({ className: styles.pin, html: '<span></span>', iconSize: [22, 22], iconAnchor: [11, 11] })
 
 export function UkraineMap({ map, command, resultLabel, onExplore }: Props) {
+  const [source, setSource] = useState(PRIMARY_BASEMAP)
+  const tiles = useRef({ loaded: 0, failed: 0 })
   const kyivBounds = map ? (map.bounds as LatLngBoundsExpression) : null
   return (
     <div className={styles.frame} data-testid="ukraine-map">
@@ -59,7 +61,21 @@ export function UkraineMap({ map, command, resultLabel, onExplore }: Props) {
         attributionControl
         aria-label="Map of Ukraine"
       >
-        <TileLayer url={BASEMAP.url} attribution={BASEMAP.attribution} maxZoom={BASEMAP.maxZoom} />
+        <TileLayer
+          key={source.id}
+          url={source.url}
+          attribution={source.attribution}
+          maxZoom={source.maxZoom}
+          eventHandlers={{
+            tileload: () => { tiles.current.loaded += 1 },
+            tileerror: () => {
+              tiles.current.failed += 1
+              if (source.id === 'primary' && tiles.current.loaded === 0 && tiles.current.failed >= TILE_FAILURES_BEFORE_FALLBACK) {
+                setSource(FALLBACK_BASEMAP)
+              }
+            },
+          }}
+        />
         <Controller command={command} kyivBounds={kyivBounds} />
         {map ? (
           <>
