@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import argparse
 import csv
 import hashlib
 import io
@@ -37,6 +36,7 @@ MONTHLY_COLUMNS = [
 TIME_HEADERS = {"time", "timestamp", "timestamp (utc)", "date", "datetime"}
 DEFAULT_SPARSE_MIN_VALID_DAYS = 10
 DEFAULT_VERY_SPARSE_DAYS = 5
+DEFAULT_LOW_COVERAGE_FRACTION = 0.50
 
 
 def _sha256_file(path: Path) -> str:
@@ -280,10 +280,11 @@ def aggregate_monthly(
     daily_full: pd.DataFrame,
     sparse_min_valid_days: int = DEFAULT_SPARSE_MIN_VALID_DAYS,
     very_sparse_days: int = DEFAULT_VERY_SPARSE_DAYS,
+    low_coverage_fraction: float = DEFAULT_LOW_COVERAGE_FRACTION,
 ) -> Tuple[pd.DataFrame, Dict[str, object]]:
     """
     Aggregate valid daily NO2 measurements into monthly means and coverage metrics.
-    Sparse months are flagged in the quality summary; gaps are never filled.
+    Flags low-coverage months (<50% proposed project rule and <10 valid days) without filling gaps.
     """
     df = daily_full.copy()
     df["month_period"] = df["date"].dt.to_period("M")
@@ -303,18 +304,12 @@ def aggregate_monthly(
     monthly_df = grouped[MONTHLY_COLUMNS].copy()
 
     sparse_rows = monthly_df[monthly_df["valid_days"] < sparse_min_valid_days]
+    low_cov_rows = monthly_df[(monthly_df["valid_days"] / monthly_df["calendar_days"]) < low_coverage_fraction]
     zero_rows = monthly_df[monthly_df["valid_days"] == 0]
     very_sparse_rows = monthly_df[monthly_df["valid_days"] < very_sparse_days]
 
-    monthly_qc = {
-        "total_months": int(len(monthly_df)),
-        "months_with_any_valid_obs": int((monthly_df["valid_days"] > 0).sum()),
-        "months_with_zero_valid_obs": zero_rows["month"].tolist(),
-        "sparse_threshold_valid_days": int(sparse_min_valid_days),
-        "very_sparse_threshold_valid_days": int(very_sparse_days),
-        "sparse_months_count": int(len(sparse_rows)),
-        "very_sparse_months_count": int(len(very_sparse_rows)),
-        "sparse_months": [
+    def _serialize_month_rows(frame: pd.DataFrame) -> List[Dict[str, object]]:
+        return [
             {
                 "month": str(r.month),
                 "valid_days": int(r.valid_days),
@@ -322,8 +317,22 @@ def aggregate_monthly(
                 "coverage_fraction": float(r.coverage_fraction),
                 "no2_mean_molec_cm2": None if pd.isna(r.no2_mean_molec_cm2) else float(r.no2_mean_molec_cm2),
             }
-            for r in sparse_rows.itertuples(index=False)
-        ],
+            for r in frame.itertuples(index=False)
+        ]
+
+    monthly_qc = {
+        "total_months": int(len(monthly_df)),
+        "months_with_any_valid_obs": int((monthly_df["valid_days"] > 0).sum()),
+        "months_with_zero_valid_obs": zero_rows["month"].tolist(),
+        "proposed_coverage_threshold": float(low_coverage_fraction),
+        "proposed_coverage_flag_rule": f"coverage_fraction < {low_coverage_fraction:.2f} (proposed project rule)",
+        "low_coverage_months_count": int(len(low_cov_rows)),
+        "low_coverage_months": _serialize_month_rows(low_cov_rows),
+        "sparse_threshold_valid_days": int(sparse_min_valid_days),
+        "very_sparse_threshold_valid_days": int(very_sparse_days),
+        "sparse_months_count": int(len(sparse_rows)),
+        "very_sparse_months_count": int(len(very_sparse_rows)),
+        "sparse_months": _serialize_month_rows(sparse_rows),
     }
     return monthly_df, monthly_qc
 
@@ -359,67 +368,72 @@ def plot_no2_monthly(
     daily_counts: Dict[str, object],
     output_path: Path,
     sparse_min_valid_days: int = DEFAULT_SPARSE_MIN_VALID_DAYS,
+    low_coverage_fraction: float = DEFAULT_LOW_COVERAGE_FRACTION,
 ) -> Path:
-    """Plot monthly NO2 column values and daily coverage, flagging sparse/missing months."""
+    """Plot monthly NO2 column values and daily coverage, applying the study-spec 2015–2019 baseline and <50% flag."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df = monthly_df.copy()
     df["dt"] = pd.to_datetime(df["month"] + "-01")
     df["year"] = df["dt"].dt.year
     df["cal_month"] = df["dt"].dt.month
     df["no2_e15"] = df["no2_mean_molec_cm2"] / 1e15
+    df["cov_exact"] = df["valid_days"] / df["calendar_days"]
+    df["cov_pct"] = df["cov_exact"] * 100.0
     df = df.sort_values("dt").reset_index(drop=True)
 
-    # Pre-2022 seasonal envelope & 2018-2021 monthly reference curve for seasonal context
-    pre_all = df[df["year"] < 2022].groupby("cal_month")["no2_e15"].agg(["min", "max"])
-    pre_18_21 = df[df["year"].isin((2018, 2019, 2020, 2021))].groupby("cal_month")["no2_e15"].mean()
-    df["pre_min"] = df["cal_month"].map(pre_all["min"])
-    df["pre_max"] = df["cal_month"].map(pre_all["max"])
-    df["pre_mean_18_21"] = df["cal_month"].map(pre_18_21)
+    # Primary baseline context from docs/study-spec.md: 2015–2019 same-month mean and historical min–max range
+    base_15_19 = df[df["year"].between(2015, 2019)].groupby("cal_month")["no2_e15"].agg(["mean", "min", "max"])
+    has_base_15_19 = not base_15_19.empty
+    if has_base_15_19:
+        df["base_min"] = df["cal_month"].map(base_15_19["min"])
+        df["base_max"] = df["cal_month"].map(base_15_19["max"])
+        df["base_mean_15_19"] = df["cal_month"].map(base_15_19["mean"])
 
-    adequate = df[(df["valid_days"] >= sparse_min_valid_days) & df["no2_e15"].notna()]
-    sparse = df[(df["valid_days"] > 0) & (df["valid_days"] < sparse_min_valid_days) & df["no2_e15"].notna()]
+    adequate = df[(df["cov_exact"] >= low_coverage_fraction) & df["no2_e15"].notna()]
+    flagged = df[(df["valid_days"] > 0) & (df["cov_exact"] < low_coverage_fraction) & df["no2_e15"].notna()]
     zero_cov = df[df["valid_days"] == 0]
 
     fig, (ax1, ax2) = plt.subplots(
         2,
         1,
-        figsize=(12.2, 7.6),
+        figsize=(12.6, 8.0),
         sharex=True,
-        gridspec_kw={"height_ratios": [1.85, 0.85]},
+        gridspec_kw={"height_ratios": [1.85, 0.90]},
     )
     fig.patch.set_facecolor("white")
 
-    # Top panel: monthly NO2 means + seasonal baseline + sparse highlighting
-    ax1.fill_between(
-        df["dt"],
-        df["pre_min"],
-        df["pre_max"],
-        color="#E5E8E8",
-        alpha=0.7,
-        label="Pre-2022 same-month min–max range",
-    )
-    ax1.plot(
-        df["dt"],
-        df["pre_mean_18_21"],
-        color="#7F8C8D",
-        linestyle="--",
-        linewidth=1.25,
-        label="2018–2021 same-month mean",
-    )
+    if has_base_15_19:
+        ax1.fill_between(
+            df["dt"],
+            df["base_min"],
+            df["base_max"],
+            color="#E5E8E8",
+            alpha=0.72,
+            label="2015–2019 historical min–max variability (not CI)",
+        )
+        ax1.plot(
+            df["dt"],
+            df["base_mean_15_19"],
+            color="#5D6D7E",
+            linestyle="--",
+            linewidth=1.25,
+            label="2015–2019 primary same-month mean",
+        )
 
-    for yr in sorted(df["year"].unique()):
-        q2_s = pd.Timestamp(f"{yr}-04-01")
-        q2_e = pd.Timestamp(f"{yr}-06-30")
-        if q2_e >= df["dt"].min() and q2_s <= df["dt"].max():
+    for idx_yr, yr in enumerate(sorted(df["year"].unique())):
+        ma_s = pd.Timestamp(f"{yr}-03-01")
+        ma_e = pd.Timestamp(f"{yr}-08-31")
+        if ma_e >= df["dt"].min() and ma_s <= df["dt"].max():
             ax1.axvspan(
-                max(q2_s, df["dt"].min()),
-                min(q2_e, df["dt"].max()),
-                color="#FEF5E7" if yr < 2022 else "#FDEDEC",
-                alpha=0.55,
+                max(ma_s, df["dt"].min()),
+                min(ma_e, df["dt"].max()),
+                color="#FDEDEC" if yr == 2022 else "#FEF9E7",
+                alpha=0.60,
                 zorder=0,
+                label="March–August comparison window" if idx_yr == 0 else None,
             )
 
-    # Connect continuous observed months (gaps remain broken at NaNs)
+    # Connect observed months (zero-observation gaps stay broken)
     ax1.plot(df["dt"], df["no2_e15"], color="#C0392B", linewidth=1.6, zorder=3)
     ax1.scatter(
         adequate["dt"],
@@ -427,19 +441,19 @@ def plot_no2_monthly(
         color="#C0392B",
         s=26,
         zorder=4,
-        label=f"Adequate coverage (≥{sparse_min_valid_days} valid days)",
+        label=f"Coverage ≥{int(low_coverage_fraction * 100)}%",
     )
-    if not sparse.empty:
+    if not flagged.empty:
         ax1.scatter(
-            sparse["dt"],
-            sparse["no2_e15"],
+            flagged["dt"],
+            flagged["no2_e15"],
             facecolor="white",
             edgecolor="#D35400",
             linewidth=1.8,
-            s=48,
+            s=46,
             marker="D",
             zorder=5,
-            label=f"Sparse coverage (<{sparse_min_valid_days} valid days)",
+            label=f"Flagged <{int(low_coverage_fraction * 100)}% coverage (project rule)",
         )
     if not zero_cov.empty:
         ax1.scatter(
@@ -453,10 +467,10 @@ def plot_no2_monthly(
         )
 
     war_dt = pd.Timestamp("2022-02-24")
+    ymax = max(1.0, float(df["no2_e15"].max(skipna=True) or 5.0))
+    ax1.set_ylim(0, ymax * 1.15)
     if df["dt"].min() <= war_dt <= df["dt"].max():
         ax1.axvline(war_dt, color="#7B241C", linestyle="-.", linewidth=1.5)
-        ymax = max(1.0, float(df["no2_e15"].max(skipna=True) or 5.0))
-        ax1.set_ylim(0, ymax * 1.15)
         ax1.text(
             war_dt - pd.Timedelta(days=15),
             ymax * 0.96,
@@ -471,53 +485,54 @@ def plot_no2_monthly(
 
     bbox = meta.get("user_bounding_box") or {}
     bbox_txt = (
-        f"({bbox['west']:.3f}°E–{bbox['east']:.3f}°E, {bbox['south']:.2f}°N–{bbox['north']:.2f}°N)"
+        f"Kyiv box ({bbox['west']:.3f}°E–{bbox['east']:.3f}°E, {bbox['south']:.2f}°N–{bbox['north']:.2f}°N)"
         if bbox
         else "Kyiv study box"
     )
     ax1.set_title(
-        f"Monthly Tropospheric NO₂ Column — OMNO2d v004 {bbox_txt}",
-        fontsize=12.5,
+        f"Monthly Tropospheric NO₂ Column — {bbox_txt} (OMNO2d v004, {daily_counts['start_date']} to {daily_counts['end_date']})",
+        fontsize=11.0,
         fontweight="bold",
-        pad=26,
+        pad=38,
     )
     ax1.set_ylabel("Mean NO₂ (10¹⁵ molecules/cm²)", fontsize=10)
     ax1.legend(
         loc="lower center",
         bbox_to_anchor=(0.5, 1.01),
-        ncol=4,
+        ncol=3,
         frameon=True,
         facecolor="white",
-        fontsize=8.2,
+        fontsize=8.0,
     )
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
     ax1.grid(axis="y", linestyle=":", alpha=0.5, color="#B2BABB")
 
-    # Bottom panel: valid observation count per month
+    # Bottom panel: monthly sampling coverage (% of calendar days) with 50% proposed project flag
     bar_colors = [
-        "#E67E22" if vd < sparse_min_valid_days else "#5499C7"
-        for vd in df["valid_days"]
+        "#E67E22" if cov < low_coverage_fraction else "#5499C7"
+        for cov in df["cov_exact"]
     ]
-    ax2.bar(df["dt"], df["valid_days"], width=22, color=bar_colors, alpha=0.9)
+    ax2.bar(df["dt"], df["cov_pct"], width=22, color=bar_colors, alpha=0.9)
     ax2.axhline(
-        sparse_min_valid_days,
+        low_coverage_fraction * 100.0,
         color="#D35400",
         linestyle=":",
-        linewidth=1.3,
-        label=f"Sparse-month flag (<{sparse_min_valid_days} valid days)",
+        linewidth=1.4,
+        label=f"Proposed project flag (<{int(low_coverage_fraction * 100)}% monthly coverage)",
     )
     if df["dt"].min() <= war_dt <= df["dt"].max():
         ax2.axvline(war_dt, color="#7B241C", linestyle="-.", linewidth=1.3)
 
-    # Annotate the most sparse months cleanly
-    for row in sparse.itertuples(index=False):
-        if row.valid_days <= 5 or row.month == "2022-04":
-            x_pos = row.dt + pd.Timedelta(days=10) if row.month == "2022-04" else row.dt
-            y_pos = 11.5 if row.month == "2022-04" else row.valid_days + 1.0
+    # Annotate key very-sparse months and April 2022 with exact valid/calendar day counts
+    key_months = {"2016-03", "2020-11", "2022-04"}
+    for row in flagged.itertuples(index=False):
+        if row.month in key_months:
+            x_pos = row.dt + pd.Timedelta(days=12) if row.month == "2022-04" else row.dt
+            y_pos = 56.0 if row.month == "2022-04" else max(row.cov_pct + 7.0, 26.0)
             ax2.annotate(
-                f"{row.month} ({int(row.valid_days)}d)",
-                xy=(row.dt, row.valid_days),
+                f"{row.month}\n({int(row.valid_days)}/{int(row.calendar_days)}d)",
+                xy=(row.dt, row.cov_pct),
                 xytext=(x_pos, y_pos),
                 ha="center",
                 va="bottom",
@@ -529,35 +544,35 @@ def plot_no2_monthly(
                     facecolor="white",
                     edgecolor="#E67E22",
                     linewidth=0.7,
-                    alpha=0.92,
+                    alpha=0.94,
                 ),
                 arrowprops=dict(arrowstyle="-", color="#E67E22", linewidth=0.8),
             )
 
-    ax2.set_ylabel("Valid days / month", fontsize=9.5)
-    ax2.set_ylim(0, 33)
+    ax2.set_ylabel("Coverage (% days/mo)", fontsize=9.5)
+    ax2.set_ylim(0, 108)
     ax2.xaxis.set_major_locator(mdates.YearLocator())
     ax2.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-    ax2.legend(loc="upper right", frameon=True, facecolor="white", fontsize=8.2)
+    ax2.legend(loc="upper right", frameon=True, facecolor="white", fontsize=8.0)
     ax2.spines["top"].set_visible(False)
     ax2.spines["right"].set_visible(False)
     ax2.grid(axis="y", linestyle=":", alpha=0.5, color="#B2BABB")
 
+    low_cov_cnt = int((df["cov_exact"] < low_coverage_fraction).sum())
     fig.text(
         0.015,
         0.01,
         (
-            f"Source: NASA Giovanni OMNO2d v004 (30% Cloud Screened) | "
-            f"{daily_counts['valid_observations']:,} valid obs / {daily_counts['calendar_days']:,} calendar days "
-            f"({daily_counts['fill_value_rows']:,} fill, {daily_counts['absent_dates_count']:,} absent; never zero-filled)\n"
-            "Note: Tropospheric column NO₂ reflects atmospheric column density rather than street-level exposure; "
-            "observed temporal changes alone do not establish war causation."
+            f"Source: NASA Giovanni OMNO2d v004 (30% Cloud Screened) | Baseline: 2015–2019 same-month mean & min–max range (not a CI) | "
+            f"{daily_counts['valid_observations']:,} valid obs / {daily_counts['calendar_days']:,} days ({daily_counts['fill_value_rows']:,} fill, {daily_counts['absent_dates_count']:,} absent)\n"
+            f"Note: {low_cov_cnt}/{len(df)} months flagged <50% coverage (project rule); tropospheric column ≠ street-level exposure; "
+            "observed changes alone do not establish war causation."
         ),
-        fontsize=7.6,
+        fontsize=7.4,
         color="#566573",
         linespacing=1.35,
     )
-    plt.tight_layout(rect=[0, 0.048, 1, 1])
+    plt.tight_layout(rect=[0, 0.05, 1, 1])
     fig.savefig(output_path, dpi=180)
     plt.close(fig)
     return output_path
@@ -583,6 +598,7 @@ def run_pipeline(
     output_chart: Path = DEFAULT_REPORTS_DIR / "no2_monthly.png",
     output_quality: Path = DEFAULT_REPORTS_DIR / "data_quality.json",
     sparse_min_valid_days: int = DEFAULT_SPARSE_MIN_VALID_DAYS,
+    low_coverage_fraction: float = DEFAULT_LOW_COVERAGE_FRACTION,
 ) -> Dict[str, object]:
     """Execute full daily cleaning, calendar reindexing, monthly aggregation, validation, and charting."""
     daily_raw, meta = parse_giovanni_csv(input_csv)
@@ -590,6 +606,7 @@ def run_pipeline(
     monthly_df, monthly_qc = aggregate_monthly(
         daily_full,
         sparse_min_valid_days=sparse_min_valid_days,
+        low_coverage_fraction=low_coverage_fraction,
     )
     invariant_checks = validate_accounting(daily_counts, monthly_df)
 
@@ -602,6 +619,7 @@ def run_pipeline(
         daily_counts=daily_counts,
         output_path=output_chart,
         sparse_min_valid_days=sparse_min_valid_days,
+        low_coverage_fraction=low_coverage_fraction,
     )
 
     quality_report = {
@@ -627,7 +645,8 @@ def run_pipeline(
         "processing_rules": {
             "missing_values_never_zero_filled": True,
             "negative_valid_values_preserved": True,
-            "sparse_month_rule": f"valid_days < {sparse_min_valid_days}",
+            "proposed_coverage_flag_rule": f"coverage_fraction < {low_coverage_fraction:.2f} (proposed project rule)",
+            "sparse_month_rule": f"valid_days < {sparse_min_valid_days} (legacy severe-sparsity reference)",
             "causal_claim_caveat": (
                 "Tropospheric column NO2 reflects regional atmospheric column density, not street-level exposure; "
                 "temporal drops alone cannot establish war causation without matched controls and weather adjustments."
@@ -636,39 +655,14 @@ def run_pipeline(
     }
 
     output_quality.parent.mkdir(parents=True, exist_ok=True)
-    output_quality.write_text(json.dumps(quality_report, indent=2), encoding="utf-8")
+    output_quality.write_text(json.dumps(quality_report, indent=2, allow_nan=False, ensure_ascii=False), encoding="utf-8")
     return quality_report
 
 
 def main(argv: Optional[List[str]] = None) -> int:
-    parser = argparse.ArgumentParser(description="Clean and summarize NASA Giovanni OMNO2d daily NO2 CSV.")
-    parser.add_argument("--input", type=Path, default=None, help="Path to raw NASA Giovanni CSV")
-    parser.add_argument("--output-csv", type=Path, default=DEFAULT_REPORTS_DIR / "no2_monthly.csv")
-    parser.add_argument("--output-chart", type=Path, default=DEFAULT_REPORTS_DIR / "no2_monthly.png")
-    parser.add_argument("--output-quality", type=Path, default=DEFAULT_REPORTS_DIR / "data_quality.json")
-    parser.add_argument("--sparse-days", type=int, default=DEFAULT_SPARSE_MIN_VALID_DAYS)
-    args = parser.parse_args(argv)
+    from src.air_analysis import main as air_main
 
-    input_path = args.input if args.input is not None else _discover_default_input()
-    report = run_pipeline(
-        input_csv=input_path,
-        output_csv=args.output_csv,
-        output_chart=args.output_chart,
-        output_quality=args.output_quality,
-        sparse_min_valid_days=args.sparse_days,
-    )
-    dc = report["daily_counts"]
-    ms = report["monthly_summary"]
-    print(
-        f"Processed {report['provenance']['input_file']} "
-        f"({dc['start_date']} to {dc['end_date']}):\n"
-        f"  dated_rows={dc['raw_dated_rows']}, fill_rows={dc['fill_value_rows']}, "
-        f"absent_dates={dc['absent_dates_count']}, valid_obs={dc['valid_observations']}, "
-        f"calendar_days={dc['calendar_days']}, negative_valid={dc['negative_valid_observations']}\n"
-        f"  months={ms['total_months']}, sparse_months(<{ms['sparse_threshold_valid_days']}d)={ms['sparse_months_count']}\n"
-        f"  outputs: {args.output_csv}, {args.output_chart}, {args.output_quality}"
-    )
-    return 0
+    return air_main(argv)
 
 
 if __name__ == "__main__":
