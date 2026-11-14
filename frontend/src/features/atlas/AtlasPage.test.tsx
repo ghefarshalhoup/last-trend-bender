@@ -19,6 +19,10 @@ async function openAir() {
   await screen.findByTestId('kyiv-polygon')
   return user
 }
+async function openScroll(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByTestId('evidence-scroll'))
+  return screen.getByTestId('evidence-widget')
+}
 
 describe('illustrated atlas: Air through the layer structure', () => {
   beforeEach(() => serve())
@@ -31,9 +35,11 @@ describe('illustrated atlas: Air through the layer structure', () => {
     expect(screen.queryByTestId('evidence-widget')).not.toBeInTheDocument()
   })
 
-  it('reveals the Kyiv polygon with the seasonal comparison and a fixed key', async () => {
-    await openAir()
+  it('reveals the Kyiv polygon with the seasonal comparison; the key is in the scroll legend', async () => {
+    const user = await openAir()
     expect(screen.getByTestId('kyiv-value')).toHaveTextContent('−28.0% vs 2015–2019')
+    await openScroll(user)
+    await user.click(screen.getByTestId('scroll-tab-legend'))
     expect(screen.getByTestId('air-key')).toBeInTheDocument()
     expect(screen.getByTestId('kyiv-polygon')).toHaveAttribute('data-fill', colourFor(-27.96) as string)
   })
@@ -46,6 +52,7 @@ describe('illustrated atlas: Air through the layer structure', () => {
     expect(screen.getByTestId('kyiv-label')).toHaveTextContent('8/30 days')
     expect(screen.getByTestId('kyiv-label-warning')).toHaveTextContent('low coverage')
     expect(screen.getByTestId('kyiv-low-coverage')).toBeInTheDocument()
+    await openScroll(user)
     expect(screen.getByTestId('evidence-value')).toHaveTextContent('−37.0%')
     expect(screen.getByTestId('evidence-low-coverage')).toHaveTextContent('8 of 30 days')
     expect(screen.getByTestId('guide-bubble')).toHaveTextContent('only 8 of 30 days')
@@ -56,6 +63,7 @@ describe('illustrated atlas: Air through the layer structure', () => {
   it('switching baseline changes the comparison everywhere', async () => {
     const user = await openAir()
     await user.click(screen.getByTestId('period-4'))
+    await openScroll(user)
     await user.click(within(screen.getByTestId('comparison-sensitivity_2019_2021_valid_day')).getByRole('radio'))
     expect(screen.getByTestId('kyiv-value')).toHaveTextContent('−33.2% vs 2019–2021')
     expect(screen.getByTestId('evidence-value')).toHaveTextContent('−33.2%')
@@ -64,6 +72,7 @@ describe('illustrated atlas: Air through the layer structure', () => {
 
   it('selecting the study area is reflected in the map, evidence and guide', async () => {
     const user = await openAir()
+    await openScroll(user)
     await user.click(screen.getByTestId('kyiv-label'))
     expect(screen.getByTestId('kyiv-label')).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByTestId('evidence-area')).toBeInTheDocument()
@@ -72,10 +81,62 @@ describe('illustrated atlas: Air through the layer structure', () => {
 
   it('clearing the element returns to the neutral atlas', async () => {
     const user = await openAir()
+    await openScroll(user)
     await user.click(screen.getByTestId('clear-element'))
     expect(screen.queryByTestId('kyiv-polygon')).not.toBeInTheDocument()
     expect(screen.queryByTestId('evidence-widget')).not.toBeInTheDocument()
     expect(screen.getByTestId('atlas-base')).toBeInTheDocument()
+  })
+})
+
+describe('element medallions and scroll', () => {
+  beforeEach(() => serve())
+
+  it('the scroll starts neutral and takes on the selected element', async () => {
+    const user = userEvent.setup()
+    render(<AtlasPage />)
+    expect(await screen.findByTestId('element-status')).toHaveTextContent('No element selected')
+    expect(screen.getByTestId('evidence-scroll')).toHaveAttribute('data-element', 'none')
+    await user.click(screen.getByTestId('element-air'))
+    expect(screen.getByTestId('element-status')).toHaveTextContent('Air selected')
+    expect(screen.getByTestId('evidence-scroll')).toHaveAttribute('data-element', 'air')
+    expect(screen.getByTestId('evidence-scroll')).toHaveAttribute('data-unread', 'true')
+    expect(screen.getByTestId('evidence-scroll')).toHaveAccessibleName('Air scroll')
+  })
+
+  it('unavailable elements cannot be selected', async () => {
+    const user = userEvent.setup()
+    render(<AtlasPage />)
+    await user.click(await screen.findByTestId('element-fire'))
+    expect(screen.getByTestId('element-fire')).toHaveAttribute('aria-disabled', 'true')
+    expect(screen.getByTestId('element-status')).toHaveTextContent('No element selected')
+  })
+
+  it('pressing the selected medallion again clears it', async () => {
+    const user = await openAir()
+    await user.click(screen.getByTestId('element-air'))
+    expect(screen.queryByTestId('kyiv-polygon')).not.toBeInTheDocument()
+  })
+
+  it('the scroll opens over the map with evidence and legend tabs, and closes with Escape', async () => {
+    const user = await openAir()
+    expect(screen.queryByTestId('evidence-widget')).not.toBeInTheDocument()
+    const overlay = await openScroll(user)
+    expect(screen.getByTestId('evidence-scroll')).toHaveAttribute('aria-expanded', 'true')
+    expect(within(overlay).getByRole('tab', { name: 'Evidence' })).toHaveAttribute('aria-selected', 'true')
+    expect(within(overlay).getByTestId('evidence-value')).toBeInTheDocument()
+    await user.click(within(overlay).getByRole('tab', { name: 'Legend' }))
+    expect(within(overlay).getByTestId('air-key')).toBeInTheDocument()
+    await user.keyboard('{Escape}')
+    expect(screen.queryByTestId('evidence-widget')).not.toBeInTheDocument()
+    expect(screen.getByTestId('evidence-scroll')).toHaveFocus()
+  })
+
+  it('with no element, the scroll explains how to read the atlas', async () => {
+    const user = userEvent.setup()
+    render(<AtlasPage />)
+    await user.click(await screen.findByTestId('evidence-scroll'))
+    expect(screen.getByTestId('scroll-help')).toBeInTheDocument()
   })
 })
 

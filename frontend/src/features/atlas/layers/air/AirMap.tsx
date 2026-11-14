@@ -39,6 +39,7 @@ export function AirMapSvg({ boundary, reading, onToggle }: Props) {
         fill={fill ?? 'url(#air-no-value)'}
         className={styles.polygon}
         data-testid="kyiv-polygon"
+        data-atlas-focus=""
         data-fill={fill ?? 'no-value'}
         data-selected={reading.featureSelected}
       />

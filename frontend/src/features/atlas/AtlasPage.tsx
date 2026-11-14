@@ -1,14 +1,15 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { fetchCatalog, studyEndpointFor, type CatalogBundle } from '../../api/airStudy'
 import { useApiResource } from '../../api/useApiResource'
 import { DecorativeFrame } from '../../components/Frame/DecorativeFrame'
 import { ErrorView, LoadingView } from '../air/StateViews'
-import { ElementControls } from '../explorer/ElementControls'
 import { resolveElements, type ElementId, type ElementView } from '../explorer/elements'
 import { GuideBubble } from '../explorer/GuideBubble'
 import { TitleBadge } from '../explorer/TitleBadge'
 import { AtlasBase } from './AtlasBase'
 import styles from './AtlasPage.module.css'
+import { ElementMedallions } from './ElementMedallions'
+import { ScrollButton, ScrollOverlay, type ScrollTab } from './EvidenceScroll'
 import { LayerControlsBar } from './LayerControlsBar'
 import { LAYERS } from './layers/registry'
 import type { AtlasSelection, EvidenceLayer, LayerActions, LayerPresentation } from './layers/types'
@@ -22,15 +23,42 @@ export function AtlasPage() {
   return <Atlas catalog={state.data} />
 }
 
-const NEUTRAL_GUIDE = 'This atlas shows what satellites recorded over Ukraine. Choose an element to see its evidence on the map.'
+const NEUTRAL_GUIDE = 'This atlas shows what satellites recorded over Ukraine. Choose an element in the top-right corner.'
 
-/** The shell owns which element is active. Everything else about a selection belongs to the layer host. */
+/** The shell owns the active element and whether its scroll is open. Everything else belongs to the layer host. */
 function Atlas({ catalog }: { catalog: CatalogBundle }) {
   const [active, setActive] = useState<ElementId | null>(null)
+  const [scrollOpen, setScrollOpen] = useState(false)
+  const [unread, setUnread] = useState(false)
   const elements = useMemo(() => resolveElements(catalog.elements), [catalog.elements])
   const layer = active ? (LAYERS[active] ?? null) : null
   const endpoint = active ? studyEndpointFor(catalog.elements, active) : null
-  const chrome = { elements, active, onSelect: setActive, onClear: () => setActive(null) }
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  const chrome: ChromeProps = {
+    elements,
+    active,
+    scrollOpen,
+    unread,
+    onSelect: (id) => {
+      setActive(id)
+      setUnread(!scrollOpen)
+    },
+    onClear: () => {
+      setActive(null)
+      setScrollOpen(false)
+      setUnread(false)
+    },
+    onToggleScroll: () => {
+      setScrollOpen((open) => !open)
+      setUnread(false)
+    },
+    onCloseScroll: () => {
+      setScrollOpen(false)
+      scrollRef.current?.querySelector('button')?.focus()
+    },
+    scrollRef,
+  }
 
   if (layer && endpoint) return <LayerHost key={layer.id} layer={layer} endpoint={endpoint} {...chrome} />
   return <AtlasLayout {...chrome} guide={NEUTRAL_GUIDE} />
@@ -39,8 +67,13 @@ function Atlas({ catalog }: { catalog: CatalogBundle }) {
 interface ChromeProps {
   elements: ElementView[]
   active: ElementId | null
+  scrollOpen: boolean
+  unread: boolean
   onSelect: (id: ElementId) => void
   onClear: () => void
+  onToggleScroll: () => void
+  onCloseScroll: () => void
+  scrollRef: React.RefObject<HTMLDivElement | null>
 }
 
 /** Loads one layer's data and turns data + shared selection into the four outputs. */
@@ -86,47 +119,118 @@ interface LayoutProps extends ChromeProps {
   children?: React.ReactNode
 }
 
-/** Layout only: header, controls, the fixed map with the layer over it, guide, key and evidence widget. */
-function AtlasLayout({ elements, active, onSelect, onClear, guide, layer, presentation, selection, actions, children }: LayoutProps) {
-  const accent = elements.find((e) => e.id === active)?.accent
+const OVERLAY_MAX = 384 // px, 24rem
+const OVERLAY_MIN = 256 // px, 16rem: below this the scroll may cover the feature rather than become unreadable
+const OVERLAY_GAP = 16
+
+/**
+ * Wide screens: width of the opened scroll so it stays right of the layer's focus feature
+ * (marked `data-atlas-focus`). Recomputed when the stage resizes. Narrow screens use a bottom sheet.
+ */
+function useClearOfFocus(stageRef: React.RefObject<HTMLDivElement | null>, open: boolean): React.CSSProperties | undefined {
+  const [width, setWidth] = useState<number | null>(null)
+  useLayoutEffect(() => {
+    const stage = stageRef.current
+    if (!open || !stage) return
+    const measure = () => {
+      const focus = stage.querySelector('[data-atlas-focus]')
+      const slot = stage.querySelector<HTMLElement>('[data-overlay-slot]')
+      if (!focus || !slot || !window.matchMedia('(min-width: 62rem)').matches) return setWidth(null)
+      const slotRight = slot.getBoundingClientRect().right
+      const room = slotRight - focus.getBoundingClientRect().right - OVERLAY_GAP
+      setWidth(Math.max(OVERLAY_MIN, Math.min(OVERLAY_MAX, room)))
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(stage)
+    return () => observer.disconnect()
+  }, [stageRef, open])
+  return width === null ? undefined : { width }
+}
+
+/** Shown in the scroll before any element is chosen. */
+function NeutralHelp() {
+  return (
+    <div className={styles.help} data-testid="scroll-help">
+      <p>Each element shows a different kind of satellite evidence on the same fixed map of Ukraine.</p>
+      <ol>
+        <li>Choose an element with the medallions in the top-right corner.</li>
+        <li>Pick a month and a comparison period in the bar above the map.</li>
+        <li>Open this scroll to read the legend and the analysis.</li>
+      </ol>
+      <p>Elements marked “Coming later” have no evidence yet.</p>
+    </div>
+  )
+}
+
+/** Layout only: title, controls, the fixed map, and the corner pieces that sit over it. */
+function AtlasLayout(props: LayoutProps) {
+  const { elements, active, scrollOpen, unread, onSelect, onClear, onToggleScroll, onCloseScroll, scrollRef } = props
+  const { guide, layer, presentation, selection, actions, children } = props
+  const overlayId = useId()
+  const stageRef = useRef<HTMLDivElement>(null)
+  const overlayStyle = useClearOfFocus(stageRef, scrollOpen)
+  const current = elements.find((e) => e.id === active)
+  const art = current ? current.id : 'none'
+
+  const tabs: ScrollTab[] = presentation
+    ? [
+        { id: 'evidence', label: 'Evidence', content: presentation.evidence },
+        { id: 'legend', label: 'Legend', content: presentation.mapKey },
+      ]
+    : [{ id: 'help', label: 'How to read', content: <NeutralHelp /> }]
+  const title = layer?.title ?? 'How to read this atlas'
+  const scrollLabel = current ? `${current.label} scroll` : 'Atlas scroll'
+
   return (
     <div className={styles.app} data-active={active ?? 'none'} data-testid="atlas-page">
       <DecorativeFrame className={styles.frame}>
         <header className={styles.header}>
           <TitleBadge />
-          <ElementControls elements={elements} selected={active} onSelect={onSelect} onClear={onClear} />
         </header>
 
-        <div className={styles.main} data-evidence={presentation ? 'open' : 'closed'}>
-          <div className={styles.mapColumn}>
-            {presentation && selection && actions ? (
-              <LayerControlsBar controls={presentation.controls} selection={selection} actions={actions} />
-            ) : null}
-            <div className={styles.mapArea}>
-              <div className={styles.atlas} data-testid="atlas-frame">
-                <svg viewBox={`0 0 ${ATLAS_WIDTH} ${ATLAS_HEIGHT}`} className={styles.svg} role="img" aria-label="Illustrated map of Ukraine">
-                  <AtlasBase />
-                  {presentation?.mapSvg}
-                </svg>
-                {presentation?.mapHtml}
-              </div>
-            </div>
-            <div className={styles.overlays}>
-              <div className={styles.guide}>
-                {children}
-                <GuideBubble text={guide} accent={accent} />
-              </div>
+        {/* The bar's space is reserved from the start, so the map never resizes when an element is chosen. */}
+        <div className={styles.controlsSlot}>
+          {presentation && selection && actions ? (
+            <LayerControlsBar controls={presentation.controls} selection={selection} actions={actions} />
+          ) : (
+            <p className={styles.controlsHint} data-testid="controls-hint">
+              Months and comparison periods appear here once you choose an element.
+            </p>
+          )}
+        </div>
+
+        <div className={styles.stage} data-scroll={scrollOpen ? 'open' : 'closed'} ref={stageRef}>
+          <div className={styles.mapArea}>
+            <div className={styles.atlas} data-testid="atlas-frame">
+              <svg viewBox={`0 0 ${ATLAS_WIDTH} ${ATLAS_HEIGHT}`} className={styles.svg} role="img" aria-label="Illustrated map of Ukraine">
+                <AtlasBase />
+                {presentation?.mapSvg}
+              </svg>
+              {presentation?.mapHtml}
             </div>
           </div>
 
-          {presentation && layer ? (
-            <aside className={styles.evidence} aria-label="Evidence" data-testid="evidence-widget">
-              <h2 className={styles.evidenceTitle}>{layer.title}</h2>
-              <div className={styles.keyCard}>{presentation.mapKey}</div>
-              {presentation.evidence}
-            </aside>
+          <div className={styles.topRight}>
+            <ElementMedallions elements={elements} active={active} onSelect={onSelect} onClear={onClear} />
+          </div>
+
+          <div className={styles.bottomLeft}>
+            {children}
+            <GuideBubble text={guide} accent={current?.accent} />
+          </div>
+
+          <div className={styles.bottomRight} ref={scrollRef}>
+            <ScrollButton art={art} label={scrollLabel} open={scrollOpen} unread={unread} controls={overlayId} onToggle={onToggleScroll} />
+          </div>
+
+          {scrollOpen ? (
+            <div className={styles.overlaySlot} style={overlayStyle} data-overlay-slot="">
+              <ScrollOverlay key={art} id={overlayId} title={title} art={art} tabs={tabs} onClose={onCloseScroll} />
+            </div>
           ) : null}
         </div>
+
         <p className={styles.foot}>
           Illustrated-atlas preview · geography: Natural Earth · <a href="#/">Open the tile-map version</a>
         </p>

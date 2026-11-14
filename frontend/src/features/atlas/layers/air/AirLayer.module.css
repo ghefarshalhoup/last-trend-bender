@@ -44,7 +44,7 @@
 .keyNote { margin: var(--space-1) 0 0; color: var(--color-ink-muted); }
 
 /* evidence widget body */
-.evidence { display: grid; gap: var(--space-5); }
+.evidence { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
 .evidence h3 { font-family: var(--font-display); font-size: var(--text-base); margin: 0 0 var(--space-2); }
 .evidence p { margin: 0; }
 .reading { display: grid; gap: var(--space-1); }

@@ -44,7 +44,10 @@ export interface LayerActions {
 /** Everything a layer contributes to the screen for one selection. */
 export interface LayerPresentation {
   controls: LayerControls
-  /** SVG content in atlas units. Positions must come from `projectLonLat`. */
+  /**
+   * SVG content in atlas units. Positions must come from `projectLonLat`.
+   * Mark the feature the reader must keep seeing with `data-atlas-focus`; the opened scroll stays clear of it.
+   */
   mapSvg: ReactNode
   /** HTML anchored over the map (labels). Positioned with `atlasPercent`. */
   mapHtml?: ReactNode
