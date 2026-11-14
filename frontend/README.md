@@ -5,6 +5,8 @@ It reads everything from the FastAPI backend (`/api/cases`, `/api/air/kyiv`, cha
 
 Requires Node ≥ 20.19 and, for the backend, Python with `pip install -r backend/requirements.txt` (see `docs/backend-api.md`).
 
+**Illustrated-atlas preview:** `http://127.0.0.1:5173/#/atlas` (fixed illustrated map with evidence layers). See [`docs/illustrated-atlas-poc.md`](../docs/illustrated-atlas-poc.md).
+
 ## Install
 
 ```bash

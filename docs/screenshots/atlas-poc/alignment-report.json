@@ -1,0 +1,266 @@
+{
+ "image_size": [
+  1586,
+  992
+ ],
+ "city_pixels": {
+  "Kyiv": [
+   710.8,
+   331.4
+  ],
+  "Lviv": [
+   258.1,
+   384.3
+  ],
+  "Kharkiv": [
+   1049.3,
+   373.4
+  ],
+  "Dnipro": [
+   953.3,
+   502.6
+  ],
+  "Donetsk": [
+   1145.5,
+   541.3
+  ],
+  "Odesa": [
+   620.8,
+   674.2
+  ]
+ },
+ "painted_border_pixels": 16497,
+ "models": [
+  {
+   "projection": "equirectangular",
+   "transform": "affine",
+   "km_per_px": 1.16,
+   "kyiv_box_px": [
+    33.1,
+    44.3
+   ],
+   "fit_residual_px": {
+    "Kyiv": 10.7,
+    "Lviv": 0.5,
+    "Kharkiv": 18.3,
+    "Dnipro": 3.0,
+    "Donetsk": 16.7,
+    "Odesa": 6.8
+   },
+   "fit_rms_px": 11.4,
+   "holdout_median_px": 27.8,
+   "holdout_max_px": 89.8,
+   "holdout_median_km": 32.0,
+   "holdout_max_km": 104.0,
+   "holdout_median_in_box_widths": 0.84,
+   "border_real_to_painted_px": {
+    "median": 15.5,
+    "p90": 224.2,
+    "max": 321.8
+   },
+   "border_painted_to_real_px": {
+    "median": 11.4,
+    "p90": 29.5,
+    "max": 72.9
+   }
+  },
+  {
+   "projection": "equirectangular",
+   "transform": "similarity",
+   "km_per_px": 1.37,
+   "kyiv_box_px": [
+    33.2,
+    33.2
+   ],
+   "fit_residual_px": {
+    "Kyiv": 48.2,
+    "Lviv": 21.8,
+    "Kharkiv": 31.8,
+    "Dnipro": 11.3,
+    "Donetsk": 0.9,
+    "Odesa": 73.0
+   },
+   "fit_rms_px": 39.3,
+   "holdout_median_px": 53.3,
+   "holdout_max_px": 165.1,
+   "holdout_median_km": 73.0,
+   "holdout_max_km": 226.0,
+   "holdout_median_in_box_widths": 1.6,
+   "border_real_to_painted_px": {
+    "median": 46.5,
+    "p90": 209.8,
+    "max": 304.8
+   },
+   "border_painted_to_real_px": {
+    "median": 39.7,
+    "p90": 87.7,
+    "max": 132.4
+   }
+  },
+  {
+   "projection": "Mercator",
+   "transform": "affine",
+   "km_per_px": 1.13,
+   "kyiv_box_px": [
+    33.1,
+    46.2
+   ],
+   "fit_residual_px": {
+    "Kyiv": 10.4,
+    "Lviv": 1.5,
+    "Kharkiv": 18.5,
+    "Dnipro": 3.3,
+    "Donetsk": 17.0,
+    "Odesa": 7.5
+   },
+   "fit_rms_px": 11.6,
+   "holdout_median_px": 27.0,
+   "holdout_max_px": 91.0,
+   "holdout_median_km": 31.0,
+   "holdout_max_km": 103.0,
+   "holdout_median_in_box_widths": 0.82,
+   "border_real_to_painted_px": {
+    "median": 14.9,
+    "p90": 222.3,
+    "max": 317.8
+   },
+   "border_painted_to_real_px": {
+    "median": 9.1,
+    "p90": 25.7,
+    "max": 62.7
+   }
+  },
+  {
+   "projection": "Mercator",
+   "transform": "similarity",
+   "km_per_px": 1.11,
+   "kyiv_box_px": [
+    31.7,
+    49.8
+   ],
+   "fit_residual_px": {
+    "Kyiv": 40.5,
+    "Lviv": 22.1,
+    "Kharkiv": 15.4,
+    "Dnipro": 11.1,
+    "Donetsk": 24.2,
+    "Odesa": 60.2
+   },
+   "fit_rms_px": 33.4,
+   "holdout_median_px": 50.1,
+   "holdout_max_px": 113.7,
+   "holdout_median_km": 56.0,
+   "holdout_max_km": 126.0,
+   "holdout_median_in_box_widths": 1.58,
+   "border_real_to_painted_px": {
+    "median": 28.5,
+    "p90": 245.3,
+    "max": 351.5
+   },
+   "border_painted_to_real_px": {
+    "median": 18.7,
+    "p90": 44.6,
+    "max": 69.3
+   }
+  },
+  {
+   "projection": "Lambert conic",
+   "transform": "affine",
+   "km_per_px": 1.18,
+   "kyiv_box_px": [
+    32.4,
+    43.9
+   ],
+   "fit_residual_px": {
+    "Kyiv": 17.9,
+    "Lviv": 10.1,
+    "Kharkiv": 11.3,
+    "Dnipro": 4.8,
+    "Donetsk": 10.6,
+    "Odesa": 4.4
+   },
+   "fit_rms_px": 10.8,
+   "holdout_median_px": 25.5,
+   "holdout_max_px": 56.3,
+   "holdout_median_km": 30.0,
+   "holdout_max_km": 67.0,
+   "holdout_median_in_box_widths": 0.79,
+   "border_real_to_painted_px": {
+    "median": 21.4,
+    "p90": 224.9,
+    "max": 323.4
+   },
+   "border_painted_to_real_px": {
+    "median": 15.4,
+    "p90": 37.1,
+    "max": 83.7
+   }
+  },
+  {
+   "projection": "Lambert conic",
+   "transform": "similarity",
+   "km_per_px": 1.15,
+   "kyiv_box_px": [
+    30.9,
+    48.3
+   ],
+   "fit_residual_px": {
+    "Kyiv": 38.0,
+    "Lviv": 36.0,
+    "Kharkiv": 23.9,
+    "Dnipro": 12.9,
+    "Donetsk": 12.9,
+    "Odesa": 62.1
+   },
+   "fit_rms_px": 35.3,
+   "holdout_median_px": 45.8,
+   "holdout_max_px": 136.8,
+   "holdout_median_km": 53.0,
+   "holdout_max_km": 157.0,
+   "holdout_median_in_box_widths": 1.48,
+   "border_real_to_painted_px": {
+    "median": 27.6,
+    "p90": 247.3,
+    "max": 365.1
+   },
+   "border_painted_to_real_px": {
+    "median": 18.4,
+    "p90": 49.4,
+    "max": 81.4
+   }
+  }
+ ],
+ "border_fitted_affine": {
+  "projection": "Lambert conic",
+  "km_per_px": 1.13,
+  "kyiv_box_px": [
+   30.1,
+   51.4
+  ],
+  "border_painted_to_real_px": {
+   "median": 22.6,
+   "p90": 70.1,
+   "max": 121.6
+  },
+  "city_error_px": {
+   "Kyiv": 13.8,
+   "Lviv": 52.7,
+   "Kharkiv": 23.0,
+   "Dnipro": 55.0,
+   "Donetsk": 88.6,
+   "Odesa": 96.1
+  },
+  "city_error_km": {
+   "Kyiv": 16.0,
+   "Lviv": 60.0,
+   "Kharkiv": 26.0,
+   "Dnipro": 62.0,
+   "Donetsk": 100.0,
+   "Odesa": 109.0
+  }
+ },
+ "best_city_model": {
+  "projection": "Lambert conic",
+  "transform": "affine"
+ }
+}
