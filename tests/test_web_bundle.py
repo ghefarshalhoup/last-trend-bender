@@ -40,7 +40,13 @@ class WebBundleTests(unittest.TestCase):
         kyiv_series = bundle["regions"]["kyiv_no2_box"]["series"]
         self.assertTrue(expected_metric_ids.issubset(set(kyiv_series.keys())))
         self.assertTrue(any(kyiv_series["no2_mean_molec_cm2"]["flags"]))
-        self.assertTrue(any("orbit gap" in f for f in kyiv_series["fire_type0_per_1k_km2_day"]["flags"]))
+        self.assertTrue(any("verified outage" in f for f in kyiv_series["fire_type0_per_1k_km2_day"]["flags"]))
+        # 2015-2019 Fire anomalies must be withheld (null), never filled from 2019 alone
+        self.assertTrue(all(v is None for v in kyiv_series["fire_type0_per_1k_km2_day"]["anom_2015_2019"]))
+        # Unsupported Fire terminology must not remain in web catalog or static UI
+        labels_blob = " ".join(v["label"] for v in bundle["variable_catalog"])
+        self.assertNotIn("Industrial Flares", labels_blob)
+        self.assertNotIn("Vegetation Fires", labels_blob)
 
     def test_build_web_bundle_writes_to_custom_output(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -70,6 +76,13 @@ class WebBundleTests(unittest.TestCase):
             'role="tablist"',
         ):
             self.assertIn(required_id, html)
+
+        js = js_path.read_text(encoding="utf-8")
+        self.assertIn("no_step_counterfactual_no2_anomaly_molec_cm2", js)
+        self.assertIn("no_step_counterfactual_ci95_half_molec_cm2", js)
+        for banned in ("Vegetation/Conflict", "Industrial Flare", "Flare type2", "burned +", "burned <em", "industrial collapse"):
+            self.assertNotIn(banned, js)
+            self.assertNotIn(banned, html)
 
         css = css_path.read_text(encoding="utf-8")
         self.assertIn("@container", css)
