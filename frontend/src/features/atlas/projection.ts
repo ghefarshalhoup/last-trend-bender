@@ -14,6 +14,12 @@ import { geoConicConformal } from 'd3-geo'
  */
 export const ATLAS_WIDTH = 1600
 export const ATLAS_HEIGHT = 1000
+/**
+ * The part of atlas space the screen shows. Wider than the 1600 × 1000 box so the painted
+ * neighbours fill wide screens; the projection is unchanged, so all coordinates stay the same.
+ */
+export const ATLAS_VIEW = { x: -40, y: 30, w: 1720, h: 830 } as const
+export const ATLAS_VIEWBOX = `${ATLAS_VIEW.x} ${ATLAS_VIEW.y} ${ATLAS_VIEW.w} ${ATLAS_VIEW.h}`
 
 /** Geographic box the frame is fitted to: Ukraine including Crimea, with a small margin. */
 export const FIT_BOX = { west: 22.0, south: 44.2, east: 40.35, north: 52.5 } as const
@@ -92,5 +98,5 @@ export function ringBounds(ring: number[][]): { minX: number; minY: number; maxX
 
 /** Atlas units → percentage of the frame, for HTML positioned over the map. */
 export function atlasPercent(x: number, y: number): { left: string; top: string } {
-  return { left: `${(x / ATLAS_WIDTH) * 100}%`, top: `${(y / ATLAS_HEIGHT) * 100}%` }
+  return { left: `${((x - ATLAS_VIEW.x) / ATLAS_VIEW.w) * 100}%`, top: `${((y - ATLAS_VIEW.y) / ATLAS_VIEW.h) * 100}%` }
 }

@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import geoJson from './geo/atlas-geo.json'
-import { ATLAS_HEIGHT, ATLAS_WIDTH, linePath, projectLonLat } from './projection'
+import { ATLAS_VIEW, linePath, projectLonLat } from './projection'
 import styles from './AtlasBase.module.css'
 import paintedBase from './assets/painted-base.webp'
 
@@ -34,6 +34,9 @@ export const CITIES = [
 ] as const
 
 function AtlasBaseImpl() {
+  const V = ATLAS_VIEW
+  const ukraineLabel = projectLonLat(31.2, 49.0)
+  const sea = projectLonLat(32.0, 44.0)
   return (
     <g data-testid="atlas-base">
       <defs>
@@ -44,25 +47,32 @@ function AtlasBaseImpl() {
         <pattern id="atlas-waves" width="34" height="16" patternUnits="userSpaceOnUse">
           <path d="M0 11q8.5-9 17 0t17 0" className={styles.wave} />
         </pattern>
-        <clipPath id="atlas-clip"><rect width={ATLAS_WIDTH} height={ATLAS_HEIGHT} /></clipPath>
+        <clipPath id="atlas-clip"><rect x={V.x} y={V.y} width={V.w} height={V.h} /></clipPath>
       </defs>
       <g clipPath="url(#atlas-clip)">
-        <rect width={ATLAS_WIDTH} height={ATLAS_HEIGHT} className={styles.sea} />
-        <rect width={ATLAS_WIDTH} height={ATLAS_HEIGHT} fill="url(#atlas-waves)" />
+        <rect x={V.x} y={V.y} width={V.w} height={V.h} className={styles.sea} />
+        <rect x={V.x} y={V.y} width={V.w} height={V.h} fill="url(#atlas-waves)" />
         {NEIGHBOURS.map((d, i) => <path key={i} d={d} className={styles.shore} />)}
         <path d={UKRAINE} className={styles.shore} />
         {NEIGHBOURS.map((d, i) => <path key={i} d={d} className={styles.neighbour} />)}
         <path d={UKRAINE} className={styles.ukraine} />
-        <image href={paintedBase} x="0" y="0" width={ATLAS_WIDTH} height={ATLAS_HEIGHT} preserveAspectRatio="none" data-testid="painted-base" />
-        {/* The painting carries its own border, rivers and labels; the true outline and city points stay for alignment, invisible. */}
+        <image href={paintedBase} x={V.x} y={V.y} width={V.w} height={V.h} preserveAspectRatio="none" data-testid="painted-base" />
+        {/* The painting carries the border and rivers; the true outline stays for alignment, invisible. Labels are ours, at true coordinates. */}
         <path d={UKRAINE} className={styles.trueOutline} data-testid="ukraine-outline" />
+        <text x={ukraineLabel[0]} y={ukraineLabel[1]} className={styles.country}>UKRAINE</text>
+        <text x={sea[0]} y={sea[1]} className={styles.seaLabel}>BLACK SEA</text>
         {CITIES.map((c) => {
           const [x, y] = projectLonLat(c.lon, c.lat)
-          return <g key={c.name} data-testid={`city-${c.name}`} data-x={x} data-y={y}><circle cx={x} cy={y} r={5} className={styles.trueCity} /></g>
+          return (
+            <g key={c.name} data-testid={`city-${c.name}`} data-x={x} data-y={y}>
+              {'capital' in c ? <circle cx={x} cy={y} r={9} className={styles.capitalRing} /> : null}
+              <circle cx={x} cy={y} r={5} className={styles.cityDot} />
+              <text x={x + 14} y={y + 7} className={styles.city}>{c.name}</text>
+            </g>
+          )
         })}
-        <text x={ATLAS_WIDTH - 36} y={ATLAS_HEIGHT - 34} className={styles.aiMark} data-testid="ai-mark">AI-generated illustration · aligned to true coordinates</text>
-        <rect x="10" y="10" width={ATLAS_WIDTH - 20} height={ATLAS_HEIGHT - 20} className={styles.frameOuter} />
-        <rect x="20" y="20" width={ATLAS_WIDTH - 40} height={ATLAS_HEIGHT - 40} className={styles.frameInner} />
+        <text x={V.x + V.w / 2} y={V.y + V.h - 22} className={styles.aiMark} data-testid="ai-mark">AI-generated illustration · aligned to true coordinates</text>
+        <rect x={V.x + 6} y={V.y + 6} width={V.w - 12} height={V.h - 12} className={styles.frameOuter} />
       </g>
     </g>
   )

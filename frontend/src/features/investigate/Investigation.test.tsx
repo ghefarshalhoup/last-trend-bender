@@ -150,16 +150,20 @@ describe('phase 2: variables as cards', () => {
     expect(screen.getAllByRole('article')).toHaveLength(2)
   })
 
-  it('the guided example opens Kyiv NO₂ with wind and cloud, and the guide quotes the card', async () => {
+  it('Kyiv NO₂ with wind and cloud: the portrait quotes each card', async () => {
     serve()
     const user = await openAtlas()
-    await user.click(screen.getByTestId('guided-example'))
+    await user.click(screen.getByTestId('place-kyiv_no2_box'))
+    await user.click(screen.getByTestId('investigate'))
+    await user.click(screen.getByTestId('element-air'))
+    for (const id of ['no2_mean_molec_cm2', 'ws10m', 'cloud_amt']) await user.click(screen.getByTestId(`variable-${id}`))
     const no2 = screen.getByTestId('card-no2_mean_molec_cm2')
     expect(await within(no2).findByTestId('card-verdict')).toHaveTextContent('No significant trend')
     expect(within(no2).getByTestId('card-seasonal')).toHaveTextContent('−28.0% vs 2015–2019')
     expect(screen.getByTestId('card-ws10m')).toBeInTheDocument()
     expect(screen.getByTestId('card-cloud_amt')).toBeInTheDocument()
-    // the example opens the guide's insights: one per card, read from the card's own fields
+    // the portrait opens the guide's insights: one per card, read from the card's own fields
+    await user.click(screen.getByTestId('avatar-button'))
     const panel = await screen.findByTestId('avatar-panel')
     expect(await within(panel).findByTestId('insight-no2_mean_molec_cm2-kyiv_no2_box')).toHaveTextContent('did not detect a clear trend over Mar 2015 – Aug 2022')
     expect(within(panel).getByTestId('insight-no2_mean_molec_cm2-kyiv_no2_box')).toHaveTextContent('Separately, March–August 2022 averaged 28% below')

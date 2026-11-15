@@ -23,7 +23,7 @@ Deadline: **Sunday 15 November, 23:59 local time**. Press "Submit for Judging" b
 | Test significance (t-test, Mann-Kendall, confidence intervals) | Done | Regression t-test with robust errors, confidence interval, Mann-Kendall stored as a check, correction for many tests |
 | What, where, how much, is it significant | Done | The four parts of each card |
 | Simple definitions of the variables | Done, in draft | 25 definitions on the card backs; not yet reviewed by the team |
-| Demonstration examples the user can watch | Partly | One guided example (Kyiv). The challenge says "a couple" |
+| Demonstration examples the user can watch | Partly | "Show me around" tours of both screens; the demo deck walks through Kyiv. No playable example in the app |
 | Trends that differ between regions | Done | Prague falls significantly; Ukrainian places do not |
 | Non-significant trends are still interesting | Done | Shown with their rate and an explanation |
 | Seasonal cycle removed | Done | One offset per calendar month |
@@ -42,13 +42,13 @@ Deadline: **Sunday 15 November, 23:59 local time**. Press "Submit for Judging" b
 
 - Data pipeline for NO₂ (8 places), fire, and 22 weather, water and earth variables.
 - Trend verdicts for all 392 place × variable × period combinations (368 tested, 24 with too little data).
-- Atlas web app: two-step flow, cards, guided example, "How to read" guide, mobile layout.
+- Atlas web app: two-step flow, cards, compare view, portrait insights, field guide, "Show me around" tour.
 - Tests: 48 analysis, 66 backend, 50 frontend unit, 23 browser. All pass, including the fire tests with the raw download.
 
 ## Not complete
 
 1. **Hosted demo link.** The app needs a backend, so it is not yet a single public URL.
-2. **Second guided example** (the city comparison).
+2. **A playable example in the app** (removed in favour of the tour; the deck covers it).
 3. **Team review of the 25 definitions.**
 4. **Husam's review** of decisions D4, D5 and D6.
 5. **An "after the invasion" view** and **one picker for all variables**: offered, not built.

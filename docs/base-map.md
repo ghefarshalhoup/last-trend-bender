@@ -4,21 +4,25 @@ The atlas background is a painted illustration (AI-generated; the map shows a vi
 
 ## How it was fitted
 
-1. **Control points.** The six city dots on the painting (Kyiv, Lviv, Odesa, Kharkiv, Dnipro, Donetsk) were located automatically and matched to their true positions in the atlas projection (Lambert conformal conic, `frontend/src/features/atlas/projection.ts`).
-2. **First fit.** An affine transform from the six pairs left city errors of 5–15 atlas units (of 1600).
-3. **Border fit.** The painted red border and coastline were matched to the true Natural Earth outline of Ukraine, about every 12 units, and a smooth thin-plate spline warp was fitted to those offsets and the cities.
+The current painting (wide, 2.3:1, no labels) has no city dots, so the fit uses shape alone:
+
+1. **Ukraine on the painting.** The cream land inside the red border was segmented into a mask.
+2. **First fit.** An affine transform matched the mask's centre and spread to the true outline of Ukraine (Natural Earth, drawn through the atlas projection in `frontend/src/features/atlas/projection.ts`).
+3. **Refinement.** The painted border was matched to the true border point by point (iterative closest point), then a smooth thin-plate spline warp corrected what an affine transform cannot.
 
 ## Result
 
-| Check | Value (atlas units, map is 1600 wide) |
+| Check | Value (atlas units; Ukraine is about 1330 wide) |
 | --- | --- |
-| City dots after the warp | within 3 units of true positions |
-| Border, median distance | about 5 |
-| Border, 90th percentile | about 18 (mostly the Black Sea coast and Crimea, which the painting simplifies) |
+| Border, median distance | about 3 |
+| Border, 90th percentile | about 13 (mostly the Black Sea coast) |
 
-The painting is decoration. Study boxes, pins and place outlines are drawn from true coordinates on top of it, so no result depends on the painting.
+The painting is decoration. City labels, study boxes, pins and place outlines are drawn from true coordinates on top of it, so no result depends on the painting.
+
+## Screen window
+
+The map shows atlas units x −40 to 1680, y 30 to 860 (`ATLAS_VIEW`), wider than the 1600 × 1000 projection box, so the painted neighbours fill wide screens. The projection itself is unchanged.
 
 ## Files
 
-- `frontend/src/features/atlas/assets/painted-base.webp`: the warped painting with soft transparent edges.
-- Beyond the painting's edges the vector geography (Natural Earth) shows through in a matching parchment tone.
+- `frontend/src/features/atlas/assets/painted-base.webp`: the warped painting, exactly covering `ATLAS_VIEW`.

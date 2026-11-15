@@ -5,6 +5,12 @@ Newest first. Husam has not yet reviewed the entries marked **needs review**.
 
 ## 2026-11-15
 
+### D13. Wide painted map and a "Show me around" tour
+- **Decided by:** G.
+- **Map:** a new wide painting with grey-blue neighbours and no labels, fitted to the true border (median about 3 atlas units; `docs/base-map.md`). The map window widened so it fills wide screens; our own labels sit at true coordinates.
+- **Tour:** "Show me around" (Driver.js) highlights one control at a time with Next, Back, Close and Escape. It never changes a selection or loads data, and it skips controls not on screen. Seven stops before Investigate, seven after. It replaces "Start guided example", which was removed (G).
+- **Later:** a zoom on each card's chart (visual only; the verdict stays on the tested period).
+
 ### D12. Name, painted base map, portrait slot
 - **Decided by:** G.
 - **Name:** the app is "The Last Trend Bender" (title centred). The repository keeps its name.
