@@ -1,0 +1,13 @@
+.row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); }
+.month {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+  min-height: 56px; padding: var(--space-2) var(--space-3);
+  background: var(--color-surface); border: 1px solid var(--color-line-strong); border-radius: var(--radius-md);
+  cursor: pointer; text-align: left;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.month:hover { border-color: var(--color-gilt); }
+.month[data-selected='true'] { background: var(--color-night); color: var(--color-on-night); border-color: var(--color-night); }
+.month[data-low='true']:not([data-selected='true']) { border-color: var(--status-warning-line); background: var(--status-warning-bg); color: var(--status-warning-ink); }
+.name { font-weight: 600; font-size: var(--text-sm); }
+.days { font-size: var(--text-xs); font-variant-numeric: tabular-nums; opacity: 0.9; }

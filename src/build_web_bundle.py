@@ -25,8 +25,8 @@ WEB_VARIABLES = (
     ("air", "ps", "Surface Barometric Pressure", "kPa", 1.0, "kPa"),
     ("air", "clrsky_sfc_sw_dwn", "Clear-Sky Shortwave (Aerosol/Haze Tracer)", "MJ/m^2/day", 1.0, "MJ/m^2/day"),
     ("air", "cloud_radiative_attenuation_wm2", "Cloud Radiative Attenuation", "W/m^2", 1.0, "W/m^2"),
-    ("fire", "fire_type0_per_1k_km2_day", "VIIRS Vegetation Fires (type0)", "det / 1000 km^2 / d", 1.0, "det/1k km^2/d"),
-    ("fire", "fire_type2_per_1k_km2_day", "VIIRS Industrial Flares (type2)", "det / 1000 km^2 / d", 1.0, "det/1k km^2/d"),
+    ("fire", "fire_type0_per_1k_km2_day", "VIIRS Presumed Vegetation Detections (type0)", "det / 1000 km^2 / d", 1.0, "det/1k km^2/d"),
+    ("fire", "fire_type2_per_1k_km2_day", "VIIRS Other Static Land Sources (type2)", "det / 1000 km^2 / d", 1.0, "det/1k km^2/d"),
     ("fire", "t2m", "2m Air Temperature", "°C", 1.0, "°C"),
     ("fire", "dtr_c", "Mean Daily Diurnal Temp Range (T2M_RANGE)", "°C", 1.0, "°C"),
     ("fire", "allsky_sfc_sw_dwn", "All-Sky Surface Shortwave Flux", "MJ/m^2/day", 1.0, "MJ/m^2/day"),
@@ -93,8 +93,10 @@ def build_web_bundle(
                     sat_col = "fire_type0_sat_cov" if col.startswith("fire_type0") else "fire_type2_sat_cov"
                     if sat_col in sub.columns and pd.notna(sub[sat_col].iloc[idx]):
                         sat_cov = float(sub[sat_col].iloc[idx])
-                        if sat_cov < 0.99:
-                            flag = f"VIIRS S-NPP orbit gap: {100.0 * sat_cov:.1f}% satellite days observed"
+                        if m_str in ("2022-07", "2022-08"):
+                            flag = f"VIIRS S-NPP CMR verified outage (Jul 27–Aug 10): {100.0 * sat_cov:.1f}% days w/ detections"
+                        elif sat_cov < 0.99:
+                            flag = f"VIIRS S-NPP valid zero-detection check (CMR granules present): {100.0 * sat_cov:.1f}% days w/ detections"
                 cov_flags.append(flag)
 
             is_interval = bool(METRIC_SPEC_BY_ID[col].is_interval_scale) if col in METRIC_SPEC_BY_ID else False

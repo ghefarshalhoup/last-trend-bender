@@ -177,7 +177,7 @@
         <div class="subpanel">
           <h3>Daily Wind &amp; Cloud Stratification (Mar&ndash;Aug 2022 vs Baselines)</h3>
           <p class="muted-meta">
-            Faster wind dilutes NO<sub>2</sub> (pre-war daily Spearman &rho; = <strong id="spearman-wind">-0.305</strong>).
+            Faster wind dilutes NO<sub>2</sub> (pre-war daily Spearman &rho; = <strong id="spearman-wind">-0.272</strong>).
             Filtering strictly to calm stagnant days (&lt; 3 m/s) or clear/moderate skies (&lt; 60% cloud) tests if meteorology alone explains 2022.
           </p>
           <div id="strata-buttons" class="pill-group" role="group" aria-label="Select daily meteorology filter stratum"></div>
@@ -190,12 +190,12 @@
         <div class="subpanel">
           <div class="chart-card-head">
             <div>
-              <h3>Observed NO<sub>2</sub> Anomaly vs Meteorology-Expected Counterfactual</h3>
-              <p class="muted-meta">Kyiv Box&ndash;Tiao linear+step+weather regression (2015&ndash;2022)</p>
+              <h3>Observed NO<sub>2</sub> Anomaly vs Full No-Step Counterfactual</h3>
+              <p class="muted-meta">Kyiv Box&ndash;Tiao linear+step+weather regression (2015&ndash;2022); shaded band shows &plusmn;95% AR(1) uncertainty around trend + weather</p>
             </div>
           </div>
           <div class="canvas-stage canvas-stage-sm">
-            <canvas id="weather-control-canvas" aria-label="Comparison of observed Kyiv NO2 monthly anomaly and weather-expected trajectory"></canvas>
+            <canvas id="weather-control-canvas" aria-label="Comparison of observed Kyiv NO2 monthly anomaly and full no-step trend plus weather counterfactual with 95% AR(1) uncertainty band"></canvas>
           </div>
           <div id="box-tiao-grid" class="mini-model-grid"></div>
         </div>
@@ -207,19 +207,19 @@
       <div class="panel-header">
         <div>
           <p class="section-tag">Section 3 &bull; Sub-National Drought-Fire Mismatch</p>
-          <h2 id="contrast-heading">Climate Drought vs Conflict Fire Divergence Across 6 Ukraine Regions (Mar&ndash;Aug 2022)</h2>
+          <h2 id="contrast-heading">Climate Drying vs Active-Detection Rate Divergence Across 6 Ukraine Comparators (Mar&ndash;Aug 2022)</h2>
         </div>
       </div>
 
       <div class="contrast-split">
         <div class="subpanel">
-          <h3>Atmospheric Drying (+&Delta;VPD) vs Vegetation Fire Shift (% vs 2019&ndash;2021)</h3>
+          <h3>Atmospheric Drying (+&Delta;VPD) vs Presumed Vegetation Detection Rate Shift (% vs 2019&ndash;2021)</h3>
           <p class="muted-meta">
-            Click any region marker to load it in Section 1. Western &amp; Central Ukraine dried (+0.06 to +0.14 kPa VPD, topsoil -0.028 to -0.043) yet burned <em>less</em> (-22% to -56%),
-            while Donbas surged (+72.4% <code>type0</code>) with only +0.052 kPa VPD shift alongside an -83.3% collapse in static industrial <code>type2</code> flares.
+            Click any region marker to load it in Section 1. Across box-level averages, Western &amp; Central comparators (not un-impacted controls) dried (+0.06 to +0.14 kPa VPD, topsoil -0.028 to -0.043) alongside <em>declining</em> presumed-vegetation (<code>type0</code>) detection rates (-22% to -56%),
+            while Donbas&ndash;Kharkiv rose +72.4% (+104.3% under matched 169d/yr UKR-clipped audit) with +0.052 kPa VPD and an -83.3% decline in <code>type2</code> static land anomalies. Coarse 0.5&deg; box means do not rule out localized drought; hotspots do not measure burned area.
           </p>
           <div class="canvas-stage canvas-stage-md">
-            <canvas id="fire-vpd-scatter" tabindex="0" aria-label="Interactive scatter chart of 2022 VPD drought shift vs vegetation fire density change across 6 Ukraine regions. Use Left and Right arrows to step through regions and Enter to inspect in Section 1."></canvas>
+            <canvas id="fire-vpd-scatter" tabindex="0" aria-label="Interactive scatter chart of 2022 VPD drought shift vs presumed-vegetation type0 detection rate change across 6 Ukraine regions. Use Left and Right arrows to step through regions and Enter to inspect in Section 1."></canvas>
           </div>
           <div id="scatter-hover-readout" class="month-inspector" aria-live="polite">
             Click, hover, or focus chart + Left/Right arrows &amp; Enter to inspect any region point.
@@ -233,8 +233,8 @@
               <thead>
                 <tr>
                   <th scope="col">Region (Role)</th>
-                  <th scope="col">Fire type0 %</th>
-                  <th scope="col">Flare type2 %</th>
+                  <th scope="col">Veg type0 %</th>
+                  <th scope="col">Static type2 %</th>
                   <th scope="col">&Delta;VPD (kPa)</th>
                   <th scope="col">&Delta;Soil Wet</th>
                   <th scope="col">&Delta;T2M (&deg;C)</th>

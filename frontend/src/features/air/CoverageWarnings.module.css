@@ -1,0 +1,8 @@
+.wrap { display: grid; gap: var(--space-3); }
+.coverage, .notices { padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border-left: 4px solid; font-size: var(--text-sm); }
+.coverage { background: var(--status-warning-bg); border-color: var(--status-warning-line); color: var(--status-warning-ink); }
+.notices { background: var(--status-info-bg); border-color: var(--status-info-line); color: var(--status-info-ink); }
+.title { font-weight: 600; margin-bottom: var(--space-1); }
+.icon { margin-right: var(--space-1); }
+.list { display: grid; gap: var(--space-1); }
+.list li { max-width: 62ch; }
