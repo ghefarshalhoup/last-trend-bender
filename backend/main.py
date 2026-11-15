@@ -7,6 +7,7 @@ Run from the repository root::
 
 from __future__ import annotations
 
+import json
 import re
 from typing import Literal, Optional
 
@@ -25,6 +26,7 @@ from backend.schemas import AirStudyResponse, CasesResponse, ErrorResponse, Heal
 
 _MONTH_RE = re.compile(r"^\d{4}-\d{2}$")
 
+TRENDS_FILE = "trend_results.json"
 SERVICE_NAME = "war-environment-tracker-backend"
 _ERRORS = {
     404: {"model": ErrorResponse, "description": "Unknown resource"},
@@ -154,6 +156,23 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
                 "variables": variables,
             }
         )
+
+    @app.get("/api/trends")
+    def trends(request: Request):
+        """Trend verdicts per region x metric x analysis window, written by the analysis
+        pipeline to ``reports/trend_results.json`` (see docs/trend-results-schema.md).
+        Missing file -> an empty list, so the UI shows "not assessed" instead of failing."""
+        path = request.app.state.settings.reports_dir / TRENDS_FILE
+        if not path.is_file():
+            return JSONResponse(content={"schema_version": "1.0.0", "status": "not_available", "results": []})
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            raise ApiError(503, "data_unavailable", f"Trend results could not be read: {exc}") from exc
+        if not isinstance(payload, dict) or not isinstance(payload.get("results"), list):
+            raise ApiError(503, "data_unavailable", "Trend results file has no 'results' list.")
+        payload.setdefault("status", "available")
+        return JSONResponse(content=payload)
 
     @app.get("/api/air/weather", responses={503: _ERRORS[503]})
     def air_weather(request: Request):

@@ -9,7 +9,7 @@ Requires Node ≥ 20.19 and, for the backend, Python with `pip install -r backen
 
 On Windows use `python` (not `python3`) for the backend and open `http://localhost:5173/#/atlas`.
 
-**Atlas flow:** choose an element (top right) → open its scroll (bottom right) → *Long-term trend* shows the timeline, invasion date, plain verdict and rate with 95% interval (test and p-value under "How this was tested"); *2022 comparison* shows the seasonal change; *About* gives definition, source and limits. Analysis period (Full record / Before the invasion) sits above the map. Elements without a reviewed result stay "Coming later".
+**Atlas flow:** phase 1, press a place pin (or Kraków/Prague in the bar), pick a period, press Investigate (or *Start guided example*). Phase 2, choose an element (top right), tick up to 4 variables; each opens as a card: timeline with the invasion marked, verdict (● significant, ○ not significant, – not assessed), rate with 95% range, descriptive Mar–Aug 2022 change; *i* turns the card over (definition, source, test, limits). Verdicts come from `/api/trends` (`docs/trend-results-schema.md`); without a result a card says "Not assessed".
 
 Who does what next: [`docs/team-handoff.md`](../docs/team-handoff.md). Plain definitions of the 25 variables: [`docs/variable-definitions.md`](../docs/variable-definitions.md).
 

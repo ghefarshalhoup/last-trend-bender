@@ -187,3 +187,30 @@ def test_cors_allowed_on_atlas_routes(client):
         res = client.get(route, headers={"Origin": "http://localhost:5173"})
         assert res.status_code == 200
         assert res.headers.get("access-control-allow-origin") == "http://localhost:5173"
+
+
+def test_trends_missing_file_is_empty_not_an_error(tmp_path):
+    reports, settings = _stage_full_reports(tmp_path)
+    body = TestClient(create_app(settings)).get("/api/trends").json()
+    assert body["status"] == "not_available"
+    assert body["results"] == []
+
+
+def test_trends_are_served_unchanged(tmp_path):
+    reports, settings = _stage_full_reports(tmp_path)
+    row = {
+        "region_id": "donbas_kharkiv_east", "metric_id": "t2m", "window_id": "full_record", "status": "assessed",
+        "start_month": "2015-01", "end_month": "2022-12", "n_months": 96, "slope_per_year": 0.05,
+        "ci_low": -0.01, "ci_high": 0.11, "p_value": 0.09, "p_value_fdr": 0.3, "significant": False,
+        "method": "Month-fixed-effects OLS, Newey-West HAC", "caveats": [],
+    }
+    (reports / "trend_results.json").write_text(json.dumps({"schema_version": "1.0.0", "results": [row]}))
+    body = TestClient(create_app(settings)).get("/api/trends").json()
+    assert body["status"] == "available"
+    assert body["results"] == [row]
+
+
+def test_trends_malformed_file_is_503(tmp_path):
+    reports, settings = _stage_full_reports(tmp_path)
+    (reports / "trend_results.json").write_text('{"rows": []}')
+    assert TestClient(create_app(settings)).get("/api/trends").status_code == 503

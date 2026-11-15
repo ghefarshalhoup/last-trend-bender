@@ -38,6 +38,10 @@ interface Props {
   lowLabel?: string
   formatValue: (value: number) => string
   ariaLabel: string
+  /** Small card version: no legend row, no table toggle, shorter plot. The card explains the marks. */
+  compact?: boolean
+  /** Dashed when the trend is not significant, solid when it is. */
+  rateDashed?: boolean
 }
 
 const C_SERIES = '#2a78d6'
@@ -54,11 +58,15 @@ interface DotProps {
 }
 
 /** Full-record timeline with a marked event, an optional rate line and a table view of the same data. */
-export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel, analysisEndT, rateLine, lowLabel, formatValue, ariaLabel }: Props) {
+export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel, analysisEndT, rateLine, lowLabel, formatValue, ariaLabel, compact = false, rateDashed = true }: Props) {
   const [view, setView] = useState<'chart' | 'table'>('chart')
   const values = points.map((p) => p.value).filter((v): v is number => v !== null)
-  const yMax = values.length ? Math.ceil(Math.max(...values) * 1.08 * 2) / 2 : 1
-  const yMin = values.length ? Math.min(0, Math.floor(Math.min(...values))) : 0
+  const vMax = values.length ? Math.max(...values) : 1
+  const vMin = values.length ? Math.min(...values) : 0
+  const pad = (vMax - vMin) * 0.08 || Math.abs(vMax) * 0.1 || 1
+  // Counts and amounts start at zero; signed or offset quantities (°C, kPa) get a padded range.
+  const yMin = vMin >= 0 && vMin < (vMax - vMin) * 0.6 ? 0 : vMin - pad
+  const yMax = vMax + pad
   const firstYear = Math.floor(points[0]?.t ?? 2015)
   const lastYear = Math.ceil(points[points.length - 1]?.t ?? 2023)
   const years = Array.from({ length: lastYear - firstYear + 1 }, (_, i) => firstYear + i)
@@ -71,7 +79,7 @@ export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel,
         key={`t-${index}`}
         cx={cx}
         cy={cy}
-        r={payload.low ? 3.4 : 3}
+        r={compact ? (payload.low ? 2.4 : 1.6) : payload.low ? 3.4 : 3}
         fill={payload.low ? '#fcfcfb' : C_SERIES}
         stroke={C_SERIES}
         strokeWidth={payload.low ? 1.6 : 1}
@@ -94,6 +102,7 @@ export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel,
 
   return (
     <div className={styles.wrap}>
+      {compact ? null : (
       <div className={styles.head}>
         <ul className={styles.legend} aria-label="Chart legend">
           <li>
@@ -122,18 +131,19 @@ export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel,
           <button type="button" aria-pressed={view === 'table'} onClick={() => setView('table')}>Table</button>
         </div>
       </div>
+      )}
 
       {view === 'chart' ? (
         <div className={styles.plot} role="img" aria-label={ariaLabel} data-testid="trend-chart">
-          <ResponsiveContainer width="100%" height={300}>
-            <ComposedChart data={points} margin={{ top: 22, right: 14, bottom: 8, left: 4 }}>
+          <ResponsiveContainer width="100%" height={compact ? 150 : 300}>
+            <ComposedChart data={points} margin={compact ? { top: 16, right: 8, bottom: 0, left: 0 } : { top: 22, right: 14, bottom: 8, left: 4 }}>
               <CartesianGrid stroke="#e7dfc9" vertical={false} />
               <XAxis
                 dataKey="t"
                 type="number"
                 domain={[firstYear, lastYear]}
                 ticks={years}
-                tickFormatter={(y: number) => String(y)}
+                tickFormatter={(y: number) => (compact ? `’${String(y).slice(2)}` : String(y))}
                 tick={{ fontSize: 12, fill: '#5a4a38' }}
                 tickLine={false}
                 axisLine={{ stroke: '#b9a678' }}
@@ -143,11 +153,12 @@ export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel,
                 tick={{ fontSize: 12, fill: '#5a4a38' }}
                 tickLine={false}
                 axisLine={false}
-                width={44}
-                label={{ value: unitLabel, angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#5a4a38', textAnchor: 'middle' }, dx: -2 }}
+                width={compact ? 40 : 44}
+                tickFormatter={(v: number) => (Math.abs(v) >= 1000 ? `${Math.round(v / 100) / 10}k` : String(Math.round(v * 100) / 100))}
+                label={compact ? undefined : { value: unitLabel, angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#5a4a38', textAnchor: 'middle' }, dx: -2 }}
               />
               {analysisEndT !== undefined ? <ReferenceArea x1={analysisEndT} x2={lastYear} fill="#2b2117" fillOpacity={0.06} /> : null}
-              <ReferenceLine x={eventT} stroke={C_EVENT} strokeWidth={2} label={{ value: eventLabel, position: 'top', fontSize: 11, fill: C_EVENT }} />
+              <ReferenceLine x={eventT} stroke={C_EVENT} strokeWidth={2} label={{ value: compact ? 'Invasion' : eventLabel, position: 'top', fontSize: 11, fill: C_EVENT }} />
               <Tooltip content={tooltip} isAnimationActive={false} />
               <Line dataKey="value" stroke={C_SERIES} strokeWidth={1.6} dot={dot} activeDot={{ r: 5 }} isAnimationActive={false} connectNulls={false} />
               {rateLine ? (
@@ -155,7 +166,7 @@ export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel,
                   segment={[{ x: rateLine.t0, y: rateLine.y0 }, { x: rateLine.t1, y: rateLine.y1 }]}
                   stroke={C_RATE}
                   strokeWidth={2}
-                  strokeDasharray="6 4"
+                  strokeDasharray={rateDashed ? '6 4' : undefined}
                 />
               ) : null}
             </ComposedChart>
