@@ -59,15 +59,15 @@ export function VariableCard({ variable, element, placeId, window, invasionDate,
         <p className={styles.muted} data-testid="card-no-data">No data for {placeLabel(placeId)}. This variable covers other places.</p>
       ) : null}
       {state.status === 'ready' && state.series ? (
-        <CardBody variable={variable} series={state.series} trend={trend} window={window} invasionDate={invasionDate} flipped={flipped} />
+        <CardBody variable={variable} series={state.series} trend={trend} window={window} invasionDate={invasionDate} flipped={flipped} placeId={placeId} />
       ) : null}
     </article>
   )
 }
 
-function CardBody({ variable, series, trend, window, invasionDate, flipped }: { variable: VariableEntry; series: VariableSeries; trend: TrendResult | undefined; window: WindowId; invasionDate: string; flipped: boolean }) {
+function CardBody({ variable, series, trend, window, invasionDate, flipped, placeId }: { placeId: string; variable: VariableEntry; series: VariableSeries; trend: TrendResult | undefined; window: WindowId; invasionDate: string; flipped: boolean }) {
   const reading = readCard(variable, series, trend)
-  if (flipped) return <CardBack variable={variable} reading={reading} series={series} />
+  if (flipped) return <CardBack variable={variable} reading={reading} series={series} placeId={placeId} />
   const { scale, unit } = displayUnit(variable)
   const points = withGaps(series.points.map((p) => ({ month: p.month, t: monthToDecimalYear(p.month), value: p.value === null ? null : p.value / scale, low: p.low, note: p.note })))
   const invasionT = dateToDecimalYear(invasionDate)
@@ -132,7 +132,7 @@ function rateLineFor(points: TimelinePoint[], trend: TrendResult | undefined, re
   return { t0, t1, y0: meanY + perYear * (t0 - meanT), y1: meanY + perYear * (t1 - meanT) }
 }
 
-function CardBack({ variable, reading, series }: { variable: VariableEntry; reading: CardReading; series: VariableSeries }) {
+function CardBack({ variable, reading, series, placeId }: { variable: VariableEntry; reading: CardReading; series: VariableSeries; placeId: string }) {
   const def = DEFS.get(variable.metric_id)
   const first = series.points[0]?.month
   const last = series.points[series.points.length - 1]?.month
@@ -154,7 +154,8 @@ function CardBack({ variable, reading, series }: { variable: VariableEntry; read
       <p className={styles.mutedText}>Significant means p is below 0.05: a trend this strong would rarely appear by chance alone. It does not say what caused it.</p>
       {reading.seasonalNote ? <p className={styles.mutedText}>{reading.seasonalNote}</p> : null}
       <ul className={styles.limits}>
-        {[...variable.limitations, ...reading.caveats].slice(0, 5).map((l) => <li key={l}>{l}</li>)}
+        {/* The result's own caveats come first: they are about this place and period. The catalog's NO₂ notes describe Kyiv only. */}
+        {[...reading.caveats, ...(variable.metric_id === 'no2_mean_molec_cm2' && placeId !== 'kyiv_no2_box' ? [] : variable.limitations)].slice(0, 5).map((l) => <li key={l}>{l}</li>)}
       </ul>
     </div>
   )

@@ -41,6 +41,7 @@ def test_every_row_follows_the_contract(payload):
         if r["status"] == "assessed":
             assert r["ci_low"] <= r["slope_per_year"] <= r["ci_high"]
             assert 0 <= r["p_value"] <= r["p_value_fdr"] <= 1
+            assert 12 <= r["fdr_family_size"] <= 16
             assert r["significant"] == (r["p_value_fdr"] < tr.ALPHA) or "coverage_sensitivity" in r
         else:
             assert r["slope_per_year"] is None and r["p_value"] is None and r["significant"] is None
@@ -51,14 +52,31 @@ def test_fire_is_insufficient_evidence(payload):
     assert row["status"] == "insufficient_evidence"
 
 
-def test_coverage_rule_blocks_unconfirmable_no2_verdicts(payload):
+def test_no2_verdicts_need_confirmation_on_well_observed_months(payload):
     for r in payload["results"]:
         sens = r.get("coverage_sensitivity")
         if sens and r["status"] == "assessed" and r["significant"]:
             assert sens["robust"] is True
+    # Prague: winter too cloudy for the all-year check, so April-September confirms it (decision 2026-11-15).
     prague = _row(payload, "czechia_prague", "no2_mean_molec_cm2", "full_record")
-    assert prague["status"] == "insufficient_evidence"
-    assert prague["unconfirmed_estimate"]["p_value_fdr"] < tr.ALPHA
+    sens = prague["coverage_sensitivity"]
+    assert sens["check_used"] == "well_observed_months_april_september"
+    assert sens["april_september"]["p_value"] < tr.ALPHA and sens["april_september"]["slope_per_year"] < 0
+    assert prague["significant"] is True
+    # Kyiv: not significant either way.
+    assert _row(payload, "kyiv_no2_box", "no2_mean_molec_cm2", "full_record")["significant"] is False
+
+
+def test_summer_check_matches_the_main_model_on_a_full_year():
+    """With all 12 months the subset helper must reproduce the main trend function."""
+    import pandas as pd
+
+    kyiv = pd.read_csv(REPO / "reports" / "no2_monthly.csv", dtype={"month": str})
+    df = tr._frame(kyiv["month"], kyiv[tr.NO2_METRIC])
+    main = tr.evaluate(df, "full_record")
+    sub = tr.evaluate_months_subset(df, "full_record", range(1, 13))
+    assert sub["slope_per_year"] == pytest.approx(main["slope_per_year"])
+    assert sub["p_value"] == pytest.approx(main["p_value"], abs=1e-6)
 
 
 def test_regional_no2_monthly_shape(tmp_path):

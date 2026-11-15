@@ -55,3 +55,15 @@ See [docs/backend-api.md](docs/backend-api.md) for configuration, endpoints and 
 
 Data sources: [NASA Giovanni](https://giovanni.gsfc.nasa.gov/) and [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/).
 Reference study: [Ialongo et al. (2023), Scientific Reports](https://www.nature.com/articles/s41598-023-42118-w).
+
+## Illustrated atlas (the submitted tool)
+
+Choose a place and a period, then open NASA variables as cards with a trend verdict. See [frontend/README.md](frontend/README.md) to run it, [docs/decisions.md](docs/decisions.md) for every analysis decision, and [docs/submission/](docs/submission/) for the submission text.
+
+```bash
+python -m src.trend_results   # regional NO2 monthly series + reports/trend_results.json
+```
+
+## Use of AI
+
+Parts of this repository were written with AI assistance: Claude (Anthropic, via Claude Code) for most of the frontend, parts of the backend and analysis scripts, tests and documentation; Codex / ChatGPT (OpenAI) for review and audits. Commits written with Claude carry a `Co-Authored-By: Claude` trailer. No images, video or audio in this repository are AI-generated: the atlas map is drawn by code from Natural Earth data and all charts come from the result files.

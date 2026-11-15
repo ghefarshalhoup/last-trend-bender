@@ -46,15 +46,13 @@ For `insufficient_evidence` / `not_assessed` rows, set the numbers to `null`. Ch
 
 ## How the file is produced
 
-`python -m src.trend_results` writes it (and `reports/no2_regional/`) from the committed inputs:
+`python -m src.trend_results` writes it, together with `reports/no2_regional/` and `reports/atlas_no2_regional.json`, from committed inputs. The choices behind it are recorded in [decisions.md](decisions.md).
 
 - **Test:** the Kyiv NO₂ trend function, applied unchanged to every monthly series, for the full record and for months up to 2022-02.
-- **Multiple testing:** Benjamini-Hochberg across all tested rows; `significant` means `p_value_fdr < 0.05`.
+- **Multiple testing:** Benjamini-Hochberg within each variable (its places × periods); `significant` means `p_value_fdr < 0.05`. `fdr_family_size` records the family.
 - **Fire:** `insufficient_evidence` (four comparable seasons).
-- **NO₂ coverage rule:** the trend uses every month with a mean, as for Kyiv. It is only called significant if it stays significant, with the same sign, after dropping months below 50% daily coverage. If the adjusted p-value passes but the test cannot be repeated on well-observed months, the row becomes `insufficient_evidence` and the numbers move to `unconfirmed_estimate`.
-- **Extra fields** (ignored by the cards today): `theil_sen_slope_per_year`, `p_value_hamed_rao`, `coverage_sensitivity`, `unconfirmed_estimate`.
-- `kharkiv_city` is NO₂-only. It is not in the 25-variable catalog; the atlas adds it as a pin from `extra_places` in `reports/atlas_no2_regional.json` (`/api/air/no2`). Moving it into the catalog generator is a follow-up.
-- **Open question:** one BH family across all tests (current, strict) versus one family per variable.
-- The same command also writes `reports/atlas_no2_regional.json`: monthly NO₂, coverage flags and the March–August 2022 vs 2015–2019 comparison per place, using the Kyiv functions unchanged.
+- **NO₂ coverage rule:** the trend uses every month with a mean. It is only called significant if it is confirmed on months with at least 50% daily coverage: all year where possible, otherwise April–September. `coverage_sensitivity` records which check was used and its numbers.
+- **Extra fields** (ignored by the cards today): `theil_sen_slope_per_year`, `p_value_hamed_rao`, `coverage_sensitivity`, `fdr_family_size`, `unconfirmed_estimate`.
+- **Kharkiv city** is NO₂-only and enters the atlas through `extra_places` in `reports/atlas_no2_regional.json` (`/api/air/no2`).
 
 Regional raw exports live in `data/frozen/no2_regional/` (untouched Giovanni CSVs).
