@@ -43,3 +43,16 @@
 | `caveats` | Short plain sentences; the card shows up to five |
 
 For `insufficient_evidence` / `not_assessed` rows, set the numbers to `null`. Check the file with `curl localhost:8000/api/trends`.
+
+## How the file is produced
+
+`python -m src.trend_results` writes it (and `reports/no2_regional/`) from the committed inputs:
+
+- **Test:** the Kyiv NO₂ trend function, applied unchanged to every monthly series, for the full record and for months up to 2022-02.
+- **Multiple testing:** Benjamini-Hochberg across all tested rows; `significant` means `p_value_fdr < 0.05`.
+- **Fire:** `insufficient_evidence` (four comparable seasons).
+- **NO₂ coverage rule:** the trend uses every month with a mean, as for Kyiv. It is only called significant if it stays significant, with the same sign, after dropping months below 50% daily coverage. If the adjusted p-value passes but the test cannot be repeated on well-observed months, the row becomes `insufficient_evidence` and the numbers move to `unconfirmed_estimate`.
+- **Extra fields** (ignored by the cards today): `theil_sen_slope_per_year`, `p_value_hamed_rao`, `coverage_sensitivity`, `unconfirmed_estimate`.
+- `kharkiv_city` rows are included but it is not one of the 8 atlas boxes yet.
+
+Regional raw exports live in `data/frozen/no2_regional/` (untouched Giovanni CSVs).

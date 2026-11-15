@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0.0",
+  "coverage_flag_rule": "coverage_fraction < 0.50",
+  "note": "Same parsing, calendar reindexing and monthly averaging as the Kyiv pipeline (src.no2_pipeline).",
+  "regions": [
+    {
+      "region_id": "donbas_kharkiv_east",
+      "input_file": "no2_donbas_kharkiv_east_OMNO2d_v004_2015-03_2022-08.csv",
+      "input_sha256": "151e205e6ad83251dd887b619b319ee7cde1b865de2ef03e9ec5935f751799c1",
+      "user_bounding_box": {
+        "west": 35.5,
+        "south": 46.8,
+        "east": 40.2,
+        "north": 50.3
+      },
+      "data_bounding_box": {
+        "west": 35.625,
+        "south": 46.875,
+        "east": 40.125,
+        "north": 50.125
+      },
+      "months": 90,
+      "months_with_a_mean": 90,
+      "low_coverage_months": 1,
+      "sparse_months_under_10_days": 0,
+      "very_sparse_months_under_5_days": 0
+    },
+    {
+      "region_id": "south_steppe_belt",
+      "input_file": "no2_south_steppe_belt_OMNO2d_v004_2015-03_2022-08.csv",
+      "input_sha256": "84b87f1d8c9952283bcda4a633bc0755515bdf4ffe4496a9cc906e77a265c838",
+      "user_bounding_box": {
+        "west": 30.0,
+        "south": 44.4,
+        "east": 35.5,
+        "north": 47.5
+      },
+      "data_bounding_box": {
+        "west": 30.125,
+        "south": 44.625,
+        "east": 35.375,
+        "north": 47.375
+      },
+      "months": 90,
+      "months_with_a_mean": 90,
+      "low_coverage_months": 0,
+      "sparse_months_under_10_days": 0,
+      "very_sparse_months_under_5_days": 0
+    },
+    {
+      "region_id": "central_interior_cand",
+      "input_file": "no2_central_interior_cand_OMNO2d_v004_2015-03_2022-08.csv",
+      "input_sha256": "6ac1a3b6a927f5a4f853f3a9b81f4c3890b33d4a88726ea9f1fd687c738e97f5",
+      "user_bounding_box": {
+        "west": 27.5,
+        "south": 47.5,
+        "east": 35.5,
+        "north": 50.0
+      },
+      "data_bounding_box": {
+        "west": 27.625,
+        "south": 47.625,
+        "east": 35.375,
+        "north": 49.875
+      },
+      "months": 90,
+      "months_with_a_mean": 90,
+      "low_coverage_months": 0,
+      "sparse_months_under_10_days": 0,
+      "very_sparse_months_under_5_days": 0
+    },
+    {
+      "region_id": "west_ukraine_cand",
+      "input_file": "no2_west_ukraine_cand_OMNO2d_v004_2015-03_2022-08.csv",
+      "input_sha256": "433d71143e79cbf82738103ccedb62ca12d54ae76bb0f3e9ce5f16e6c5da9b71",
+      "user_bounding_box": {
+        "west": 22.1,
+        "south": 47.7,
+        "east": 27.5,
+        "north": 51.8
+      },
+      "data_bounding_box": {
+        "west": 22.125,
+        "south": 47.875,
+        "east": 27.375,
+        "north": 51.625
+      },
+      "months": 90,
+      "months_with_a_mean": 90,
+      "low_coverage_months": 0,
+      "sparse_months_under_10_days": 0,
+      "very_sparse_months_under_5_days": 0
+    },
+    {
+      "region_id": "poland_krakow",
+      "input_file": "no2_poland_krakow_OMNO2d_v004_2015-03_2022-08.csv",
+      "input_sha256": "ea7e7eb3256a73b03232c900c6592186c4a500c31198330afce7d5315729b42f",
+      "user_bounding_box": {
+        "west": 19.695,
+        "south": 49.8147,
+        "east": 20.195,
+        "north": 50.3147
+      },
+      "data_bounding_box": {
+        "west": 19.875,
+        "south": 49.875,
+        "east": 20.125,
+        "north": 50.125
+      },
+      "months": 90,
+      "months_with_a_mean": 90,
+      "low_coverage_months": 45,
+      "sparse_months_under_10_days": 7,
+      "very_sparse_months_under_5_days": 0
+    },
+    {
+      "region_id": "czechia_prague",
+      "input_file": "no2_czechia_prague_OMNO2d_v004_2015-03_2022-08.csv",
+      "input_sha256": "fe370c7b7e05dd5ea8710377e245c56e0bfb6fdb93e0977bafc470e710563598",
+      "user_bounding_box": {
+        "west": 14.1878,
+        "south": 49.8255,
+        "east": 14.6878,
+        "north": 50.3255
+      },
+      "data_bounding_box": {
+        "west": 14.375,
+        "south": 49.875,
+        "east": 14.625,
+        "north": 50.125
+      },
+      "months": 90,
+      "months_with_a_mean": 90,
+      "low_coverage_months": 46,
+      "sparse_months_under_10_days": 18,
+      "very_sparse_months_under_5_days": 1
+    },
+    {
+      "region_id": "kharkiv_city",
+      "input_file": "no2_kharkiv_city_OMNO2d_v004_2015-03_2022-08.csv",
+      "input_sha256": "a5b5f114e6200dc123dc2448706944d1941ef99238af5f36d964a01a6b78ca51",
+      "user_bounding_box": {
+        "west": 35.98,
+        "south": 49.74,
+        "east": 36.48,
+        "north": 50.24
+      },
+      "data_bounding_box": {
+        "west": 36.125,
+        "south": 49.875,
+        "east": 36.375,
+        "north": 50.125
+      },
+      "months": 90,
+      "months_with_a_mean": 90,
+      "low_coverage_months": 39,
+      "sparse_months_under_10_days": 11,
+      "very_sparse_months_under_5_days": 1
+    }
+  ]
+}
