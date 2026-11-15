@@ -74,7 +74,7 @@ test('phase 2: place → investigate → element → variable card with an hones
   await page.screenshot({ path: `${SHOTS}/3-cards-donbas-desktop.png` })
 })
 
-test('NO₂ beyond Kyiv: Kharkiv city, a large box, and Prague with too little evidence', async ({ page }) => {
+test('NO₂ beyond Kyiv: Kharkiv city, a large box, and the confirmed decline in Prague', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
   await open(page)
   await page.getByTestId('place-kharkiv_city').click()
@@ -97,10 +97,15 @@ test('NO₂ beyond Kyiv: Kharkiv city, a large box, and Prague with too little e
   await page.getByTestId('change-place').click()
   await page.getByTestId('place-czechia_prague').click()
   await page.getByTestId('investigate').click()
-  await expect(no2.getByTestId('card-verdict')).toContainText('Too little data')
-  await expect(no2).toContainText('poorly observed')
-  await expect(no2.getByTestId('card-rate')).toHaveCount(0)
-  await expect(no2.getByTestId('trend-chart')).toBeVisible()
+  // the one significant trend: Prague's decline, confirmed on April–September and present before the invasion too
+  await expect(no2.getByTestId('card-verdict')).toContainText('Significant fall')
+  await expect(no2.getByTestId('card-rate')).toContainText('−0.147 ×10¹⁵ molecules/cm² per year')
+  await page.getByTestId('window-pre_invasion').click()
+  await expect(no2.getByTestId('card-verdict')).toContainText('Significant fall')
+  await page.getByTestId('window-full_record').click()
+  await page.getByTestId('card-flip-no2_mean_molec_cm2').click()
+  await expect(no2.getByTestId('card-back')).toContainText('April–September')
+  await page.getByTestId('card-flip-no2_mean_molec_cm2').click()
   await page.screenshot({ path: `${SHOTS}/6-no2-prague-desktop.png` })
 })
 
