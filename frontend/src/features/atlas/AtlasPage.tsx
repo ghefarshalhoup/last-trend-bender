@@ -1,7 +1,7 @@
 import { fetchCatalog } from '../../api/airStudy'
 import { useApiResource } from '../../api/useApiResource'
 import { ErrorView, LoadingView } from '../air/StateViews'
-import { fetchVariableCatalog } from '../investigate/catalog'
+import { fetchNo2Regional, fetchVariableCatalog, NO_REGIONAL_NO2 } from '../investigate/catalog'
 import { InvestigationAtlas } from '../investigate/InvestigationAtlas'
 import { fetchTrends, type TrendsPayload } from '../investigate/series'
 
@@ -15,12 +15,13 @@ export function AtlasPage() {
 
 const NO_TRENDS: TrendsPayload = { status: 'not_available', results: [] }
 
-/** Catalog, variables and trend results in parallel. Missing trend results are not an error: cards then say "not assessed". */
+/** Catalog, variables, trend results and regional NO₂ in parallel. Missing trend results are not an error: cards then say "not assessed". */
 async function loadAtlas(signal: AbortSignal) {
-  const [cases, catalog, trends] = await Promise.all([
+  const [cases, catalog, trends, no2Regional] = await Promise.all([
     fetchCatalog(signal),
     fetchVariableCatalog(signal),
     fetchTrends(signal).catch(() => NO_TRENDS),
+    fetchNo2Regional(signal).catch(() => NO_REGIONAL_NO2),
   ])
-  return { cases, catalog, trends }
+  return { cases, catalog, trends, no2Regional }
 }

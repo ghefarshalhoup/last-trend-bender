@@ -71,8 +71,8 @@ export interface VariableSeries {
 }
 
 /** Which endpoint holds which variable. The catalog names the element; this names the file. */
-export function endpointFor(variable: VariableEntry): string {
-  if (variable.metric_id === 'no2_mean_molec_cm2') return '/api/air/kyiv'
+export function endpointFor(variable: VariableEntry, placeId?: string | null): string {
+  if (variable.metric_id === 'no2_mean_molec_cm2') return !placeId || placeId === 'kyiv_no2_box' ? '/api/air/kyiv' : '/api/air/no2'
   switch (variable.element_id) {
     case 'air':
       return '/api/air/weather'
@@ -105,7 +105,7 @@ const FIRE_FILTERS: Record<string, string> = {
  */
 export function readSeries(variable: VariableEntry, placeId: string, payload: unknown): VariableSeries | null {
   const id = variable.metric_id
-  if (id === 'no2_mean_molec_cm2') return placeId === 'kyiv_no2_box' ? readNo2(payload as StudyPackage) : null
+  if (id === 'no2_mean_molec_cm2') return placeId === 'kyiv_no2_box' ? readNo2(payload as StudyPackage) : readRegionalNo2(placeId, payload)
 
   if (id in FIRE_FILTERS) {
     const region = at(payload, 'result', 'regions', placeId)
@@ -134,6 +134,24 @@ export function readSeries(variable: VariableEntry, placeId: string, payload: un
   if (!Array.isArray(rows)) return null
   const points = rows.filter(isRec).map((r) => ({ month: String(r.month), value: num(r.value), low: false }))
   return { points, seasonal: seasonalFrom(at(metric, 'seasonal_mar_aug', 'vs_2015_2019'), '2015–2019', variable), embeddedTrends: {} }
+}
+
+/** NO₂ for a study box other than Kyiv: same monthly rules, flags and 2022 comparison as the Kyiv file. */
+function readRegionalNo2(placeId: string, payload: unknown): VariableSeries | null {
+  const region = at(payload, 'regions', placeId)
+  const rows = at(region, 'monthly_series')
+  if (!Array.isArray(rows)) return null
+  const points = rows.filter(isRec).map((r) => ({
+    month: String(r.month),
+    value: num(r.value),
+    low: r.flagged_below_50_pct === true,
+    note: `${String(r.valid_days)}/${String(r.calendar_days)} days observed`,
+  }))
+  const cmp = at(region, 'seasonal_mar_aug', 'vs_2015_2019')
+  const seasonal: SeasonalChange | null = isRec(cmp)
+    ? { baselineLabel: '2015–2019', absDiff: num(cmp.abs_diff), pct: cmp.pct_change_status === 'computed' ? num(cmp.pct_change) : null, pctWithheld: null }
+    : null
+  return { points, seasonal, embeddedTrends: {} }
 }
 
 function seasonalFrom(cmp: unknown, baselineLabel: string, variable: VariableEntry): SeasonalChange | null {

@@ -20,7 +20,7 @@ export default defineConfig({
   },
   webServer: [
     {
-      command: `python3 -m uvicorn backend.main:app --port ${BACKEND_PORT}`,
+      command: `${process.platform === 'win32' ? 'python' : 'python3'} -m uvicorn backend.main:app --port ${BACKEND_PORT}`,
       cwd: '..',
       url: `http://127.0.0.1:${BACKEND_PORT}/api/health`,
       reuseExistingServer: true,

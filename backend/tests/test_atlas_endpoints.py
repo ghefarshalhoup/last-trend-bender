@@ -214,3 +214,21 @@ def test_trends_malformed_file_is_503(tmp_path):
     reports, settings = _stage_full_reports(tmp_path)
     (reports / "trend_results.json").write_text('{"rows": []}')
     assert TestClient(create_app(settings)).get("/api/trends").status_code == 503
+
+
+def test_regional_no2_missing_file_offers_no_regions(tmp_path):
+    reports, settings = _stage_full_reports(tmp_path)
+    (reports / "atlas_no2_regional.json").unlink(missing_ok=True)
+    body = TestClient(create_app(settings)).get("/api/air/no2").json()
+    assert body["status"] == "not_available"
+    assert body["regions"] == {} and body["extra_places"] == []
+
+
+def test_regional_no2_served_and_malformed_is_503(tmp_path):
+    reports, settings = _stage_full_reports(tmp_path)
+    payload = {"schema_version": "1.0.0", "status": "available", "regions": {"poland_krakow": {"monthly_series": []}}}
+    (reports / "atlas_no2_regional.json").write_text(json.dumps(payload))
+    api = TestClient(create_app(settings))
+    assert api.get("/api/air/no2").json()["regions"] == payload["regions"]
+    (reports / "atlas_no2_regional.json").write_text("[]")
+    assert api.get("/api/air/no2").status_code == 503

@@ -6,8 +6,8 @@ import variablesJson from '../../test/fixtures/variables.json'
 import weatherJson from '../../test/fixtures/air-weather-trimmed.json'
 import fireJson from '../../test/fixtures/fire-trimmed.json'
 import { AtlasPage } from '../atlas/AtlasPage'
-import type { VariableCatalog, VariableEntry } from './catalog'
-import { readSeries, type TrendResult, type TrendsPayload } from './series'
+import { hasDataFor, type VariableCatalog, type VariableEntry } from './catalog'
+import { endpointFor, readSeries, type TrendResult, type TrendsPayload } from './series'
 import { fmt, readCard } from './verdict'
 
 const catalog = variablesJson as unknown as VariableCatalog
@@ -183,5 +183,36 @@ describe('adapters', () => {
     expect(fmt(-0.04178, true)).toBe('−0.0418')
     expect(fmt(12.345, true)).toBe('+12.3')
     expect(fmt(0)).toBe('0')
+  })
+})
+
+describe('regional NO₂', () => {
+  const payload = {
+    regions: {
+      poland_krakow: {
+        monthly_series: [
+          { month: '2022-03', value: 3.1e15, valid_days: 9, calendar_days: 31, flagged_below_50_pct: true },
+          { month: '2022-04', value: null, valid_days: 0, calendar_days: 30, flagged_below_50_pct: true },
+        ],
+        seasonal_mar_aug: { vs_2015_2019: { abs_diff: -3e14, pct_change: -11.0, pct_change_status: 'computed' } },
+      },
+    },
+  }
+
+  it('reads a place beyond Kyiv with coverage flags and the 2022 comparison', () => {
+    const series = readSeries(variable('no2_mean_molec_cm2'), 'poland_krakow', payload)
+    expect(series?.points).toEqual([
+      { month: '2022-03', value: 3.1e15, low: true, note: '9/31 days observed' },
+      { month: '2022-04', value: null, low: true, note: '0/30 days observed' },
+    ])
+    expect(series?.seasonal).toMatchObject({ baselineLabel: '2015–2019', pct: -11.0 })
+    expect(readSeries(variable('no2_mean_molec_cm2'), 'west_ukraine_cand', payload)).toBeNull()
+  })
+
+  it('asks the regional file for other places and the Kyiv study for Kyiv', () => {
+    expect(endpointFor(variable('no2_mean_molec_cm2'), 'poland_krakow')).toBe('/api/air/no2')
+    expect(endpointFor(variable('no2_mean_molec_cm2'), 'kyiv_no2_box')).toBe('/api/air/kyiv')
+    expect(hasDataFor(variable('no2_mean_molec_cm2'), 'poland_krakow', new Set(['poland_krakow']))).toBe(true)
+    expect(hasDataFor(variable('ws10m'), 'kharkiv_city', new Set(['kharkiv_city']))).toBe(false)
   })
 })

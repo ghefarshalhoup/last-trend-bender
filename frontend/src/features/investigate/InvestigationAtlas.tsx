@@ -9,7 +9,7 @@ import { ATLAS_HEIGHT, ATLAS_WIDTH, atlasPercent, projectLonLat, ringPath } from
 import { resolveElements, type ElementId } from '../explorer/elements'
 import { GuideBubble } from '../explorer/GuideBubble'
 import { TitleBadge } from '../explorer/TitleBadge'
-import { hasDataFor, placeLabel, variablesOf, type PlaceFeature, type VariableCatalog, type VariableEntry } from './catalog'
+import { hasDataFor, NO_REGIONAL_NO2, placeLabel, variablesOf, type No2Regional, type PlaceFeature, type VariableCatalog, type VariableEntry } from './catalog'
 import styles from './InvestigationAtlas.module.css'
 import { endpointFor, indexTrends, readSeries, trendKey, WINDOWS, type TrendsPayload, type WindowId } from './series'
 import { usePayloads } from './usePayloads'
@@ -31,6 +31,8 @@ interface Props {
   cases: CatalogBundle
   catalog: VariableCatalog
   trends: TrendsPayload
+  /** Monthly NO₂ beyond Kyiv. Optional: without it NO₂ is offered for Kyiv only. */
+  no2Regional?: No2Regional
 }
 
 type Phase = 'choose' | 'investigate'
@@ -39,7 +41,7 @@ type Phase = 'choose' | 'investigate'
  * Two phases. 1: choose a place on the map and an analysis period. 2: the map becomes the
  * background and each chosen variable opens as a card with its timeline and verdict.
  */
-export function InvestigationAtlas({ cases, catalog, trends }: Props) {
+export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_REGIONAL_NO2 }: Props) {
   const [phase, setPhase] = useState<Phase>('choose')
   const [place, setPlace] = useState<string | null>(null)
   const [hover, setHover] = useState<string | null>(null)
@@ -53,11 +55,15 @@ export function InvestigationAtlas({ cases, catalog, trends }: Props) {
   const overlayId = useId()
 
   const elements = useMemo(() => resolveElements(cases.elements, ALL_ELEMENTS), [cases.elements])
-  const places = catalog.study_regions.features
+  const places = useMemo(() => {
+    const known = new Set(catalog.study_regions.features.map((f) => f.properties.region_id))
+    return [...catalog.study_regions.features, ...no2Regional.extra_places.filter((f) => !known.has(f.properties.region_id))]
+  }, [catalog.study_regions.features, no2Regional.extra_places])
+  const no2Places = useMemo(() => new Set(Object.keys(no2Regional.regions)), [no2Regional.regions])
   const trendIndex = useMemo(() => indexTrends(trends), [trends])
   const byId = useMemo(() => new Map(catalog.variables.map((v) => [v.metric_id, v])), [catalog.variables])
   const openVars = cards.map((id) => byId.get(id)).filter((v): v is VariableEntry => Boolean(v))
-  const { states, retry } = usePayloads(phase === 'investigate' ? openVars.map(endpointFor) : [])
+  const { states, retry } = usePayloads(phase === 'investigate' ? openVars.map((v) => endpointFor(v, place)) : [])
 
   const edit = () => {
     setExample(false)
@@ -75,7 +81,7 @@ export function InvestigationAtlas({ cases, catalog, trends }: Props) {
   const toggleCard = (v: VariableEntry) => {
     edit()
     if (cards.includes(v.metric_id)) return setCards((c) => c.filter((id) => id !== v.metric_id))
-    if (place && !hasDataFor(v, place)) return setNotice(`${v.short_label} has no data for ${placeLabel(place)}.`)
+    if (place && !hasDataFor(v, place, no2Places)) return setNotice(`${v.short_label} has no data for ${placeLabel(place)}.`)
     if (cards.length >= MAX_CARDS) return setNotice(`Up to ${MAX_CARDS} cards at once. Remove one first.`)
     setCards((c) => [...c, v.metric_id])
   }
@@ -90,7 +96,7 @@ export function InvestigationAtlas({ cases, catalog, trends }: Props) {
   }
 
   const cardState = (v: VariableEntry): SeriesState => {
-    const s = states[endpointFor(v)]
+    const s = states[endpointFor(v, place)]
     if (!s || s.status === 'loading') return { status: 'loading' }
     if (s.status === 'error') return { status: 'error', message: s.error.message }
     return { status: 'ready', series: place ? readSeries(v, place, s.data) : null }
@@ -139,7 +145,7 @@ export function InvestigationAtlas({ cases, catalog, trends }: Props) {
                   <button type="button" className={styles.chip} onClick={() => { edit(); setPhase('choose') }} data-testid="change-place">Change place</button>
                 </div>
                 <PeriodGroup window={window} onChange={(w) => { edit(); setWindow(w) }} label="Period" />
-                <VariablePicker catalog={catalog} element={element} place={place} cards={cards} onToggle={toggleCard} />
+                <VariablePicker catalog={catalog} element={element} place={place} no2Places={no2Places} cards={cards} onToggle={toggleCard} />
               </>
             )}
           </div>
@@ -175,7 +181,7 @@ export function InvestigationAtlas({ cases, catalog, trends }: Props) {
                       state={st}
                       trend={trendFor(v, st)}
                       onRemove={() => toggleCard(v)}
-                      onRetry={() => retry(endpointFor(v))}
+                      onRetry={() => retry(endpointFor(v, place))}
                     />
                   )
                 })
@@ -231,13 +237,13 @@ function PeriodGroup({ window, onChange, label }: { window: WindowId; onChange: 
   )
 }
 
-function VariablePicker({ catalog, element, place, cards, onToggle }: { catalog: VariableCatalog; element: ElementId | null; place: string | null; cards: string[]; onToggle: (v: VariableEntry) => void }) {
+function VariablePicker({ catalog, element, place, no2Places, cards, onToggle }: { catalog: VariableCatalog; element: ElementId | null; place: string | null; no2Places: ReadonlySet<string>; cards: string[]; onToggle: (v: VariableEntry) => void }) {
   if (!element) return <p className={styles.hint} data-testid="variables-hint">Choose an element at the top right to list its variables.</p>
   return (
     <div role="group" aria-label="Variables" className={`${styles.group} ${styles.variables}`} data-testid="variable-picker">
       <span className={styles.step}>Variables · {cards.length}/{MAX_CARDS} open</span>
       {variablesOf(catalog, element).map((v) => {
-        const here = place ? hasDataFor(v, place) : true
+        const here = place ? hasDataFor(v, place, no2Places) : true
         return (
           <button
             key={v.metric_id}
@@ -324,7 +330,7 @@ function HowToRead() {
       <ul className={styles.key}>
         <li><strong>● Significant</strong> The trend is unlikely to be chance (p below 0.05). Solid rate line.</li>
         <li><strong>○ No significant trend</strong> The data are consistent with no change. Dashed rate line.</li>
-        <li><strong>– Not assessed</strong> No test result for this place and period. No rate is shown.</li>
+        <li><strong>– Too little data / Not assessed</strong> The record is too short or too patchy for a fair test, or no test was run. No rate is shown.</li>
       </ul>
       <p>The red line marks the invasion, 24 February 2022. Hollow points are months the satellite saw on under half the days. A significant trend does not say what caused it.</p>
     </div>

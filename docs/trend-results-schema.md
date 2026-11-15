@@ -53,6 +53,8 @@ For `insufficient_evidence` / `not_assessed` rows, set the numbers to `null`. Ch
 - **Fire:** `insufficient_evidence` (four comparable seasons).
 - **NO₂ coverage rule:** the trend uses every month with a mean, as for Kyiv. It is only called significant if it stays significant, with the same sign, after dropping months below 50% daily coverage. If the adjusted p-value passes but the test cannot be repeated on well-observed months, the row becomes `insufficient_evidence` and the numbers move to `unconfirmed_estimate`.
 - **Extra fields** (ignored by the cards today): `theil_sen_slope_per_year`, `p_value_hamed_rao`, `coverage_sensitivity`, `unconfirmed_estimate`.
-- `kharkiv_city` rows are included but it is not one of the 8 atlas boxes yet.
+- `kharkiv_city` is NO₂-only. It is not in the 25-variable catalog; the atlas adds it as a pin from `extra_places` in `reports/atlas_no2_regional.json` (`/api/air/no2`). Moving it into the catalog generator is a follow-up.
+- **Open question:** one BH family across all tests (current, strict) versus one family per variable.
+- The same command also writes `reports/atlas_no2_regional.json`: monthly NO₂, coverage flags and the March–August 2022 vs 2015–2019 comparison per place, using the Kyiv functions unchanged.
 
 Regional raw exports live in `data/frozen/no2_regional/` (untouched Giovanni CSVs).
