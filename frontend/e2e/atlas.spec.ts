@@ -82,7 +82,7 @@ test('NO₂ beyond Kyiv: Kharkiv city, a large box, and the confirmed decline in
   await expect(page.getByTestId('chosen-place')).toHaveText('Kharkiv city')
   await page.getByTestId('element-air').click()
   await page.getByTestId('variable-no2_mean_molec_cm2').click()
-  const no2 = page.getByTestId('card-no2_mean_molec_cm2')
+  const no2 = page.getByTestId('card-no2_mean_molec_cm2').first()
   await expect(no2.getByTestId('card-verdict')).toHaveText('○ No significant trend')
   await expect(no2.getByTestId('trend-chart')).toBeVisible()
   await expect(no2.getByTestId('card-seasonal')).toContainText('−29.4% vs 2015–2019')
@@ -94,19 +94,52 @@ test('NO₂ beyond Kyiv: Kharkiv city, a large box, and the confirmed decline in
   await expect(no2.getByTestId('card-verdict')).toHaveText('○ No significant trend')
   await expect(no2.getByTestId('card-rate')).toContainText('−0.0233 ×10¹⁵ molecules/cm² per year')
 
-  await page.getByTestId('change-place').click()
-  await page.getByTestId('place-czechia_prague').click()
-  await page.getByTestId('investigate').click()
-  // the one significant trend: Prague's decline, confirmed on April–September and present before the invasion too
-  await expect(no2.getByTestId('card-verdict')).toContainText('Significant fall')
-  await expect(no2.getByTestId('card-rate')).toContainText('−0.147 ×10¹⁵ molecules/cm² per year')
+  // compare the South with Prague: the one significant trend is in the comparison city
+  await page.getByTestId('compare-czechia_prague').click()
+  const prague = page.getByTestId('half-compare').getByTestId('card-no2_mean_molec_cm2')
+  await expect(page.getByTestId('half-main')).toContainText('South (Kherson–Crimea edge)')
+  await expect(page.getByTestId('half-compare')).toContainText('Prague, Czechia')
+  await expect(prague.getByTestId('card-verdict')).toContainText('Significant fall')
+  await expect(prague.getByTestId('card-rate')).toContainText('−0.147 ×10¹⁵ molecules/cm² per year')
   await page.getByTestId('window-pre_invasion').click()
-  await expect(no2.getByTestId('card-verdict')).toContainText('Significant fall')
+  await expect(prague.getByTestId('card-verdict')).toContainText('Significant fall')
   await page.getByTestId('window-full_record').click()
-  await page.getByTestId('card-flip-no2_mean_molec_cm2').click()
-  await expect(no2.getByTestId('card-back')).toContainText('April–September')
-  await page.getByTestId('card-flip-no2_mean_molec_cm2').click()
+  await page.getByTestId('card-flip-no2_mean_molec_cm2').last().click()
+  await expect(prague.getByTestId('card-back')).toContainText('April–September')
+  await page.getByTestId('card-flip-no2_mean_molec_cm2').last().click()
   await page.screenshot({ path: `${SHOTS}/6-no2-prague-desktop.png` })
+})
+
+test('dated periods and the Kraków comparison: temperature data, fire not collected, marker', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await open(page)
+  await expect(page.getByTestId('window-full_record')).toContainText('2015 – 2022')
+  await expect(page.getByTestId('window-pre_invasion')).toContainText('2015 – Feb 2022')
+
+  await page.getByTestId('place-donbas_kharkiv_east').click()
+  await page.getByTestId('compare-poland_krakow').click()
+  await expect(page.getByTestId('outside-marker')).toContainText('Kraków, Poland')
+  await page.getByTestId('investigate').click()
+  await page.getByTestId('element-fire').click()
+  await page.getByTestId('variable-t2m').click()
+  await page.getByTestId('variable-fire_type0_per_1k_km2_day').click()
+  const main = page.getByTestId('half-main')
+  const other = page.getByTestId('half-compare')
+  await expect(main.getByTestId('card-t2m').getByTestId('card-verdict')).toBeVisible()
+  const krakowTemp = other.getByTestId('card-t2m')
+  await expect(krakowTemp.getByTestId('card-verdict')).toHaveText('○ No significant trend')
+  await expect(krakowTemp.getByTestId('card-span')).toContainText('Jan 2015 – Dec 2022')
+  await page.getByTestId('window-pre_invasion').click()
+  await expect(krakowTemp.getByTestId('card-span')).toContainText('Jan 2015 – Feb 2022')
+  // fire was never collected outside Ukraine: the Kraków card says so and how to get it
+  await expect(other.getByTestId('card-fire_type0_per_1k_km2_day').getByTestId('card-no-data')).toContainText('Not collected')
+  await expect(main.getByTestId('card-fire_type0_per_1k_km2_day').getByTestId('card-verdict')).toContainText('Too little data')
+  await page.screenshot({ path: `${SHOTS}/7-compare-krakow-desktop.png` })
+
+  await page.getByTestId('compare-czechia_prague').click()
+  await expect(other).toContainText('Prague, Czechia')
+  await expect(page.getByTestId('outside-marker')).toContainText('beyond this map')
+  await expect(other.getByTestId('card-t2m').getByTestId('trend-chart')).toBeVisible()
 })
 
 test('guided example: Kyiv NO₂ with wind and cloud, numbers from the API', async ({ page }) => {
@@ -119,11 +152,11 @@ test('guided example: Kyiv NO₂ with wind and cloud, numbers from the API', asy
   await expect(no2.getByTestId('card-seasonal')).toContainText('−28.0% vs 2015–2019')
   await expect(page.getByTestId('card-ws10m').getByTestId('card-verdict')).toBeVisible()
   await expect(page.getByTestId('card-cloud_amt').getByTestId('card-verdict')).toBeVisible()
-  await expect(page.getByTestId('guide-bubble')).toContainText('−28.0%')
+  await expect(page.getByTestId('guide-bubble')).toContainText('averaged 28% below the 2015–2019 average')
   // the guide never hides a card at this size
   const guide = (await page.getByTestId('guide-bubble').boundingBox())!
-  const cardBox = (await no2.boundingBox())!
-  expect(cardBox.y + cardBox.height).toBeLessThanOrEqual(guide.y)
+  const chartBox = (await no2.getByTestId('trend-chart').boundingBox())!
+  expect(chartBox.y + chartBox.height).toBeLessThanOrEqual(guide.y)
   await page.screenshot({ path: `${SHOTS}/2-guided-example-desktop.png` })
 
   await page.getByTestId('window-pre_invasion').click()

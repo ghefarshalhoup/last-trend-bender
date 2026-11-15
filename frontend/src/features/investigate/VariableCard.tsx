@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { dateToDecimalYear, monthToDecimalYear, TrendChart, type RateLine, type TimelinePoint } from '../atlas/TrendChart'
 import type { ElementView } from '../explorer/elements'
-import { placeLabel, type VariableEntry } from './catalog'
-import type { TrendResult, VariableSeries, WindowId } from './series'
+import { noDataReason, placeLabel, type VariableEntry } from './catalog'
+import { spanText, type SeriesState, type TrendResult, type VariableSeries, type WindowId } from './series'
 import { displayUnit, fmt, readCard, type CardReading } from './verdict'
 import definitions from '../atlas/variableDefinitions.json'
 import styles from './VariableCard.module.css'
 
-export type SeriesState = { status: 'loading' } | { status: 'error'; message: string } | { status: 'ready'; series: VariableSeries | null }
+export type { SeriesState }
 
 interface Props {
   variable: VariableEntry
@@ -19,13 +19,16 @@ interface Props {
   trend: TrendResult | undefined
   onRemove: () => void
   onRetry: () => void
+  /** The card the guide is reading. */
+  focused?: boolean
+  onFocus?: () => void
 }
 
 const ICON = { significant: '●', not_significant: '○', not_assessed: '–' } as const
 const DEFS = new Map((definitions as { metric_id: string; definition: string; reading_hint: string }[]).map((d) => [d.metric_id, d]))
 
 /** One variable for one place: timeline, verdict, rate with uncertainty; the back explains it. */
-export function VariableCard({ variable, element, placeId, window, invasionDate, state, trend, onRemove, onRetry }: Props) {
+export function VariableCard({ variable, element, placeId, window, invasionDate, state, trend, onRemove, onRetry, focused = false, onFocus }: Props) {
   const [flipped, setFlipped] = useState(false)
   const title = variable.short_label
   return (
@@ -34,6 +37,9 @@ export function VariableCard({ variable, element, placeId, window, invasionDate,
       style={{ '--accent': element.accent, '--soft': element.soft } as React.CSSProperties}
       aria-label={`${title}, ${placeLabel(placeId)}`}
       data-testid={`card-${variable.metric_id}`}
+      data-focused={focused}
+      aria-current={focused ? 'true' : undefined}
+      onClick={onFocus}
     >
       <header className={styles.head}>
         <div className={styles.titles}>
@@ -50,13 +56,13 @@ export function VariableCard({ variable, element, placeId, window, invasionDate,
       </header>
       {state.status === 'loading' ? <p className={styles.muted}>Loading the record…</p> : null}
       {state.status === 'error' ? (
-        <div className={styles.muted} role="alert">
-          <p>The record did not load. {state.message}</p>
+        <div className={styles.muted} role="alert" data-testid="card-failed">
+          <p>Failed to load: the record did not arrive from the server. {state.message}</p>
           <button type="button" className={styles.retry} onClick={onRetry}>Try again</button>
         </div>
       ) : null}
       {state.status === 'ready' && state.series === null ? (
-        <p className={styles.muted} data-testid="card-no-data">No data for {placeLabel(placeId)}. This variable covers other places.</p>
+        <p className={styles.muted} data-testid="card-no-data">{noDataReason(variable, placeId)}</p>
       ) : null}
       {state.status === 'ready' && state.series ? (
         <CardBody variable={variable} series={state.series} trend={trend} window={window} invasionDate={invasionDate} flipped={flipped} placeId={placeId} />
@@ -71,20 +77,15 @@ function CardBody({ variable, series, trend, window, invasionDate, flipped, plac
   const { scale, unit } = displayUnit(variable)
   const points = withGaps(series.points.map((p) => ({ month: p.month, t: monthToDecimalYear(p.month), value: p.value === null ? null : p.value / scale, low: p.low, note: p.note })))
   const invasionT = dateToDecimalYear(invasionDate)
-  const analysisEndT = window === 'pre_invasion' ? invasionT : undefined
+  const span = spanText(series, window)
+  // Monthly data: the pre-invasion test runs to the end of February 2022, so the untested shading starts on 1 March.
+  const analysisEndT = window === 'pre_invasion' ? monthToDecimalYear('2022-03') - 0.5 / 12 : undefined
   const rateLine = rateLineFor(points, trend, reading, scale, analysisEndT)
   return (
     <>
       <p className={styles.badge} data-verdict={reading.verdict} data-testid="card-verdict">
         <span aria-hidden="true">{ICON[reading.verdict]}</span> {reading.badge}
       </p>
-      <p className={styles.sentence}>{reading.sentence}</p>
-      {reading.rateText ? (
-        <p className={styles.rate} data-testid="card-rate">
-          {reading.rateText}
-          {reading.intervalText ? <span className={styles.ci}> · 95% range {reading.intervalText}</span> : null}
-        </p>
-      ) : null}
       <TrendChart
         compact
         points={points}
@@ -99,6 +100,19 @@ function CardBody({ variable, series, trend, window, invasionDate, flipped, plac
         formatValue={(v) => `${fmt(v)} ${unit}`}
         ariaLabel={`Monthly ${variable.short_label}. ${reading.sentence}`}
       />
+      <p className={styles.sentence}>{reading.sentence}</p>
+      {span ? (
+        <p className={styles.span} data-testid="card-span">
+          {reading.verdict === 'not_assessed' ? 'Record' : 'Tested'}: {span}
+          {window === 'pre_invasion' && span.endsWith('Feb 2022') ? ' (includes 24–28 Feb)' : ''}
+        </p>
+      ) : null}
+      {reading.rateText ? (
+        <p className={styles.rate} data-testid="card-rate">
+          {reading.rateText}
+          {reading.intervalText ? <span className={styles.ci}> · 95% range {reading.intervalText}</span> : null}
+        </p>
+      ) : null}
       {reading.seasonalText ? (
         <p className={styles.seasonal} data-testid="card-seasonal">
           Mar–Aug 2022: <strong>{reading.seasonalText}</strong> <span className={styles.ci}>(a description, not a test)</span>

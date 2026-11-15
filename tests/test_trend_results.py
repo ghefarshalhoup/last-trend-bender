@@ -96,3 +96,25 @@ def test_no2_atlas_payload_matches_monthly_files_and_adds_kharkiv():
         assert cmp["abs_diff"] == pytest.approx(cmp["target_mean"] - cmp["baseline_mean"])
         for p in region["monthly_series"]:
             assert p["flagged_below_50_pct"] == (p["valid_days"] / p["calendar_days"] < 0.5)
+
+
+def test_comparison_weather_uses_the_same_seasonal_rule_as_the_fire_file():
+    """Recompute a Ukraine box with the comparison-city code and compare with Husam's export."""
+    fire = json.loads((REPO / "reports" / "atlas_fire_ukraine.json").read_text(encoding="utf-8"))["result"]
+    ref = fire["context_weather_regions"]["kyiv_north_belt"]["metrics"]
+    mine = tr.build_comparison_weather_payload(REPO / "reports", ["kyiv_north_belt"])
+    got = mine["result"]["context_weather_regions"]["kyiv_north_belt"]["metrics"]
+    for metric_id in tr.COMPARISON_METRICS:
+        a, b = got[metric_id]["seasonal_mar_aug"]["vs_2015_2019"], ref[metric_id]["seasonal_mar_aug"]["vs_2015_2019"]
+        assert a["abs_diff"] == pytest.approx(b["abs_diff"], abs=2e-4)
+        assert a["pct_change_status"] == b["pct_change_status"]
+        if b["pct_change"] is not None:
+            assert a["pct_change"] == pytest.approx(b["pct_change"], abs=2e-2)
+        assert [p["value"] for p in got[metric_id]["monthly_series"]] == pytest.approx(
+            [p["value"] for p in ref[metric_id]["monthly_series"]], abs=1e-3
+        )
+
+
+def test_comparison_cities_have_temperature_trends(payload):
+    row = _row(payload, "czechia_prague", "t2m", "full_record")
+    assert row["status"] == "assessed" and row["fdr_family_size"] == 16

@@ -70,9 +70,32 @@ export async function fetchNo2Regional(signal?: AbortSignal): Promise<No2Regiona
   return getJson<No2Regional>('/api/air/no2', { signal })
 }
 
-/** Whether the variable has data for the place. NO₂ places beyond the catalog come from the regional file. */
-export function hasDataFor(variable: VariableEntry, placeId: string, no2Places: ReadonlySet<string> = new Set()): boolean {
-  if (variable.metric_id === NO2_METRIC && no2Places.has(placeId)) return true
+/** Temperature, sunlight and evaporation demand for the comparison cities (`/api/weather/comparison`). */
+export interface ComparisonWeather {
+  result: { context_weather_regions: Record<string, { metrics: Record<string, unknown> }> }
+}
+export const NO_COMPARISON_WEATHER: ComparisonWeather = { result: { context_weather_regions: {} } }
+
+export async function fetchComparisonWeather(signal?: AbortSignal): Promise<ComparisonWeather> {
+  return getJson<ComparisonWeather>('/api/weather/comparison', { signal })
+}
+
+/** Variable × place pairs that have data beyond the catalog, and the endpoint that serves each. */
+export type ExtraSupport = ReadonlyMap<string, string>
+export const supportKey = (metricId: string, placeId: string): string => `${metricId}|${placeId}`
+
+export function extraSupport(no2: No2Regional, weather: ComparisonWeather): ExtraSupport {
+  const out = new Map<string, string>()
+  for (const place of Object.keys(no2.regions)) out.set(supportKey(NO2_METRIC, place), '/api/air/no2')
+  for (const [place, region] of Object.entries(weather.result.context_weather_regions)) {
+    for (const metric of Object.keys(region.metrics ?? {})) out.set(supportKey(metric, place), '/api/weather/comparison')
+  }
+  return out
+}
+
+/** Whether the variable has data for the place: the catalog's own support, or an extra file. */
+export function hasDataFor(variable: VariableEntry, placeId: string, extra: ExtraSupport = new Map()): boolean {
+  if (extra.has(supportKey(variable.metric_id, placeId))) return true
   const s = variable.spatial_support
   return s.ukraine_region_ids.includes(placeId) || s.external_weather_region_ids.includes(placeId)
 }
@@ -81,3 +104,23 @@ export function variablesOf(catalog: VariableCatalog, element: ElementId): Varia
   const ids = catalog.variable_ids_by_element[element] ?? []
   return ids.map((id) => catalog.variables.find((v) => v.metric_id === id)).filter((v): v is VariableEntry => Boolean(v))
 }
+
+/** Approximate distance from each comparison city to Ukraine's nearest border. */
+export const OUTSIDE_DISTANCE_KM: Record<string, number> = { poland_krakow: 200, czechia_prague: 600 }
+
+/**
+ * Why a place lacks a variable: every gap today is "not collected" (never downloaded), with how to get it.
+ * Checked against the exports on 2026-11-15; see docs/data-availability.md.
+ */
+export function noDataReason(variable: VariableEntry, placeId: string): string {
+  const place = placeLabel(placeId)
+  if (variable.metric_id.startsWith('fire_type') && !UKRAINE_PLACES.has(placeId))
+    return `Not collected: NASA FIRMS fire detections were downloaded for Ukraine only. Adding ${place} needs a FIRMS request for that area and a re-run of the fire pipeline.`
+  if (placeId === 'kharkiv_city')
+    return 'Not collected: only NO₂ was requested for the small Kharkiv city box. Adding this variable needs a NASA POWER request for the box; until then, the East front contains it.'
+  if (variable.metric_id === NO2_METRIC)
+    return `Not collected: NO₂ was not requested from NASA Giovanni for ${place}. Adding it needs one Giovanni area-average export (OMNO2d) for the box.`
+  return `Not collected: ${variable.short_label} has no record for ${place}.`
+}
+
+const UKRAINE_PLACES = new Set(['donbas_kharkiv_east', 'south_steppe_belt', 'kyiv_north_belt', 'kyiv_no2_box', 'central_interior_cand', 'west_ukraine_cand', 'kharkiv_city'])
