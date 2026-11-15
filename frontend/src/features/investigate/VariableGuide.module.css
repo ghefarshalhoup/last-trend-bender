@@ -1,0 +1,11 @@
+.guide { display: grid; gap: var(--space-3); font-size: var(--text-sm); animation: unfurl 0.35s var(--ease-out); }
+@keyframes unfurl { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .guide { animation: none; } }
+.lead, .hint { margin: 0; font-style: italic; color: var(--color-ink-muted); }
+.list { margin: 0; display: grid; gap: var(--space-3); }
+.entry { display: grid; gap: 2px; }
+.entry dt { font-family: var(--font-display); font-weight: 700; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
+.entry dd { margin: 0; line-height: 1.45; }
+.read { color: var(--color-ink-muted); }
+.tag { font-family: inherit; font-size: var(--text-xs); font-weight: 600; padding: 0 6px; border-radius: 999px; background: var(--color-night); color: var(--color-on-night); }
+.off { background: none; color: var(--color-ink-muted); border: 1px dashed var(--color-line-strong); }
