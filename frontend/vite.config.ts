@@ -10,6 +10,8 @@ export default defineConfig(({ mode }) => {
   const proxy = { '/api': { target, changeOrigin: true } }
 
   return {
+    // GitHub Pages serves the site under /<repo>/; VITE_BASE sets that path for the static build.
+    base: env.VITE_BASE || '/',
     plugins: [react()],
     server: { port: 5173, proxy },
     preview: { port: 4173, proxy },

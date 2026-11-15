@@ -48,10 +48,18 @@ export class ApiError extends Error {
 const rawBase = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? ''
 export const API_BASE = rawBase.replace(/\/+$/, '')
 
+/**
+ * Static hosting (GitHub Pages): built with VITE_STATIC_API=1, the app reads the saved responses
+ * written by scripts/export_static_api.py instead of a live server, under the site's base path.
+ */
+const STATIC_API = import.meta.env.VITE_STATIC_API === '1'
+
 /** Turn a server-relative path such as `/api/cases` into a request URL. */
 export function apiUrl(path: string): string {
   if (/^https?:\/\//i.test(path)) return path
-  return `${API_BASE}${path.startsWith('/') ? path : `/${path}`}`
+  const clean = path.startsWith('/') ? path : `/${path}`
+  if (STATIC_API) return `${import.meta.env.BASE_URL}${clean.slice(1).split('?')[0]}${clean.includes('/charts/') ? '.png' : '.json'}`
+  return `${API_BASE}${clean}`
 }
 
 interface BackendErrorBody {
