@@ -65,6 +65,7 @@ class CatalogVariableContract(ContractModel):
     element_label: Literal["Air", "Fire", "Earth", "Water"]
     label: str
     short_label: str
+    plain_definition: str = Field(min_length=10)
     units: str
     is_interval_scale: StrictBool
     is_primary_indicator: StrictBool

@@ -57,6 +57,7 @@ from src.four_elements_analysis import (
     METRIC_SPEC_BY_ID,
     PROPOSED_REGIONS,
 )
+from src.kyiv_sensitivities import build_krakow_prague_comparison, build_kyiv_no2_sensitivities
 from src.stats_rigor import clean_float, safe_pct_change, write_strict_json
 from src.weather_power_pipeline import STUDY_BOXES, PowerBoxSpec, bbox_area_km2
 
@@ -777,6 +778,110 @@ CATALOG_VARIABLES: Tuple[CatalogVariableSpec, ...] = (
 
 CATALOG_BY_ID: Dict[str, CatalogVariableSpec] = {v.metric_id: v for v in CATALOG_VARIABLES}
 
+# Plain-language one-sentence definitions for all 25 curated metrics.
+PLAIN_DEFINITIONS_BY_METRIC_ID: Dict[str, str] = {
+    "no2_mean_molec_cm2": (
+        "Satellite-measured nitrogen dioxide (NO2) gas density in the air column above the study "
+        "box, reflecting fuel combustion from traffic, power generation, and industry."
+    ),
+    "ws10m": (
+        "Average wind speed measured 10 meters above ground, controlling how quickly air pollution "
+        "is blown away and dispersed."
+    ),
+    "cloud_amt": (
+        "Percentage of the sky covered by clouds, which cools daytime surfaces and causes missing "
+        "days in satellite NO2 observations."
+    ),
+    "ps": (
+        "Air pressure at the land surface, indicating passing high-pressure fair weather versus "
+        "low-pressure storm systems."
+    ),
+    "clrsky_sfc_sw_dwn": (
+        "Incoming sunlight power on a completely cloudless day, showing the seasonal solar ceiling "
+        "without cloud shading."
+    ),
+    "cloud_radiative_attenuation_wm2": (
+        "Average sunlight power blocked or reflected by clouds before reaching the ground (clear-sky "
+        "minus all-sky solar radiation)."
+    ),
+    "fire_type0_per_1k_km2_day": (
+        "Number of satellite-detected open-land or vegetation fire hotspots per 1,000 square "
+        "kilometers per day observed by satellite."
+    ),
+    "fire_type2_per_1k_km2_day": (
+        "Number of satellite-detected hotspots at stationary industrial, steel, or flaring sites "
+        "per 1,000 square kilometers per observed day."
+    ),
+    "t2m": (
+        "Average air temperature 2 meters above the ground, describing regional baseline warmth "
+        "across seasons."
+    ),
+    "t2m_max": (
+        "Monthly mean of daily peak daytime temperatures at 2 meters height, capturing heat stress "
+        "that dries out surface fuels."
+    ),
+    "dtr_c": (
+        "Spread between daytime high and nighttime low temperatures, which widens during sunny dry "
+        "spells and shrinks under clouds."
+    ),
+    "allsky_sfc_sw_dwn": (
+        "Actual average solar energy reaching the ground after cloud shading, driving surface "
+        "heating and water evaporation."
+    ),
+    "pet_fao56_mm_day": (
+        "Maximum rate at which moist soil and well-watered vegetation lose water into the air "
+        "given local sun, heat, humidity, and wind."
+    ),
+    "prectotcorr": (
+        "Bias-corrected total rain and melted snowfall reaching the land surface each day across "
+        "the study box."
+    ),
+    "vpd_kpa": (
+        "Atmospheric drying pull (vapor pressure deficit): how strongly thirsty air draws moisture "
+        "out of soils and plants."
+    ),
+    "qv2m": (
+        "Actual mass of water vapor mixed into every kilogram of near-surface air, measuring true "
+        "atmospheric moisture content."
+    ),
+    "rh2m": (
+        "Percentage of water vapor the air holds compared with the maximum it could hold at its "
+        "current temperature."
+    ),
+    "evptrns_mm_day": (
+        "Estimated daily water returning from soil evaporation and plant transpiration into the "
+        "atmosphere."
+    ),
+    "precip_minus_pet_mm_day": (
+        "Climatic water balance (rainfall minus evaporation demand): positive indicates moisture "
+        "surplus and negative indicates net drying."
+    ),
+    "gwettop": (
+        "Moisture saturation in the top few centimeters of soil (from 0 completely dry to 1 fully "
+        "saturated)."
+    ),
+    "gwetroot": (
+        "Moisture saturation down through the plant root zone (roughly top meter of soil), "
+        "tracking water available to crops."
+    ),
+    "gwetprof": (
+        "Total water saturation across the full vertical soil column, changing more slowly across "
+        "seasons than surface soil."
+    ),
+    "ts": (
+        "Radiometric skin temperature of the ground surface itself, rising sharply above air "
+        "temperature when soils dry out."
+    ),
+    "ts_minus_t2m_c": (
+        "Temperature difference between the bare/vegetated ground skin and air 2 meters above it, "
+        "indicating surface heating versus evaporative cooling."
+    ),
+    "allsky_srf_alb": (
+        "Fraction of incoming sunlight reflected off the land surface back into space, varying "
+        "with winter snow, bare soil, and crop greenness."
+    ),
+}
+
 
 def _finite(value: Optional[float], digits: Optional[int] = 4) -> Optional[float]:
     return clean_float(value, digits)
@@ -932,6 +1037,7 @@ def _serialize_variable_spec(spec: CatalogVariableSpec) -> Dict[str, Any]:
         "element_label": spec.element_label,
         "label": spec.label,
         "short_label": spec.short_label,
+        "plain_definition": PLAIN_DEFINITIONS_BY_METRIC_ID[spec.metric_id],
         "units": spec.units,
         "is_interval_scale": spec.is_interval_scale,
         "is_primary_indicator": spec.is_primary_indicator,
@@ -1737,10 +1843,33 @@ def generate_atlas_exports(reports_dir: Path = DEFAULT_REPORTS_DIR) -> Dict[str,
     generated_at_utc = datetime.now(timezone.utc).isoformat()
 
     panel_df = pd.read_csv(reports_dir / "four_elements_monthly_panel.csv")
+    air_results = json.loads((reports_dir / "air_no2_results.json").read_text(encoding="utf-8"))
+    no2_regional_path = reports_dir / "atlas_no2_regional.json"
+    no2_regional = (
+        json.loads(no2_regional_path.read_text(encoding="utf-8"))
+        if no2_regional_path.is_file()
+        else None
+    )
     fire_results = json.loads((reports_dir / "fire_viirs_results.json").read_text(encoding="utf-8"))
     kyiv_four_results = json.loads((reports_dir / "kyiv_four_elements_results.json").read_text(encoding="utf-8"))
     spatial_audit = json.loads((FROZEN_DIR / "spatial_mask_audit.json").read_text(encoding="utf-8"))
     firms_matched_audit = json.loads((FROZEN_DIR / "firms_cmr_matched_audit.json").read_text(encoding="utf-8"))
+
+    power_specs = [
+        s for s in CATALOG_VARIABLES
+        if s.metric_id != "no2_mean_molec_cm2" and not s.metric_id.startswith("fire_")
+    ]
+    kyiv_no2_sensitivities = build_kyiv_no2_sensitivities(
+        air_results=air_results,
+        panel_df=panel_df,
+        kyiv_four_results=kyiv_four_results,
+    )
+    krakow_prague_comparison = build_krakow_prague_comparison(
+        panel_df,
+        power_specs,
+        air_results=air_results,
+        no2_regional=no2_regional,
+    )
 
     fire_inputs = discover_fire_inputs()
     clean_firms_df, _ = load_and_validate_firms_archives(fire_inputs)
@@ -1816,6 +1945,8 @@ def generate_atlas_exports(reports_dir: Path = DEFAULT_REPORTS_DIR) -> Dict[str,
         extra_sections={
             "kyiv_daily_wind_cloud_sensitivity": kyiv_four_results.get("kyiv_daily_wind_cloud_sensitivity", {}),
             "kyiv_no2_companion_endpoint": "/api/air/kyiv",
+            "kyiv_no2_sensitivities": kyiv_no2_sensitivities,
+            "krakow_prague_2022_comparison": krakow_prague_comparison,
         },
     )
 

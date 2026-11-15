@@ -28,8 +28,12 @@ class AtlasExportsTest(unittest.TestCase):
             "four_elements_monthly_panel.csv",
             "fire_viirs_results.json",
             "kyiv_four_elements_results.json",
+            "air_no2_results.json",
         ):
             (cls.out_dir / name).write_bytes((src_reports / name).read_bytes())
+        regional_no2 = src_reports / "atlas_no2_regional.json"
+        if regional_no2.exists():
+            (cls.out_dir / "atlas_no2_regional.json").write_bytes(regional_no2.read_bytes())
         cls.paths = generate_atlas_exports(cls.out_dir)
 
     @classmethod
@@ -54,6 +58,7 @@ class AtlasExportsTest(unittest.TestCase):
             "element_id",
             "element_label",
             "label",
+            "plain_definition",
             "units",
             "dates",
             "supported_baselines",
@@ -65,6 +70,8 @@ class AtlasExportsTest(unittest.TestCase):
         }
         for var in cat["variables"]:
             self.assertTrue(required_fields.issubset(var.keys()), var.get("metric_id"))
+            self.assertIsInstance(var["plain_definition"], str)
+            self.assertGreater(len(var["plain_definition"].strip()), 20)
             self.assertTrue(var["sources"])
             self.assertTrue(var["limitations"])
             baselines = {b["baseline_id"]: b for b in var["supported_baselines"]}
@@ -129,6 +136,27 @@ class AtlasExportsTest(unittest.TestCase):
         ts_cmp = kyiv_earth["ts"]["seasonal_mar_aug"]["vs_2015_2019"]
         self.assertIsNone(ts_cmp["pct_change"])
         self.assertEqual(ts_cmp["pct_change_status"], "withheld_interval_scale")
+
+    def test_air_weather_includes_kyiv_sensitivities_and_krakow_prague(self):
+        import json
+
+        air_weather = json.loads((self.out_dir / "atlas_air_weather_ukraine.json").read_text(encoding="utf-8"))
+        res = air_weather["result"]
+        self.assertIn("kyiv_no2_sensitivities", res)
+        self.assertIn("krakow_prague_2022_comparison", res)
+
+        sens = res["kyiv_no2_sensitivities"]
+        self.assertEqual(sens["n_flagged_below_50_pct"], 37)
+        self.assertEqual(sens["dropped_calendar_months_completely_excluded"], [11, 12])
+        self.assertTrue(sens["coverage_exclusion_sensitivity"]["unflagged_ge50pct_full_record"]["significant"])
+        self.assertFalse(sens["coverage_exclusion_sensitivity"]["unflagged_ge50pct_pre_invasion"]["significant"])
+
+        kp = res["krakow_prague_2022_comparison"]
+        self.assertEqual(kp["metrics_count"], 22)
+        if (self.out_dir / "atlas_no2_regional.json").exists():
+            self.assertEqual(kp["no2_cross_city_comparison"]["status"], "available")
+        else:
+            self.assertEqual(kp["no2_cross_city_comparison"]["status"], "not_available")
 
 
 if __name__ == "__main__":
