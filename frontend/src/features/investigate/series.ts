@@ -4,8 +4,8 @@ import type { VariableEntry } from './catalog'
 
 /** The two analysis periods. Only periods with a reviewed result are offered. */
 export const WINDOWS = [
-  { id: 'full_record', label: 'Full record' },
-  { id: 'pre_invasion', label: 'Before the invasion' },
+  { id: 'full_record', label: 'Full record', dates: '2015 – 2022', note: 'Every month on record. NO₂ runs to August 2022, fire to August 2022, weather to December 2022.' },
+  { id: 'pre_invasion', label: 'Before the invasion', dates: '2015 – Feb 2022', note: 'Monthly data: February 2022 is counted whole, so its last five days (from 24 February) are included.' },
 ] as const
 export type WindowId = (typeof WINDOWS)[number]['id']
 
@@ -71,7 +71,9 @@ export interface VariableSeries {
 }
 
 /** Which endpoint holds which variable. The catalog names the element; this names the file. */
-export function endpointFor(variable: VariableEntry, placeId?: string | null): string {
+export function endpointFor(variable: VariableEntry, placeId?: string | null, extra?: ReadonlyMap<string, string>): string {
+  const special = placeId ? extra?.get(`${variable.metric_id}|${placeId}`) : undefined
+  if (special) return special
   if (variable.metric_id === 'no2_mean_molec_cm2') return !placeId || placeId === 'kyiv_no2_box' ? '/api/air/kyiv' : '/api/air/no2'
   switch (variable.element_id) {
     case 'air':
@@ -200,3 +202,17 @@ function readNo2(study: StudyPackage): VariableSeries {
   }
   return { points, seasonal, embeddedTrends }
 }
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const monthText = (m: string): string => `${MONTHS[Number(m.slice(5, 7)) - 1] ?? ''} ${m.slice(0, 4)}`
+
+/** The months a card actually uses for the chosen period, e.g. "Mar 2015 – Feb 2022". */
+export function spanText(series: VariableSeries, window: WindowId): string | null {
+  const used = series.points.filter((p) => p.value !== null && (window === 'full_record' || p.month <= '2022-02'))
+  const first = used[0]?.month
+  const last = used[used.length - 1]?.month
+  return first && last ? `${monthText(first)} – ${monthText(last)}` : null
+}
+
+/** What a card knows about its record. */
+export type SeriesState = { status: 'loading' } | { status: 'error'; message: string } | { status: 'ready'; series: VariableSeries | null }

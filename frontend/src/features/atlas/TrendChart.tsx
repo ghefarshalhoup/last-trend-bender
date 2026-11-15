@@ -135,7 +135,7 @@ export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel,
 
       {view === 'chart' ? (
         <div className={styles.plot} role="img" aria-label={ariaLabel} data-testid="trend-chart">
-          <ResponsiveContainer width="100%" height={compact ? 150 : 300}>
+          <ResponsiveContainer width="100%" height={compact ? 200 : 300}>
             <ComposedChart data={points} margin={compact ? { top: 16, right: 8, bottom: 0, left: 0 } : { top: 22, right: 14, bottom: 8, left: 4 }}>
               <CartesianGrid stroke="#e7dfc9" vertical={false} />
               <XAxis
@@ -157,7 +157,7 @@ export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel,
                 tickFormatter={(v: number) => (Math.abs(v) >= 1000 ? `${Math.round(v / 100) / 10}k` : String(Math.round(v * 100) / 100))}
                 label={compact ? undefined : { value: unitLabel, angle: -90, position: 'insideLeft', style: { fontSize: 11, fill: '#5a4a38', textAnchor: 'middle' }, dx: -2 }}
               />
-              {analysisEndT !== undefined ? <ReferenceArea x1={analysisEndT} x2={lastYear} fill="#2b2117" fillOpacity={0.06} /> : null}
+              {analysisEndT !== undefined ? <ReferenceArea x1={analysisEndT} x2={lastYear} fill="#2b2117" fillOpacity={0.1} label={compact ? undefined : { value: 'Not tested', position: 'insideBottom', fontSize: 10, fill: '#5a4a38' }} /> : null}
               <ReferenceLine x={eventT} stroke={C_EVENT} strokeWidth={2} label={{ value: compact ? 'Invasion' : eventLabel, position: 'top', fontSize: 11, fill: C_EVENT }} />
               <Tooltip content={tooltip} isAnimationActive={false} />
               <Line dataKey="value" stroke={C_SERIES} strokeWidth={1.6} dot={dot} activeDot={{ r: 5 }} isAnimationActive={false} connectNulls={false} />

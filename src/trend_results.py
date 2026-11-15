@@ -63,6 +63,12 @@ EXTRA_PLACES = {
     },
 }
 NO2_ATLAS_FILE = "atlas_no2_regional.json"
+# The fire file carries temperature, sunlight and evaporation demand for the six Ukraine boxes only.
+# The same variables exist in the monthly panel for the two comparison cities; export them in the same shape.
+COMPARISON_WEATHER_FILE = "atlas_comparison_weather.json"
+COMPARISON_REGIONS = ("poland_krakow", "czechia_prague")
+COMPARISON_METRICS = ("t2m", "t2m_max", "dtr_c", "allsky_sfc_sw_dwn", "pet_fao56_mm_day")
+INTERVAL_SCALE_METRICS = {"t2m", "t2m_max"}
 SMALL_NO2_BOXES = {"kyiv_no2_box", "poland_krakow", "czechia_prague", "kharkiv_city"}
 
 MONTHLY_ATLAS_FILES = (
@@ -221,6 +227,49 @@ def build_no2_atlas_payload(raw_dir: Path = NO2_RAW_DIR) -> Dict[str, object]:
         "coverage_flag_rule": f"coverage_fraction < {DEFAULT_LOW_COVERAGE_FRACTION:.2f}",
         "regions": regions,
         "extra_places": extra_places,
+    }
+
+
+def _mar_aug_vs_2015_2019(df: pd.DataFrame, metric_id: str) -> Dict[str, object]:
+    """March-August mean per year; baseline = mean of the 2015-2019 yearly means (as in src.atlas_exports)."""
+    season = df[df["month_num"].between(3, 8)]
+    yearly = season.groupby("year")[metric_id].mean()
+    baseline = float(yearly.loc[2015:2019].mean())
+    target = float(yearly.loc[2022])
+    out: Dict[str, object] = {"abs_diff": round(target - baseline, 4), "pct_change": None}
+    if metric_id in INTERVAL_SCALE_METRICS:
+        out["pct_change_status"] = "withheld_interval_scale"
+    elif abs(baseline) < 1e-12:
+        out["pct_change_status"] = "withheld_zero_baseline"
+    else:
+        out["pct_change"] = round(100.0 * (target - baseline) / baseline, 4)
+        out["pct_change_status"] = "computed"
+    return out
+
+
+def build_comparison_weather_payload(reports_dir: Path = REPORTS_DIR, regions: Sequence[str] = COMPARISON_REGIONS) -> Dict[str, object]:
+    panel = pd.read_csv(reports_dir / "four_elements_monthly_panel.csv", dtype={"month": str})
+    out: Dict[str, object] = {}
+    for region_id in regions:
+        df = panel[panel["region_id"] == region_id].sort_values("month")
+        if df.empty:
+            continue
+        metrics: Dict[str, object] = {}
+        for metric_id in COMPARISON_METRICS:
+            metrics[metric_id] = {
+                "metric_id": metric_id,
+                "seasonal_mar_aug": {"window_label": "March–August", "vs_2015_2019": _mar_aug_vs_2015_2019(df, metric_id)},
+                "monthly_series": [
+                    {"month": m, "value": None if pd.isna(v) else round(float(v), 4)}
+                    for m, v in zip(df["month"], df[metric_id])
+                ],
+            }
+        out[region_id] = {"region_id": region_id, "metrics": metrics}
+    return {
+        "schema_version": "1.0.0",
+        "status": "available",
+        "source": "reports/four_elements_monthly_panel.csv (NASA POWER: MERRA-2 / CERES)",
+        "result": {"context_weather_regions": out},
     }
 
 
@@ -507,6 +556,7 @@ def build(reports_dir: Path = REPORTS_DIR, raw_dir: Path = NO2_RAW_DIR, out_dir:
 
     fire = json.loads((reports_dir / FIRE_FILE).read_text(encoding="utf-8"))["result"]
     rows += monthly_metric_rows(fire.get("context_weather_regions") or {})
+    rows += monthly_metric_rows(build_comparison_weather_payload(reports_dir)["result"]["context_weather_regions"])
     rows += fire_rows(fire.get("regions") or {}, study_regions)
 
     n_tested = sum(1 for r in rows if r["status"] == "assessed")
@@ -546,6 +596,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     payload = build(args.reports_dir, args.raw_dir, args.reports_dir / "no2_regional")
     write_strict_json(args.reports_dir / "trend_results.json", payload)
     write_strict_json(args.reports_dir / NO2_ATLAS_FILE, build_no2_atlas_payload(args.raw_dir))
+    write_strict_json(args.reports_dir / COMPARISON_WEATHER_FILE, build_comparison_weather_payload(args.reports_dir))
     print(json.dumps(payload["counts"], indent=2))
     return 0
 

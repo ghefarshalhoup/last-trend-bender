@@ -232,3 +232,16 @@ def test_regional_no2_served_and_malformed_is_503(tmp_path):
     assert api.get("/api/air/no2").json()["regions"] == payload["regions"]
     (reports / "atlas_no2_regional.json").write_text("[]")
     assert api.get("/api/air/no2").status_code == 503
+
+
+def test_comparison_weather_missing_served_and_malformed(tmp_path):
+    reports, settings = _stage_full_reports(tmp_path)
+    target = reports / "atlas_comparison_weather.json"
+    target.unlink(missing_ok=True)
+    api = TestClient(create_app(settings))
+    assert api.get("/api/weather/comparison").json()["result"]["context_weather_regions"] == {}
+    payload = {"result": {"context_weather_regions": {"poland_krakow": {"metrics": {}}}}}
+    target.write_text(json.dumps(payload))
+    assert api.get("/api/weather/comparison").json() == payload
+    target.write_text("{}")
+    assert api.get("/api/weather/comparison").status_code == 503

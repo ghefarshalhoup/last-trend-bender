@@ -28,6 +28,7 @@ _MONTH_RE = re.compile(r"^\d{4}-\d{2}$")
 
 TRENDS_FILE = "trend_results.json"
 NO2_REGIONAL_FILE = "atlas_no2_regional.json"
+COMPARISON_WEATHER_FILE = "atlas_comparison_weather.json"
 SERVICE_NAME = "war-environment-tracker-backend"
 _ERRORS = {
     404: {"model": ErrorResponse, "description": "Unknown resource"},
@@ -191,6 +192,23 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         if not isinstance(payload, dict) or not isinstance(payload.get("regions"), dict):
             raise ApiError(503, "data_unavailable", "Regional NO2 file has no 'regions' object.")
         payload.setdefault("extra_places", [])
+        return JSONResponse(content=payload)
+
+    @app.get("/api/weather/comparison")
+    def comparison_weather(request: Request):
+        """Temperature, sunlight and evaporation demand for the comparison cities (same shape as the
+        fire file's ``context_weather_regions``). Missing file -> no regions."""
+        empty = {"schema_version": "1.0.0", "status": "not_available", "result": {"context_weather_regions": {}}}
+        path = request.app.state.settings.reports_dir / COMPARISON_WEATHER_FILE
+        if not path.is_file():
+            return JSONResponse(content=empty)
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            raise ApiError(503, "data_unavailable", f"Comparison weather could not be read: {exc}") from exc
+        regions = payload.get("result", {}).get("context_weather_regions") if isinstance(payload, dict) else None
+        if not isinstance(regions, dict):
+            raise ApiError(503, "data_unavailable", "Comparison weather file has no regions object.")
         return JSONResponse(content=payload)
 
     @app.get("/api/air/weather", responses={503: _ERRORS[503]})

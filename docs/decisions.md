@@ -5,6 +5,19 @@ Newest first. Husam has not yet reviewed the entries marked **needs review**.
 
 ## 2026-11-15
 
+### D10. Compare with a city outside the war
+- **Decided by:** G.
+- **What:** Kraków and Prague are no longer places on their own. "Compare with" splits the screen: the Ukrainian place on the left, the city on the right, the same variables in the same order. Each card keeps its own test; nothing tests the difference between the two.
+- **Also:** at most 3 cards per side, larger charts.
+
+### D9. February 2022 counts as "before the invasion"
+- **Decided by:** Claude.
+- **What:** the data are monthly, so the pre-invasion test ends with February 2022, which includes 24–28 February. The label says so instead of changing the calculation the night before submission.
+
+### D8. Temperature, sunlight and evaporation demand for the comparison cities
+- **Decided by:** Claude. **Needs review.**
+- **What:** the five variables existed in `reports/four_elements_monthly_panel.csv` for Kraków and Prague but were exported for Ukraine only. They are now exported with the same seasonal rule (a test reproduces Husam's numbers for a Ukraine box). Their trend tests join each variable's correction family (16 tests instead of 12). No verdict changed.
+
 ### D7. Fire tests verified with the raw download
 - **Decided by:** G (supplied the files), Claude (ran them).
 - **What:** the four FIRMS archives (`DL_FIRE_SV-C2_848848/848862/848867/848869.zip`) from G's Downloads were placed in `data/raw/firms_viirs/` (not committed, by design). All 47 analysis tests pass, including the four that failed without the raw files.
