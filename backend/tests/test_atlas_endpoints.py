@@ -50,6 +50,10 @@ def test_variables_catalog_endpoints_and_filters(client):
     body = full.json()
     assert body["metric_count"] == 25
     assert len(body["variables"]) == 25
+    assert all(
+        isinstance(v.get("plain_definition"), str) and len(v["plain_definition"].strip()) > 20
+        for v in body["variables"]
+    )
 
     earth_filtered = client.get("/api/variables?element_id=earth")
     assert earth_filtered.status_code == 200
@@ -149,6 +153,9 @@ def test_water_land_and_air_weather_endpoints(client):
     ab = weather.json()
     assert ab["element_id"] == "air"
     assert ab["result"]["kyiv_no2_companion_endpoint"] == "/api/air/kyiv"
+    assert "kyiv_no2_sensitivities" in ab["result"]
+    assert "krakow_prague_2022_comparison" in ab["result"]
+    assert ab["result"]["krakow_prague_2022_comparison"]["metrics_count"] == 22
 
 
 def test_corrupt_or_missing_atlas_artifact_degrades_cleanly(tmp_path):
