@@ -1,0 +1,99 @@
+{
+  "provenance": {
+    "input_file": "no2_central_interior_cand_OMNO2d_v004_2015-03_2022-08.csv",
+    "input_sha256": "6ac1a3b6a927f5a4f853f3a9b81f4c3890b33d4a88726ea9f1fd687c738e97f5",
+    "input_bytes": 70742,
+    "header_line_number_1based": 9,
+    "title": "Time Series, Area-Averaged of NO2 Tropospheric Column (30% Cloud Screened) daily 0.25 (daily)",
+    "dataset": "OMNO2d v004",
+    "variable": "mean_OMNO2d_004_ColumnAmountNO2TropCloudScreened",
+    "units": "molecules/cm^2",
+    "user_start_date": "2015-03-01",
+    "user_end_date": "2022-08-31",
+    "user_bounding_box": {
+      "west": 27.5,
+      "south": 47.5,
+      "east": 35.5,
+      "north": 50.0
+    },
+    "data_bounding_box": {
+      "west": 27.625,
+      "south": 47.625,
+      "east": 35.375,
+      "north": 49.875
+    },
+    "reproducibility_url": "https://giovanni.gsfc.nasa.gov/giovanni/#service=ArAvTs&starttime=2015-03-01T00:00:00Z&endtime=2022-08-31T23:59:59Z&bbox=27.5,47.5,35.5,50&data=OMNO2d_004_ColumnAmountNO2TropCloudScreened&dataKeyword=OMNO2d&portal=GIOVANNI&format=json",
+    "declared_fill_value": -1.267651e+30
+  },
+  "daily_counts": {
+    "start_date": "2015-03-01",
+    "end_date": "2022-08-31",
+    "calendar_days": 2741,
+    "raw_dated_rows": 2714,
+    "fill_value_rows": 257,
+    "other_missing_rows": 0,
+    "absent_dates_count": 27,
+    "valid_observations": 2457,
+    "negative_valid_observations": 17,
+    "min_valid_value": -2310931850000000.0,
+    "max_valid_value": 9283604020000000.0,
+    "overall_daily_coverage_fraction": 0.896388,
+    "absent_dates": [
+      "2016-03-05",
+      "2016-03-06",
+      "2016-03-07",
+      "2016-03-08",
+      "2016-03-09",
+      "2016-03-10",
+      "2016-03-11",
+      "2016-03-12",
+      "2016-03-13",
+      "2016-03-14",
+      "2016-05-30",
+      "2016-05-31",
+      "2016-06-01",
+      "2016-06-02",
+      "2016-06-03",
+      "2016-06-04",
+      "2016-06-05",
+      "2016-06-06",
+      "2016-06-07",
+      "2016-06-08",
+      "2016-06-09",
+      "2016-06-11",
+      "2016-06-12",
+      "2017-03-13",
+      "2017-03-14",
+      "2017-03-15",
+      "2017-03-16"
+    ]
+  },
+  "monthly_summary": {
+    "total_months": 90,
+    "months_with_any_valid_obs": 90,
+    "months_with_zero_valid_obs": [],
+    "proposed_coverage_threshold": 0.5,
+    "proposed_coverage_flag_rule": "coverage_fraction < 0.50 (proposed project rule)",
+    "low_coverage_months_count": 0,
+    "low_coverage_months": [],
+    "sparse_threshold_valid_days": 10,
+    "very_sparse_threshold_valid_days": 5,
+    "sparse_months_count": 0,
+    "very_sparse_months_count": 0,
+    "sparse_months": []
+  },
+  "validation_checks": {
+    "raw_rows_decompose_exactly": true,
+    "calendar_days_equal_raw_plus_absent": true,
+    "monthly_valid_days_sum_matches_daily": true,
+    "monthly_calendar_days_sum_matches_daily": true,
+    "coverage_fraction_within_bounds": true
+  },
+  "processing_rules": {
+    "missing_values_never_zero_filled": true,
+    "negative_valid_values_preserved": true,
+    "proposed_coverage_flag_rule": "coverage_fraction < 0.50 (proposed project rule)",
+    "sparse_month_rule": "valid_days < 10 (legacy severe-sparsity reference)",
+    "causal_claim_caveat": "Tropospheric column NO2 reflects regional atmospheric column density, not street-level exposure; temporal drops alone cannot establish war causation without matched controls and weather adjustments."
+  }
+}
