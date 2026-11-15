@@ -1,0 +1,78 @@
+/* The evidence sheet: parchment laid over the night side. Evidence lives on paper; navigation lives on the dark. */
+.sheet {
+  position: absolute; z-index: 3; inset: 0 auto 0 0;
+  width: clamp(26rem, 42vw, 40rem);
+  display: flex; flex-direction: column; gap: var(--space-4);
+  padding: var(--space-5) var(--space-6) var(--space-5);
+  overflow-y: auto; overscroll-behavior: contain;
+  background: var(--color-parchment); color: var(--color-ink);
+  border-right: 1px solid var(--color-line-strong);
+  box-shadow: 24px 0 70px rgba(0, 0, 0, 0.55);
+  animation: sheet-in 760ms var(--ease-out) 180ms both;
+}
+@keyframes sheet-in {
+  from { transform: translateX(-104%); }
+  to { transform: translateX(0); }
+}
+
+.bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.path { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); font-size: var(--text-xs); color: var(--color-ink-faint); }
+.path [aria-current='page'] { color: var(--color-ink); font-weight: 600; }
+.link { padding: 0; border: 0; background: none; cursor: pointer; color: var(--series-baseline-ink); text-decoration: underline; text-underline-offset: 3px; }
+.close {
+  min-height: 36px; padding: 0 var(--space-3); cursor: pointer;
+  background: transparent; border: 1px solid var(--color-line-strong); border-radius: var(--radius-sm); font-size: var(--text-xs);
+}
+.close:hover { background: var(--color-surface); }
+
+.question { font-family: var(--font-display); font-weight: 600; font-size: var(--text-xl); line-height: 1.18; letter-spacing: -0.01em; text-wrap: balance; }
+.note { font-size: var(--text-sm); color: var(--color-ink-muted); max-width: var(--measure); }
+.retry { margin-top: var(--space-2); min-height: 36px; padding: 0 var(--space-3); cursor: pointer; background: var(--color-night); color: var(--color-on-night); border: 0; border-radius: var(--radius-sm); }
+
+/* The season everyone quotes, in the colour 2022 has on every chart in this project. */
+.season { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--space-5); padding-block: var(--space-3); border-block: 1px solid var(--color-line-strong); }
+.number { font-family: var(--font-display); font-weight: 600; font-size: var(--text-number); line-height: 0.95; letter-spacing: -0.03em; color: var(--series-2022-ink); font-variant-numeric: lining-nums; }
+.numberLabel { font-size: var(--text-sm); line-height: 1.45; max-width: 34ch; }
+.quiet { color: var(--color-ink-faint); }
+
+.record { display: grid; gap: var(--space-3); min-width: 0; }
+.recordHead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+.h3 { font-family: var(--font-display); font-weight: 600; font-size: var(--text-lg); }
+.periods { display: inline-flex; border: 1px solid var(--color-line-strong); border-radius: var(--radius-sm); overflow: hidden; }
+.periods button { min-height: 36px; padding: 0 var(--space-3); background: var(--color-surface); border: 0; cursor: pointer; font-size: var(--text-xs); }
+.periods button + button { border-left: 1px solid var(--color-line-strong); }
+.periods button[aria-pressed='true'] { background: var(--color-night); color: var(--color-on-night); }
+
+.legend { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); font-size: 0.75rem; color: var(--color-ink-muted); }
+.legend li { display: inline-flex; align-items: center; gap: 6px; }
+.keyDot { width: 8px; height: 8px; border-radius: 50%; background: var(--series-baseline); }
+.keyHollow { width: 8px; height: 8px; border-radius: 50%; background: var(--color-plot); border: 1.6px solid var(--series-baseline); }
+.keyRate { width: 18px; border-top: 2px dashed var(--color-ink); }
+.keyEvent { width: 2px; height: 12px; background: #a8321f; }
+
+.verdict { display: grid; gap: var(--space-3); }
+.badge { justify-self: start; padding: 2px var(--space-3); border-radius: 999px; font-size: var(--text-xs); font-weight: 600; background: var(--status-neutral-bg); border: 1px solid var(--status-neutral-line); color: var(--status-neutral-ink); }
+.verdict[data-verdict='significant'] .badge { background: var(--status-info-bg); border-color: var(--status-info-line); color: var(--status-info-ink); }
+.takeaway { font-family: var(--font-display); font-size: 1.1875rem; line-height: 1.4; max-width: 44ch; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: var(--space-3) var(--space-5); margin: 0; font-size: var(--text-xs); }
+.facts dt { color: var(--color-ink-faint); }
+.facts dd { font-weight: 500; font-variant-numeric: tabular-nums; }
+
+.foot { margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--color-line); display: grid; gap: var(--space-1); font-size: var(--text-xs); color: var(--color-ink-faint); }
+.foot a { color: var(--series-baseline-ink); }
+
+/* Narrow screens: the sheet rises from the bottom and the map keeps the top. */
+@media (max-width: 860px) {
+  .sheet {
+    inset: auto 0 0 0; width: auto; height: 56vh;
+    padding: var(--space-4) var(--space-4) var(--space-5);
+    border-right: 0; border-top: 1px solid var(--color-line-strong); border-radius: 14px 14px 0 0;
+    box-shadow: 0 -18px 50px rgba(0, 0, 0, 0.55);
+    animation-name: sheet-up;
+  }
+  .season { grid-template-columns: 1fr; gap: var(--space-2); }
+}
+@keyframes sheet-up {
+  from { transform: translateY(104%); }
+  to { transform: translateY(0); }
+}

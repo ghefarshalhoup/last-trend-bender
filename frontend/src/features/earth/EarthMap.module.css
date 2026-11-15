@@ -1,0 +1,60 @@
+.wrap { position: absolute; inset: 0; }
+.map { position: absolute; inset: 0; background: transparent; }
+.map :global(.maplibregl-canvas) { outline: none; }
+.map:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: -3px; }
+
+/* Attribution stays, but quietly: small, on the night side. */
+.map :global(.maplibregl-ctrl-attrib) { background: rgba(8, 12, 24, 0.72); color: var(--color-on-night-muted); font-size: 0.6875rem; }
+.map :global(.maplibregl-ctrl-attrib a) { color: var(--color-on-night); }
+.map :global(.maplibregl-ctrl-attrib-button) { filter: invert(1); opacity: 0.7; }
+
+.failed { position: absolute; inset: auto 0 40% 0; text-align: center; color: var(--color-on-night); padding: 0 var(--space-5); }
+.failed a { color: #f2cf7a; }
+
+/* The one case on the globe: a gilt seal with a slow ring, and its name beside it. */
+.casePin {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 0; border: 0; background: none; cursor: pointer;
+  color: var(--color-on-night); font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500;
+  transform: translateX(-9px); /* the dot, not the label, sits on the coordinate */
+}
+.casePinDot {
+  position: relative; width: 18px; height: 18px; border-radius: 50%;
+  background: #f2cf7a; border: 2px solid #fff6d6; box-shadow: 0 0 0 1px rgba(43, 33, 23, 0.6), 0 0 18px 4px rgba(242, 207, 122, 0.55);
+}
+.casePinDot::after {
+  content: ''; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid #f2cf7a;
+  animation: ring 2.6s var(--ease-out) infinite;
+}
+.casePinLabel {
+  padding: 3px 10px; border-radius: 999px; background: rgba(8, 12, 24, 0.78); border: 1px solid rgba(242, 207, 122, 0.55);
+  white-space: nowrap; text-shadow: none;
+}
+.casePin:hover .casePinLabel, .casePin:focus-visible .casePinLabel { background: #f2cf7a; color: var(--color-ink); }
+
+@keyframes ring {
+  from { transform: scale(1); opacity: 0.9; }
+  to { transform: scale(3.2); opacity: 0; }
+}
+
+/* A study place once the case is open. */
+.place {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0; border: 0; background: none; cursor: pointer;
+  color: var(--color-on-night); font-family: var(--font-body); font-size: var(--text-xs); font-weight: 500;
+  transform: translateX(-6px);
+}
+.placeDot { width: 12px; height: 12px; border-radius: 50%; background: #f7e3a6; border: 2px solid rgba(43, 33, 23, 0.85); box-shadow: 0 0 0 1px #f7e3a6; }
+.placeLabel { padding: 2px 8px; border-radius: 999px; background: rgba(8, 12, 24, 0.72); white-space: nowrap; }
+.place:hover .placeLabel, .place:focus-visible .placeLabel { background: rgba(8, 12, 24, 0.95); }
+.place[data-selected='true'] .placeDot { background: #fff6d6; box-shadow: 0 0 0 2px #f2cf7a, 0 0 14px 4px rgba(242, 207, 122, 0.6); }
+.place[data-selected='true'] .placeLabel { background: #f2cf7a; color: var(--color-ink); font-weight: 600; }
+
+.popup :global(.maplibregl-popup-content) {
+  background: var(--color-surface); color: var(--color-ink); border-radius: var(--radius-md); border: 1px solid var(--color-line-strong);
+  padding: var(--space-3) var(--space-4); font-family: var(--font-body); font-size: var(--text-xs); line-height: 1.45;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+.popup :global(.maplibregl-popup-content) strong { display: block; font-size: var(--text-sm); margin-bottom: 2px; }
+.popup :global(.maplibregl-popup-content) p { margin: 0; color: var(--color-ink-muted); }
+.popup :global(.maplibregl-popup-tip) { border-top-color: var(--color-surface); border-bottom-color: var(--color-surface); }

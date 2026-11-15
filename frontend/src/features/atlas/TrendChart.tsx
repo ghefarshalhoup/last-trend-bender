@@ -42,6 +42,10 @@ interface Props {
   compact?: boolean
   /** Dashed when the trend is not significant, solid when it is. */
   rateDashed?: boolean
+  /** Draw the line from left to right once, on first show. Off by default; ignored when the reader prefers reduced motion. */
+  drawOn?: boolean
+  /** Plot height in pixels. Defaults to 200 for the compact card and 300 for the full chart. */
+  height?: number
 }
 
 const C_SERIES = '#2a78d6'
@@ -58,7 +62,8 @@ interface DotProps {
 }
 
 /** Full-record timeline with a marked event, an optional rate line and a table view of the same data. */
-export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel, analysisEndT, rateLine, lowLabel, formatValue, ariaLabel, compact = false, rateDashed = true }: Props) {
+export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel, analysisEndT, rateLine, lowLabel, formatValue, ariaLabel, compact = false, rateDashed = true, drawOn = false, height }: Props) {
+  const animate = drawOn && !(typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)
   const [view, setView] = useState<'chart' | 'table'>('chart')
   const values = points.map((p) => p.value).filter((v): v is number => v !== null)
   const vMax = values.length ? Math.max(...values) : 1
@@ -135,7 +140,7 @@ export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel,
 
       {view === 'chart' ? (
         <div className={styles.plot} role="img" aria-label={ariaLabel} data-testid="trend-chart">
-          <ResponsiveContainer width="100%" height={compact ? 200 : 300}>
+          <ResponsiveContainer width="100%" height={height ?? (compact ? 200 : 300)}>
             <ComposedChart data={points} margin={compact ? { top: 16, right: 8, bottom: 0, left: 0 } : { top: 22, right: 14, bottom: 8, left: 4 }}>
               <CartesianGrid stroke="#e7dfc9" vertical={false} />
               <XAxis
@@ -160,7 +165,7 @@ export function TrendChart({ points, unitLabel, seriesLabel, eventT, eventLabel,
               {analysisEndT !== undefined ? <ReferenceArea x1={analysisEndT} x2={lastYear} fill="#2b2117" fillOpacity={0.1} label={compact ? undefined : { value: 'Not tested', position: 'insideBottom', fontSize: 10, fill: '#5a4a38' }} /> : null}
               <ReferenceLine x={eventT} stroke={C_EVENT} strokeWidth={2} label={{ value: compact ? 'Invasion' : eventLabel, position: 'top', fontSize: 11, fill: C_EVENT }} />
               <Tooltip content={tooltip} isAnimationActive={false} />
-              <Line dataKey="value" stroke={C_SERIES} strokeWidth={1.6} dot={dot} activeDot={{ r: 5 }} isAnimationActive={false} connectNulls={false} />
+              <Line dataKey="value" stroke={C_SERIES} strokeWidth={1.6} dot={dot} activeDot={{ r: 5 }} isAnimationActive={animate} animationBegin={500} animationDuration={2200} animationEasing="ease-out" connectNulls={false} />
               {rateLine ? (
                 <ReferenceLine
                   segment={[{ x: rateLine.t0, y: rateLine.y0 }, { x: rateLine.t1, y: rateLine.y1 }]}
