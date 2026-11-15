@@ -1,11 +1,28 @@
+import { useState } from 'react'
 interface Props {
   size?: number
   /** Accent used for the headband; follows the active element. */
   accent?: string
 }
 
-/** Placeholder guide mark. Final character art is pending; swap this component only. */
+/**
+ * The guide's portrait. If `public/guide-portrait.png` exists (an original character, square, at least
+ * 256 px), it is shown in a round frame; otherwise this drawn placeholder is used.
+ */
 export function AvatarMark({ size = 48, accent = 'var(--element-air)' }: Props) {
+  const [missing, setMissing] = useState(false)
+  if (!missing)
+    return (
+      <img
+        src={`${import.meta.env.BASE_URL}guide-portrait.png`}
+        width={size}
+        height={size}
+        alt="The guide"
+        onError={() => setMissing(true)}
+        style={{ flex: 'none', borderRadius: '50%', objectFit: 'cover', display: 'block' }}
+        data-testid="guide-portrait"
+      />
+    )
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="Guide placeholder (final character art pending)" style={{ flex: 'none' }}>
       <circle cx="32" cy="32" r="30" fill="#f7f0df" stroke="#8a6a2f" strokeWidth="2" />

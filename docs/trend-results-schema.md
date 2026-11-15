@@ -32,13 +32,13 @@
 
 | Field | Rule |
 | --- | --- |
-| `region_id` | One of the 8 study boxes in `/api/variables` → `study_regions` |
+| `region_id` | One of the 8 study boxes (9 places with Kharkiv city, NO₂ only) in `/api/variables` → `study_regions` |
 | `metric_id` | One of the 25 ids in `/api/variables` |
 | `window_id` | `full_record` (whole series) or `pre_invasion` (series up to 2022-02) |
 | `status` | `assessed`, `insufficient_evidence` (e.g. Fire: 4 seasons) or `not_assessed` |
 | `slope_per_year`, `ci_low`, `ci_high` | In the variable's **own units** per year (NO₂ in molecules/cm²; the UI rescales) |
 | `p_value` | Raw p of the primary test |
-| `p_value_fdr` | BH-adjusted p (optional but strongly wanted: ~200 tests) |
+| `p_value_fdr` | BH-adjusted p (optional but strongly wanted: 368 tests) |
 | `significant` | The verdict the UI shows. Decide it on `p_value_fdr` if present and say so in `multiple_testing` |
 | `caveats` | Short plain sentences; the card shows up to five |
 
@@ -46,7 +46,7 @@ For `insufficient_evidence` / `not_assessed` rows, set the numbers to `null`. Ch
 
 ## How the file is produced
 
-`python -m src.trend_results` writes it, together with `reports/no2_regional/` and `reports/atlas_no2_regional.json`, from committed inputs. The choices behind it are recorded in [decisions.md](decisions.md).
+`python -m src.trend_results` writes it, together with `reports/no2_regional/`, `reports/atlas_no2_regional.json` and `reports/atlas_comparison_weather.json`, from committed inputs. The choices behind it are recorded in [decisions.md](decisions.md).
 
 - **Test:** the Kyiv NO₂ trend function, applied unchanged to every monthly series, for the full record and for months up to 2022-02.
 - **Multiple testing:** Benjamini-Hochberg within each variable (its places × periods); `significant` means `p_value_fdr < 0.05`. `fdr_family_size` records the family.

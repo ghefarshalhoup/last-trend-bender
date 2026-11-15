@@ -5,6 +5,12 @@ Newest first. Husam has not yet reviewed the entries marked **needs review**.
 
 ## 2026-11-15
 
+### D12. Name, painted base map, portrait slot
+- **Decided by:** G.
+- **Name:** the app is "The Last Trend Bender" (title centred). The repository keeps its name.
+- **Base map:** a painted illustration, AI-generated and marked as such on the map, warped onto the true projection (`docs/base-map.md`). Boxes and pins stay on true coordinates.
+- **Portrait:** shows `frontend/public/guide-portrait.png` when present, otherwise the drawn placeholder. The portrait must be an original character, not one from an existing franchise.
+
 ### D11. The guide becomes a portrait; the letter becomes a field guide
 - **Decided by:** G.
 - **What:** the guide is a portrait in the corner with a badge counting insights. Pressing it opens one insight per open card, built only from that card's fields (test, then "Separately…" for 2022, then coverage). The letter ("Field guide") lists the chosen element's variables with plain definitions and follows the element; its second tab keeps "How to read".
@@ -38,7 +44,7 @@ Newest first. Husam has not yet reviewed the entries marked **needs review**.
 - **What:** Benjamini-Hochberg is applied per variable (its places × periods, 12–16 tests), not across all 348 tests.
 - **Alternative rejected:** one family of 348 (stricter; used in the first version).
 - **Why:** a user reads one variable card at a time and compares places; the family they see is that variable.
-- **Effect:** together with D4, Prague NO₂ becomes a significant fall. Kraków NO₂ is just above the line (adjusted p = 0.052). No weather, water or earth verdict changes (smallest adjusted p = 0.11).
+- **Effect:** together with D4, Prague NO₂ becomes a significant fall. Kraków NO₂ is just above the line (adjusted p = 0.052). No weather, water or earth verdict changes (smallest adjusted p = 0.11; 0.144 after D8 added the comparison cities).
 
 ### D4. NO₂ in cloudy places is confirmed on April–September only
 - **Decided by:** G. **Needs review.**

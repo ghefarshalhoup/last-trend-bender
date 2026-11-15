@@ -2,11 +2,14 @@ import { memo } from 'react'
 import geoJson from './geo/atlas-geo.json'
 import { ATLAS_HEIGHT, ATLAS_WIDTH, linePath, projectLonLat } from './projection'
 import styles from './AtlasBase.module.css'
+import paintedBase from './assets/painted-base.webp'
 
 /**
- * The fixed base map: real geography (Natural Earth 1:10m) drawn through the
- * atlas projection, in an inked-parchment style. It never pans or zooms.
- * Everything here is decoration or orientation; evidence comes from layers.
+ * The fixed base map. A painted illustration (AI-generated, marked on the map) is warped onto the
+ * atlas projection: its six city dots and its border were fitted to the real ones (median border
+ * offset about 5 units of 1600; see docs/base-map.md). The vector geography (Natural Earth 1:10m)
+ * stays underneath for the edges the painting does not cover. Place boxes and pins are drawn
+ * from true coordinates on top, so evidence never depends on the painting. It never pans or zooms.
  */
 interface GeoFeature {
   properties: { kind: 'ukraine' | 'neighbour' | 'river'; name: string }
@@ -16,11 +19,9 @@ const features = (geoJson as unknown as { features: GeoFeature[] }).features
 
 const polygonPath = (f: GeoFeature) =>
   (f.geometry.coordinates as number[][][][]).map((poly) => poly.map((ring) => linePath(ring, true)).join('')).join('')
-const riverPath = (f: GeoFeature) => (f.geometry.coordinates as number[][][]).map((line) => linePath(line)).join('')
 
 const UKRAINE = features.filter((f) => f.properties.kind === 'ukraine').map(polygonPath).join('')
 const NEIGHBOURS = features.filter((f) => f.properties.kind === 'neighbour').map(polygonPath)
-const RIVERS = features.filter((f) => f.properties.kind === 'river').map((f) => ({ name: f.properties.name, d: riverPath(f) }))
 
 /** Orientation labels at their real coordinates. */
 export const CITIES = [
@@ -32,19 +33,7 @@ export const CITIES = [
   { name: 'Odesa', lon: 30.7233, lat: 46.4825 },
 ] as const
 
-// Decorative glyphs, placed where the terrain really is (Carpathians, Crimean Mountains, northern forests).
-const MOUNTAINS: [number, number][] = [
-  [22.9, 48.75], [23.4, 48.55], [23.9, 48.4], [24.4, 48.25], [24.9, 48.05], [23.6, 48.85], [24.2, 48.65], [34.1, 44.62], [34.6, 44.75],
-]
-const FORESTS: [number, number][] = [
-  [24.9, 51.3], [25.8, 51.45], [26.7, 51.35], [27.6, 51.3], [28.5, 51.2], [29.3, 51.05], [27.1, 50.85], [31.9, 51.75],
-  [32.7, 51.9], [33.5, 51.75], [24.6, 49.0], [25.2, 48.6], [37.6, 49.15], [38.3, 49.3], [29.0, 49.0], [31.9, 49.2],
-]
-
 function AtlasBaseImpl() {
-  const ukraineLabel = projectLonLat(31.7, 48.95)
-  const sea = projectLonLat(31.6, 44.75)
-  const azov = projectLonLat(36.6, 46.05)
   return (
     <g data-testid="atlas-base">
       <defs>
@@ -64,36 +53,14 @@ function AtlasBaseImpl() {
         <path d={UKRAINE} className={styles.shore} />
         {NEIGHBOURS.map((d, i) => <path key={i} d={d} className={styles.neighbour} />)}
         <path d={UKRAINE} className={styles.ukraine} />
-        {RIVERS.map((r, i) => <path key={i} d={r.d} className={styles.river} data-major={r.name === 'Dnieper'} />)}
-        {FORESTS.map(([lon, lat], i) => {
-          const [x, y] = projectLonLat(lon, lat)
-          return <path key={i} transform={`translate(${x} ${y})`} d="M-9 6l5-13 4 9 4-11 6 15z" className={styles.forest} />
-        })}
-        {MOUNTAINS.map(([lon, lat], i) => {
-          const [x, y] = projectLonLat(lon, lat)
-          return (
-            <g key={i} transform={`translate(${x} ${y})`}>
-              <path d="M-15 8L-3-11 2-3 6-9 16 8z" className={styles.mountain} />
-              <path d="M-3-11l3 9-4 5" className={styles.ridge} />
-            </g>
-          )
-        })}
-        <path d={UKRAINE} className={styles.borderGlow} />
-        <path d={UKRAINE} className={styles.border} data-testid="ukraine-outline" />
-        <text x={ukraineLabel[0]} y={ukraineLabel[1]} className={styles.country}>UKRAINE</text>
-        <text x={sea[0]} y={sea[1]} className={styles.seaLabel}>BLACK SEA</text>
-        <text x={azov[0]} y={azov[1]} className={styles.seaLabelSmall}>Sea of Azov</text>
+        <image href={paintedBase} x="0" y="0" width={ATLAS_WIDTH} height={ATLAS_HEIGHT} preserveAspectRatio="none" data-testid="painted-base" />
+        {/* The painting carries its own border, rivers and labels; the true outline and city points stay for alignment, invisible. */}
+        <path d={UKRAINE} className={styles.trueOutline} data-testid="ukraine-outline" />
         {CITIES.map((c) => {
           const [x, y] = projectLonLat(c.lon, c.lat)
-          return (
-            <g key={c.name} data-testid={`city-${c.name}`} data-x={x} data-y={y}>
-              {'capital' in c ? <circle cx={x} cy={y} r={9} className={styles.capitalRing} /> : null}
-              <circle cx={x} cy={y} r={5} className={styles.cityDot} />
-              <text x={x + 14} y={y + 7} className={styles.city}>{c.name}</text>
-            </g>
-          )
+          return <g key={c.name} data-testid={`city-${c.name}`} data-x={x} data-y={y}><circle cx={x} cy={y} r={5} className={styles.trueCity} /></g>
         })}
-        <rect width={ATLAS_WIDTH} height={ATLAS_HEIGHT} filter="url(#atlas-paper)" className={styles.paper} />
+        <text x={ATLAS_WIDTH - 36} y={ATLAS_HEIGHT - 34} className={styles.aiMark} data-testid="ai-mark">AI-generated illustration · aligned to true coordinates</text>
         <rect x="10" y="10" width={ATLAS_WIDTH - 20} height={ATLAS_HEIGHT - 20} className={styles.frameOuter} />
         <rect x="20" y="20" width={ATLAS_WIDTH - 40} height={ATLAS_HEIGHT - 40} className={styles.frameInner} />
       </g>
