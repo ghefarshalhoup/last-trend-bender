@@ -19,7 +19,9 @@ Writes strictly finite (`allow_nan=False`), schema-validated JSON artifacts to `
 | `reports/atlas_fire_cells.json` | `GET /api/fire/ukraine/cells` | Complete `0.25° × 0.25°` monthly grid (`2019-03` to `2022-08`) with filter slices + `cell_registry` & `cmr_month_coverage` |
 | `reports/atlas_water_ukraine.json` | `GET /api/water/ukraine` | Water regional context (`prectotcorr` + `vpd_kpa` primary; 6 Ukraine study boxes + 2 EU weather comparators) |
 | `reports/atlas_earth_ukraine.json` | `GET /api/land/ukraine` | Earth/`land` regional context (`gwettop` primary; depth wetness, skin temperature, albedo) |
-| `reports/atlas_air_weather_ukraine.json` | `GET /api/air/weather` | Additive Air meteorology context (`ws10m`, `cloud_amt`, `ps`, `clrsky_sfc_sw_dwn`, `cloud_radiative_attenuation_wm2`) & Kyiv wind/cloud sensitivity |
+| `reports/atlas_air_weather_ukraine.json` | `GET /api/air/weather` | Additive Air meteorology context (`ws10m`, `cloud_amt`, `ps`, `clrsky_sfc_sw_dwn`, `cloud_radiative_attenuation_wm2`), Kyiv NO₂ coverage/weather sensitivities, & Kraków/Prague 2022 comparison |
+
+Canonical multi-region trend verdicts (`reports/trend_results.json` served by `GET /api/trends`) and regional NO₂ series (`reports/atlas_no2_regional.json` served by `GET /api/air/no2`) are documented in [trend-results-schema.md](trend-results-schema.md).
 
 ## Endpoints
 
@@ -35,7 +37,7 @@ Optional query filters:
 - `metric_id`: exact curated metric ID (returns `404 variable_not_found` if absent)
 
 Every variable object guarantees:
-- `units`, `is_interval_scale`
+- `plain_definition` (concise one-sentence definition for every one of the 25 metrics), `units`, `is_interval_scale`
 - `dates` (`start`, `end`, `seasonal_window`, `n_years_available`)
 - `supported_baselines` (`2015-2019` strictly marked `supported: false`, `status: "withheld_insufficient_baseline"` for Fire metrics)
 - `spatial_support` (`presentation_type`, `resolution`, `sampling_method`, `supports_fine_heatmap`, `supports_spatial_cells`, `ukraine_region_ids`)
@@ -52,3 +54,7 @@ Every variable object guarantees:
 - GeoJSON `FeatureCollection` polygons for all 6 Ukraine regional study boxes (with `box_vs_ukr_adm0` spatial audit stats) plus 2 external EU weather comparator boxes.
 - Interval-scale / signed metrics (`precip_minus_pet_mm_day`, `ts`, `ts_minus_t2m_c`, `t2m`, `t2m_max`, `cloud_radiative_attenuation_wm2`) strictly set `pct_change: null` and `pct_change_status: "withheld_interval_scale"`.
 - Explicitly scoped as coarse `0.5°` / `1.0°` regional environmental context (cannot produce local heatmaps, do not rule out localized drought, and do not observe direct war infrastructure damage).
+
+### `GET /api/air/weather` (additive Kyiv & comparator diagnostics)
+- Carries `kyiv_no2_sensitivities`: Kyiv OMI NO₂ coverage-exclusion sensitivity (excluding the 37 `<50%`-coverage months, dropping Nov/Dec) and weather-covariate-adjusted Month-FE OLS + calendar-lag Newey–West HAC regressions (`ws10m`, `cloud_amt`, `ps`, `t2m`), plus Box–Tiao intervention references.
+- Carries `krakow_prague_2022_comparison`: March–August 2022 vs. `2015–2019` and `2019–2021` shifts across all 22 NASA POWER indicators and OMI NO₂ (`kyiv_no2_box`, `poland_krakow`, `czechia_prague`, `kharkiv_city`).

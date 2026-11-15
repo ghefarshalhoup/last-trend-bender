@@ -4,9 +4,9 @@
   "element": "air",
   "label": "NO2",
   "units": "molecules/cm^2",
-  "definition": "How much nitrogen dioxide, a gas released mainly by burning fuel, sits in the air column above the area, measured by the Aura satellite.",
-  "reading_hint": "Higher usually means more combustion (traffic, power, industry, fires), but weather also moves it.",
-  "review": "draft"
+  "definition": "How much nitrogen dioxide, a gas released mainly by burning fuel, sits in the lower atmosphere (tropospheric air column) above the area, measured by the Aura satellite.",
+  "reading_hint": "Higher usually means more combustion (traffic, power, industry, fires), but weather and sunlight also change how fast it disperses or breaks down.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "ws10m",
@@ -14,8 +14,8 @@
   "label": "Wind speed",
   "units": "m/s",
   "definition": "How fast the wind blows 10 metres above the ground.",
-  "reading_hint": "Stronger wind spreads pollution out; calm air lets it build up.",
-  "review": "draft"
+  "reading_hint": "Stronger wind spreads pollution out and increases drying; calm air lets pollution build up.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "cloud_amt",
@@ -24,204 +24,204 @@
   "units": "%",
   "definition": "The share of the sky covered by cloud.",
   "reading_hint": "Clouds also block the satellite's view, so this helps judge how much to trust NO₂ months.",
-  "review": "draft"
+  "review": "science_reviewed"
  },
  {
   "metric_id": "ps",
   "element": "air",
   "label": "Pressure",
   "units": "kPa",
-  "definition": "The air pressure at the ground.",
-  "reading_hint": "High pressure usually means calm, clear weather; low pressure means storms and cloud.",
-  "review": "draft"
+  "definition": "The air pressure at the ground surface.",
+  "reading_hint": "Changes over time track high-pressure fair weather versus low-pressure storms; average levels also depend on ground elevation.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "clrsky_sfc_sw_dwn",
   "element": "air",
   "label": "Clear-sky sunlight",
   "units": "MJ/m^2/day",
-  "definition": "The sunlight that would reach the ground if the sky were cloud-free.",
-  "reading_hint": "Set by the season and latitude; it is the sunny-day ceiling.",
-  "review": "draft"
+  "definition": "The sunlight energy that would reach the ground if the sky were cloud-free.",
+  "reading_hint": "Mainly set by the season and latitude (plus atmospheric haze and water vapour); it is the cloudless ceiling.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "cloud_radiative_attenuation_wm2",
   "element": "air",
   "label": "Cloud sunlight reduction",
   "units": "W/m^2",
-  "definition": "How much sunlight the clouds blocked: clear-sky sunlight minus actual sunlight.",
+  "definition": "How much sunlight power clouds blocked before reaching the ground: clear-sky minus actual sunlight, converted to watts per square metre.",
   "reading_hint": "Larger means cloudier skies took away more sun.",
-  "review": "draft"
+  "review": "science_reviewed"
  },
  {
   "metric_id": "fire_type0_per_1k_km2_day",
   "element": "fire",
   "label": "Vegetation fire density",
   "units": "det / 1000 km^2 / day",
-  "definition": "How many satellite-detected heat spots from presumed vegetation fires appear per 1,000 km² each day.",
-  "reading_hint": "Higher means more burning detected, from wildfires, farm burning or war-related fires; the satellite cannot say which.",
-  "review": "draft"
+  "definition": "How many satellite-detected heat spots from presumed vegetation fires appear per 1,000 km² per day observed by the satellite (nominal and high confidence).",
+  "reading_hint": "Counts detected pixels across satellite overpasses, not distinct fires or burned area; higher means more detected burning from wildfires, farm burning or war-related fires.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "fire_type2_per_1k_km2_day",
   "element": "fire",
   "label": "Static heat sources",
   "units": "det / 1000 km^2 / day",
-  "definition": "Heat spots on land that are not vegetation fires, such as gas flares and industrial sites.",
-  "reading_hint": "A steady background reading; changes can mean industry started, stopped or was damaged.",
-  "review": "draft"
+  "definition": "Persistent stationary heat spots on land that are not vegetation fires, such as steelworks, industrial plants and gas flares, per 1,000 km² per satellite-observed day.",
+  "reading_hint": "A steady industrial background reading; sharp drops or rises usually mean plants or flares stopped, started or were damaged.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "t2m",
   "element": "fire",
   "label": "Air temperature",
   "units": "°C",
-  "definition": "The average air temperature 2 metres above the ground.",
+  "definition": "The monthly average air temperature 2 metres above the ground.",
   "reading_hint": "The basic measure of warm or cold.",
-  "review": "draft"
+  "review": "science_reviewed"
  },
  {
   "metric_id": "t2m_max",
   "element": "fire",
   "label": "Peak temperature",
   "units": "°C",
-  "definition": "The hottest air temperature reached each day, averaged over the month.",
-  "reading_hint": "Shows daytime heat, which drives drought and wildfire risk.",
-  "review": "draft"
+  "definition": "The single hottest air temperature reached 2 metres above the ground at any time during the month (monthly extreme peak, not an average of daily highs).",
+  "reading_hint": "Captures monthly heat extremes, which spike wildfire and heat-stress risk.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "dtr_c",
   "element": "fire",
   "label": "Temperature range",
   "units": "°C",
-  "definition": "The gap between the hottest and coldest air temperature of the day.",
-  "reading_hint": "A big gap means clear, dry days and cold nights; a small gap means cloudy or humid weather.",
-  "review": "draft"
+  "definition": "The daily gap between daytime high and nighttime low air temperature, averaged over the month.",
+  "reading_hint": "A wider average daily swing points to clear, dry days and cooler nights; a narrow gap points to cloudy or humid air.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "allsky_sfc_sw_dwn",
   "element": "fire",
   "label": "All-sky sunlight",
   "units": "MJ/m^2/day",
-  "definition": "The sunlight actually reaching the ground, with clouds included.",
-  "reading_hint": "Less than clear-sky sunlight whenever it is cloudy.",
-  "review": "draft"
+  "definition": "The sunlight energy actually reaching the ground each day, with clouds included.",
+  "reading_hint": "Less than clear-sky sunlight whenever it is cloudy; drives surface heating and evaporation.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "pet_fao56_mm_day",
   "element": "fire",
   "label": "Evaporation demand (PET)",
   "units": "mm/day",
-  "definition": "How much water the air and sun could pull from a well-watered field in a day (the FAO-56 standard estimate).",
-  "reading_hint": "Higher means thirstier air and faster drying of soil and crops.",
-  "review": "draft"
+  "definition": "How much water the air and sun could pull in a day from a hypothetical well-watered reference grass field (the FAO-56 standard benchmark).",
+  "reading_hint": "Higher means thirstier air and potential faster drying of soil and crops; actual evaporation is lower when soils are dry.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "prectotcorr",
   "element": "water",
   "label": "Rainfall",
   "units": "mm/day",
-  "definition": "The rain and snow that fell, as millimetres of water per day.",
+  "definition": "The total rain and melted snowfall reaching the ground, as millimetres of liquid water per day (bias-corrected reanalysis).",
   "reading_hint": "The main supply of water to land.",
-  "review": "draft"
+  "review": "science_reviewed"
  },
  {
   "metric_id": "vpd_kpa",
   "element": "water",
   "label": "VPD (drying demand)",
   "units": "kPa",
-  "definition": "How dry the air is, measured as how much more moisture it could still hold.",
-  "reading_hint": "Higher means the air pulls water from plants and soil harder.",
-  "review": "draft"
+  "definition": "How dry the air feels to plants: the gap between saturation vapour pressure at that temperature and the air's actual vapour pressure.",
+  "reading_hint": "Higher means the air pulls moisture out of leaves and damp soil faster.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "qv2m",
   "element": "water",
   "label": "Specific humidity",
   "units": "g/kg",
-  "definition": "The weight of water vapour in the air, in grams per kilogram of air.",
-  "reading_hint": "Higher means the air holds more moisture.",
-  "review": "draft"
+  "definition": "The mass of water vapour mixed into the air, in grams per kilogram of moist air at 2 metres height.",
+  "reading_hint": "Higher means the air actually carries more moisture, independent of temperature.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "rh2m",
   "element": "water",
   "label": "Relative humidity",
   "units": "%",
-  "definition": "How full of water vapour the air is, as a percentage of the most it could hold at that temperature.",
-  "reading_hint": "Low values mean dry air.",
-  "review": "draft"
+  "definition": "How close the air's water vapour is to saturation, as a percentage of the maximum it could hold at that temperature.",
+  "reading_hint": "Lower values mean drier air, either because moisture fell or because temperature rose.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "evptrns_mm_day",
   "element": "water",
   "label": "Transpiration",
   "units": "mm/day",
-  "definition": "The water that plants release into the air through their leaves, per day.",
-  "reading_hint": "Higher means growing vegetation is active and using water.",
-  "review": "draft"
+  "definition": "Model-estimated water that plants release into the air through their leaves each day (MERRA-2 canopy transpiration, converted from energy flux).",
+  "reading_hint": "Drops near zero in dormant winter; higher in warm months means active, growing vegetation with available root water.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "precip_minus_pet_mm_day",
   "element": "water",
   "label": "Water balance (P - PET)",
   "units": "mm/day",
-  "definition": "Rainfall minus the water the air could evaporate: the surplus or deficit of water.",
-  "reading_hint": "Below zero means more water is being demanded than rain supplies.",
-  "review": "draft"
+  "definition": "Total precipitation (rain and melted snow) minus reference evaporation demand (PET): the climatic water surplus or deficit.",
+  "reading_hint": "Below zero (common in summer) means atmospheric demand exceeds water supplied by precipitation.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "gwettop",
   "element": "land",
   "label": "Surface soil wetness",
   "units": "fraction",
-  "definition": "How wet the top 5 cm of soil is, from 0 (dry) to 1 (saturated).",
-  "reading_hint": "Reacts quickly to rain and dry spells.",
-  "review": "draft"
+  "definition": "Reanalysis model estimate of how wet the top 5 cm of soil is, from 0 (completely water-free) to 1 (saturated).",
+  "reading_hint": "Reacts quickly to recent rain and dry spells.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "gwetroot",
   "element": "land",
   "label": "Root-zone wetness",
   "units": "fraction",
-  "definition": "How wet the soil is down to 1 metre, where most roots grow, from 0 (dry) to 1 (saturated).",
-  "reading_hint": "Shows whether crops and plants have water in reserve.",
-  "review": "draft"
+  "definition": "Reanalysis model estimate of how wet the soil is down to 1 metre, where most roots grow, from 0 (completely water-free) to 1 (saturated).",
+  "reading_hint": "Shows whether crops and vegetation have moisture in reserve.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "gwetprof",
   "element": "land",
   "label": "Full-profile wetness",
   "units": "fraction",
-  "definition": "How wet the whole soil column is, from 0 (dry) to 1 (saturated).",
-  "reading_hint": "Changes slowly; shows long dry or wet periods.",
-  "review": "draft"
+  "definition": "Reanalysis model estimate of wetness across the entire soil column from the surface to bedrock, from 0 (completely water-free) to 1 (saturated).",
+  "reading_hint": "Changes slowly; tracks multi-season dry or wet periods.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "ts",
   "element": "land",
   "label": "Surface temperature",
   "units": "°C",
-  "definition": "The temperature of the ground surface itself, not the air above it.",
-  "reading_hint": "Rises with sun and dry ground.",
-  "review": "draft"
+  "definition": "The modelled radiative skin temperature of the ground surface itself, rather than the air 2 metres above it.",
+  "reading_hint": "Rises with strong sun and dry ground.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "ts_minus_t2m_c",
   "element": "land",
   "label": "Surface-air diff",
   "units": "°C",
-  "definition": "How much hotter or cooler the ground surface is than the air just above it.",
-  "reading_hint": "A large positive gap points to hot, dry, bare ground.",
-  "review": "draft"
+  "definition": "How much warmer or cooler the modelled ground skin surface is than the air 2 metres above it, as a 24-hour monthly mean.",
+  "reading_hint": "Across 24-hour monthly averages, values stay near zero (-1.4 to +2.0 °C); positive summer shifts point to stronger heating or drier ground, while winter values often turn negative under snow or radiative cooling.",
+  "review": "science_reviewed"
  },
  {
   "metric_id": "allsky_srf_alb",
   "element": "land",
   "label": "Albedo",
   "units": "dimensionless",
-  "definition": "The share of incoming sunlight the ground reflects, from 0 (none) to 1 (all).",
-  "reading_hint": "Snow and bright soil reflect more; dark forest and wet fields reflect less.",
-  "review": "draft"
+  "definition": "The share of incoming sunlight the ground reflects back upward, from 0 (none) to 1 (all).",
+  "reading_hint": "Snow and bright bare soil reflect more; dark forest and green or wet fields reflect less.",
+  "review": "science_reviewed"
  }
 ]
