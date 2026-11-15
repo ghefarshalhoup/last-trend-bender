@@ -39,7 +39,7 @@ describe('neutral opening state', () => {
   it('shows the title, four elements with true availability, and no scientific content', async () => {
     serve()
     await openNeutral()
-    expect(screen.getByRole('heading', { level: 1, name: 'Environmental Fingerprints of War' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'The Last Trend Bender' })).toBeInTheDocument()
     expect(screen.getByTestId('choose-prompt')).toHaveTextContent('Choose an element to explore')
     for (const id of ['air', 'fire', 'land', 'water']) expect(screen.getByTestId(`element-${id}`)).toBeInTheDocument()
     expect(screen.getByTestId('element-air')).toHaveAttribute('aria-disabled', 'false')

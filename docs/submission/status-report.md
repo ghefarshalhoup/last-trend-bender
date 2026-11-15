@@ -17,7 +17,7 @@ Deadline: **Sunday 15 November, 23:59 local time**. Press "Submit for Judging" b
 | The challenge asks for | Status | Where |
 | --- | --- | --- |
 | Select variables from Earth science missions or models | Done | 25 variables from OMI, VIIRS, MERRA-2 and CERES, in four groups |
-| Acquire them for a particular region | Done | 9 places; the user chooses one on the map |
+| Acquire them for a particular region | Done | 7 places in Ukraine, chosen on the map, plus Kraków or Prague side by side |
 | Visualise a time series over a long enough period | Done | Monthly series 2015–2022 on every card; fire 2019–2022 |
 | Rate of change over time | Done | Rate per year with a 95% range |
 | Test significance (t-test, Mann-Kendall, confidence intervals) | Done | Regression t-test with robust errors, confidence interval, Mann-Kendall stored as a check, correction for many tests |
@@ -41,7 +41,7 @@ Deadline: **Sunday 15 November, 23:59 local time**. Press "Submit for Judging" b
 ## Complete
 
 - Data pipeline for NO₂ (8 places), fire, and 22 weather, water and earth variables.
-- Trend verdicts for all 372 place × variable × period combinations.
+- Trend verdicts for all 392 place × variable × period combinations (368 tested, 24 with too little data).
 - Atlas web app: two-step flow, cards, guided example, "How to read" guide, mobile layout.
 - Tests: 48 analysis, 66 backend, 50 frontend unit, 23 browser. All pass, including the fire tests with the raw download.
 

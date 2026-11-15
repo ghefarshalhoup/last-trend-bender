@@ -4,11 +4,11 @@ Everything below is English and ready to paste. Items in **[brackets]** need the
 
 ## Project Name
 
-Environmental Fingerprints of War
+The Last Trend Bender
 
 ## High-Level Project Summary
 
-Environmental Fingerprints of War is a web atlas that turns anyone into an Earth-system trend detective. You pick a place in or near Ukraine and a period, then open up to four NASA variables as cards over an illustrated map. Each card shows the monthly time series, the rate of change per year with its 95% range, and a plain verdict: significant, not significant, or too little data. We built it around one hard question: did the 2022 invasion leave a mark that satellites can see? The honest answer is the point of the tool. Across 348 trend tests on 25 variables, only one place shows a significant long-term trend, and it is Prague, where NO₂ was already falling before the war. Kyiv and Kharkiv lost almost 30% of their NO₂ in spring and summer 2022, but that is a sudden step, not a trend. The atlas teaches the difference between a trend, a shock, and noise, and it never shows a number it cannot defend.
+The Last Trend Bender is a web atlas that turns anyone into an Earth-system trend detective, reading the environmental fingerprints of war from space. You pick a place in Ukraine and a period, can set a city outside the war beside it, then open up to three NASA variables as cards over an illustrated map. Each card shows the monthly time series, the rate of change per year with its 95% range, and a plain verdict: significant, not significant, or too little data. We built it around one hard question: did the 2022 invasion leave a mark that satellites can see? The honest answer is the point of the tool. Across 368 trend tests on 25 variables, only one place shows a significant long-term trend, and it is Prague, where NO₂ was already falling before the war. Kyiv and Kharkiv lost almost 30% of their NO₂ in spring and summer 2022, but that is a sudden step, not a trend. The atlas teaches the difference between a trend, a shock, and noise, and it never shows a number it cannot defend.
 
 ## Link to Project Demo
 
@@ -24,7 +24,8 @@ https://github.com/ghefarshalhoup/war-environment-tracker
 
 ### What it does
 
-1. **Choose a place and a period.** Nine study places: six regions of Ukraine, Kyiv city, Kharkiv city, and two comparison cities outside the war (Kraków and Prague). Two periods: the full record, or only the months before the invasion.
+1. **Choose a place and a period.** Seven places in Ukraine: six study regions (including Kyiv city) and Kharkiv city. Two periods, with their dates on the buttons: the full record (2015–2022) or only the months before the invasion (2015 – February 2022).
+   - **Compare with a city outside the war.** Kraków or Prague. The screen splits: your Ukrainian place on the left, the city on the right, the same variables side by side, each with its own test.
 2. **Choose variables.** 25 variables in four groups, each with a one-sentence definition:
    - **Air:** NO₂, wind, cloud, pressure, sunlight.
    - **Fire:** vegetation fires, industrial heat sources, temperature, evaporation demand.
@@ -41,7 +42,7 @@ https://github.com/ghefarshalhoup/war-environment-tracker
 
 - **Data pipeline (Python).** Daily and monthly NASA data are cleaned and averaged per place. Missing days are never filled in. Months where the satellite saw the place on fewer than half the days are flagged and drawn as hollow points.
 - **Trend test.** For every series we fit a straight line with one offset per calendar month, which removes the seasonal cycle, and Newey-West standard errors, which allow for month-to-month memory. Seasonal Theil-Sen slopes and a modified Mann-Kendall test are stored as checks.
-- **Many tests, honest verdicts.** We run 348 tests, so some would look significant by luck. We apply the Benjamini-Hochberg correction within each variable.
+- **Many tests, honest verdicts.** We run 368 tests, so some would look significant by luck. We apply the Benjamini-Hochberg correction within each variable.
 - **Cloudy places.** A NO₂ trend is only called significant if it holds on well-observed months alone (April–September where winter is too cloudy).
 - **Too little data is a result.** Fire has four comparable seasons, so its cards say "Too little data" and show the 2022 change as a description only.
 - **Web app.** A read-only FastAPI service serves the results. A React app draws the atlas and the cards. Nothing is computed in the browser, so every number on screen can be traced to a file in the repository.
@@ -74,7 +75,8 @@ Yes. **[Confirm the list.]**
 - **Claude (Anthropic), through Claude Code:** wrote most of the web frontend, parts of the backend and of the analysis scripts, tests, and documentation, and drafted this text. Commits written with Claude carry a `Co-Authored-By: Claude` line, and the repository README states it.
 - **Codex / ChatGPT (OpenAI):** code review, a scientific audit of the analysis, and validation of the data downloads.
 - **[Any tool Husam used.]**
-- **No AI-generated images, video or audio.** The map is drawn by code from Natural Earth data. Charts are drawn from our result files. No NASA logos or mission identifiers are used or modified.
+- **One AI-generated image: the painted base map.** It carries a visible "AI-generated illustration" mark on the map. We warped it onto the true map projection so its border and city dots match real geography (`docs/base-map.md`); every study box and pin is drawn from true coordinates on top. **[Name the tool that made the painting.]**
+- **No other AI-generated images, video or audio.** Charts are drawn from our result files. The guide's portrait is **[an original image by … / a drawn placeholder]**. No NASA logos or mission identifiers are used or modified.
 - The team chose the question, the places, the statistical rules and every decision recorded in `docs/decisions.md`, and reviewed the results.
 
 ## NASA Data

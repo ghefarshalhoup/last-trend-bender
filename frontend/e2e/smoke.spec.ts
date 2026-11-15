@@ -52,7 +52,7 @@ test('neutral opening: Ukraine (with Crimea) framed, four elements, no scientifi
   const requests: string[] = []
   page.on('request', (r) => r.url().includes('/api/') && requests.push(new URL(r.url()).pathname))
   await open(page)
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Environmental Fingerprints of War')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('The Last Trend Bender')
   await expect(page.getByTestId('choose-prompt')).toHaveText('Choose an element to explore')
   await expect(page.getByTestId('element-air')).toHaveAttribute('aria-disabled', 'false')
   for (const id of ['fire', 'land', 'water']) await expect(page.getByTestId(`element-${id}`)).toContainText('Coming later')

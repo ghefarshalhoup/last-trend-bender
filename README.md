@@ -1,4 +1,6 @@
-# War Environment Tracker
+# The Last Trend Bender
+
+*Environmental fingerprints of war, seen from space.* (Repository: war-environment-tracker.)
 
 A NASA Earth-observation hackathon project investigating how armed conflicts change environmental indicators before and during war.
 
@@ -66,4 +68,4 @@ python -m src.trend_results   # regional NO2 monthly series + reports/trend_resu
 
 ## Use of AI
 
-Parts of this repository were written with AI assistance: Claude (Anthropic, via Claude Code) for most of the frontend, parts of the backend and analysis scripts, tests and documentation; Codex / ChatGPT (OpenAI) for review and audits. Commits written with Claude carry a `Co-Authored-By: Claude` trailer. No images, video or audio in this repository are AI-generated: the atlas map is drawn by code from Natural Earth data and all charts come from the result files.
+Parts of this repository were written with AI assistance: Claude (Anthropic, via Claude Code) for most of the frontend, parts of the backend and analysis scripts, tests and documentation; Codex / ChatGPT (OpenAI) for review and audits. Commits written with Claude carry a `Co-Authored-By: Claude` trailer. One image is AI-generated: the painted base map of the atlas (`frontend/src/features/atlas/assets/painted-base.webp`). It shows a visible "AI-generated illustration" mark and is warped onto the true projection (see `docs/base-map.md`); all study boxes and pins are drawn from true coordinates. No other images, video or audio are AI-generated, and all charts come from the result files.

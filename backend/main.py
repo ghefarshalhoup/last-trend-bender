@@ -206,7 +206,8 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError) as exc:
             raise ApiError(503, "data_unavailable", f"Comparison weather could not be read: {exc}") from exc
-        regions = payload.get("result", {}).get("context_weather_regions") if isinstance(payload, dict) else None
+        result = payload.get("result") if isinstance(payload, dict) else None
+        regions = result.get("context_weather_regions") if isinstance(result, dict) else None
         if not isinstance(regions, dict):
             raise ApiError(503, "data_unavailable", "Comparison weather file has no regions object.")
         return JSONResponse(content=payload)
