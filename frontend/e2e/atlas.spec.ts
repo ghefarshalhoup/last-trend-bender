@@ -8,6 +8,14 @@ async function open(page: Page) {
   await expect(page.getByTestId('place-kyiv_no2_box')).toBeVisible()
 }
 
+/** Kyiv city, full record, Air: NO₂ beside wind and cloud. */
+async function openKyivAir(page: Page) {
+  await page.getByTestId('place-kyiv_no2_box').click()
+  await page.getByTestId('investigate').click()
+  await page.getByTestId('element-air').click()
+  for (const id of ['no2_mean_molec_cm2', 'ws10m', 'cloud_amt']) await page.getByTestId(`variable-${id}`).click()
+}
+
 test('phase 1: fixed illustrated map with place pins, no tiles, no cards', async ({ page }) => {
   const tiles: string[] = []
   page.on('request', (r) => { if (/tile|arcgisonline/.test(r.url())) tiles.push(r.url()) })
@@ -143,22 +151,24 @@ test('dated periods and the Kraków comparison: temperature data, fire not colle
   await expect(other.getByTestId('card-t2m').getByTestId('trend-chart')).toBeVisible()
 })
 
-test('guided example: Kyiv NO₂ with wind and cloud, numbers from the API', async ({ page }) => {
+test('Kyiv NO₂ with wind and cloud: numbers from the API, insights from the portrait', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
   await open(page)
-  await page.getByTestId('guided-example').click()
+  await openKyivAir(page)
   const no2 = page.getByTestId('card-no2_mean_molec_cm2')
   await expect(no2.getByTestId('card-verdict')).toHaveText('○ No significant trend')
   await expect(no2.getByTestId('card-rate')).toContainText('−0.0418 ×10¹⁵ molecules/cm² per year')
   await expect(no2.getByTestId('card-seasonal')).toContainText('−28.0% vs 2015–2019')
   await expect(page.getByTestId('card-ws10m').getByTestId('card-verdict')).toBeVisible()
   await expect(page.getByTestId('card-cloud_amt').getByTestId('card-verdict')).toBeVisible()
-  // the example opens the guide's insights, one per card
+  // the portrait opens the guide's insights, one per card
+  await expect(page.getByTestId('avatar-badge')).toHaveText('3')
+  await page.getByTestId('avatar-button').click()
   const panel = page.getByTestId('avatar-panel')
   await expect(panel.getByTestId('insight-no2_mean_molec_cm2-kyiv_no2_box')).toContainText('averaged 28% below the 2015–2019 average')
   await expect(page.getByTestId('avatar-badge')).toHaveText('3')
   await page.waitForTimeout(400)
-  await page.screenshot({ path: `${SHOTS}/2-guided-example-desktop.png` })
+  await page.screenshot({ path: `${SHOTS}/2-kyiv-insights-desktop.png` })
   // folded back to the portrait, the guide never hides a chart at this size
   await page.getByTestId('avatar-close').click()
   await expect(panel).toHaveCount(0)
@@ -176,10 +186,10 @@ test('guided example: Kyiv NO₂ with wind and cloud, numbers from the API', asy
 test('mobile: cards stack under the map with no sideways scroll', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await open(page)
-  await page.getByTestId('guided-example').click()
+  await openKyivAir(page)
   await expect(page.getByTestId('card-no2_mean_molec_cm2').getByTestId('card-verdict')).toBeVisible()
   expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0)
-  await page.screenshot({ path: `${SHOTS}/4-guided-example-mobile.png`, fullPage: true })
+  await page.screenshot({ path: `${SHOTS}/4-cards-mobile.png`, fullPage: true })
 })
 
 test('the field guide: variables of the chosen element with definitions, how to read, Escape closes', async ({ page }) => {
@@ -232,8 +242,7 @@ test('Show me around: a tour of the current controls, without changing anything,
   await expect(popover).toHaveCount(0)
 
   // after Investigate the tour explains the evidence screen and skips nothing on screen
-  await page.getByTestId('guided-example').click()
-  await page.getByTestId('avatar-close').click()
+  await openKyivAir(page)
   await page.getByTestId('show-me-around').click()
   await expect(popover).toContainText('Variables')
   await expect(popover).toContainText('1 of 7')

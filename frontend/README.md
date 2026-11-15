@@ -9,7 +9,7 @@ Requires Node ≥ 20.19 and, for the backend, Python with `pip install -r backen
 
 On Windows use `python` (not `python3`) for the backend and open `http://localhost:5173/#/atlas`.
 
-**Atlas flow:** phase 1, press a place pin (or Kraków/Prague in the bar), pick a period, press Investigate (or *Start guided example*). Phase 2, choose an element (top right), tick up to 4 variables; each opens as a card: timeline with the invasion marked, verdict (● significant, ○ not significant, – not assessed), rate with 95% range, descriptive Mar–Aug 2022 change; *i* turns the card over (definition, source, test, limits). Verdicts come from `/api/trends` (`docs/trend-results-schema.md`); without a result a card says "Not assessed".
+**Atlas flow:** phase 1, press a place pin (or Kraków/Prague in the bar), pick a period, press Investigate (or *Show me around* for a tour of the controls). Phase 2, choose an element (top right), tick up to 4 variables; each opens as a card: timeline with the invasion marked, verdict (● significant, ○ not significant, – not assessed), rate with 95% range, descriptive Mar–Aug 2022 change; *i* turns the card over (definition, source, test, limits). Verdicts come from `/api/trends` (`docs/trend-results-schema.md`); without a result a card says "Not assessed".
 
 Who does what next: [`docs/team-handoff.md`](../docs/team-handoff.md). Plain definitions of the 25 variables: [`docs/variable-definitions.md`](../docs/variable-definitions.md).
 

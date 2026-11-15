@@ -24,14 +24,6 @@ export const MAX_CARDS = 3
 export const COMPARE_PLACES = ['poland_krakow', 'czechia_prague'] as const
 const ALL_ELEMENTS: ElementId[] = ['air', 'fire', 'land', 'water']
 
-/** The guided example: Kyiv NO₂ beside the two weather variables that most affect it. */
-export const GUIDED_EXAMPLE = {
-  place: 'kyiv_no2_box',
-  window: 'full_record' as WindowId,
-  element: 'air' as ElementId,
-  cards: ['no2_mean_molec_cm2', 'ws10m', 'cloud_amt'],
-}
-
 interface Props {
   cases: CatalogBundle
   catalog: VariableCatalog
@@ -60,7 +52,6 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
   /** The card the avatar reads (metric and place); the latest opened, or the one last clicked. */
   const [focus, setFocus] = useState<{ metric: string; place: string | null } | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
-  const [example, setExample] = useState(false)
   const [scrollOpen, setScrollOpen] = useState(false)
   const [scrollTab, setScrollTab] = useState<'variables' | 'help'>('variables')
   const [insightsOpen, setInsightsOpen] = useState(false)
@@ -82,7 +73,6 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
   )
 
   const edit = () => {
-    setExample(false)
     setNotice(null)
   }
   const choosePlace = (id: string) => {
@@ -102,18 +92,6 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
     setCards((c) => [...c, v.metric_id])
     setFocus({ metric: v.metric_id, place })
   }
-  const startExample = () => {
-    setPlace(GUIDED_EXAMPLE.place)
-    setWindow(GUIDED_EXAMPLE.window)
-    setElement(GUIDED_EXAMPLE.element)
-    setCards(GUIDED_EXAMPLE.cards)
-    setFocus({ metric: GUIDED_EXAMPLE.cards[0] ?? '', place: GUIDED_EXAMPLE.place })
-    setCompare(null)
-    setNotice(null)
-    setPhase('investigate')
-    setExample(true)
-    setInsightsOpen(true)
-  }
 
   const cardState = (v: VariableEntry, at: string | null = place): SeriesState => {
     const s = states[endpointFor(v, at, no2Places)]
@@ -130,7 +108,7 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
   const speech = speechText({ phase, place, element, notice, openVars })
   // One insight per open card and place, built from that card's own fields; the focused card first.
   const insightGroups: InsightGroup[] = shownPlaces.map((at) => ({
-    label: compare && at ? placeLabel(at) : example ? 'Guided example: Kyiv city' : null,
+    label: compare && at ? placeLabel(at) : null,
     items: [...openVars]
       .sort((a, b) => Number(b === focusVar && at === focusPlace) - Number(a === focusVar && at === focusPlace))
       .filter((v) => cardState(v, at).status === 'ready')
@@ -153,9 +131,6 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
       <DecorativeFrame className={pageStyles.frame}>
         <header className={pageStyles.header}>
           <TitleBadge />
-          <button type="button" className={styles.tourButton} onClick={() => startTour(phase)} data-testid="show-me-around">
-            Show me around
-          </button>
         </header>
 
         <div className={pageStyles.controlsSlot}>
@@ -170,7 +145,7 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
                 <PeriodGroup window={window} onChange={(w) => { edit(); setWindow(w) }} label="2 · Period" />
                 <div className={styles.actions}>
                   <button type="button" className={styles.primary} onClick={investigate} data-testid="investigate" data-tour="investigate">Investigate</button>
-                  <button type="button" className={styles.secondary} onClick={startExample} data-testid="guided-example">Start guided example</button>
+                  <button type="button" className={styles.secondary} onClick={() => startTour('choose')} data-testid="show-me-around">Show me around</button>
                 </div>
               </>
             ) : (
@@ -183,6 +158,9 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
                 <CompareGroup compare={compare} onChange={(c) => { edit(); setCompare(c) }} />
                 <PeriodGroup window={window} onChange={(w) => { edit(); setWindow(w) }} label="Period" />
                 <VariablePicker catalog={catalog} element={element} place={place} no2Places={no2Places} cards={cards} onToggle={toggleCard} />
+                <div className={styles.actions}>
+                  <button type="button" className={styles.secondary} onClick={() => startTour('investigate')} data-testid="show-me-around">Show me around</button>
+                </div>
               </>
             )}
           </div>
@@ -457,7 +435,7 @@ function HowToRead() {
 function speechText({ phase, place, element, notice, openVars }: { phase: Phase; place: string | null; element: ElementId | null; notice: string | null; openVars: VariableEntry[] }): string | null {
   if (notice) return notice
   if (phase === 'choose') {
-    if (!place) return 'Press a place on the map, or start the guided example. Each place is a study box; its true size appears when you point at it.'
+    if (!place) return 'Press a place on the map, or press Show me around for a quick tour. Each place is a study box; its true size appears when you point at it.'
     return `${placeLabel(place)} is chosen. Pick a period and press Investigate.`
   }
   if (!openVars.length) return element ? 'Pick variables in the bar above.' : 'Choose an element at the top right. The field guide explains its variables.'

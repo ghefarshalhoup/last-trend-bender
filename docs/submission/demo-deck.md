@@ -18,6 +18,6 @@ A built deck is in `demo-deck.pptx` / `demo-deck.pdf`; this file is its script.
 - **0:00** "We are **[team]**."
 - **0:02** "Our challenge: be an Earth system trend detective."
 - **0:05** "The Last Trend Bender: environmental fingerprints of war, seen from space."
-- **0:10** Screen recording: pick Kyiv, press the guided example, three cards open. "Pick a place, pick NASA variables. Each card shows the trend, the rate, and whether it is significant."
+- **0:10** Screen recording: pick Kyiv, choose Air, open NO₂, wind and cloud. "Pick a place, pick NASA variables. Each card shows the trend, the rate, and whether it is significant."
 - **0:20** Kharkiv and Prague cards side by side. "Kyiv and Kharkiv lost almost 30% of their NO₂ in 2022. But the only significant long-term trend is in Prague, and it started before the war. A shock is not a trend."
 - **0:27** "Built on open NASA data, for any region that needs the truth."

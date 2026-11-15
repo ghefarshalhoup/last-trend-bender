@@ -36,7 +36,7 @@ https://github.com/ghefarshalhoup/war-environment-tracker
    - **Where?** The chosen place, drawn at its true size on the map.
    - **How much?** The rate per year with a 95% confidence range, and the change in March–August 2022 against earlier years.
    - **Is it significant?** A verdict symbol, the p-value, and the test used.
-4. **Watch a guided example.** One button opens Kyiv with NO₂, wind and cloud, and a guide explains what the cards show.
+4. **Take the tour.** "Show me around" highlights each control in turn with a short explanation, on the start screen and again on the evidence screen. It never changes what you selected.
 
 ### How it works
 
