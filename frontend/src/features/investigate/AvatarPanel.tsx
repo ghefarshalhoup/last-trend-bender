@@ -77,6 +77,7 @@ export function AvatarPanel({ accent, speech, groups, open, onToggle, action }: 
           aria-controls={open ? panelId : undefined}
           onClick={onToggle}
           data-testid="avatar-button"
+          data-tour="avatar"
         >
           <AvatarMark size={56} accent={accent} />
           {count > 0 ? <span className={styles.badge} key={count} data-testid="avatar-badge">{count}</span> : null}

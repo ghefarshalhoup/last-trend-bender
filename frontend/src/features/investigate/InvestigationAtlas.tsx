@@ -5,10 +5,11 @@ import { AtlasBase } from '../atlas/AtlasBase'
 import pageStyles from '../atlas/AtlasPage.module.css'
 import { ElementMedallions } from '../atlas/ElementMedallions'
 import { ScrollButton, ScrollOverlay } from '../atlas/EvidenceScroll'
-import { ATLAS_HEIGHT, ATLAS_WIDTH, atlasPercent, projectLonLat, ringPath } from '../atlas/projection'
+import { ATLAS_VIEW, ATLAS_VIEWBOX, atlasPercent, projectLonLat, ringPath } from '../atlas/projection'
 import { resolveElements, type ElementId } from '../explorer/elements'
 import { AvatarPanel, type InsightGroup } from './AvatarPanel'
 import { VariableGuide } from './VariableGuide'
+import { startTour } from './tour'
 import { TitleBadge } from '../explorer/TitleBadge'
 import { extraSupport, hasDataFor, NO_COMPARISON_WEATHER, NO_REGIONAL_NO2, noDataReason, OUTSIDE_DISTANCE_KM, placeLabel, variablesOf, type ComparisonWeather, type ExtraSupport, type No2Regional, type PlaceFeature, type VariableCatalog, type VariableEntry } from './catalog'
 import styles from './InvestigationAtlas.module.css'
@@ -152,6 +153,9 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
       <DecorativeFrame className={pageStyles.frame}>
         <header className={pageStyles.header}>
           <TitleBadge />
+          <button type="button" className={styles.tourButton} onClick={() => startTour(phase)} data-testid="show-me-around">
+            Show me around
+          </button>
         </header>
 
         <div className={pageStyles.controlsSlot}>
@@ -165,7 +169,7 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
                 <CompareGroup compare={compare} onChange={(c) => { edit(); setCompare(c) }} />
                 <PeriodGroup window={window} onChange={(w) => { edit(); setWindow(w) }} label="2 · Period" />
                 <div className={styles.actions}>
-                  <button type="button" className={styles.primary} onClick={investigate} data-testid="investigate">Investigate</button>
+                  <button type="button" className={styles.primary} onClick={investigate} data-testid="investigate" data-tour="investigate">Investigate</button>
                   <button type="button" className={styles.secondary} onClick={startExample} data-testid="guided-example">Start guided example</button>
                 </div>
               </>
@@ -186,8 +190,8 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
 
         <div className={pageStyles.stage} data-scroll={scrollOpen ? 'open' : 'closed'} data-phase={phase}>
           <div className={pageStyles.mapArea}>
-            <div className={`${pageStyles.atlas} ${phase === 'investigate' ? styles.dimmed : ''}`} data-testid="atlas-frame">
-              <svg viewBox={`0 0 ${ATLAS_WIDTH} ${ATLAS_HEIGHT}`} className={pageStyles.svg} role="img" aria-label="Illustrated map of Ukraine">
+            <div className={`${pageStyles.atlas} ${phase === 'investigate' ? styles.dimmed : ''}`} data-testid="atlas-frame" data-tour="map">
+              <svg viewBox={ATLAS_VIEWBOX} className={pageStyles.svg} role="img" aria-label="Illustrated map of Ukraine">
                 <AtlasBase />
                 <PlaceBoxes places={places} selected={place} hover={phase === 'choose' ? hover : null} />
               </svg>
@@ -197,7 +201,7 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
           </div>
 
           {phase === 'investigate' ? (
-            <section className={`${styles.cards} ${compare ? styles.split : ''}`} aria-label="Variable cards" data-testid="card-area" data-compare={compare ?? undefined}>
+            <section className={`${styles.cards} ${compare ? styles.split : ''}`} aria-label="Variable cards" data-testid="card-area" data-tour="cards" data-compare={compare ?? undefined}>
               {openVars.length === 0 ? (
                 <p className={styles.empty} data-testid="cards-empty">Choose an element at the top right, then pick its variables in the bar above. Each opens here as a card.</p>
               ) : (
@@ -238,7 +242,7 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
             </section>
           ) : null}
 
-          <div className={pageStyles.topRight}>
+          <div className={pageStyles.topRight} data-tour="elements">
             <ElementMedallions elements={elements} active={element} onSelect={(id) => { edit(); setElement(id) }} onClear={() => { edit(); setElement(null) }} />
           </div>
           <div className={`${pageStyles.bottomLeft} ${styles.guide}`}>
@@ -251,7 +255,7 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
               action={guideAction}
             />
           </div>
-          <div className={pageStyles.bottomRight} ref={scrollRef}>
+          <div className={pageStyles.bottomRight} ref={scrollRef} data-tour="field-guide">
             <ScrollButton art={art} label="Field guide" open={scrollOpen} unread={false} controls={overlayId} onToggle={() => setScrollOpen((o) => !o)} />
           </div>
           {scrollOpen ? (
@@ -298,7 +302,7 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
 
 function CompareGroup({ compare, onChange }: { compare: string | null; onChange: (c: string | null) => void }) {
   return (
-    <div role="group" aria-label="Compare with a city outside the war" className={styles.group}>
+    <div role="group" aria-label="Compare with a city outside the war" className={styles.group} data-tour="compare">
       <span className={styles.step}>Compare with</span>
       {COMPARE_PLACES.map((id) => (
         <button
@@ -318,7 +322,7 @@ function CompareGroup({ compare, onChange }: { compare: string | null; onChange:
 
 function PeriodGroup({ window, onChange, label }: { window: WindowId; onChange: (w: WindowId) => void; label: string }) {
   return (
-    <div role="group" aria-label="Analysis period" className={styles.group}>
+    <div role="group" aria-label="Analysis period" className={styles.group} data-tour="period">
       <span className={styles.step}>{label}</span>
       {WINDOWS.map((w) => (
         <button key={w.id} type="button" className={styles.chip} aria-pressed={window === w.id} onClick={() => onChange(w.id)} title={w.note} data-testid={`window-${w.id}`}>
@@ -330,9 +334,9 @@ function PeriodGroup({ window, onChange, label }: { window: WindowId; onChange: 
 }
 
 function VariablePicker({ catalog, element, place, no2Places, cards, onToggle }: { catalog: VariableCatalog; element: ElementId | null; place: string | null; no2Places: ExtraSupport; cards: string[]; onToggle: (v: VariableEntry) => void }) {
-  if (!element) return <p className={styles.hint} data-testid="variables-hint">Choose an element at the top right to list its variables.</p>
+  if (!element) return <p className={styles.hint} data-testid="variables-hint" data-tour="variables">Choose an element at the top right to list its variables.</p>
   return (
-    <div role="group" aria-label="Variables" className={`${styles.group} ${styles.variables}`} data-testid="variable-picker">
+    <div role="group" aria-label="Variables" className={`${styles.group} ${styles.variables}`} data-testid="variable-picker" data-tour="variables">
       <span className={styles.step}>Variables · {cards.length}/{MAX_CARDS} open</span>
       {variablesOf(catalog, element).map((v) => {
         const here = place ? hasDataFor(v, place, no2Places) : true
@@ -383,9 +387,9 @@ function OutsideMarker({ places, selected }: { places: PlaceFeature[]; selected:
   if (!f || f.properties.is_ukraine_study_area) return null
   const { center } = f.properties
   const [x, y] = projectLonLat(center.lon, center.lat)
-  const offMap = x < 24
+  const offMap = x < ATLAS_VIEW.x + 24
   const km = OUTSIDE_DISTANCE_KM[f.properties.region_id]
-  const pos = atlasPercent(offMap ? 24 : x, Math.min(Math.max(y, 60), ATLAS_HEIGHT - 60))
+  const pos = atlasPercent(offMap ? ATLAS_VIEW.x + 24 : x, Math.min(Math.max(y, ATLAS_VIEW.y + 40), ATLAS_VIEW.y + ATLAS_VIEW.h - 40))
   return (
     <p className={styles.outsideMarker} style={{ left: pos.left, top: pos.top }} data-off-map={offMap} data-testid="outside-marker">
       {offMap ? '← ' : ''}

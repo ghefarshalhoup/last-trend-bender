@@ -32,8 +32,9 @@ test('pins sit where the projection puts each box centre, at every screen size',
       const frame = document.querySelector('[data-testid="atlas-frame"]')!.getBoundingClientRect()
       const city = document.querySelector('[data-testid="city-Kyiv"]') as SVGGElement
       const dot = document.querySelector('[data-testid="place-kyiv_no2_box"] span')!.getBoundingClientRect()
-      const x = frame.left + (Number(city.dataset.x) / 1600) * frame.width
-      const y = frame.top + (Number(city.dataset.y) / 1000) * frame.height
+      const [vx, vy, vw, vh] = document.querySelector('[data-testid="atlas-frame"] svg')!.getAttribute('viewBox')!.split(' ').map(Number)
+      const x = frame.left + ((Number(city.dataset.x) - vx!) / vw!) * frame.width
+      const y = frame.top + ((Number(city.dataset.y) - vy!) / vh!) * frame.height
       return { dx: dot.left + dot.width / 2 - x, dy: dot.top + dot.height / 2 - y }
     })
     // Kyiv city label in the base map and the Kyiv box centre are both 50.45N, 30.5E
@@ -199,6 +200,49 @@ test('the field guide: variables of the chosen element with definitions, how to 
   await page.keyboard.press('Escape')
   await expect(page.getByTestId('scroll-help')).toHaveCount(0)
   await expect(page.getByTestId('evidence-scroll')).toBeFocused()
+})
+
+test('Show me around: a tour of the current controls, without changing anything, replayable', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await open(page)
+  const popover = page.locator('.driver-popover')
+  await page.getByTestId('show-me-around').click()
+  await expect(popover).toBeVisible()
+  await expect(popover).toContainText('Study areas')
+  await expect(popover).toContainText('1 of 7')
+  await page.screenshot({ path: `${SHOTS}/9-tour-step1-desktop.png` })
+  await popover.getByRole('button', { name: 'Next', exact: true }).click()
+  await expect(popover).toContainText('Tested period')
+  await expect(popover).toContainText('2 of 7')
+  await popover.getByRole('button', { name: 'Back' }).click()
+  await expect(popover).toContainText('Study areas')
+  for (let i = 0; i < 6; i += 1) await popover.getByRole('button', { name: 'Next', exact: true }).click()
+  await expect(popover).toContainText('Field guide')
+  await expect(popover).toContainText('7 of 7')
+  await popover.locator('.driver-popover-next-btn').click() // labelled Close on the last stop
+  await expect(popover).toHaveCount(0)
+  // nothing was selected or opened by the tour
+  await expect(page.getByTestId('chosen-place')).toHaveText('Press a place on the map')
+  await expect(page.getByTestId('card-area')).toHaveCount(0)
+
+  // replay, then leave with Escape
+  await page.getByTestId('show-me-around').click()
+  await expect(popover).toContainText('1 of 7')
+  await page.keyboard.press('Escape')
+  await expect(popover).toHaveCount(0)
+
+  // after Investigate the tour explains the evidence screen and skips nothing on screen
+  await page.getByTestId('guided-example').click()
+  await page.getByTestId('avatar-close').click()
+  await page.getByTestId('show-me-around').click()
+  await expect(popover).toContainText('Variables')
+  await expect(popover).toContainText('1 of 7')
+  await popover.getByRole('button', { name: 'Next', exact: true }).click()
+  await expect(popover).toContainText('Cards')
+  await page.waitForTimeout(500)
+  await page.screenshot({ path: `${SHOTS}/9b-tour-cards-desktop.png` })
+  await page.keyboard.press('Escape')
+  await expect(page.getByTestId('card-no2_mean_molec_cm2')).toBeVisible()
 })
 
 test('the tile-map explorer is still the default screen', async ({ page }) => {
