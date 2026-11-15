@@ -21,8 +21,14 @@ from typing import Dict, Iterable, List, Optional, Sequence
 
 import pandas as pd
 
-from src.air_analysis import _evaluate_trend_window
-from src.no2_pipeline import DEFAULT_LOW_COVERAGE_FRACTION, run_pipeline
+from src.air_analysis import _evaluate_trend_window, compute_annual_seasonal_series, compute_baseline_comparison
+from src.no2_pipeline import (
+    DEFAULT_LOW_COVERAGE_FRACTION,
+    aggregate_monthly,
+    parse_giovanni_csv,
+    reindex_daily_calendar,
+    run_pipeline,
+)
 from src.stats_rigor import bh_q_values, write_strict_json
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -47,6 +53,16 @@ NO2_REGIONAL_FILES = {
     # Extra candidate; not one of the 8 atlas study boxes yet.
     "kharkiv_city": "no2_kharkiv_city_OMNO2d_v004_2015-03_2022-08.csv",
 }
+# Places that exist only in the NO2 exports (not in the 25-variable catalog). The atlas adds them as pins.
+EXTRA_PLACES = {
+    "kharkiv_city": {
+        "name": "Kharkiv city",
+        "role": "extra_no2_city_box",
+        "is_ukraine_study_area": True,
+        "description": "0.5° box over Kharkiv city. NO₂ only; inside the East front box.",
+    },
+}
+NO2_ATLAS_FILE = "atlas_no2_regional.json"
 SMALL_NO2_BOXES = {"kyiv_no2_box", "poland_krakow", "czechia_prague", "kharkiv_city"}
 
 MONTHLY_ATLAS_FILES = (
@@ -117,6 +133,95 @@ def build_regional_no2(raw_dir: Path = NO2_RAW_DIR, out_dir: Path = NO2_OUT_DIR)
         },
     )
     return monthly
+
+
+def _box_area_km2(b: Dict[str, float]) -> float:
+    import math
+
+    r = 6371.0088
+    return (
+        r * r * math.radians(b["east"] - b["west"])
+        * (math.sin(math.radians(b["north"])) - math.sin(math.radians(b["south"])))
+    )
+
+
+def build_no2_atlas_payload(raw_dir: Path = NO2_RAW_DIR) -> Dict[str, object]:
+    """Monthly NO2 series and the March-August 2022 vs 2015-2019 comparison per region, for /api/air/no2.
+
+    Uses the Kyiv functions unchanged (valid-day weighting, equal weight per baseline year)."""
+    regions: Dict[str, object] = {}
+    extra_places: List[Dict[str, object]] = []
+    for region_id, filename in NO2_REGIONAL_FILES.items():
+        src = raw_dir / filename
+        if not src.exists():
+            continue
+        daily_raw, meta = parse_giovanni_csv(src)
+        daily_full, _ = reindex_daily_calendar(daily_raw, meta)
+        monthly, _ = aggregate_monthly(daily_full)
+        annual = compute_annual_seasonal_series(daily_full, monthly)
+        cmp = compute_baseline_comparison(
+            annual,
+            comparison_id="primary_2015_2019_valid_day",
+            label="March–August 2022 vs. 2015–2019",
+            baseline_years=[2015, 2016, 2017, 2018, 2019],
+        )
+        series = []
+        for row in monthly.to_dict("records"):
+            value = row[NO2_METRIC]
+            cov = row["valid_days"] / row["calendar_days"]
+            series.append(
+                {
+                    "month": row["month"],
+                    "value": None if pd.isna(value) else float(value),
+                    "valid_days": int(row["valid_days"]),
+                    "calendar_days": int(row["calendar_days"]),
+                    "coverage_fraction": round(float(cov), 4),
+                    "flagged_below_50_pct": bool(cov < DEFAULT_LOW_COVERAGE_FRACTION),
+                }
+            )
+        box = meta["user_bounding_box"]
+        regions[region_id] = {
+            "region_id": region_id,
+            "bounds": box,
+            "data_bounds": meta["data_bounding_box"],
+            "monthly_series": series,
+            "seasonal_mar_aug": {
+                "vs_2015_2019": {
+                    "baseline_mean": cmp["baseline_mean_molec_cm2"],
+                    "target_mean": cmp["target_mean_molec_cm2"],
+                    "abs_diff": cmp["absolute_change_molec_cm2"],
+                    "pct_change": cmp["pct_change"],
+                    "pct_change_status": cmp["pct_change_status"],
+                    "target_valid_days": cmp.get("target_valid_days"),
+                    "target_calendar_days": cmp.get("target_calendar_days"),
+                    "any_flagged_month": cmp.get("any_flagged_month"),
+                }
+            },
+        }
+        if region_id in EXTRA_PLACES:
+            w, s_, e, n = box["west"], box["south"], box["east"], box["north"]
+            extra_places.append(
+                {
+                    "type": "Feature",
+                    "geometry": {"type": "Polygon", "coordinates": [[[w, s_], [e, s_], [e, n], [w, n], [w, s_]]]},
+                    "properties": {
+                        "region_id": region_id,
+                        "area_km2": round(_box_area_km2(box), 1),
+                        "center": {"lat": round((s_ + n) / 2, 4), "lon": round((w + e) / 2, 4)},
+                        **EXTRA_PLACES[region_id],
+                    },
+                }
+            )
+    return {
+        "schema_version": "1.0.0",
+        "status": "available",
+        "metric_id": NO2_METRIC,
+        "units": "molecules/cm^2",
+        "dataset": "OMI OMNO2d v004, tropospheric column, 30% cloud screened (NASA Giovanni area average)",
+        "coverage_flag_rule": f"coverage_fraction < {DEFAULT_LOW_COVERAGE_FRACTION:.2f}",
+        "regions": regions,
+        "extra_places": extra_places,
+    }
 
 
 # --------------------------------------------------------------------------- trend core
@@ -299,7 +404,7 @@ def apply_fdr(rows: List[Dict[str, object]]) -> None:
                 row["caveats"].insert(0, "Not called significant: the result does not hold without low-coverage months.")
             else:
                 # Strong raw signal that cannot be confirmed on well-observed months: say so instead of a verdict.
-                slope_e15 = float(row["slope_per_year"]) / 1e15
+                slope_text = f"{float(row['slope_per_year']) / 1e15:+.3f}".replace("-", "−")
                 row["unconfirmed_estimate"] = {
                     key: row[key]
                     for key in ("slope_per_year", "ci_low", "ci_high", "p_value", "p_value_fdr", "n_months", "method")
@@ -309,7 +414,7 @@ def apply_fdr(rows: List[Dict[str, object]]) -> None:
                     row[key] = None
                 row["significant"] = None
                 row["caveats"] = [
-                    f"The raw numbers change steeply ({slope_e15:+.3f} ×10¹⁵ molecules/cm² per year), but about half "
+                    f"The raw numbers change steeply ({slope_text} ×10¹⁵ molecules/cm² per year), but about half "
                     "the months are poorly observed and the test cannot be repeated without them."
                 ] + [c for c in row["caveats"] if not c.startswith("Too few well-observed")]
                 continue
@@ -345,6 +450,11 @@ def build(reports_dir: Path = REPORTS_DIR, raw_dir: Path = NO2_RAW_DIR, out_dir:
             f"Benjamini-Hochberg across all {n_tested} tested rows; "
             "'significant' means p_value_fdr < alpha"
         ),
+        "open_question": (
+            "One family of all tests is the strict choice. Correcting per variable instead is a team decision "
+            "still to be reviewed; with the current data it would change no verdict except Prague/Krakow NO2, "
+            "which the coverage rule already withholds."
+        ),
         "no2_coverage_rule": (
             "NO2 trends use every month with a mean (as for Kyiv). A NO2 trend is only called significant if it "
             "stays significant with the same sign after dropping months below 50% daily coverage."
@@ -368,6 +478,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parser.parse_args(argv)
     payload = build(args.reports_dir, args.raw_dir, args.reports_dir / "no2_regional")
     write_strict_json(args.reports_dir / "trend_results.json", payload)
+    write_strict_json(args.reports_dir / NO2_ATLAS_FILE, build_no2_atlas_payload(args.raw_dir))
     print(json.dumps(payload["counts"], indent=2))
     return 0
 

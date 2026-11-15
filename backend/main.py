@@ -27,6 +27,7 @@ from backend.schemas import AirStudyResponse, CasesResponse, ErrorResponse, Heal
 _MONTH_RE = re.compile(r"^\d{4}-\d{2}$")
 
 TRENDS_FILE = "trend_results.json"
+NO2_REGIONAL_FILE = "atlas_no2_regional.json"
 SERVICE_NAME = "war-environment-tracker-backend"
 _ERRORS = {
     404: {"model": ErrorResponse, "description": "Unknown resource"},
@@ -172,6 +173,24 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
         if not isinstance(payload, dict) or not isinstance(payload.get("results"), list):
             raise ApiError(503, "data_unavailable", "Trend results file has no 'results' list.")
         payload.setdefault("status", "available")
+        return JSONResponse(content=payload)
+
+    @app.get("/api/air/no2")
+    def air_no2_regional(request: Request):
+        """Monthly NO2 per study box beyond Kyiv, written by ``python -m src.trend_results``.
+        Missing file -> no regions, so the UI offers NO2 for Kyiv only."""
+        path = request.app.state.settings.reports_dir / NO2_REGIONAL_FILE
+        if not path.is_file():
+            return JSONResponse(
+                content={"schema_version": "1.0.0", "status": "not_available", "regions": {}, "extra_places": []}
+            )
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            raise ApiError(503, "data_unavailable", f"Regional NO2 could not be read: {exc}") from exc
+        if not isinstance(payload, dict) or not isinstance(payload.get("regions"), dict):
+            raise ApiError(503, "data_unavailable", "Regional NO2 file has no 'regions' object.")
+        payload.setdefault("extra_places", [])
         return JSONResponse(content=payload)
 
     @app.get("/api/air/weather", responses={503: _ERRORS[503]})

@@ -1,0 +1,5297 @@
+{
+  "schema_version": "1.0.0",
+  "status": "available",
+  "metric_id": "no2_mean_molec_cm2",
+  "units": "molecules/cm^2",
+  "dataset": "OMI OMNO2d v004, tropospheric column, 30% cloud screened (NASA Giovanni area average)",
+  "coverage_flag_rule": "coverage_fraction < 0.50",
+  "regions": {
+    "donbas_kharkiv_east": {
+      "region_id": "donbas_kharkiv_east",
+      "bounds": {
+        "west": 35.5,
+        "south": 46.8,
+        "east": 40.2,
+        "north": 50.3
+      },
+      "data_bounds": {
+        "west": 35.625,
+        "south": 46.875,
+        "east": 40.125,
+        "north": 50.125
+      },
+      "monthly_series": [
+        {
+          "month": "2015-03",
+          "value": 1124740420846153.9,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-04",
+          "value": 1830022162726923.0,
+          "valid_days": 26,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-05",
+          "value": 1843500643033333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-06",
+          "value": 1550361604493103.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-07",
+          "value": 1329800113847586.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-08",
+          "value": 1900743535900000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-09",
+          "value": 2044298763785714.2,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-10",
+          "value": 2344413125888889.0,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-11",
+          "value": 1897162878826087.0,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-12",
+          "value": 1973711892287500.0,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-01",
+          "value": 1579500510095238.0,
+          "valid_days": 21,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6774,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-02",
+          "value": 1659391352318181.8,
+          "valid_days": 22,
+          "calendar_days": 29,
+          "coverage_fraction": 0.7586,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-03",
+          "value": 1780182072200000.0,
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-04",
+          "value": 2246879320000000.0,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-05",
+          "value": 1636171256071428.5,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-06",
+          "value": 1566266785500000.0,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-07",
+          "value": 1717888409133333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-08",
+          "value": 2084089219300000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-09",
+          "value": 1999369290000000.0,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-10",
+          "value": 2165505638076923.0,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-11",
+          "value": 1842953762833333.2,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-12",
+          "value": 1059242093000000.0,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-01",
+          "value": 1152834453807692.2,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-02",
+          "value": 1102878270500000.0,
+          "valid_days": 26,
+          "calendar_days": 28,
+          "coverage_fraction": 0.9286,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-03",
+          "value": 1589064726250000.0,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-04",
+          "value": 1756942990586207.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-05",
+          "value": 1805522768033333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-06",
+          "value": 1523453495275862.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-07",
+          "value": 1920555507000000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-08",
+          "value": 2055849898966666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-09",
+          "value": 1902281325068965.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-10",
+          "value": 2155718748608695.8,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-11",
+          "value": 1750100255495238.0,
+          "valid_days": 21,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-12",
+          "value": 1809451655522727.2,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-01",
+          "value": 1141688465956521.8,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-02",
+          "value": 941184719360000.0,
+          "valid_days": 25,
+          "calendar_days": 28,
+          "coverage_fraction": 0.8929,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-03",
+          "value": 966847144603571.4,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-04",
+          "value": 1903312024137931.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-05",
+          "value": 1825774551900000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-06",
+          "value": 1450224705517241.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-07",
+          "value": 1826475237933333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-08",
+          "value": 1785297885266666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-09",
+          "value": 2391972263379310.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-10",
+          "value": 2300440830269231.0,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-11",
+          "value": 1581361412615384.5,
+          "valid_days": 26,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-12",
+          "value": 1136140884595238.0,
+          "valid_days": 21,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6774,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-01",
+          "value": 1140652928500000.0,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-02",
+          "value": 1001250739053571.4,
+          "valid_days": 28,
+          "calendar_days": 28,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-03",
+          "value": 1481425020255172.5,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-04",
+          "value": 2193441895307692.2,
+          "valid_days": 26,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-05",
+          "value": 1476911062172413.8,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-06",
+          "value": 1572384715586207.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-07",
+          "value": 2014717799482758.5,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-08",
+          "value": 2016151415466666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-09",
+          "value": 2290022011392857.0,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-10",
+          "value": 2624273040137931.0,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-11",
+          "value": 2178694527090909.0,
+          "valid_days": 22,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-12",
+          "value": 1839253762250000.0,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-01",
+          "value": 1754321948423077.0,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-02",
+          "value": 1140173295465384.5,
+          "valid_days": 26,
+          "calendar_days": 29,
+          "coverage_fraction": 0.8966,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-03",
+          "value": 2265046669100000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-04",
+          "value": 1501778753586207.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-05",
+          "value": 1781324577100000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-06",
+          "value": 1392883556066666.8,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-07",
+          "value": 1635248852483871.0,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-08",
+          "value": 1640513136709677.5,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-09",
+          "value": 2092434736116666.8,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-10",
+          "value": 2223372264642857.2,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-11",
+          "value": 2122989009920000.0,
+          "valid_days": 25,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-12",
+          "value": 1147275955000000.0,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-01",
+          "value": 891646164913793.1,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-02",
+          "value": 771653255450000.0,
+          "valid_days": 20,
+          "calendar_days": 28,
+          "coverage_fraction": 0.7143,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-03",
+          "value": 1041491754087333.4,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-04",
+          "value": 1668401924034482.8,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-05",
+          "value": 1526253598310344.8,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-06",
+          "value": 1426790318464285.8,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-07",
+          "value": 1506914371433333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-08",
+          "value": 2007962773766666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-09",
+          "value": 1915241196142857.2,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-10",
+          "value": 2301882580966666.5,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-11",
+          "value": 1998918059913043.5,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-12",
+          "value": 1196408725880000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-01",
+          "value": 1172776389500000.0,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-02",
+          "value": 1090773373769565.2,
+          "valid_days": 23,
+          "calendar_days": 28,
+          "coverage_fraction": 0.8214,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-03",
+          "value": 1032660907041379.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-04",
+          "value": 1852005649666666.8,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-05",
+          "value": 1775907153866666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-06",
+          "value": 1441902834300000.0,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-07",
+          "value": 1620175058741935.5,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-08",
+          "value": 1828647236612903.2,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        }
+      ],
+      "seasonal_mar_aug": {
+        "vs_2015_2019": {
+          "baseline_mean": 1734121819409941.5,
+          "target_mean": 1592129829473033.8,
+          "abs_diff": -141991989936907.75,
+          "pct_change": -8.1881,
+          "pct_change_status": "computed",
+          "target_valid_days": 178,
+          "target_calendar_days": 184,
+          "any_flagged_month": true
+        }
+      }
+    },
+    "south_steppe_belt": {
+      "region_id": "south_steppe_belt",
+      "bounds": {
+        "west": 30.0,
+        "south": 44.4,
+        "east": 35.5,
+        "north": 47.5
+      },
+      "data_bounds": {
+        "west": 30.125,
+        "south": 44.625,
+        "east": 35.375,
+        "north": 47.375
+      },
+      "monthly_series": [
+        {
+          "month": "2015-03",
+          "value": 1328367705840000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-04",
+          "value": 1238742451948148.2,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-05",
+          "value": 1064528191000000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-06",
+          "value": 1109455202965517.2,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-07",
+          "value": 983650581706666.6,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-08",
+          "value": 1587680434070000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-09",
+          "value": 1663681010482758.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-10",
+          "value": 1720661166750000.0,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-11",
+          "value": 1551205069000000.0,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-12",
+          "value": 1686222468285714.2,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-01",
+          "value": 1684970319916666.8,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-02",
+          "value": 1483561914318181.8,
+          "valid_days": 22,
+          "calendar_days": 29,
+          "coverage_fraction": 0.7586,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-03",
+          "value": 1225363340944444.5,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-04",
+          "value": 1095980148551724.1,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-05",
+          "value": 1311700436892857.2,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-06",
+          "value": 971530435955555.5,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-07",
+          "value": 1271681759066666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-08",
+          "value": 1574601418034482.8,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-09",
+          "value": 1622525479407407.5,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-10",
+          "value": 1503542808960000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-11",
+          "value": 1525941834240000.0,
+          "valid_days": 25,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-12",
+          "value": 1312738374814814.8,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-01",
+          "value": 1482365671120000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-02",
+          "value": 1001534115777777.8,
+          "valid_days": 27,
+          "calendar_days": 28,
+          "coverage_fraction": 0.9643,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-03",
+          "value": 1183462158800000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-04",
+          "value": 967704919178571.4,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-05",
+          "value": 1185095634533333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-06",
+          "value": 888596538600000.0,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-07",
+          "value": 1357112617313793.0,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-08",
+          "value": 1631675530655172.5,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-09",
+          "value": 1334620336071428.5,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-10",
+          "value": 1598125381115384.5,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-11",
+          "value": 1114130861090909.1,
+          "valid_days": 22,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-12",
+          "value": 1837074749240000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-01",
+          "value": 1143325453314814.8,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-02",
+          "value": 947578992952381.0,
+          "valid_days": 21,
+          "calendar_days": 28,
+          "coverage_fraction": 0.75,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-03",
+          "value": 929716573122222.2,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-04",
+          "value": 931672835378571.4,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-05",
+          "value": 1180897798000000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-06",
+          "value": 975162681103448.2,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-07",
+          "value": 1391460975066666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-08",
+          "value": 1387092875980000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-09",
+          "value": 1590947645551724.2,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-10",
+          "value": 1525614658179310.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-11",
+          "value": 1648096488130434.8,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-12",
+          "value": 894933348795833.4,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-01",
+          "value": 1170097441019230.8,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-02",
+          "value": 1109204060608695.6,
+          "valid_days": 23,
+          "calendar_days": 28,
+          "coverage_fraction": 0.8214,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-03",
+          "value": 1056464755965517.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-04",
+          "value": 1257443276333333.2,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-05",
+          "value": 970059758296428.6,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-06",
+          "value": 1262306380965517.2,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-07",
+          "value": 1486461364633333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-08",
+          "value": 1523453745066666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-09",
+          "value": 1679801804034482.8,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-10",
+          "value": 1512188533655172.5,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-11",
+          "value": 1619943342791666.8,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-12",
+          "value": 1549491457056000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-01",
+          "value": 1242415617333333.2,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-02",
+          "value": 1376856403240000.0,
+          "valid_days": 25,
+          "calendar_days": 29,
+          "coverage_fraction": 0.8621,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-03",
+          "value": 1144763122196666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-04",
+          "value": 938432350833333.4,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-05",
+          "value": 982413525161290.4,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-06",
+          "value": 1034266380766666.6,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-07",
+          "value": 1168272600266666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-08",
+          "value": 1164424905548387.0,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-09",
+          "value": 1541270032733333.2,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-10",
+          "value": 1280031975689655.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-11",
+          "value": 1179554216582608.8,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-12",
+          "value": 1549597668020000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-01",
+          "value": 1068004455625000.0,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-02",
+          "value": 1062828207840000.0,
+          "valid_days": 25,
+          "calendar_days": 28,
+          "coverage_fraction": 0.8929,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-03",
+          "value": 790579754777777.8,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-04",
+          "value": 846986510884615.4,
+          "valid_days": 26,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-05",
+          "value": 979779068000000.0,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-06",
+          "value": 1002408061785714.2,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-07",
+          "value": 1126498405806451.5,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-08",
+          "value": 1416000859351613.0,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-09",
+          "value": 1434090652068965.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-10",
+          "value": 1705216890551724.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-11",
+          "value": 1561004906333333.2,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-12",
+          "value": 1205548134350000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-01",
+          "value": 1572180172173913.0,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-02",
+          "value": 1246156903304347.8,
+          "valid_days": 23,
+          "calendar_days": 28,
+          "coverage_fraction": 0.8214,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-03",
+          "value": 896048849900000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-04",
+          "value": 872069547666666.6,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-05",
+          "value": 1222695454838709.8,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-06",
+          "value": 1133604448166666.8,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-07",
+          "value": 1050083275848387.1,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-08",
+          "value": 1558643798483871.0,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        }
+      ],
+      "seasonal_mar_aug": {
+        "vs_2015_2019": {
+          "baseline_mean": 1216709642028522.2,
+          "target_mean": 1128942084073889.0,
+          "abs_diff": -87767557954633.25,
+          "pct_change": -7.2135,
+          "pct_change_status": "computed",
+          "target_valid_days": 180,
+          "target_calendar_days": 184,
+          "any_flagged_month": false
+        }
+      }
+    },
+    "central_interior_cand": {
+      "region_id": "central_interior_cand",
+      "bounds": {
+        "west": 27.5,
+        "south": 47.5,
+        "east": 35.5,
+        "north": 50.0
+      },
+      "data_bounds": {
+        "west": 27.625,
+        "south": 47.625,
+        "east": 35.375,
+        "north": 49.875
+      },
+      "monthly_series": [
+        {
+          "month": "2015-03",
+          "value": 1989759040839285.8,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-04",
+          "value": 1514123176800000.0,
+          "valid_days": 25,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-05",
+          "value": 1396471015233333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-06",
+          "value": 1275132210000000.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-07",
+          "value": 1172062834633333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-08",
+          "value": 1697624265733333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-09",
+          "value": 2117377154000000.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-10",
+          "value": 2391177023862069.0,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-11",
+          "value": 2357989540684210.5,
+          "valid_days": 19,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-12",
+          "value": 1334470254464285.8,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-01",
+          "value": 1394515889000000.0,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-02",
+          "value": 1673203247923077.0,
+          "valid_days": 26,
+          "calendar_days": 29,
+          "coverage_fraction": 0.8966,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-03",
+          "value": 1535738967035294.0,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-04",
+          "value": 1571211686821428.5,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-05",
+          "value": 1841349094000000.0,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-06",
+          "value": 1164642386055555.5,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-07",
+          "value": 1413771711533333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-08",
+          "value": 1751575612033333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-09",
+          "value": 1531534935000000.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-10",
+          "value": 2543814515500000.0,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-11",
+          "value": 1836140435478260.8,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-12",
+          "value": 794155932125000.0,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-01",
+          "value": 1264372334964285.8,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-02",
+          "value": 705958574357692.2,
+          "valid_days": 26,
+          "calendar_days": 28,
+          "coverage_fraction": 0.9286,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-03",
+          "value": 1644830822652174.0,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-04",
+          "value": 1439086883892857.2,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-05",
+          "value": 1447548613310344.8,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-06",
+          "value": 1260873280766666.8,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-07",
+          "value": 1547268375933333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-08",
+          "value": 1682802775379310.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-09",
+          "value": 1681577631137931.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-10",
+          "value": 1810504721608695.8,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-11",
+          "value": 1639183963388889.0,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-12",
+          "value": 1546531367260869.5,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-01",
+          "value": 1161142628954545.5,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-02",
+          "value": 699263919208333.4,
+          "valid_days": 24,
+          "calendar_days": 28,
+          "coverage_fraction": 0.8571,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-03",
+          "value": 810269820586206.9,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-04",
+          "value": 1407394505344827.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-05",
+          "value": 1730390043310344.8,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-06",
+          "value": 1277964481357142.8,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-07",
+          "value": 1633019465466666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-08",
+          "value": 1491116372266666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-09",
+          "value": 2161614347964285.8,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-10",
+          "value": 2198263003607142.8,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-11",
+          "value": 1890020563392857.2,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-12",
+          "value": 936384724780000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-01",
+          "value": 1005724340896551.8,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-02",
+          "value": 802531786687444.5,
+          "valid_days": 27,
+          "calendar_days": 28,
+          "coverage_fraction": 0.9643,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-03",
+          "value": 1547399479111111.0,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-04",
+          "value": 1837032922814814.8,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-05",
+          "value": 1583335429966666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-06",
+          "value": 1405613860965517.2,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-07",
+          "value": 1548150210666666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-08",
+          "value": 1758529776766666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-09",
+          "value": 2182257540344827.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-10",
+          "value": 2153512497000000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-11",
+          "value": 2291573439083333.5,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-12",
+          "value": 1702559639961250.0,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-01",
+          "value": 1704932426615384.5,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-02",
+          "value": 1359788789777777.8,
+          "valid_days": 27,
+          "calendar_days": 29,
+          "coverage_fraction": 0.931,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-03",
+          "value": 1977255323366666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-04",
+          "value": 1105172827700000.0,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-05",
+          "value": 1407760796586207.0,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-06",
+          "value": 1378295419533333.2,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-07",
+          "value": 1335031747400000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-08",
+          "value": 1294318722774193.5,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-09",
+          "value": 1780011757275862.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-10",
+          "value": 1895120999206896.5,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-11",
+          "value": 1567134454052174.0,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-12",
+          "value": 1056869348363636.4,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-01",
+          "value": 1034386233807692.2,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-02",
+          "value": 703203230360000.0,
+          "valid_days": 25,
+          "calendar_days": 28,
+          "coverage_fraction": 0.8929,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-03",
+          "value": 1092926001386666.6,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-04",
+          "value": 1239887099681481.5,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-05",
+          "value": 1404460714333333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-06",
+          "value": 1283786177357142.8,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-07",
+          "value": 1139367800032258.0,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-08",
+          "value": 1639238250516129.0,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-09",
+          "value": 1333189771557692.2,
+          "valid_days": 26,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-10",
+          "value": 2224931351193548.5,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-11",
+          "value": 1843026099480000.0,
+          "valid_days": 25,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-12",
+          "value": 1188600550855000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-01",
+          "value": 802673297225000.0,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-02",
+          "value": 1085879114678571.4,
+          "valid_days": 28,
+          "calendar_days": 28,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-03",
+          "value": 879929200276666.6,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-04",
+          "value": 1669410586642857.2,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-05",
+          "value": 1612901407096774.2,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-06",
+          "value": 1206048503290000.0,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-07",
+          "value": 1157014704548387.0,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-08",
+          "value": 1903164569806451.5,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        }
+      ],
+      "seasonal_mar_aug": {
+        "vs_2015_2019": {
+          "baseline_mean": 1515744155802166.5,
+          "target_mean": 1404355406950276.2,
+          "abs_diff": -111388748851890.25,
+          "pct_change": -7.3488,
+          "pct_change_status": "computed",
+          "target_valid_days": 181,
+          "target_calendar_days": 184,
+          "any_flagged_month": false
+        }
+      }
+    },
+    "west_ukraine_cand": {
+      "region_id": "west_ukraine_cand",
+      "bounds": {
+        "west": 22.1,
+        "south": 47.7,
+        "east": 27.5,
+        "north": 51.8
+      },
+      "data_bounds": {
+        "west": 22.125,
+        "south": 47.875,
+        "east": 27.375,
+        "north": 51.625
+      },
+      "monthly_series": [
+        {
+          "month": "2015-03",
+          "value": 1858739420703703.8,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-04",
+          "value": 1206433632620689.8,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-05",
+          "value": 1289706805137931.0,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-06",
+          "value": 1120690721413793.1,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-07",
+          "value": 1045664929724137.9,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-08",
+          "value": 1484013209666666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-09",
+          "value": 1545643631538461.5,
+          "valid_days": 26,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-10",
+          "value": 1764101474320000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-11",
+          "value": 2582613179333333.5,
+          "valid_days": 21,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-12",
+          "value": 1661255013307692.2,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-01",
+          "value": 1347487147541666.8,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-02",
+          "value": 2194941020260869.5,
+          "valid_days": 23,
+          "calendar_days": 29,
+          "coverage_fraction": 0.7931,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-03",
+          "value": 1314906369789473.8,
+          "valid_days": 19,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6129,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-04",
+          "value": 1578700902178571.5,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-05",
+          "value": 1414206645321428.5,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-06",
+          "value": 1055169913117647.0,
+          "valid_days": 17,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-07",
+          "value": 1042869031800000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-08",
+          "value": 1348710945200000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-09",
+          "value": 1351963477344827.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-10",
+          "value": 1706488456090909.0,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-11",
+          "value": 1324931730869565.2,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-12",
+          "value": 1231801290046666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-01",
+          "value": 898115402171428.6,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-02",
+          "value": 967631436484615.4,
+          "valid_days": 26,
+          "calendar_days": 28,
+          "coverage_fraction": 0.9286,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-03",
+          "value": 1519609344916666.8,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-04",
+          "value": 1283231004666666.8,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-05",
+          "value": 1087978590100000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-06",
+          "value": 1096182142310344.9,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-07",
+          "value": 1273816934033333.2,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-08",
+          "value": 1391169320566666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-09",
+          "value": 1342441079896551.8,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-10",
+          "value": 1938675552285714.2,
+          "valid_days": 21,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6774,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-11",
+          "value": 1981207970119047.5,
+          "valid_days": 21,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-12",
+          "value": 1375401922181818.2,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-01",
+          "value": 1479900348296296.2,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-02",
+          "value": 639393710739130.4,
+          "valid_days": 23,
+          "calendar_days": 28,
+          "coverage_fraction": 0.8214,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-03",
+          "value": 770091962310714.2,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-04",
+          "value": 1352153968703703.8,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-05",
+          "value": 1322544561268965.5,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-06",
+          "value": 1025285633000000.0,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-07",
+          "value": 1202264402413793.0,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-08",
+          "value": 1151791369366666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-09",
+          "value": 1732972929642857.2,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-10",
+          "value": 1802379342500000.0,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-11",
+          "value": 1464921898720000.0,
+          "valid_days": 25,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-12",
+          "value": 896422609550000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-01",
+          "value": 719371385464285.8,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-02",
+          "value": 1462820156960000.0,
+          "valid_days": 25,
+          "calendar_days": 28,
+          "coverage_fraction": 0.8929,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-03",
+          "value": 1614668641655172.5,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-04",
+          "value": 1276066869482758.5,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-05",
+          "value": 1110173573035714.2,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-06",
+          "value": 1027327903758620.8,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-07",
+          "value": 1213039309466666.8,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-08",
+          "value": 1367962396600000.0,
+          "valid_days": 30,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9677,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-09",
+          "value": 1697976991678571.5,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-10",
+          "value": 2045135887357142.8,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-11",
+          "value": 1961605208880000.0,
+          "valid_days": 25,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-12",
+          "value": 1952437002934782.5,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-01",
+          "value": 1592218032551724.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-02",
+          "value": 1735752851000000.0,
+          "valid_days": 24,
+          "calendar_days": 29,
+          "coverage_fraction": 0.8276,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-03",
+          "value": 1620589675793103.5,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-04",
+          "value": 1167278724413793.0,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-05",
+          "value": 1220497252689655.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-06",
+          "value": 1004103501800000.0,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-07",
+          "value": 1031401957387096.8,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-08",
+          "value": 1104056727419354.9,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-09",
+          "value": 1612609509750000.0,
+          "valid_days": 28,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-10",
+          "value": 1650836156083333.2,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-11",
+          "value": 1414073645583333.2,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-12",
+          "value": 1016227641851851.9,
+          "valid_days": 27,
+          "calendar_days": 31,
+          "coverage_fraction": 0.871,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-01",
+          "value": 973239710000000.0,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-02",
+          "value": 718886683185185.1,
+          "valid_days": 27,
+          "calendar_days": 28,
+          "coverage_fraction": 0.9643,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-03",
+          "value": 837477184625806.5,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-04",
+          "value": 1275151035125926.0,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-05",
+          "value": 1150942964709677.5,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-06",
+          "value": 1160830971827586.2,
+          "valid_days": 29,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-07",
+          "value": 996044898580645.1,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-08",
+          "value": 1375096420896551.8,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-09",
+          "value": 1341585657461538.5,
+          "valid_days": 26,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-10",
+          "value": 1791801215965517.2,
+          "valid_days": 29,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9355,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-11",
+          "value": 1646105579333333.2,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-12",
+          "value": 907207215961538.5,
+          "valid_days": 26,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8387,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-01",
+          "value": 926088406642857.1,
+          "valid_days": 28,
+          "calendar_days": 31,
+          "coverage_fraction": 0.9032,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-02",
+          "value": 1412308179111111.0,
+          "valid_days": 27,
+          "calendar_days": 28,
+          "coverage_fraction": 0.9643,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-03",
+          "value": 876628636935483.9,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-04",
+          "value": 939391534400000.0,
+          "valid_days": 27,
+          "calendar_days": 30,
+          "coverage_fraction": 0.9,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-05",
+          "value": 1251781948967742.0,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-06",
+          "value": 940871292933333.4,
+          "valid_days": 30,
+          "calendar_days": 30,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-07",
+          "value": 980514601667741.9,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-08",
+          "value": 1343831331225806.5,
+          "valid_days": 31,
+          "calendar_days": 31,
+          "coverage_fraction": 1.0,
+          "flagged_below_50_pct": false
+        }
+      ],
+      "seasonal_mar_aug": {
+        "vs_2015_2019": {
+          "baseline_mean": 1261890437574713.5,
+          "target_mean": 1058702554140884.0,
+          "abs_diff": -203187883433829.5,
+          "pct_change": -16.1019,
+          "pct_change_status": "computed",
+          "target_valid_days": 181,
+          "target_calendar_days": 184,
+          "any_flagged_month": false
+        }
+      }
+    },
+    "poland_krakow": {
+      "region_id": "poland_krakow",
+      "bounds": {
+        "west": 19.695,
+        "south": 49.8147,
+        "east": 20.195,
+        "north": 50.3147
+      },
+      "data_bounds": {
+        "west": 19.875,
+        "south": 49.875,
+        "east": 20.125,
+        "north": 50.125
+      },
+      "monthly_series": [
+        {
+          "month": "2015-03",
+          "value": 3226434565600000.0,
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2015-04",
+          "value": 2916093708125000.0,
+          "valid_days": 16,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-05",
+          "value": 2352801714785714.5,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2015-06",
+          "value": 2555489516000000.0,
+          "valid_days": 15,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-07",
+          "value": 2365400812263158.0,
+          "valid_days": 19,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6129,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-08",
+          "value": 2399313403409091.0,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-09",
+          "value": 3717093404000000.0,
+          "valid_days": 15,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-10",
+          "value": 6295464555384615.0,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2015-11",
+          "value": 7300599303000000.0,
+          "valid_days": 10,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2015-12",
+          "value": 3466568436705882.5,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-01",
+          "value": 2858071853307692.5,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-02",
+          "value": 2352054150000000.0,
+          "valid_days": 6,
+          "calendar_days": 29,
+          "coverage_fraction": 0.2069,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-03",
+          "value": 5156976557000000.0,
+          "valid_days": 10,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3226,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-04",
+          "value": 3832460400000000.0,
+          "valid_days": 14,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-05",
+          "value": 3555776740444444.5,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-06",
+          "value": 2084382197000000.0,
+          "valid_days": 14,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-07",
+          "value": 2203379729222222.2,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-08",
+          "value": 2421389810437500.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-09",
+          "value": 3394093133333333.5,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-10",
+          "value": 4311610938000000.0,
+          "valid_days": 5,
+          "calendar_days": 31,
+          "coverage_fraction": 0.1613,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-11",
+          "value": 3130076850628571.5,
+          "valid_days": 7,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-12",
+          "value": 1973610063416666.8,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-01",
+          "value": 2132266869942105.2,
+          "valid_days": 19,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6129,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-02",
+          "value": 3100069000153846.0,
+          "valid_days": 13,
+          "calendar_days": 28,
+          "coverage_fraction": 0.4643,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-03",
+          "value": 3673436403100000.0,
+          "valid_days": 10,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3226,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-04",
+          "value": 2515889186908000.0,
+          "valid_days": 15,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-05",
+          "value": 2031016708071428.5,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-06",
+          "value": 2150069895565217.5,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-07",
+          "value": 2264248116117647.0,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-08",
+          "value": 2254453784666666.5,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-09",
+          "value": 4652812582500000.0,
+          "valid_days": 12,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-10",
+          "value": 5000745186222222.0,
+          "valid_days": 9,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2903,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-11",
+          "value": 2978878625714285.5,
+          "valid_days": 7,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-12",
+          "value": 3235994724000000.0,
+          "valid_days": 10,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3226,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-01",
+          "value": 1836510757615384.5,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-02",
+          "value": 1949407641984615.5,
+          "valid_days": 13,
+          "calendar_days": 28,
+          "coverage_fraction": 0.4643,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-03",
+          "value": 2608075459055555.5,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-04",
+          "value": 2849364605340000.0,
+          "valid_days": 20,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-05",
+          "value": 2370852711869565.0,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-06",
+          "value": 2356504803285714.5,
+          "valid_days": 14,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-07",
+          "value": 2775926018277778.0,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-08",
+          "value": 1987995381950000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-09",
+          "value": 3597263285238095.0,
+          "valid_days": 21,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-10",
+          "value": 3757048777142857.0,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-11",
+          "value": 3478308462818182.0,
+          "valid_days": 11,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-12",
+          "value": 2537246685444444.5,
+          "valid_days": 9,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2903,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-01",
+          "value": 1977565472550000.0,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-02",
+          "value": 3724271503117647.0,
+          "valid_days": 17,
+          "calendar_days": 28,
+          "coverage_fraction": 0.6071,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-03",
+          "value": 4641283136000000.0,
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-04",
+          "value": 2198812106562500.0,
+          "valid_days": 16,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-05",
+          "value": 3252742552320000.0,
+          "valid_days": 10,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3226,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-06",
+          "value": 1555293081772727.2,
+          "valid_days": 22,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-07",
+          "value": 2205072372312500.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-08",
+          "value": 2692644600952381.0,
+          "valid_days": 21,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6774,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-09",
+          "value": 2752973022777778.0,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-10",
+          "value": 4271918704117647.0,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-11",
+          "value": 3851162848800000.0,
+          "valid_days": 10,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-12",
+          "value": 4129058407272727.5,
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-01",
+          "value": 4250901701812500.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-02",
+          "value": 2716421592500000.0,
+          "valid_days": 8,
+          "calendar_days": 29,
+          "coverage_fraction": 0.2759,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-03",
+          "value": 3506581515153846.0,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-04",
+          "value": 2383307487166666.5,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-05",
+          "value": 2489442879600000.0,
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-06",
+          "value": 1037843971731579.0,
+          "valid_days": 19,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-07",
+          "value": 1871672632388889.0,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-08",
+          "value": 2365066931000000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-09",
+          "value": 3071482020625000.0,
+          "valid_days": 16,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-10",
+          "value": 2881849290461538.5,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-11",
+          "value": 3298785982416666.5,
+          "valid_days": 12,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-12",
+          "value": 2814428872600000.0,
+          "valid_days": 10,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3226,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-01",
+          "value": 2835151413333333.5,
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-02",
+          "value": 1795043463500000.0,
+          "valid_days": 12,
+          "calendar_days": 28,
+          "coverage_fraction": 0.4286,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-03",
+          "value": 2036184462687500.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-04",
+          "value": 2546508586062500.0,
+          "valid_days": 16,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-05",
+          "value": 1280895040714285.8,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-06",
+          "value": 2503701785791666.5,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-07",
+          "value": 1864537801578947.2,
+          "valid_days": 19,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6129,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-08",
+          "value": 2419996387133333.5,
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-09",
+          "value": 2643215163529412.0,
+          "valid_days": 17,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-10",
+          "value": 3272221238888889.0,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-11",
+          "value": 4175520698000000.0,
+          "valid_days": 10,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-12",
+          "value": 2585486485642857.0,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-01",
+          "value": 2369283099833333.5,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-02",
+          "value": 2165121019846153.8,
+          "valid_days": 13,
+          "calendar_days": 28,
+          "coverage_fraction": 0.4643,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-03",
+          "value": 3529011216363636.5,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-04",
+          "value": 2368571169200000.0,
+          "valid_days": 10,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-05",
+          "value": 2221213345894736.8,
+          "valid_days": 19,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6129,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-06",
+          "value": 1854980735772727.2,
+          "valid_days": 22,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-07",
+          "value": 1907293982842105.2,
+          "valid_days": 19,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6129,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-08",
+          "value": 2154479345434782.5,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        }
+      ],
+      "seasonal_mar_aug": {
+        "vs_2015_2019": {
+          "baseline_mean": 2639598902567152.5,
+          "target_mean": 2348940859391304.5,
+          "abs_diff": -290658043175848.0,
+          "pct_change": -11.0114,
+          "pct_change_status": "computed",
+          "target_valid_days": 115,
+          "target_calendar_days": 184,
+          "any_flagged_month": true
+        }
+      }
+    },
+    "czechia_prague": {
+      "region_id": "czechia_prague",
+      "bounds": {
+        "west": 14.1878,
+        "south": 49.8255,
+        "east": 14.6878,
+        "north": 50.3255
+      },
+      "data_bounds": {
+        "west": 14.375,
+        "south": 49.875,
+        "east": 14.625,
+        "north": 50.125
+      },
+      "monthly_series": [
+        {
+          "month": "2015-03",
+          "value": 5209485041250000.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-04",
+          "value": 4038196068333333.5,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-05",
+          "value": 2618837317142857.0,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2015-06",
+          "value": 1945013302781250.0,
+          "valid_days": 16,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-07",
+          "value": 2336883134434782.5,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-08",
+          "value": 2986319479952381.0,
+          "valid_days": 21,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6774,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-09",
+          "value": 4059149827062500.0,
+          "valid_days": 16,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-10",
+          "value": 4894957301000000.0,
+          "valid_days": 10,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3226,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2015-11",
+          "value": 8038850680000000.0,
+          "valid_days": 9,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2015-12",
+          "value": 3996237703636363.5,
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-01",
+          "value": 4599279361000000.0,
+          "valid_days": 10,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3226,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-02",
+          "value": 3651878136244444.5,
+          "valid_days": 9,
+          "calendar_days": 29,
+          "coverage_fraction": 0.3103,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-03",
+          "value": 5527697690333333.0,
+          "valid_days": 6,
+          "calendar_days": 31,
+          "coverage_fraction": 0.1935,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-04",
+          "value": 4476125023750000.0,
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-05",
+          "value": 3202174159000000.0,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-06",
+          "value": 1932551557071428.5,
+          "valid_days": 7,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-07",
+          "value": 2006695210625000.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-08",
+          "value": 3116513980000000.0,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-09",
+          "value": 4303363577222222.0,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-10",
+          "value": 6770855415000000.0,
+          "valid_days": 4,
+          "calendar_days": 31,
+          "coverage_fraction": 0.129,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-11",
+          "value": 4548734203333333.0,
+          "valid_days": 9,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-12",
+          "value": 4146136724583333.5,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-01",
+          "value": 3392486002588235.5,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-02",
+          "value": 3084382297285714.5,
+          "valid_days": 14,
+          "calendar_days": 28,
+          "coverage_fraction": 0.5,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-03",
+          "value": 4524679288571429.0,
+          "valid_days": 7,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2258,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-04",
+          "value": 2486287515000000.0,
+          "valid_days": 10,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-05",
+          "value": 3384491833904762.0,
+          "valid_days": 21,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6774,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-06",
+          "value": 2343689610142857.0,
+          "valid_days": 21,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-07",
+          "value": 2305056466436666.5,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-08",
+          "value": 2670411724444444.5,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-09",
+          "value": 4228277762500000.0,
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-10",
+          "value": 4534859705916667.0,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-11",
+          "value": 4512041718750000.0,
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-12",
+          "value": 3771633548750000.0,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-01",
+          "value": 3418889906000000.0,
+          "valid_days": 5,
+          "calendar_days": 31,
+          "coverage_fraction": 0.1613,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-02",
+          "value": 4059621368785714.5,
+          "valid_days": 14,
+          "calendar_days": 28,
+          "coverage_fraction": 0.5,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-03",
+          "value": 3048803609181818.0,
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-04",
+          "value": 3460387564833333.5,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-05",
+          "value": 2625625602666666.5,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-06",
+          "value": 2102060583666666.8,
+          "valid_days": 15,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-07",
+          "value": 3100010073809524.0,
+          "valid_days": 21,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6774,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-08",
+          "value": 2877233000652174.0,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-09",
+          "value": 4233015543764706.0,
+          "valid_days": 17,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-10",
+          "value": 5916995308750000.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-11",
+          "value": 6422929746363636.0,
+          "valid_days": 11,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-12",
+          "value": 3350430858571428.5,
+          "valid_days": 7,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2258,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-01",
+          "value": 4379062232857143.0,
+          "valid_days": 7,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2258,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-02",
+          "value": 5451321594533333.0,
+          "valid_days": 15,
+          "calendar_days": 28,
+          "coverage_fraction": 0.5357,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-03",
+          "value": 5960216719428571.0,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-04",
+          "value": 3562960309368421.0,
+          "valid_days": 19,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-05",
+          "value": 2957425665153846.0,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-06",
+          "value": 1963528209043478.2,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-07",
+          "value": 2130631975223529.5,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-08",
+          "value": 2655122968820000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-09",
+          "value": 3469783191705882.5,
+          "valid_days": 17,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-10",
+          "value": 4672774310312500.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-11",
+          "value": 3326179557500000.0,
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-12",
+          "value": 4528396884000000.0,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-01",
+          "value": 5325696815500000.0,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-02",
+          "value": 2253542239250000.0,
+          "valid_days": 8,
+          "calendar_days": 29,
+          "coverage_fraction": 0.2759,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-03",
+          "value": 2527725740437500.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-04",
+          "value": 2645960940476190.5,
+          "valid_days": 21,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-05",
+          "value": 2732360699058823.5,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-06",
+          "value": 1729658221416666.8,
+          "valid_days": 12,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-07",
+          "value": 2162442149882353.0,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-08",
+          "value": 2101982314500000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-09",
+          "value": 3875083335882353.0,
+          "valid_days": 17,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-10",
+          "value": 5845772608571429.0,
+          "valid_days": 7,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2258,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-11",
+          "value": 4409952702444444.5,
+          "valid_days": 9,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-12",
+          "value": 2584124242750000.0,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-01",
+          "value": 2297489488300000.0,
+          "valid_days": 10,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3226,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-02",
+          "value": 4170678715250000.0,
+          "valid_days": 16,
+          "calendar_days": 28,
+          "coverage_fraction": 0.5714,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-03",
+          "value": 3497840319307692.5,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-04",
+          "value": 3759049753333333.5,
+          "valid_days": 12,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-05",
+          "value": 2650063830818182.0,
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-06",
+          "value": 2311528332181818.0,
+          "valid_days": 22,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-07",
+          "value": 1751043916888889.0,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-08",
+          "value": 1976864691538461.5,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-09",
+          "value": 3267948901666666.5,
+          "valid_days": 12,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-10",
+          "value": 3740219557647059.0,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-11",
+          "value": 3128241923875000.0,
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-12",
+          "value": 2838517596545454.5,
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-01",
+          "value": 2811528415461538.5,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-02",
+          "value": 3250597573000000.0,
+          "valid_days": 10,
+          "calendar_days": 28,
+          "coverage_fraction": 0.3571,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-03",
+          "value": 4790292424500000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-04",
+          "value": 3202813160000000.0,
+          "valid_days": 12,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-05",
+          "value": 2475285815473684.0,
+          "valid_days": 19,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6129,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-06",
+          "value": 1690998002523809.5,
+          "valid_days": 21,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-07",
+          "value": 2260505325777778.0,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-08",
+          "value": 2263493577586666.5,
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "flagged_below_50_pct": true
+        }
+      ],
+      "seasonal_mar_aug": {
+        "vs_2015_2019": {
+          "baseline_mean": 3001324760343134.5,
+          "target_mean": 2775452328426666.5,
+          "abs_diff": -225872431916468.0,
+          "pct_change": -7.5258,
+          "pct_change_status": "computed",
+          "target_valid_days": 105,
+          "target_calendar_days": 184,
+          "any_flagged_month": true
+        }
+      }
+    },
+    "kharkiv_city": {
+      "region_id": "kharkiv_city",
+      "bounds": {
+        "west": 35.98,
+        "south": 49.74,
+        "east": 36.48,
+        "north": 50.24
+      },
+      "data_bounds": {
+        "west": 36.125,
+        "south": 49.875,
+        "east": 36.375,
+        "north": 50.125
+      },
+      "monthly_series": [
+        {
+          "month": "2015-03",
+          "value": 2521893479375000.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-04",
+          "value": 2070300936923077.0,
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2015-05",
+          "value": 1940432372341176.5,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-06",
+          "value": 1565011344052631.5,
+          "valid_days": 19,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-07",
+          "value": 1350468446600000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-08",
+          "value": 1931430498350000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-09",
+          "value": 2802399331000000.0,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-10",
+          "value": 2862316351666666.5,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2015-11",
+          "value": 5555145868000000.0,
+          "valid_days": 5,
+          "calendar_days": 30,
+          "coverage_fraction": 0.1667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2015-12",
+          "value": 1238466368461538.5,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-01",
+          "value": 1825327894000000.0,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-02",
+          "value": 1806529967991666.8,
+          "valid_days": 12,
+          "calendar_days": 29,
+          "coverage_fraction": 0.4138,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-03",
+          "value": 879401653860000.0,
+          "valid_days": 5,
+          "calendar_days": 31,
+          "coverage_fraction": 0.1613,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-04",
+          "value": 2435403445538461.5,
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-05",
+          "value": 1820516839000000.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-06",
+          "value": 1613967540461538.5,
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-07",
+          "value": 1848438558791666.8,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-08",
+          "value": 2204413180863636.2,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2016-09",
+          "value": 1150222618775000.0,
+          "valid_days": 12,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-10",
+          "value": 3256869679636363.5,
+          "valid_days": 11,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3548,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-11",
+          "value": 2734395610475000.0,
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2016-12",
+          "value": 1179968099285714.2,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-01",
+          "value": 1429028084533333.2,
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-02",
+          "value": 894803499176470.6,
+          "valid_days": 17,
+          "calendar_days": 28,
+          "coverage_fraction": 0.6071,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-03",
+          "value": 1089109154778571.4,
+          "valid_days": 14,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4516,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-04",
+          "value": 2070187232000000.0,
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-05",
+          "value": 1675150287585714.2,
+          "valid_days": 21,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6774,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-06",
+          "value": 1742514454578947.2,
+          "valid_days": 19,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-07",
+          "value": 1390073239888889.0,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-08",
+          "value": 1790871040227272.8,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-09",
+          "value": 1904423566600000.0,
+          "valid_days": 21,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2017-10",
+          "value": 1462877691428571.5,
+          "valid_days": 7,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2258,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-11",
+          "value": 3194839120500000.0,
+          "valid_days": 4,
+          "calendar_days": 30,
+          "coverage_fraction": 0.1333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2017-12",
+          "value": 1600613794833333.2,
+          "valid_days": 6,
+          "calendar_days": 31,
+          "coverage_fraction": 0.1935,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-01",
+          "value": 2048696045000000.0,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2018-02",
+          "value": 1187783365192857.2,
+          "valid_days": 14,
+          "calendar_days": 28,
+          "coverage_fraction": 0.5,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-03",
+          "value": 1012987321300000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-04",
+          "value": 2104292712210526.2,
+          "valid_days": 19,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-05",
+          "value": 2018742478238095.2,
+          "valid_days": 21,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6774,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-06",
+          "value": 1247362242181818.2,
+          "valid_days": 22,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-07",
+          "value": 1776931648727272.8,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-08",
+          "value": 1820438126360000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-09",
+          "value": 1646873536100000.0,
+          "valid_days": 20,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-10",
+          "value": 2951232084111111.0,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-11",
+          "value": 2377579630529412.0,
+          "valid_days": 17,
+          "calendar_days": 30,
+          "coverage_fraction": 0.5667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2018-12",
+          "value": 889099223916666.6,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-01",
+          "value": 1378130957076923.0,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-02",
+          "value": 861715152789473.6,
+          "valid_days": 19,
+          "calendar_days": 28,
+          "coverage_fraction": 0.6786,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-03",
+          "value": 2433293583333333.5,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-04",
+          "value": 3022821852222222.0,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-05",
+          "value": 1562054364157894.8,
+          "valid_days": 19,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6129,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-06",
+          "value": 1383941727565217.5,
+          "valid_days": 23,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-07",
+          "value": 1815472924043478.2,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-08",
+          "value": 1880540273090909.0,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-09",
+          "value": 2830187339950000.0,
+          "valid_days": 20,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2019-10",
+          "value": 3200634066666666.5,
+          "valid_days": 15,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4839,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-11",
+          "value": 1746231647125000.0,
+          "valid_days": 8,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2019-12",
+          "value": 1751735893508333.2,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-01",
+          "value": 2066386309000000.0,
+          "valid_days": 5,
+          "calendar_days": 31,
+          "coverage_fraction": 0.1613,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-02",
+          "value": 1287837052615384.5,
+          "valid_days": 13,
+          "calendar_days": 29,
+          "coverage_fraction": 0.4483,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-03",
+          "value": 2669947669750000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-04",
+          "value": 1460719624222222.2,
+          "valid_days": 18,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-05",
+          "value": 1858319781625000.0,
+          "valid_days": 8,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2581,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-06",
+          "value": 1171017176192307.8,
+          "valid_days": 26,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-07",
+          "value": 1801342493120000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-08",
+          "value": 1450019037708333.2,
+          "valid_days": 24,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7742,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-09",
+          "value": 2554288545818182.0,
+          "valid_days": 22,
+          "calendar_days": 30,
+          "coverage_fraction": 0.7333,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-10",
+          "value": 2443362517611111.0,
+          "valid_days": 18,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5806,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2020-11",
+          "value": 2640456154857143.0,
+          "valid_days": 7,
+          "calendar_days": 30,
+          "coverage_fraction": 0.2333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2020-12",
+          "value": 1213247632250000.0,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-01",
+          "value": 906319441461538.5,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-02",
+          "value": 1517695870233333.2,
+          "valid_days": 12,
+          "calendar_days": 28,
+          "coverage_fraction": 0.4286,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-03",
+          "value": 1824682044538461.5,
+          "valid_days": 13,
+          "calendar_days": 31,
+          "coverage_fraction": 0.4194,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-04",
+          "value": 2657345960600000.0,
+          "valid_days": 10,
+          "calendar_days": 30,
+          "coverage_fraction": 0.3333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-05",
+          "value": 1765147677312500.0,
+          "valid_days": 16,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5161,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-06",
+          "value": 1371720432950000.0,
+          "valid_days": 20,
+          "calendar_days": 30,
+          "coverage_fraction": 0.6667,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-07",
+          "value": 1424609268572000.0,
+          "valid_days": 25,
+          "calendar_days": 31,
+          "coverage_fraction": 0.8065,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-08",
+          "value": 2226683177826087.0,
+          "valid_days": 23,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7419,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-09",
+          "value": 2010976789642857.2,
+          "valid_days": 14,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4667,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-10",
+          "value": 2703615886117647.0,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2021-11",
+          "value": 3145273828333333.5,
+          "valid_days": 12,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2021-12",
+          "value": 1395969997222222.2,
+          "valid_days": 9,
+          "calendar_days": 31,
+          "coverage_fraction": 0.2903,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-01",
+          "value": 1202940386225000.0,
+          "valid_days": 12,
+          "calendar_days": 31,
+          "coverage_fraction": 0.3871,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-02",
+          "value": 1147502678785714.2,
+          "valid_days": 14,
+          "calendar_days": 28,
+          "coverage_fraction": 0.5,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-03",
+          "value": 1039134794660000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-04",
+          "value": 685762441076923.1,
+          "valid_days": 13,
+          "calendar_days": 30,
+          "coverage_fraction": 0.4333,
+          "flagged_below_50_pct": true
+        },
+        {
+          "month": "2022-05",
+          "value": 1118719385941176.5,
+          "valid_days": 17,
+          "calendar_days": 31,
+          "coverage_fraction": 0.5484,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-06",
+          "value": 1245739391000000.0,
+          "valid_days": 24,
+          "calendar_days": 30,
+          "coverage_fraction": 0.8,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-07",
+          "value": 1315471344090909.0,
+          "valid_days": 22,
+          "calendar_days": 31,
+          "coverage_fraction": 0.7097,
+          "flagged_below_50_pct": false
+        },
+        {
+          "month": "2022-08",
+          "value": 2023232513050000.0,
+          "valid_days": 20,
+          "calendar_days": 31,
+          "coverage_fraction": 0.6452,
+          "flagged_below_50_pct": false
+        }
+      ],
+      "seasonal_mar_aug": {
+        "vs_2015_2019": {
+          "baseline_mean": 1807480137713646.5,
+          "target_mean": 1276022434510344.8,
+          "abs_diff": -531457703203301.75,
+          "pct_change": -29.4032,
+          "pct_change_status": "computed",
+          "target_valid_days": 116,
+          "target_calendar_days": 184,
+          "any_flagged_month": true
+        }
+      }
+    }
+  },
+  "extra_places": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              35.98,
+              49.74
+            ],
+            [
+              36.48,
+              49.74
+            ],
+            [
+              36.48,
+              50.24
+            ],
+            [
+              35.98,
+              50.24
+            ],
+            [
+              35.98,
+              49.74
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "region_id": "kharkiv_city",
+        "area_km2": 1987.3,
+        "center": {
+          "lat": 49.99,
+          "lon": 36.23
+        },
+        "name": "Kharkiv city",
+        "role": "extra_no2_city_box",
+        "is_ukraine_study_area": true,
+        "description": "0.5\u00b0 box over Kharkiv city. NO\u2082 only; inside the East front box."
+      }
+    }
+  ]
+}

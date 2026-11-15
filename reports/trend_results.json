@@ -1,8 +1,9 @@
 {
   "schema_version": "1.0.0",
-  "generated_at_utc": "2026-11-15T00:53:50Z",
+  "generated_at_utc": "2026-11-15T01:09:26Z",
   "alpha": 0.05,
   "multiple_testing": "Benjamini-Hochberg across all 348 tested rows; 'significant' means p_value_fdr < alpha",
+  "open_question": "One family of all tests is the strict choice. Correcting per variable instead is a team decision still to be reviewed; with the current data it would change no verdict except Prague/Krakow NO2, which the coverage rule already withholds.",
   "no2_coverage_rule": "NO2 trends use every month with a mean (as for Kyiv). A NO2 trend is only called significant if it stays significant with the same sign after dropping months below 50% daily coverage.",
   "counts": {
     "rows": 372,
@@ -425,7 +426,7 @@
       "theil_sen_slope_per_year": -119074677608709.31,
       "p_value_hamed_rao": 8e-05,
       "caveats": [
-        "The raw numbers change steeply (-0.147 \u00d710\u00b9\u2075 molecules/cm\u00b2 per year), but about half the months are poorly observed and the test cannot be repeated without them.",
+        "The raw numbers change steeply (\u22120.147 \u00d710\u00b9\u2075 molecules/cm\u00b2 per year), but about half the months are poorly observed and the test cannot be repeated without them.",
         "Satellite column of NO\u2082 above the box; not street-level air quality.",
         "In 46 of 90 months the satellite saw the box on fewer than half the days (mostly winter cloud).",
         "Small 0.5\u00b0 box (about four satellite grid cells), so single cloudy days matter a lot.",
@@ -468,7 +469,7 @@
       "theil_sen_slope_per_year": -138517756005066.31,
       "p_value_hamed_rao": 4.3e-05,
       "caveats": [
-        "The raw numbers change steeply (-0.174 \u00d710\u00b9\u2075 molecules/cm\u00b2 per year), but about half the months are poorly observed and the test cannot be repeated without them.",
+        "The raw numbers change steeply (\u22120.174 \u00d710\u00b9\u2075 molecules/cm\u00b2 per year), but about half the months are poorly observed and the test cannot be repeated without them.",
         "Satellite column of NO\u2082 above the box; not street-level air quality.",
         "In 44 of 84 months the satellite saw the box on fewer than half the days (mostly winter cloud).",
         "Small 0.5\u00b0 box (about four satellite grid cells), so single cloudy days matter a lot.",

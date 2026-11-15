@@ -66,3 +66,15 @@ def test_regional_no2_monthly_shape(tmp_path):
     assert set(monthly) == set(tr.NO2_REGIONAL_FILES)
     for df in monthly.values():
         assert len(df) == 90 and df["month"].iloc[0] == "2015-03" and df["month"].iloc[-1] == "2022-08"
+
+
+def test_no2_atlas_payload_matches_monthly_files_and_adds_kharkiv():
+    payload = tr.build_no2_atlas_payload(REPO / "data" / "frozen" / "no2_regional")
+    assert set(payload["regions"]) == set(tr.NO2_REGIONAL_FILES)
+    assert [f["properties"]["region_id"] for f in payload["extra_places"]] == ["kharkiv_city"]
+    for region in payload["regions"].values():
+        assert len(region["monthly_series"]) == 90
+        cmp = region["seasonal_mar_aug"]["vs_2015_2019"]
+        assert cmp["abs_diff"] == pytest.approx(cmp["target_mean"] - cmp["baseline_mean"])
+        for p in region["monthly_series"]:
+            assert p["flagged_below_50_pct"] == (p["valid_days"] / p["calendar_days"] < 0.5)

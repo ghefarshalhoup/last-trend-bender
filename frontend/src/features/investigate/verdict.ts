@@ -47,7 +47,8 @@ const yearsSpanned = (points: SeriesPoint[]) => new Set(points.filter((p) => p.v
 
 /** Reasons in words; never a number when there is no result. */
 function notAssessedSentence(result: TrendResult | undefined, series: VariableSeries): string {
-  if (result?.status === 'insufficient_evidence') return 'Too little data for a reliable trend test.'
+  // The analysis gives its own reason first (e.g. four fire seasons, or too many poorly observed months).
+  if (result?.status === 'insufficient_evidence') return result.caveats?.[0] ?? 'Too little data for a reliable trend test.'
   const years = yearsSpanned(series.points)
   if (years < 5) return `Only ${years} years of data: too short for a trend test.`
   return 'The trend test has not been run for this place yet.'
@@ -62,7 +63,7 @@ export function readCard(variable: VariableEntry, series: VariableSeries, result
   const way = direction === 'down' ? 'downward' : direction === 'up' ? 'upward' : 'flat'
 
   const badge =
-    verdict === 'not_assessed' ? 'Not assessed' : verdict === 'significant' ? `Significant ${direction === 'down' ? 'fall' : 'rise'}` : 'No significant trend'
+    verdict === 'not_assessed' ? (result?.status === 'insufficient_evidence' ? 'Too little data' : 'Not assessed') : verdict === 'significant' ? `Significant ${direction === 'down' ? 'fall' : 'rise'}` : 'No significant trend'
   const sentence =
     verdict === 'not_assessed'
       ? notAssessedSentence(result, series)

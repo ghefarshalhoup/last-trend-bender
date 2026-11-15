@@ -53,11 +53,26 @@ export const PLACE_LABELS: Record<string, string> = {
   west_ukraine_cand: 'West Ukraine',
   poland_krakow: 'Kraków, Poland',
   czechia_prague: 'Prague, Czechia',
+  kharkiv_city: 'Kharkiv city',
 }
 export const placeLabel = (id: string) => PLACE_LABELS[id] ?? id
 
-/** Whether the variable has data for the place. */
-export function hasDataFor(variable: VariableEntry, placeId: string): boolean {
+/** Monthly NO₂ for the study boxes beyond Kyiv (`/api/air/no2`), plus places that only exist there. */
+export interface No2Regional {
+  status: 'available' | 'not_available'
+  regions: Record<string, unknown>
+  extra_places: PlaceFeature[]
+}
+export const NO_REGIONAL_NO2: No2Regional = { status: 'not_available', regions: {}, extra_places: [] }
+export const NO2_METRIC = 'no2_mean_molec_cm2'
+
+export async function fetchNo2Regional(signal?: AbortSignal): Promise<No2Regional> {
+  return getJson<No2Regional>('/api/air/no2', { signal })
+}
+
+/** Whether the variable has data for the place. NO₂ places beyond the catalog come from the regional file. */
+export function hasDataFor(variable: VariableEntry, placeId: string, no2Places: ReadonlySet<string> = new Set()): boolean {
+  if (variable.metric_id === NO2_METRIC && no2Places.has(placeId)) return true
   const s = variable.spatial_support
   return s.ukraine_region_ids.includes(placeId) || s.external_weather_region_ids.includes(placeId)
 }
