@@ -67,7 +67,7 @@
   /* Both phases reserve the same bar height, so the map does not jump when phase 2 opens. */
   .bar { min-height: 7.25rem; align-content: center; box-sizing: border-box; }
   .cards {
-    position: absolute; z-index: 4; inset: var(--space-3) calc(var(--space-3) + 14.5rem) 9.5rem var(--space-3);
+    position: absolute; z-index: 4; inset: var(--space-3) calc(var(--space-3) + 14.5rem) 6rem var(--space-3);
     overflow-y: auto; padding: 0; pointer-events: none;
   }
   .cards > * { pointer-events: auto; }

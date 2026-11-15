@@ -5,6 +5,10 @@ Newest first. Husam has not yet reviewed the entries marked **needs review**.
 
 ## 2026-11-15
 
+### D11. The guide becomes a portrait; the letter becomes a field guide
+- **Decided by:** G.
+- **What:** the guide is a portrait in the corner with a badge counting insights. Pressing it opens one insight per open card, built only from that card's fields (test, then "Separately…" for 2022, then coverage). The letter ("Field guide") lists the chosen element's variables with plain definitions and follows the element; its second tab keeps "How to read".
+
 ### D10. Compare with a city outside the war
 - **Decided by:** G.
 - **What:** Kraków and Prague are no longer places on their own. "Compare with" splits the screen: the Ukrainian place on the left, the city on the right, the same variables in the same order. Each card keeps its own test; nothing tests the difference between the two.

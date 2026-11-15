@@ -7,7 +7,8 @@ import { ElementMedallions } from '../atlas/ElementMedallions'
 import { ScrollButton, ScrollOverlay } from '../atlas/EvidenceScroll'
 import { ATLAS_HEIGHT, ATLAS_WIDTH, atlasPercent, projectLonLat, ringPath } from '../atlas/projection'
 import { resolveElements, type ElementId } from '../explorer/elements'
-import { GuideBubble } from '../explorer/GuideBubble'
+import { AvatarPanel, type InsightGroup } from './AvatarPanel'
+import { VariableGuide } from './VariableGuide'
 import { TitleBadge } from '../explorer/TitleBadge'
 import { extraSupport, hasDataFor, NO_COMPARISON_WEATHER, NO_REGIONAL_NO2, noDataReason, OUTSIDE_DISTANCE_KM, placeLabel, variablesOf, type ComparisonWeather, type ExtraSupport, type No2Regional, type PlaceFeature, type VariableCatalog, type VariableEntry } from './catalog'
 import styles from './InvestigationAtlas.module.css'
@@ -60,6 +61,8 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
   const [notice, setNotice] = useState<string | null>(null)
   const [example, setExample] = useState(false)
   const [scrollOpen, setScrollOpen] = useState(false)
+  const [scrollTab, setScrollTab] = useState<'variables' | 'help'>('variables')
+  const [insightsOpen, setInsightsOpen] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const overlayId = useId()
 
@@ -108,6 +111,7 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
     setNotice(null)
     setPhase('investigate')
     setExample(true)
+    setInsightsOpen(true)
   }
 
   const cardState = (v: VariableEntry, at: string | null = place): SeriesState => {
@@ -122,12 +126,24 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
   // Focus falls back to the newest open card when the focused one is closed.
   const focusVar = openVars.find((v) => v.metric_id === focus?.metric) ?? openVars[openVars.length - 1]
   const focusPlace = focus?.place && shownPlaces.includes(focus.place) ? focus.place : place
-  const guide = guideText({
-    phase, place: focusPlace, element, example, notice, openVars, focusVar, window,
-    cardState: (v) => cardState(v, focusPlace), trendFor: (v, st) => trendFor(v, st, focusPlace),
-  })
-  const guideAction =
-    phase === 'investigate' && focusVar && !notice ? { label: 'Explore another place', onClick: () => { edit(); setPhase('choose') } } : undefined
+  const speech = speechText({ phase, place, element, notice, openVars })
+  // One insight per open card and place, built from that card's own fields; the focused card first.
+  const insightGroups: InsightGroup[] = shownPlaces.map((at) => ({
+    label: compare && at ? placeLabel(at) : example ? 'Guided example: Kyiv city' : null,
+    items: [...openVars]
+      .sort((a, b) => Number(b === focusVar && at === focusPlace) - Number(a === focusVar && at === focusPlace))
+      .filter((v) => cardState(v, at).status === 'ready')
+      .map((v) => {
+        const st = cardState(v, at)
+        return {
+          key: `${v.metric_id}-${at ?? ''}`,
+          title: compare ? v.short_label : `${v.short_label} · ${at ? placeLabel(at) : ''}`,
+          text: observe({ variable: v, placeId: at ?? '', window, state: st, trend: trendFor(v, st, at), noDataReason: noDataReason(v, at ?? '') }),
+          focused: v === focusVar && at === focusPlace,
+        }
+      }),
+  }))
+  const guideAction = phase === 'investigate' ? { label: 'Explore another place', onClick: () => { edit(); setInsightsOpen(false); setPhase('choose') } } : undefined
   const current = elements.find((e) => e.id === element)
   const art = current?.id ?? 'none'
 
@@ -226,20 +242,43 @@ export function InvestigationAtlas({ cases, catalog, trends, no2Regional = NO_RE
             <ElementMedallions elements={elements} active={element} onSelect={(id) => { edit(); setElement(id) }} onClear={() => { edit(); setElement(null) }} />
           </div>
           <div className={`${pageStyles.bottomLeft} ${styles.guide}`}>
-            <GuideBubble text={guide} accent={current?.accent} action={guideAction} />
+            <AvatarPanel
+              accent={current?.accent}
+              speech={speech}
+              groups={phase === 'investigate' ? insightGroups : []}
+              open={insightsOpen}
+              onToggle={() => setInsightsOpen((o) => !o)}
+              action={guideAction}
+            />
           </div>
           <div className={pageStyles.bottomRight} ref={scrollRef}>
-            <ScrollButton art={art} label="How to read" open={scrollOpen} unread={false} controls={overlayId} onToggle={() => setScrollOpen((o) => !o)} />
+            <ScrollButton art={art} label="Field guide" open={scrollOpen} unread={false} controls={overlayId} onToggle={() => setScrollOpen((o) => !o)} />
           </div>
           {scrollOpen ? (
             <div className={pageStyles.overlaySlot} data-overlay-slot="">
               <ScrollOverlay
                 id={overlayId}
-                title="How to read this atlas"
+                key={art}
+                title={current ? `${current.label}: the field guide` : 'The field guide'}
                 art={art}
-                tabs={[{ id: 'help', label: 'How to read', content: <HowToRead /> }]}
-                activeId="help"
-                onSelectTab={() => undefined}
+                tabs={[
+                  {
+                    id: 'variables',
+                    label: current ? `${current.label} variables` : 'Variables',
+                    content: (
+                      <VariableGuide
+                        catalog={catalog}
+                        element={element}
+                        elementLabel={current?.label}
+                        openIds={cards}
+                        hasData={(v) => !place || hasDataFor(v, place, no2Places)}
+                      />
+                    ),
+                  },
+                  { id: 'help', label: 'How to read', content: <HowToRead /> },
+                ]}
+                activeId={scrollTab}
+                onSelectTab={(id) => setScrollTab(id as 'variables' | 'help')}
                 onClose={() => {
                   setScrollOpen(false)
                   scrollRef.current?.querySelector('button')?.focus()
@@ -394,7 +433,7 @@ function HowToRead() {
     <div className={styles.help} data-testid="scroll-help">
       <ol>
         <li>Press a place on the map and pick a period, then press Investigate.</li>
-        <li>Choose an element (top right), then up to four of its variables. Each opens as a card.</li>
+        <li>Choose an element (top right), then up to three of its variables. The Variables page of this guide explains each one. Each opens as a card.</li>
         <li>Press i on a card to turn it over: what the variable is, its source, and how it was tested.</li>
       </ol>
       <h3>The verdict on every card</h3>
@@ -404,34 +443,19 @@ function HowToRead() {
         <li><strong>– Too little data / Not assessed</strong> The record is too short or too patchy for a fair test, or no test was run. No rate is shown.</li>
       </ul>
       <p><strong>Periods.</strong> Full record: 2015–2022 (NO₂ and fire end in August 2022, weather in December 2022). Before the invasion: 2015 to February 2022. The data are monthly, so February 2022 is counted whole and includes its last five days, from 24 February. Grey shading marks months a test did not use.</p>
-      <p>The guide reads one card at a time: the newest, or the one you click. It reports that card’s test and, separately, how March–August 2022 compared with earlier years. It does not explain causes.</p>
+      <p>Press the guide’s portrait (bottom left) for one insight per open card: its test and, separately, how March–August 2022 compared with earlier years. It does not explain causes.</p>
       <p>The red line marks the invasion, 24 February 2022. Hollow points are months the satellite saw on under half the days. A significant trend does not say what caused it.</p>
     </div>
   )
 }
 
-interface GuideInput {
-  phase: Phase
-  place: string | null
-  element: ElementId | null
-  example: boolean
-  notice: string | null
-  openVars: VariableEntry[]
-  focusVar: VariableEntry | undefined
-  window: WindowId
-  cardState: (v: VariableEntry) => SeriesState
-  trendFor: (v: VariableEntry, st: SeriesState) => ReturnType<typeof pickTrend>
-}
 
-function guideText({ phase, place, element, example, notice, openVars, focusVar, window, cardState, trendFor }: GuideInput): string {
+function speechText({ phase, place, element, notice, openVars }: { phase: Phase; place: string | null; element: ElementId | null; notice: string | null; openVars: VariableEntry[] }): string | null {
   if (notice) return notice
   if (phase === 'choose') {
     if (!place) return 'Press a place on the map, or start the guided example. Each place is a study box; its true size appears when you point at it.'
     return `${placeLabel(place)} is chosen. Pick a period and press Investigate.`
   }
-  if (!focusVar || !place) return element ? 'Pick variables in the bar above.' : 'Choose an element at the top right.'
-  const st = cardState(focusVar)
-  const text = observe({ variable: focusVar, placeId: place, window, state: st, trend: trendFor(focusVar, st), noDataReason: noDataReason(focusVar, place) })
-  const more = openVars.length > 1 ? ' Click another card to read it here.' : ''
-  return `${example ? 'Guided example: ' : ''}${text}${more}`
+  if (!openVars.length) return element ? 'Pick variables in the bar above.' : 'Choose an element at the top right. The field guide explains its variables.'
+  return null
 }

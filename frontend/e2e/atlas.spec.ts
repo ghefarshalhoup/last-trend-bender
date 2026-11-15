@@ -152,12 +152,19 @@ test('guided example: Kyiv NO₂ with wind and cloud, numbers from the API', asy
   await expect(no2.getByTestId('card-seasonal')).toContainText('−28.0% vs 2015–2019')
   await expect(page.getByTestId('card-ws10m').getByTestId('card-verdict')).toBeVisible()
   await expect(page.getByTestId('card-cloud_amt').getByTestId('card-verdict')).toBeVisible()
-  await expect(page.getByTestId('guide-bubble')).toContainText('averaged 28% below the 2015–2019 average')
-  // the guide never hides a card at this size
-  const guide = (await page.getByTestId('guide-bubble').boundingBox())!
-  const chartBox = (await no2.getByTestId('trend-chart').boundingBox())!
-  expect(chartBox.y + chartBox.height).toBeLessThanOrEqual(guide.y)
+  // the example opens the guide's insights, one per card
+  const panel = page.getByTestId('avatar-panel')
+  await expect(panel.getByTestId('insight-no2_mean_molec_cm2-kyiv_no2_box')).toContainText('averaged 28% below the 2015–2019 average')
+  await expect(page.getByTestId('avatar-badge')).toHaveText('3')
+  await page.waitForTimeout(400)
   await page.screenshot({ path: `${SHOTS}/2-guided-example-desktop.png` })
+  // folded back to the portrait, the guide never hides a chart at this size
+  await page.getByTestId('avatar-close').click()
+  await expect(panel).toHaveCount(0)
+  const portrait = (await page.getByTestId('avatar-button').boundingBox())!
+  const chartBox = (await no2.getByTestId('trend-chart').boundingBox())!
+  expect(chartBox.y + chartBox.height).toBeLessThanOrEqual(portrait.y)
+  await page.screenshot({ path: `${SHOTS}/2b-cards-portrait-desktop.png` })
 
   await page.getByTestId('window-pre_invasion').click()
   await expect(no2.getByTestId('card-rate')).toContainText('−0.0173')
@@ -174,9 +181,20 @@ test('mobile: cards stack under the map with no sideways scroll', async ({ page 
   await page.screenshot({ path: `${SHOTS}/4-guided-example-mobile.png`, fullPage: true })
 })
 
-test('the how-to-read scroll explains the three verdicts and closes with Escape', async ({ page }) => {
+test('the field guide: variables of the chosen element with definitions, how to read, Escape closes', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
   await open(page)
   await page.getByTestId('evidence-scroll').click()
+  await expect(page.getByTestId('variable-guide-empty')).toBeVisible()
+  await page.getByTestId('element-water').click()
+  await expect(page.getByTestId('variable-guide')).toHaveAttribute('data-element', 'water')
+  await expect(page.getByTestId('define-prectotcorr')).toBeVisible()
+  await page.getByTestId('element-water').click()
+  await page.getByTestId('element-air').click()
+  await expect(page.getByTestId('define-no2_mean_molec_cm2')).toContainText('nitrogen dioxide')
+  await page.waitForTimeout(500) // let the unroll animation finish
+  await page.screenshot({ path: `${SHOTS}/8-field-guide-air-desktop.png` })
+  await page.getByRole('tab', { name: 'How to read' }).click()
   await expect(page.getByTestId('scroll-help')).toContainText('Not assessed')
   await page.keyboard.press('Escape')
   await expect(page.getByTestId('scroll-help')).toHaveCount(0)
