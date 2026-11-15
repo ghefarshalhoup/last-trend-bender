@@ -371,7 +371,7 @@ CATALOG_VARIABLES: Tuple[CatalogVariableSpec, ...] = (
         metric_id="t2m_max",
         element_id="fire",
         element_label="Fire",
-        label="Peak Daily 2m Air Temperature (T2M_MAX)",
+        label="Monthly Peak 2m Air Temperature (T2M_MAX)",
         short_label="Peak temperature",
         units="°C",
         is_interval_scale=True,
@@ -383,7 +383,7 @@ CATALOG_VARIABLES: Tuple[CatalogVariableSpec, ...] = (
         n_years_available=8,
         method_id="nasa_power_merra2_3x3_coslat_v1",
         resolution="0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
-        sampling_method="Cos(lat)-weighted mean of monthly maximum 2m air temperature",
+        sampling_method="Cos(lat)-weighted mean of monthly extreme maximum 2m air temperature (T2M_MAX)",
         presentation_type="regional_study_boxes",
         supports_fine_heatmap=False,
         supports_spatial_cells=False,
@@ -586,7 +586,7 @@ CATALOG_VARIABLES: Tuple[CatalogVariableSpec, ...] = (
         n_years_available=8,
         method_id="nasa_power_merra2_3x3_coslat_v1",
         resolution="0.5 deg x 0.625 deg MERRA-2 sampled over 3x3 cos(lat) lattice",
-        sampling_method="Cos(lat)-weighted mean converted from W/m^2 latent heat flux using lambda=2.45 MJ/kg",
+        sampling_method="Cos(lat)-weighted mean converted from MJ/m^2/day transpiration energy flux via Bolton lambda(T) = max(2.2, 2.501 - 0.002361 * T2M) MJ/kg",
         presentation_type="regional_study_boxes",
         supports_fine_heatmap=False,
         supports_spatial_cells=False,
@@ -781,8 +781,9 @@ CATALOG_BY_ID: Dict[str, CatalogVariableSpec] = {v.metric_id: v for v in CATALOG
 # Plain-language one-sentence definitions for all 25 curated metrics.
 PLAIN_DEFINITIONS_BY_METRIC_ID: Dict[str, str] = {
     "no2_mean_molec_cm2": (
-        "Satellite-measured nitrogen dioxide (NO2) gas density in the air column above the study "
-        "box, reflecting fuel combustion from traffic, power generation, and industry."
+        "Satellite-measured nitrogen dioxide (NO2) gas density in the tropospheric "
+        "(lower-atmosphere) air column above the study box, reflecting fuel combustion from "
+        "traffic, power generation, and industry."
     ),
     "ws10m": (
         "Average wind speed measured 10 meters above ground, controlling how quickly air pollution "
@@ -793,88 +794,91 @@ PLAIN_DEFINITIONS_BY_METRIC_ID: Dict[str, str] = {
         "days in satellite NO2 observations."
     ),
     "ps": (
-        "Air pressure at the land surface, indicating passing high-pressure fair weather versus "
-        "low-pressure storm systems."
+        "Air pressure at the ground surface, tracking passing high-pressure fair weather versus "
+        "low-pressure storm systems (levels also vary with ground elevation)."
     ),
     "clrsky_sfc_sw_dwn": (
-        "Incoming sunlight power on a completely cloudless day, showing the seasonal solar ceiling "
-        "without cloud shading."
+        "Incoming sunlight energy on a cloudless day, set mainly by season, latitude, and "
+        "atmospheric haze as the clear-sky solar ceiling."
     ),
     "cloud_radiative_attenuation_wm2": (
         "Average sunlight power blocked or reflected by clouds before reaching the ground (clear-sky "
-        "minus all-sky solar radiation)."
+        "minus all-sky solar radiation, converted to W/m^2)."
     ),
     "fire_type0_per_1k_km2_day": (
-        "Number of satellite-detected open-land or vegetation fire hotspots per 1,000 square "
-        "kilometers per day observed by satellite."
+        "Number of satellite-detected vegetation fire hotspots (nominal/high confidence) per 1,000 "
+        "square kilometers per satellite-observed day; counts pixel hotspots across overpasses, "
+        "not distinct fires or burned area."
     ),
     "fire_type2_per_1k_km2_day": (
-        "Number of satellite-detected hotspots at stationary industrial, steel, or flaring sites "
-        "per 1,000 square kilometers per observed day."
+        "Number of persistent stationary heat detections (steelworks, industrial plants, and gas "
+        "flares) per 1,000 square kilometers per satellite-observed day."
     ),
     "t2m": (
-        "Average air temperature 2 meters above the ground, describing regional baseline warmth "
-        "across seasons."
+        "Monthly average air temperature 2 meters above the ground, describing regional baseline "
+        "warmth across seasons."
     ),
     "t2m_max": (
-        "Monthly mean of daily peak daytime temperatures at 2 meters height, capturing heat stress "
-        "that dries out surface fuels."
+        "Monthly extreme maximum air temperature at 2 meters height (single hottest reading of the "
+        "month, not the mean of daily highs), capturing heat extremes that dry surface fuels."
     ),
     "dtr_c": (
-        "Spread between daytime high and nighttime low temperatures, which widens during sunny dry "
-        "spells and shrinks under clouds."
+        "Monthly average of the daily spread between daytime high and nighttime low temperatures, "
+        "which widens during sunny dry spells and shrinks under clouds."
     ),
     "allsky_sfc_sw_dwn": (
         "Actual average solar energy reaching the ground after cloud shading, driving surface "
         "heating and water evaporation."
     ),
     "pet_fao56_mm_day": (
-        "Maximum rate at which moist soil and well-watered vegetation lose water into the air "
-        "given local sun, heat, humidity, and wind."
+        "Standardized FAO-56 Penman-Monteith evaporation demand from a hypothetical well-watered "
+        "reference grass surface given local sun, heat, humidity, and wind."
     ),
     "prectotcorr": (
-        "Bias-corrected total rain and melted snowfall reaching the land surface each day across "
-        "the study box."
+        "Bias-corrected total precipitation (rain and melted snowfall) reaching the land surface as "
+        "millimeters of liquid water per day across the study box."
     ),
     "vpd_kpa": (
-        "Atmospheric drying pull (vapor pressure deficit): how strongly thirsty air draws moisture "
-        "out of soils and plants."
+        "Atmospheric drying pull (vapor pressure deficit): gap between saturation vapor pressure at "
+        "air temperature and actual vapor pressure, showing how strongly dry air draws moisture."
     ),
     "qv2m": (
-        "Actual mass of water vapor mixed into every kilogram of near-surface air, measuring true "
-        "atmospheric moisture content."
+        "Actual mass of water vapor mixed into every kilogram of moist near-surface air, measuring "
+        "true atmospheric moisture content."
     ),
     "rh2m": (
         "Percentage of water vapor the air holds compared with the maximum it could hold at its "
         "current temperature."
     ),
     "evptrns_mm_day": (
-        "Estimated daily water returning from soil evaporation and plant transpiration into the "
-        "atmosphere."
+        "Model-estimated daily water transpired by vegetation canopies through leaves into the "
+        "atmosphere (MERRA-2 transpiration energy flux converted via temperature-dependent latent "
+        "heat)."
     ),
     "precip_minus_pet_mm_day": (
-        "Climatic water balance (rainfall minus evaporation demand): positive indicates moisture "
-        "surplus and negative indicates net drying."
+        "Climatic water balance (total precipitation minus FAO-56 reference evaporation demand): "
+        "positive indicates moisture surplus and negative indicates net drying pressure."
     ),
     "gwettop": (
-        "Moisture saturation in the top few centimeters of soil (from 0 completely dry to 1 fully "
-        "saturated)."
+        "MERRA-2 modeled moisture saturation in the top 5 cm of soil (from 0 completely water-free "
+        "to 1 fully saturated)."
     ),
     "gwetroot": (
-        "Moisture saturation down through the plant root zone (roughly top meter of soil), "
-        "tracking water available to crops."
+        "MERRA-2 modeled moisture saturation across the 0-1 m plant root zone (from 0 water-free "
+        "to 1 fully saturated), tracking crop water reserves."
     ),
     "gwetprof": (
-        "Total water saturation across the full vertical soil column, changing more slowly across "
-        "seasons than surface soil."
+        "MERRA-2 modeled water saturation across the full vertical soil column to bedrock, changing "
+        "more slowly across seasons than surface soil."
     ),
     "ts": (
-        "Radiometric skin temperature of the ground surface itself, rising sharply above air "
+        "Modeled radiometric skin temperature of the ground surface itself, rising relative to air "
         "temperature when soils dry out."
     ),
     "ts_minus_t2m_c": (
-        "Temperature difference between the bare/vegetated ground skin and air 2 meters above it, "
-        "indicating surface heating versus evaporative cooling."
+        "24-hour monthly mean temperature difference between the modeled ground skin and air 2 "
+        "meters above it (-1.4 to +2.0 °C across study boxes), reflecting surface heating versus "
+        "evaporative cooling."
     ),
     "allsky_srf_alb": (
         "Fraction of incoming sunlight reflected off the land surface back into space, varying "

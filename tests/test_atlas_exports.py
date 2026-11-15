@@ -83,6 +83,39 @@ class AtlasExportsTest(unittest.TestCase):
                 self.assertTrue(baselines["2015-2019"]["supported"])
                 self.assertTrue(baselines["2019-2021"]["supported"])
 
+        # Cross-check docs/variable-definitions.md, frontend variableDefinitions.json, and catalog science facts
+        import re
+
+        repo_root = Path(__file__).resolve().parents[1]
+        md_text = (repo_root / "docs" / "variable-definitions.md").read_text(encoding="utf-8")
+        md_rows = re.findall(
+            r"^\| ([^|\n]+) \(`([a-z0-9_]+)`\) \| ([^|\n]+) \| ([^|\n]+) \| ([^|\n]+) \|$",
+            md_text,
+            re.M,
+        )
+        ui_list = json.loads(
+            (repo_root / "frontend" / "src" / "features" / "atlas" / "variableDefinitions.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(len(md_rows), 25)
+        self.assertEqual(len(ui_list), 25)
+        for (lbl, mid, units, defn, hint), ui_entry in zip(md_rows, ui_list):
+            self.assertEqual((lbl, mid, units, defn, hint), (
+                ui_entry["label"],
+                ui_entry["metric_id"],
+                ui_entry["units"],
+                ui_entry["definition"],
+                ui_entry["reading_hint"],
+            ))
+        ui_defs = {entry["metric_id"]: entry for entry in ui_list}
+        cat_by_id = {v["metric_id"]: v for v in cat["variables"]}
+        self.assertEqual(set(ui_defs.keys()), set(cat_by_id.keys()))
+        self.assertNotIn("averaged over the month", ui_defs["t2m_max"]["definition"].lower())
+        self.assertIn("not the mean of daily highs", cat_by_id["t2m_max"]["plain_definition"].lower())
+        self.assertIn("MJ/m^2/day", cat_by_id["evptrns_mm_day"]["spatial_support"]["sampling_method"])
+        self.assertIn("transpiration", ui_defs["evptrns_mm_day"]["definition"].lower())
+
     def test_fire_primary_separation_outage_flags_and_cells(self) -> None:
         fire = self._load("atlas_fire_ukraine")
         self.assertEqual(fire["element_id"], "fire")
