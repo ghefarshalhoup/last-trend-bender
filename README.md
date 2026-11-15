@@ -66,6 +66,12 @@ Choose a place and a period, then open NASA variables as cards with a trend verd
 python -m src.trend_results   # regional NO2 monthly series + reports/trend_results.json
 ```
 
+## Online version
+
+**https://ghefarshalhoup.github.io/war-environment-tracker/#/atlas** (GitHub Pages, static).
+
+The atlas only reads precomputed results, so the online version serves a snapshot of the API: `scripts/export_static_api.py` saves every response the app needs as a file, and the app is built with `VITE_STATIC_API=1` to read those files. The FastAPI service in `backend/` produces the same responses. To republish after a change: `bash scripts/deploy_pages.sh`.
+
 ## Use of AI
 
 Parts of this repository were written with AI assistance: Claude (Anthropic, via Claude Code) for most of the frontend, parts of the backend and analysis scripts, tests and documentation; Codex / ChatGPT (OpenAI) for review and audits. Commits written with Claude carry a `Co-Authored-By: Claude` trailer. One image is AI-generated: the painted base map of the atlas (`frontend/src/features/atlas/assets/painted-base.webp`). It shows a visible "AI-generated illustration" mark and is warped onto the true projection (see `docs/base-map.md`); all study boxes and pins are drawn from true coordinates. No other images, video or audio are AI-generated, and all charts come from the result files.

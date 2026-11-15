@@ -16,9 +16,11 @@ The Last Trend Bender is a web atlas that turns anyone into an Earth-system tren
 
 ## Link to Final Project
 
-https://github.com/ghefarshalhoup/war-environment-tracker
+Live app: https://ghefarshalhoup.github.io/war-environment-tracker/#/atlas
 
-**[Add the hosted link here if we deploy one.]**
+Code: https://github.com/ghefarshalhoup/war-environment-tracker
+
+The live app serves the precomputed results as static files; the FastAPI service in the repository produces the same responses.
 
 ## Detailed Project Description
 
