@@ -5,10 +5,14 @@ import { casesFixture, makeStudy } from '../../test/fixtures'
 import variablesJson from '../../test/fixtures/variables.json'
 import EarthPage from './EarthPage'
 
-// The map needs WebGL, which the test browser does not have. The page's states are what is tested here.
+// The map needs WebGL, which the test browser does not have. It is replaced by buttons that call the same handlers.
 vi.mock('./EarthMap', () => ({
-  EarthMap: ({ view, placeId, insets }: { view: string; placeId: string | null; insets: { left: number; bottom: number } }) => (
-    <div data-testid="map" data-view={view} data-place={placeId ?? ''} data-left={insets.left} />
+  EarthMap: ({ view, placeId, insets, onOpenCase, onSelectPlace }: { view: string; placeId: string | null; insets: { left: number }; onOpenCase: () => void; onSelectPlace: (id: string) => void }) => (
+    <div data-testid="map" data-view={view} data-place={placeId ?? ''} data-left={insets.left}>
+      <button type="button" onClick={onOpenCase}>pin</button>
+      <button type="button" onClick={() => onSelectPlace('kyiv_no2_box')}>box kyiv</button>
+      <button type="button" onClick={() => onSelectPlace('poland_krakow')}>box krakow</button>
+    </div>
   ),
 }))
 vi.mock('./Starfield', () => ({ Starfield: () => null }))
@@ -28,52 +32,62 @@ function serve() {
 describe('the Earth view', () => {
   beforeEach(() => serve())
 
-  it('opens on the Earth with one case and no evidence', () => {
+  it('opens on the Earth with no story and Investigate unavailable', () => {
     render(<EarthPage />)
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('The Last Trend Bender')
     expect(screen.getByTestId('map')).toHaveAttribute('data-view', 'earth')
-    expect(screen.queryByTestId('workspace')).not.toBeInTheDocument()
+    expect(screen.getByTestId('investigate')).toBeDisabled()
+    expect(screen.queryByTestId('cards')).not.toBeInTheDocument()
+    expect(screen.queryByText(/Before the invasion/)).not.toBeInTheDocument()
   })
 
-  it('goes from the Earth to the case, to Kyiv, to the evidence, and back', async () => {
+  it('goes Earth, Ukraine, Kyiv, Investigate: the cards open and the camera is told to make room', async () => {
     const user = userEvent.setup()
     render(<EarthPage />)
-    await user.click(screen.getByTestId('open-case'))
+    await user.click(screen.getByText('pin'))
     expect(screen.getByTestId('map')).toHaveAttribute('data-view', 'case')
-
-    // Kyiv is listed first; nothing is investigated until a place is chosen.
-    const first = (await screen.findAllByRole('button', { pressed: false })).find((b) => b.dataset.testid?.startsWith('list-place-'))
-    expect(first).toHaveAttribute('data-testid', 'list-place-kyiv_no2_box')
-    expect(screen.queryByTestId('start-investigation')).not.toBeInTheDocument()
-
-    await user.click(screen.getByTestId('list-place-kyiv_no2_box'))
+    await user.click(screen.getByText('box kyiv'))
     expect(screen.getByTestId('map')).toHaveAttribute('data-place', 'kyiv_no2_box')
-    await user.click(screen.getByTestId('start-investigation'))
 
-    const sheet = await screen.findByTestId('workspace')
-    expect(within(sheet).getByRole('heading', { level: 2 })).toHaveTextContent('Did lower NO₂ over Kyiv in 2022 mean a lasting change?')
-    // The season is shown as a description, and the verdict comes from the study's own trend result.
-    expect(await within(sheet).findByTestId('workspace-season')).toHaveTextContent(/%/)
-    expect(within(sheet).getByTestId('workspace-season')).toHaveTextContent('It is not a test')
-    expect(within(sheet).getByTestId('workspace-verdict')).toBeInTheDocument()
-    // The workspace takes screen space, and the camera is told how much.
+    const investigate = await screen.findByTestId('investigate')
+    await vi.waitFor(() => expect(investigate).toBeEnabled())
+    await user.click(investigate)
+
+    const cards = await screen.findByTestId('cards')
+    // NO₂ is the first card, tested on the full record only.
+    const card = within(cards).getByTestId('card-no2_mean_molec_cm2')
+    expect(await within(card).findByTestId('card-verdict')).toBeInTheDocument()
+    expect(within(card).getByTestId('card-back')).toHaveTextContent('Tested on the full record')
     expect(Number(screen.getByTestId('map').getAttribute('data-left'))).toBeGreaterThan(0)
 
-    await user.click(within(sheet).getByTestId('close-workspace'))
-    expect(screen.queryByTestId('workspace')).not.toBeInTheDocument()
-    expect(screen.getByTestId('map')).toHaveAttribute('data-place', 'kyiv_no2_box')
-
-    await user.click(screen.getByTestId('back-to-earth'))
-    expect(screen.getByTestId('map')).toHaveAttribute('data-view', 'earth')
-    expect(screen.getByTestId('map')).toHaveAttribute('data-place', '')
+    await user.click(screen.getByTestId('investigate'))
+    expect(screen.queryByTestId('cards')).not.toBeInTheDocument()
+    expect(screen.getByTestId('map')).toHaveAttribute('data-left', '0')
   })
 
-  it('says why a place has no NO₂ record instead of showing an empty chart', async () => {
+  it('adds and removes variables, four at most', async () => {
     const user = userEvent.setup()
     render(<EarthPage />)
-    await user.click(screen.getByTestId('open-case'))
-    await user.click(await screen.findByTestId('list-place-poland_krakow'))
-    await user.click(screen.getByTestId('start-investigation'))
-    expect(await screen.findByTestId('workspace-no-data')).toHaveTextContent(/Not collected/)
+    await user.click(screen.getByText('pin'))
+    await user.click(screen.getByText('box kyiv'))
+    await vi.waitFor(() => expect(screen.getByTestId('investigate')).toBeEnabled())
+    await user.click(screen.getByTestId('investigate'))
+    await user.click(await screen.findByTestId('add-variable'))
+    const picker = screen.getByTestId('variable-picker')
+    const boxes = within(picker).getAllByRole('checkbox')
+    expect(boxes.length).toBeGreaterThan(4)
+    for (const box of boxes.filter((b) => !(b as HTMLInputElement).checked).slice(0, 3)) await user.click(box)
+    expect(screen.getByTestId('add-variable')).toHaveTextContent('4/4')
+    expect(within(picker).getAllByRole('checkbox').filter((b) => (b as HTMLInputElement).disabled).length).toBeGreaterThan(0)
+  })
+
+  it('offers comparison places beside the chosen one', async () => {
+    const user = userEvent.setup()
+    render(<EarthPage />)
+    await user.click(screen.getByText('pin'))
+    await user.click(screen.getByText('box kyiv'))
+    const krakow = await screen.findByTestId('compare-poland_krakow')
+    expect(screen.queryByTestId('compare-kyiv_no2_box')).not.toBeInTheDocument()
+    await user.click(krakow)
+    expect(krakow).toHaveAttribute('aria-pressed', 'true')
   })
 })

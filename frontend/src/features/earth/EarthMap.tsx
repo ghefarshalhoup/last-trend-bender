@@ -27,6 +27,8 @@ type Bounds = [number, number, number, number]
 /** Degrees of longitude per second while the Earth idles: one turn in four minutes. */
 const SPIN_DEG_PER_S = 1.5
 const IDLE_BEFORE_SPIN_MS = 5000
+/** Height of the navigation bar, kept clear when framing a place. It wraps to more lines on a phone. */
+const navSpace = (map: MapLibreMap) => Math.round(map.getContainer().closest('main')?.querySelector('nav')?.getBoundingClientRect().height ?? 60)
 const LAYERS_FOR_CASE = ['river-line', 'ukraine-glow', 'ukraine-line', 'boxes-fill', 'boxes-line']
 
 const prefersReducedMotion = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
@@ -185,6 +187,8 @@ export function EarthMap({ view, places, placeId, insets, onOpenCase, onSelectPl
   }, [ready, view, places, placeId])
 
   // Camera: where it rests follows the page's state. Moving the map by hand never changes that state.
+  const insetsRef = useRef(insets)
+  insetsRef.current = insets
   const firstCamera = useRef(true)
   useEffect(() => {
     const map = mapRef.current
@@ -195,31 +199,52 @@ export function EarthMap({ view, places, placeId, insets, onOpenCase, onSelectPl
       if (view === 'earth') return // Already at home from the constructor.
     }
     const still = prefersReducedMotion()
-    const go = (camera: { center: maplibregl.LngLatLike; zoom: number }, duration: number) => {
+    const NAV_SPACE = navSpace(map)
+    const pad = { left: insetsRef.current.left, bottom: insetsRef.current.bottom, top: 0, right: 0 }
+    const go = (camera: { center: maplibregl.LngLatLike; zoom: number }, duration: number, padding = pad) => {
       spin.current.flying = true
       map.once('moveend', () => {
         spin.current.flying = false
         spin.current.lastTouch = performance.now()
       })
-      if (still) map.jumpTo(camera)
-      else map.flyTo({ ...camera, duration, curve: 1.25, essential: true })
+      if (still) map.jumpTo({ ...camera, padding })
+      else map.flyTo({ ...camera, padding, duration, curve: 1.25, essential: true })
     }
     if (view === 'earth') {
-      go(EARTH_HOME, 2600)
+      go(EARTH_HOME, 2600, { left: 0, bottom: 0, top: 0, right: 0 })
       return
     }
     const place = placeId ? places.find((p) => p.properties.region_id === placeId) : undefined
     const [w, s, e, n] = place ? boundsOf(place) : UKRAINE_BOUNDS
-    const edge = Math.round(Math.min(map.getContainer().clientWidth, map.getContainer().clientHeight) * (place ? 0.2 : 0.1))
+    const c = map.getContainer()
+    // Fit to the screen space that is free of the cards, then centre in it.
+    const freeW = c.clientWidth - pad.left
+    const freeH = c.clientHeight - pad.bottom - NAV_SPACE
+    const edge = Math.round(Math.min(freeW, freeH) * (place ? 0.22 : 0.08))
     const camera = map.cameraForBounds(
       [
         [w, s],
         [e, n],
       ],
-      { padding: { left: insets.left + edge, right: edge, top: edge, bottom: insets.bottom + edge }, maxZoom: 8.3 },
+      { padding: { left: pad.left + edge, right: edge, top: NAV_SPACE + edge, bottom: pad.bottom + edge }, maxZoom: 8.3 },
     )
-    if (camera?.center !== undefined && camera.zoom !== undefined) go({ center: camera.center, zoom: camera.zoom }, place ? 2200 : 3200)
-  }, [ready, view, placeId, places, insets.left, insets.bottom])
+    if (camera?.zoom === undefined) return
+    go({ center: [(w + e) / 2, (s + n) / 2], zoom: camera.zoom }, place ? 2200 : 3200, { ...pad, top: NAV_SPACE })
+  }, [ready, view, placeId, places])
+
+  // Opening or closing the cards only slides the camera sideways: same place, same zoom.
+  const lastInsets = useRef(insets)
+  useEffect(() => {
+    const map = mapRef.current
+    if (!ready || !map) return
+    const prev = lastInsets.current
+    lastInsets.current = insets
+    if (prev.left === insets.left && prev.bottom === insets.bottom) return
+    if (view !== 'case') return
+    const padding = { left: insets.left, bottom: insets.bottom, top: navSpace(map), right: 0 }
+    if (prefersReducedMotion()) map.jumpTo({ padding })
+    else map.easeTo({ padding, duration: 1100, easing: (t) => 1 - Math.pow(1 - t, 3), essential: true })
+  }, [ready, view, insets])
 
   // The Earth turns slowly while nobody is holding it.
   useEffect(() => {
