@@ -17,7 +17,10 @@ interface Props {
   eventT: number
   formatValue: (v: number) => string
   ariaLabel: string
+  /** Fixed plot height in pixels. Ignored when `fill` is set. */
   height?: number
+  /** Take the height of the parent: the plot itself grows with the card, not the space around it. */
+  fill?: boolean
   /** Bigger axis labels, for the expanded evidence grid. */
   large?: boolean
 }
@@ -25,6 +28,7 @@ interface Props {
 const PAD_SMALL = { top: 10, right: 10, bottom: 20, left: 34 }
 const PAD_LARGE = { top: 12, right: 12, bottom: 24, left: 42 }
 const MIN_SPAN_YEARS = 0.5
+const MIN_FILL_HEIGHT = 120
 
 const monthName = (m: string) => {
   const [y, mm] = m.split('-')
@@ -42,12 +46,13 @@ function niceTicks(lo: number, hi: number, count: number): number[] {
 }
 
 /**
- * A quiet line chart for the glass cards. Drag across it to zoom into a stretch of time;
+ * A quiet line chart for the evidence cards. Drag across it to zoom into a stretch of time;
  * double-click or press "Full record" to go back. Zooming only changes the view: the trend test always uses the full record.
+ * Hollow points mark months observed on fewer than half the days.
  */
-export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, ariaLabel, height = 150, large = false }: Props) {
-  const wrap = useRef<HTMLDivElement>(null)
-  const [width, setWidth] = useState(320)
+export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, ariaLabel, height = 150, fill = false, large = false }: Props) {
+  const plot = useRef<HTMLDivElement>(null)
+  const [size, setSize] = useState({ w: 320, h: height })
   const all = useMemo(() => series.flatMap((s) => s.points.filter((p) => p.value !== null)), [series])
   const fullX: [number, number] = useMemo(() => {
     if (!all.length) return [2015, 2023]
@@ -59,16 +64,23 @@ export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, 
   const [hover, setHover] = useState<number | null>(null)
 
   useEffect(() => {
-    const el = wrap.current
+    const el = plot.current
     if (!el || typeof ResizeObserver === 'undefined') return
-    const ro = new ResizeObserver(([entry]) => entry && setWidth(Math.max(200, entry.contentRect.width)))
+    const ro = new ResizeObserver(([entry]) => {
+      if (!entry) return
+      const w = Math.max(200, Math.floor(entry.contentRect.width))
+      const h = Math.max(MIN_FILL_HEIGHT, Math.floor(entry.contentRect.height))
+      setSize((old) => (old.w === w && old.h === h ? old : { w, h }))
+    })
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
 
+  const width = size.w
+  const chartH = fill ? size.h : height
   const PAD = large ? PAD_LARGE : PAD_SMALL
   const innerW = width - PAD.left - PAD.right
-  const innerH = height - PAD.top - PAD.bottom
+  const innerH = chartH - PAD.top - PAD.bottom
   const visible = all.filter((p) => p.t >= x0 && p.t <= x1)
   const values = visible.map((p) => p.value as number)
   const rawLo = values.length ? Math.min(...values) : 0
@@ -94,10 +106,10 @@ export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, 
     return d
   }
 
-  const yTicks = niceTicks(y0, y1, 3)
+  const yTicks = niceTicks(y0, y1, chartH > 260 ? 5 : 3)
   const span = x1 - x0
   const xTicks: number[] = []
-  const yearStep = span > 5 ? 1 : span > 2 ? 0.5 : 0.25
+  const yearStep = span > 5 ? (width < 360 ? 2 : 1) : span > 2 ? 0.5 : 0.25
   for (let t = Math.ceil(x0 / yearStep) * yearStep; t <= x1; t += yearStep) xTicks.push(t)
   const xLabel = (t: number) => {
     const y = Math.floor(t + 1e-6)
@@ -137,82 +149,97 @@ export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, 
     for (const p of first.length ? first : all) if (!best || Math.abs(p.t - hover) < Math.abs(best.t - hover)) best = p
     if (!best) return null
     const month = best.month
-    return {
-      t: best.t,
-      month,
-      rows: series.map((s) => ({ s, p: s.points.find((p) => p.month === month) })),
-    }
+    return { t: best.t, month, rows: series.map((s) => ({ s, p: s.points.find((p) => p.month === month) })) }
   }, [hover, drag, series, all])
 
   const zoomed = domain !== null
   const clipId = useMemo(() => `clip-${Math.random().toString(36).slice(2)}`, [])
+  const hasLow = series.some((s) => s.points.some((p) => p.low && p.value !== null))
 
   return (
-    <div className={styles.wrap} ref={wrap} data-large={large}>
-      <svg
-        width={width}
-        height={height}
-        className={styles.svg}
-        role="img"
-        aria-label={`${ariaLabel}${zoomed ? ` Showing ${monthName(String(Math.floor(x0)) + '-01')} onwards.` : ''}`}
-        onPointerDown={onDown}
-        onPointerMove={onMove}
-        onPointerUp={onUp}
-        onPointerLeave={() => {
-          setHover(null)
-          setDrag(null)
-        }}
-        onDoubleClick={() => setDomain(null)}
-        data-testid="glass-chart"
-      >
-        <defs>
-          <clipPath id={clipId}>
-            <rect x={PAD.left} y={PAD.top - 4} width={innerW} height={innerH + 8} />
-          </clipPath>
-        </defs>
-        {yTicks.map((v) => (
-          <g key={v}>
-            <line x1={PAD.left} x2={PAD.left + innerW} y1={sy(v)} y2={sy(v)} className={styles.grid} />
-            <text x={PAD.left - 6} y={sy(v)} className={styles.tick} textAnchor="end" dominantBaseline="middle">
-              {Number(v.toPrecision(3))}
+    <div className={styles.wrap} data-large={large} data-fill={fill}>
+      <div className={styles.plot} ref={plot} style={fill ? undefined : { height }}>
+        <svg
+          width={width}
+          height={chartH}
+          className={styles.svg}
+          role="img"
+          aria-label={`${ariaLabel}${zoomed ? ` Zoomed to ${monthName(`${Math.floor(x0)}-01`)} onwards.` : ''}`}
+          onPointerDown={onDown}
+          onPointerMove={onMove}
+          onPointerUp={onUp}
+          onPointerLeave={() => {
+            setHover(null)
+            setDrag(null)
+          }}
+          onDoubleClick={() => setDomain(null)}
+          data-testid="glass-chart"
+          data-height={chartH}
+        >
+          <defs>
+            <clipPath id={clipId}>
+              <rect x={PAD.left - 4} y={PAD.top - 4} width={innerW + 8} height={innerH + 8} />
+            </clipPath>
+          </defs>
+          {yTicks.map((v) => (
+            <g key={v}>
+              <line x1={PAD.left} x2={PAD.left + innerW} y1={sy(v)} y2={sy(v)} className={styles.grid} />
+              <text x={PAD.left - 6} y={sy(v)} className={styles.tick} textAnchor="end" dominantBaseline="middle">
+                {Number(v.toPrecision(3))}
+              </text>
+            </g>
+          ))}
+          {xTicks.map((t) => (
+            <text key={t} x={sx(t)} y={chartH - (large ? 6 : 4)} className={styles.tick} textAnchor="middle">
+              {xLabel(t)}
             </text>
+          ))}
+          <g clipPath={`url(#${clipId})`}>
+            {eventT >= x0 && eventT <= x1 ? <line x1={sx(eventT)} x2={sx(eventT)} y1={PAD.top} y2={PAD.top + innerH} className={styles.event} /> : null}
+            {[...series].reverse().map((s) => (
+              <g key={s.id}>
+                <path d={pathOf(s.points)} stroke={s.color} className={styles.line} />
+                {s.points.map((p) =>
+                  p.low && p.value !== null && p.t >= x0 && p.t <= x1 ? <circle key={p.month} cx={sx(p.t)} cy={sy(p.value)} r={2.6} stroke={s.color} className={styles.low} /> : null,
+                )}
+              </g>
+            ))}
+            {rateLine ? (
+              <line x1={sx(rateLine.t0)} x2={sx(rateLine.t1)} y1={sy(rateLine.y0)} y2={sy(rateLine.y1)} className={styles.rate} strokeDasharray={rateDashed ? '5 4' : undefined} />
+            ) : null}
+            {readout ? (
+              <>
+                <line x1={sx(readout.t)} x2={sx(readout.t)} y1={PAD.top} y2={PAD.top + innerH} className={styles.cross} />
+                {readout.rows.map(({ s, p }) => (p && p.value !== null ? <circle key={s.id} cx={sx(p.t)} cy={sy(p.value)} r={4} fill={s.color} className={styles.dot} /> : null))}
+              </>
+            ) : null}
+            {drag ? <rect x={Math.min(drag.from, drag.to)} y={PAD.top} width={Math.abs(drag.to - drag.from)} height={innerH} className={styles.brush} /> : null}
           </g>
-        ))}
-        {xTicks.map((t) => (
-          <text key={t} x={sx(t)} y={height - (large ? 6 : 4)} className={styles.tick} textAnchor="middle">
-            {xLabel(t)}
-          </text>
-        ))}
-        <g clipPath={`url(#${clipId})`}>
-          {eventT >= x0 && eventT <= x1 ? <line x1={sx(eventT)} x2={sx(eventT)} y1={PAD.top} y2={PAD.top + innerH} className={styles.event} /> : null}
-          {[...series].reverse().map((s) => (
-            <path key={s.id} d={pathOf(s.points)} stroke={s.color} className={styles.line} style={{ filter: `drop-shadow(0 0 3px ${s.color})` }} />
-          ))}
-          {rateLine ? (
-            <line x1={sx(rateLine.t0)} x2={sx(rateLine.t1)} y1={sy(rateLine.y0)} y2={sy(rateLine.y1)} className={styles.rate} strokeDasharray={rateDashed ? '4 4' : undefined} />
-          ) : null}
-          {readout ? (
-            <>
-              <line x1={sx(readout.t)} x2={sx(readout.t)} y1={PAD.top} y2={PAD.top + innerH} className={styles.cross} />
-              {readout.rows.map(({ s, p }) => (p && p.value !== null ? <circle key={s.id} cx={sx(p.t)} cy={sy(p.value)} r={3.5} fill={s.color} className={styles.dot} /> : null))}
-            </>
-          ) : null}
-          {drag ? <rect x={Math.min(drag.from, drag.to)} y={PAD.top} width={Math.abs(drag.to - drag.from)} height={innerH} className={styles.brush} /> : null}
-        </g>
-      </svg>
-      {readout ? (
-        <div className={styles.tip} style={{ left: Math.min(Math.max(sx(readout.t) - 70, 0), width - 150) }} role="status">
-          <p className={styles.tipMonth}>{monthName(readout.month)}</p>
-          {readout.rows.map(({ s, p }) => (
-            <p key={s.id} className={styles.tipRow}>
-              <span className={styles.tipKey} style={{ background: s.color }} aria-hidden="true" />
-              <strong>{p && p.value !== null ? formatValue(p.value) : 'no data'}</strong>
-              <span className={styles.tipLabel}>{s.label}{p?.low ? ', few days' : ''}</span>
-            </p>
-          ))}
-        </div>
-      ) : null}
+        </svg>
+        {readout ? (
+          <div className={styles.tip} style={{ left: Math.min(Math.max(sx(readout.t) + 12, 0), width - 168) }} role="status">
+            <p className={styles.tipMonth}>{monthName(readout.month)}</p>
+            {readout.rows.map(({ s, p }) => (
+              <p key={s.id} className={styles.tipRow}>
+                <span className={styles.tipKey} style={{ background: s.color }} aria-hidden="true" />
+                <strong>{p && p.value !== null ? formatValue(p.value) : 'no data'}</strong>
+                <span className={styles.tipLabel}>
+                  {s.label}
+                  {p?.low ? ', few days' : ''}
+                </span>
+              </p>
+            ))}
+          </div>
+        ) : null}
+      </div>
       <div className={styles.zoomBar}>
+        {hasLow ? (
+          <span className={styles.hint}>
+            <span className={styles.lowKey} aria-hidden="true" /> under half the days observed
+          </span>
+        ) : (
+          <span />
+        )}
         {zoomed ? (
           <button type="button" className={styles.reset} onClick={() => setDomain(null)} data-testid="zoom-reset">
             Full record

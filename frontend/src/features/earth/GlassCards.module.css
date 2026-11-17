@@ -1,123 +1,143 @@
-/* Glass over the night side: translucent, blurred, thin cool edge. Words are few; the lines carry the reading. */
+/*
+ * Evidence on light frosted paper: near-opaque ivory over the map, dark ink, thin coloured lines.
+ * The surface is opaque enough that terrain and map labels never read through the evidence.
+ */
 .column {
+  --surface: rgba(247, 245, 239, 0.95);
+  --ink: #1b2333;
+  --ink-2: #4a5468;
+  --ink-3: #6b7488;
+  --edge: rgba(24, 34, 56, 0.12);
   position: absolute; z-index: 3; top: calc(var(--nav-h) + 12px); bottom: 16px; left: 16px;
   width: var(--cards-w);
-  transition: width 700ms var(--ease-out);
   display: flex; flex-direction: column; gap: 10px;
-  color: #e9f0ff; font-family: var(--font-body);
+  color: var(--ink); font-family: var(--font-body);
+  transition: width 700ms var(--ease-out);
 }
 
-.head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 4px; }
-.place { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: rgba(220, 230, 250, 0.75); }
-.placeKey { display: inline-flex; align-items: center; gap: 6px; }
-.swatch { display: inline-block; width: 12px; height: 2px; border-radius: 1px; flex: none; box-shadow: 0 0 6px currentColor; }
+.paper {
+  background: var(--surface);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border: 1px solid var(--edge);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 12px 32px rgba(4, 8, 20, 0.28);
+  border-radius: 12px;
+}
 
+/* One compact bar: places on the left, actions on the right. */
+.head {
+  flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  min-height: 42px; padding: 6px 8px 6px 12px;
+  background: var(--surface); border: 1px solid var(--edge); border-radius: 12px; box-shadow: 0 8px 24px rgba(4, 8, 20, 0.22);
+}
+.place { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 12px; color: var(--ink-2); min-width: 0; }
+.placeKey { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.swatch { display: inline-block; width: 14px; height: 3px; border-radius: 1px; flex: none; }
 .headActions { display: flex; gap: 6px; flex: none; }
-.expand {
-  min-height: 30px; padding: 0 12px; cursor: pointer; border-radius: 999px; font-size: 12px; font-weight: 600;
-  color: #071020; background: #9fd3ff; border: 0;
-}
-.expand:hover { background: #cde8ff; }
-.expand[aria-pressed='true'] { color: #e9f0ff; background: rgba(120, 190, 255, 0.14); border: 1px solid rgba(170, 205, 255, 0.45); font-weight: 500; }
 
-.add, .done {
+.add, .done, .expand {
   min-height: 30px; padding: 0 12px; cursor: pointer; border-radius: 999px; font-size: 12px; font-weight: 500;
-  color: #e9f0ff; background: rgba(120, 190, 255, 0.1); border: 1px solid rgba(160, 210, 255, 0.35);
+  color: var(--ink); background: #ffffff; border: 1px solid rgba(24, 34, 56, 0.22);
 }
-.add:hover, .done:hover, .add[aria-expanded='true'] { background: rgba(120, 190, 255, 0.22); }
+.add:hover, .done:hover, .add[aria-expanded='true'] { background: #eef2f8; }
+.expand { font-weight: 600; color: #ffffff; background: #1b2333; border-color: #1b2333; }
+.expand:hover { background: #2c3850; }
+.expand[aria-pressed='true'] { color: var(--ink); background: #ffffff; border-color: rgba(24, 34, 56, 0.22); }
+.expand[aria-pressed='true']:hover { background: #eef2f8; }
 
-.picker, .card {
-  background: linear-gradient(160deg, rgba(40, 60, 100, 0.34), rgba(10, 16, 34, 0.5));
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  border: 1px solid rgba(170, 205, 255, 0.18);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 16px 40px rgba(0, 0, 0, 0.35);
-  border-radius: 14px;
+.picker {
+  flex: none; padding: 12px 14px; display: grid; gap: 10px; max-height: 50vh; overflow-y: auto;
+  background: var(--surface); border: 1px solid var(--edge); border-radius: 12px; box-shadow: 0 12px 32px rgba(4, 8, 20, 0.28);
 }
-
-.picker { padding: 12px 14px; display: grid; gap: 10px; max-height: 50vh; overflow-y: auto; }
 .group { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.group legend { width: 100%; margin-bottom: 4px; font-size: 11px; color: rgba(220, 230, 250, 0.55); }
+.group legend { width: 100%; margin-bottom: 4px; font-size: 11px; font-weight: 600; color: var(--ink-3); }
 .option {
   display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 10px; cursor: pointer;
-  border-radius: 999px; border: 1px solid rgba(170, 205, 255, 0.2); font-size: 12px;
+  border-radius: 999px; border: 1px solid rgba(24, 34, 56, 0.18); background: #ffffff; font-size: 12px;
 }
-.option:has(input:checked) { background: rgba(120, 190, 255, 0.2); border-color: rgba(160, 210, 255, 0.6); }
-.option:has(input:focus-visible) { outline: 2px solid #7cc4ff; outline-offset: 2px; }
-.option[data-disabled='true'] { opacity: 0.4; cursor: not-allowed; }
-.option input { accent-color: #2a93d4; margin: 0; }
-.pickerNote { font-size: 11px; color: rgba(220, 230, 250, 0.55); }
+.option:has(input:checked) { background: #e3eefa; border-color: #1f7fc0; }
+.option:has(input:focus-visible) { outline: 2px solid #1f7fc0; outline-offset: 2px; }
+.option[data-disabled='true'] { opacity: 0.45; cursor: not-allowed; }
+.option input { accent-color: #1f7fc0; margin: 0; }
+.pickerNote { font-size: 11px; color: var(--ink-3); }
 .done { justify-self: end; }
 
-.empty { font-size: 13px; color: rgba(220, 230, 250, 0.7); padding: 0 4px; }
-
-.stack { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; min-height: 0; padding-right: 2px; overscroll-behavior: contain; }
-
-.card {
-  flex: none; perspective: 1400px; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; border: 0; box-shadow: none;
-  animation: card-in 600ms var(--ease-out) both;
+.empty {
+  padding: 10px 12px; font-size: 13px; color: var(--ink-2);
+  background: var(--surface); border: 1px solid var(--edge); border-radius: 12px;
 }
+
+/* Compact: a scrolling column. */
+.stack { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-right: 2px; overscroll-behavior: contain; }
+
+.card { flex: none; perspective: 1600px; animation: card-in 500ms var(--ease-out) both; }
 @keyframes card-in {
-  from { opacity: 0; transform: translateX(-24px); }
+  from { opacity: 0; transform: translateX(-20px); }
   to { opacity: 1; transform: none; }
 }
-.inner { position: relative; display: grid; transition: transform 650ms var(--ease-out); transform-style: preserve-3d; }
-/* Both faces share one grid cell, so the card is as tall as the taller face. */
-.front, .back { grid-area: 1 / 1; min-width: 0; }
+.inner { position: relative; transition: transform 600ms var(--ease-out); transform-style: preserve-3d; }
 .card[data-flipped='true'] .inner { transform: rotateY(180deg); }
 .front, .back {
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  padding: 12px 14px 8px; border-radius: 14px;
-  background: linear-gradient(160deg, rgba(40, 60, 100, 0.34), rgba(10, 16, 34, 0.55));
-  backdrop-filter: blur(16px) saturate(1.2);
-  -webkit-backdrop-filter: blur(16px) saturate(1.2);
-  border: 1px solid rgba(170, 205, 255, 0.18);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 16px 40px rgba(0, 0, 0, 0.35);
+  padding: 10px 12px 6px;
+  background: var(--surface);
+  border: 1px solid var(--edge);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 12px 32px rgba(4, 8, 20, 0.28);
+  border-radius: 12px;
 }
+.front { display: flex; flex-direction: column; min-width: 0; }
+/* The back never sets the card's height: it lies over the front and scrolls if its details run long. */
 .back {
-  transform: rotateY(180deg);
+  position: absolute; inset: 0; transform: rotateY(180deg); overflow-y: auto;
   display: flex; flex-direction: column; gap: 8px; padding-bottom: 12px;
 }
 
-.cardHead { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.title { font-family: var(--font-body); font-size: 14px; font-weight: 600; letter-spacing: 0.01em; }
+.cardHead { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 28px; }
+.title { font-family: var(--font-body); font-size: 14px; font-weight: 650; color: var(--ink); }
 .actions { display: flex; gap: 4px; }
 .icon {
   width: 28px; height: 28px; display: grid; place-items: center; cursor: pointer; border-radius: 50%;
-  color: rgba(233, 240, 255, 0.8); background: transparent; border: 1px solid rgba(170, 205, 255, 0.2); font-size: 14px; line-height: 1;
+  color: var(--ink-2); background: #ffffff; border: 1px solid rgba(24, 34, 56, 0.18); font-size: 14px; line-height: 1;
 }
-.icon:hover { background: rgba(120, 190, 255, 0.16); color: #fff; }
+.icon:hover { background: #eef2f8; color: var(--ink); }
 
-.verdict { margin: 4px 0 2px; font-size: 12px; color: rgba(220, 230, 250, 0.7); }
-.verdict[data-verdict='significant'] { color: #9fd3ff; font-weight: 600; }
-.note { font-size: 12px; color: rgba(220, 230, 250, 0.7); padding: 8px 0; }
-.inline { padding: 0; border: 0; background: none; color: #9fd3ff; text-decoration: underline; cursor: pointer; font-size: inherit; }
+.verdict { flex: none; margin: 2px 0; font-size: 12px; color: var(--ink-2); }
+.verdict[data-verdict='significant'] { color: #155f93; font-weight: 600; }
+.note { flex: none; font-size: 12px; color: var(--ink-2); padding: 6px 0; }
+.inline { padding: 0; border: 0; background: none; color: #155f93; text-decoration: underline; cursor: pointer; font-size: inherit; }
 
-.def { font-size: 12px; line-height: 1.45; color: rgba(220, 230, 250, 0.8); }
+.meta { flex: none; font-size: 12px; color: var(--ink-3); }
+.verdicts { flex: none; display: grid; gap: 1px; margin: 4px 0 2px; font-size: 12.5px; }
+.verdicts li { display: grid; grid-template-columns: 14px minmax(0, 10rem) 1fr; align-items: center; gap: 8px; }
+.vPlace { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink); }
+.vText { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.verdicts li[data-verdict='significant'] .vText { color: #155f93; font-weight: 600; }
+
+.def { font-size: 12px; line-height: 1.45; color: var(--ink-2); }
 .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; margin: 0; font-size: 12px; }
-.facts dt { color: rgba(220, 230, 250, 0.5); font-size: 11px; }
-.facts dd { font-variant-numeric: tabular-nums; }
-.others { display: grid; gap: 4px; font-size: 12px; color: rgba(220, 230, 250, 0.8); }
+.facts dt { color: var(--ink-3); font-size: 11px; }
+.facts dd { font-variant-numeric: tabular-nums; color: var(--ink); }
+.others { display: grid; gap: 4px; font-size: 12px; color: var(--ink-2); }
 .others li { display: flex; align-items: center; gap: 6px; }
-.source { margin-top: auto; font-size: 11px; color: rgba(220, 230, 250, 0.45); }
+.source { margin-top: auto; font-size: 11px; color: var(--ink-3); }
 
-.column :focus-visible { outline: 2px solid #7cc4ff; outline-offset: 2px; }
-
-/* Expanded: the evidence takes about 60% of the screen as a 2 x 2 grid, on darker glass. */
+/*
+ * Expanded: the evidence area holds a grid sized by the number of cards.
+ * 1 card fills it; 2 sit side by side at full height; 3 and 4 use a 2 x 2 grid.
+ * Rows and columns are fixed shares of the area, so the charts grow with their cells.
+ */
 .column[data-expanded='true'] { width: var(--cards-w-expanded); }
-.column[data-expanded='true'] .card, .column[data-expanded='true'] .inner { height: 100%; }
-.column[data-expanded='true'] .stack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: max-content; align-content: start; }
-.column[data-expanded='true'] .front, .column[data-expanded='true'] .back {
-  background: linear-gradient(160deg, rgba(22, 34, 62, 0.86), rgba(8, 12, 26, 0.9));
-  padding: 14px 16px 10px;
-}
-.column[data-expanded='true'] .title { font-size: 16px; }
-.meta { margin-top: 2px; font-size: 12px; color: rgba(220, 230, 250, 0.65); }
-.verdicts { display: grid; gap: 3px; margin: 8px 0 6px; font-size: 13px; }
-.verdicts li { display: grid; grid-template-columns: 12px minmax(0, 9.5rem) 1fr; align-items: center; gap: 8px; }
-.vPlace { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: rgba(233, 240, 255, 0.85); }
-.vText { color: rgba(220, 230, 250, 0.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.verdicts li[data-verdict='significant'] .vText { color: #9fd3ff; font-weight: 600; }
+.column[data-expanded='true'] .stack { display: grid; gap: 12px; overflow: hidden; grid-template-columns: 1fr; grid-template-rows: 1fr; }
+.column[data-expanded='true'] .stack[data-count='2'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.column[data-expanded='true'] .stack[data-count='3'],
+.column[data-expanded='true'] .stack[data-count='4'] { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); }
+.column[data-expanded='true'] .card,
+.column[data-expanded='true'] .inner,
+.column[data-expanded='true'] .front { height: 100%; min-height: 0; }
+.column[data-expanded='true'] .front, .column[data-expanded='true'] .back { padding: 12px 14px 6px; }
+.column[data-expanded='true'] .title { font-size: 15px; }
+
+.column :focus-visible { outline: 2px solid #1f7fc0; outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
   .column { transition: none; }
@@ -125,8 +145,14 @@
   .card { animation: none; }
 }
 
+/* Phones: one column that scrolls; charts keep a fixed readable height. */
 @media (max-width: 860px) {
   .column { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; height: 52vh; transition: height 500ms var(--ease-out); }
   .column[data-expanded='true'] { width: auto; height: calc(100vh - var(--nav-h) - 24px); }
-  .column[data-expanded='true'] .stack { grid-template-columns: 1fr; }
+  .column[data-expanded='true'] .stack,
+  .column[data-expanded='true'] .stack[data-count] { display: flex; flex-direction: column; overflow-y: auto; }
+  .column[data-expanded='true'] .card,
+  .column[data-expanded='true'] .inner,
+  .column[data-expanded='true'] .front { height: auto; }
+  .place { display: none; }
 }

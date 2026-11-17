@@ -11,8 +11,8 @@ import { GlassChart, type ChartSeries } from './GlassChart'
 import styles from './GlassCards.module.css'
 
 export const MAX_CARDS = 4
-/** Main place first, then up to two comparisons. Validated for the dark surface (dataviz palette check). */
-export const PLACE_COLORS = ['#2a93d4', '#bb8c22', '#9b73e8'] as const
+/** Main place first, then up to two comparisons. Validated against the ivory card surface #f7f5ef (dataviz palette check). */
+export const PLACE_COLORS = ['#1f7fc0', '#a8771a', '#7d55d6'] as const
 
 const DEFS = new Map((definitions as { metric_id: string; definition: string }[]).map((d) => [d.metric_id, d.definition]))
 const ELEMENT_NAMES: Record<ElementId, string> = { air: 'Air', fire: 'Fire', land: 'Earth', water: 'Water' }
@@ -64,14 +64,14 @@ export function GlassCards({ place, compare, catalog, trendIndex, extra, metrics
   }, [chosen, placeIds, extra])
   const { states, retry } = usePayloads(endpoints)
   const [picking, setPicking] = useState(false)
-  // Expanded charts share the screen height: two rows of cards, each with about 200 px of title, units and verdicts.
-  const [viewH, setViewH] = useState(() => (typeof window === 'undefined' ? 900 : window.innerHeight))
+  // On a phone the expanded cards stack and scroll, so their charts keep a fixed readable height instead of filling a grid cell.
+  const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 860)
   useEffect(() => {
-    const onResize = () => setViewH(window.innerHeight)
+    const onResize = () => setNarrow(window.innerWidth <= 860)
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
-  const expandedChartH = Math.round(Math.min(240, Math.max(140, (viewH - 170) / 2 - 205)))
+  const fillCells = expanded && !narrow
 
   const available = useMemo(
     () => [...catalog.variables].filter((v) => hasDataFor(v, placeId, extra)).sort((a, b) => a.display_order - b.display_order),
@@ -130,7 +130,7 @@ export function GlassCards({ place, compare, catalog, trendIndex, extra, metrics
       ) : null}
 
       {chosen.length === 0 ? <p className={styles.empty}>Choose up to four variables to compare.</p> : null}
-      <div className={styles.stack}>
+      <div className={styles.stack} data-count={chosen.length} data-testid="cards-grid">
         {chosen.map((v, i) => (
           <GlassCard
             key={v.metric_id}
@@ -139,7 +139,8 @@ export function GlassCards({ place, compare, catalog, trendIndex, extra, metrics
             reads={placeIds.map((p, j) => readPlace(v, p, PLACE_COLORS[j] ?? '#888', extra, trendIndex, states))}
             invasionDate={catalog.conflict_start}
             expanded={expanded}
-            chartHeight={expanded ? expandedChartH : 150}
+            fill={fillCells}
+            chartHeight={expanded ? 220 : 150}
             onRemove={() => toggle(v.metric_id)}
             onRetry={() => endpoints.forEach((e) => states[e]?.status === 'error' && retry(e))}
           />
@@ -155,12 +156,13 @@ interface CardProps {
   reads: PlaceRead[]
   invasionDate: string
   expanded: boolean
+  fill: boolean
   chartHeight: number
   onRemove: () => void
   onRetry: () => void
 }
 
-function GlassCard({ index, variable, reads, invasionDate, expanded, chartHeight, onRemove, onRetry }: CardProps) {
+function GlassCard({ index, variable, reads, invasionDate, expanded, fill, chartHeight, onRemove, onRetry }: CardProps) {
   const [flipped, setFlipped] = useState(false)
   const main = reads[0] as PlaceRead
   const { scale, unit } = displayUnit(variable)
@@ -172,7 +174,7 @@ function GlassCard({ index, variable, reads, invasionDate, expanded, chartHeight
   const span = main.series ? spanText(main.series, 'full_record') : null
 
   return (
-    <article className={styles.card} data-flipped={flipped} style={{ animationDelay: `${index * 90}ms` }} data-testid={`card-${variable.metric_id}`}>
+    <article className={styles.card} data-flipped={flipped} data-fill={fill} style={{ animationDelay: `${index * 90}ms` }} data-testid={`card-${variable.metric_id}`}>
       <div className={styles.inner}>
         <div className={styles.front} aria-hidden={flipped}>
           <div className={styles.cardHead}>
@@ -235,6 +237,7 @@ function GlassCard({ index, variable, reads, invasionDate, expanded, chartHeight
               formatValue={(v) => `${fmt(v)} ${unit}`}
               ariaLabel={`${variable.label}, monthly. ${main.reading?.sentence ?? ''}`}
               height={chartHeight}
+              fill={fill}
               large={expanded}
             />
           ) : null}
