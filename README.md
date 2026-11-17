@@ -48,6 +48,15 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+## Earth view (`#/earth`, branch `ux/earth-workspace`)
+A freely explorable Earth that becomes an investigation workspace. Three resting states share one map:
+
+1. **Earth:** a slowly turning globe (drag to turn, scroll to zoom) with one case pin. Clicking anywhere else says, honestly, that no study exists there.
+2. **Ukraine case:** the camera flies down, the study boxes appear, and a place can be chosen on the map or from the list.
+3. **Investigation:** the evidence sheet opens on the left, the camera keeps the study box in the free area on the right, and the NO₂ record draws itself with its seasonal difference, trend test and verdict.
+
+Built with MapLibre GL JS (globe projection). Imagery is NASA Blue Marble from GIBS; a coarse Natural Earth outline sits underneath so the Earth is never blank if the imagery does not arrive. Every number comes from the same API responses the atlas reads. Code: `frontend/src/features/earth/`.
+
 ## Backend API
 ```bash
 pip install -r backend/requirements-dev.txt

@@ -123,7 +123,7 @@ function CardBody({ variable, series, trend, window, invasionDate, flipped, plac
 }
 
 /** Months missing from the record (e.g. fire's September–February) become breaks, so the line never bridges them. */
-function withGaps(points: TimelinePoint[]): TimelinePoint[] {
+export function withGaps(points: TimelinePoint[]): TimelinePoint[] {
   const out: TimelinePoint[] = []
   for (const p of points) {
     const prev = out[out.length - 1]
@@ -134,7 +134,7 @@ function withGaps(points: TimelinePoint[]): TimelinePoint[] {
 }
 
 /** The rate is drawn through the period's average; the slope itself comes from the API. */
-function rateLineFor(points: TimelinePoint[], trend: TrendResult | undefined, reading: CardReading, scale: number, endT?: number): RateLine | null {
+export function rateLineFor(points: TimelinePoint[], trend: TrendResult | undefined, reading: CardReading, scale: number, endT?: number): RateLine | null {
   if (reading.verdict === 'not_assessed' || !trend || trend.slope_per_year === null) return null
   const t0 = trend.start_month ? monthToDecimalYear(trend.start_month) : (points[0]?.t ?? 0)
   const t1 = trend.end_month ? monthToDecimalYear(trend.end_month) : (endT ?? points[points.length - 1]?.t ?? 0)
