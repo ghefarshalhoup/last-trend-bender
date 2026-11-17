@@ -28,3 +28,6 @@
   color: #e9f0ff; background: rgba(120, 190, 255, 0.12); border: 1px solid rgba(160, 210, 255, 0.4);
 }
 .reset:hover { background: rgba(120, 190, 255, 0.24); }
+
+.wrap[data-large='true'] .tick { font-size: 12px; fill: rgba(220, 230, 250, 0.7); }
+.wrap[data-large='true'] .line { stroke-width: 1.9; }

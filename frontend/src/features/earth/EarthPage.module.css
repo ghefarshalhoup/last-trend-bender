@@ -2,6 +2,7 @@
 .page {
   --nav-h: 60px;
   --cards-w: clamp(20rem, 32vw, 28rem);
+  --cards-w-expanded: max(var(--cards-w), calc(60vw - 32px));
   position: fixed; inset: 0; overflow: hidden;
   background: radial-gradient(120% 95% at 68% 42%, #0c1634 0%, #060914 52%, #020308 100%);
   color: #e9f0ff;

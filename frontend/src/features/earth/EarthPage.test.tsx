@@ -90,4 +90,28 @@ describe('the Earth view', () => {
     await user.click(krakow)
     expect(krakow).toHaveAttribute('aria-pressed', 'true')
   })
+
+  it('expands the evidence into a wider grid with units, tested dates and a verdict per place', async () => {
+    const user = userEvent.setup()
+    render(<EarthPage />)
+    await user.click(screen.getByText('pin'))
+    await user.click(screen.getByText('box kyiv'))
+    await user.click(await screen.findByTestId('compare-poland_krakow'))
+    await vi.waitFor(() => expect(screen.getByTestId('investigate')).toBeEnabled())
+    await user.click(screen.getByTestId('investigate'))
+    const compactLeft = Number(screen.getByTestId('map').getAttribute('data-left'))
+
+    await user.click(await screen.findByTestId('expand-evidence'))
+    expect(screen.getByTestId('cards')).toHaveAttribute('data-expanded', 'true')
+    expect(Number(screen.getByTestId('map').getAttribute('data-left'))).toBeGreaterThan(compactLeft)
+    const card = screen.getByTestId('card-no2_mean_molec_cm2')
+    expect(await within(card).findByTestId('card-meta')).toHaveTextContent(/tested/)
+    const verdicts = within(card).getByTestId('card-verdicts')
+    expect(verdicts).toHaveTextContent('Kyiv')
+    expect(verdicts).toHaveTextContent('Kraków')
+
+    await user.click(screen.getByTestId('expand-evidence'))
+    expect(screen.getByTestId('expand-evidence')).toHaveTextContent('Expand evidence')
+    expect(Number(screen.getByTestId('map').getAttribute('data-left'))).toBe(compactLeft)
+  })
 })

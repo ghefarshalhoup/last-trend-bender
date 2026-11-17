@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { dateToDecimalYear, monthToDecimalYear, type TimelinePoint } from '../atlas/TrendChart'
 import definitions from '../atlas/variableDefinitions.json'
 import type { ElementId } from '../explorer/elements'
@@ -26,6 +26,9 @@ interface Props {
   extra: ExtraSupport
   metrics: string[]
   onMetrics: (ids: string[]) => void
+  /** Evidence takes most of the screen as a 2 × 2 grid; the map keeps the rest. */
+  expanded: boolean
+  onExpanded: (expanded: boolean) => void
 }
 
 interface PlaceRead {
@@ -50,7 +53,7 @@ function readPlace(variable: VariableEntry, placeId: string, color: string, extr
 }
 
 /** The left column of glass cards: one card per variable, every chosen place drawn in the same card. */
-export function GlassCards({ place, compare, catalog, trendIndex, extra, metrics, onMetrics }: Props) {
+export function GlassCards({ place, compare, catalog, trendIndex, extra, metrics, onMetrics, expanded, onExpanded }: Props) {
   const placeId = place.properties.region_id
   const placeIds = useMemo(() => [placeId, ...compare.filter((c) => c !== placeId)], [placeId, compare])
   const chosen = useMemo(() => metrics.map((m) => catalog.variables.find((v) => v.metric_id === m)).filter((v): v is VariableEntry => Boolean(v)), [metrics, catalog.variables])
@@ -61,6 +64,14 @@ export function GlassCards({ place, compare, catalog, trendIndex, extra, metrics
   }, [chosen, placeIds, extra])
   const { states, retry } = usePayloads(endpoints)
   const [picking, setPicking] = useState(false)
+  // Expanded charts share the screen height: two rows of cards, each with about 200 px of title, units and verdicts.
+  const [viewH, setViewH] = useState(() => (typeof window === 'undefined' ? 900 : window.innerHeight))
+  useEffect(() => {
+    const onResize = () => setViewH(window.innerHeight)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+  const expandedChartH = Math.round(Math.min(240, Math.max(140, (viewH - 170) / 2 - 205)))
 
   const available = useMemo(
     () => [...catalog.variables].filter((v) => hasDataFor(v, placeId, extra)).sort((a, b) => a.display_order - b.display_order),
@@ -73,7 +84,7 @@ export function GlassCards({ place, compare, catalog, trendIndex, extra, metrics
   }
 
   return (
-    <section className={styles.column} aria-label={`Evidence for ${placeLabel(placeId)}`} data-testid="cards">
+    <section className={styles.column} data-expanded={expanded} aria-label={`Evidence for ${placeLabel(placeId)}`} data-testid="cards">
       <header className={styles.head}>
         <p className={styles.place}>
           {placeIds.map((id, i) => (
@@ -83,9 +94,14 @@ export function GlassCards({ place, compare, catalog, trendIndex, extra, metrics
             </span>
           ))}
         </p>
-        <button type="button" className={styles.add} aria-expanded={picking} onClick={() => setPicking((p) => !p)} data-testid="add-variable">
-          Variables {metrics.length}/{MAX_CARDS}
-        </button>
+        <div className={styles.headActions}>
+          <button type="button" className={styles.add} aria-expanded={picking} onClick={() => setPicking((p) => !p)} data-testid="add-variable">
+            Variables {metrics.length}/{MAX_CARDS}
+          </button>
+          <button type="button" className={styles.expand} aria-pressed={expanded} onClick={() => onExpanded(!expanded)} data-testid="expand-evidence">
+            {expanded ? 'Return to map' : 'Expand evidence'}
+          </button>
+        </div>
       </header>
 
       {picking ? (
@@ -122,6 +138,8 @@ export function GlassCards({ place, compare, catalog, trendIndex, extra, metrics
             variable={v}
             reads={placeIds.map((p, j) => readPlace(v, p, PLACE_COLORS[j] ?? '#888', extra, trendIndex, states))}
             invasionDate={catalog.conflict_start}
+            expanded={expanded}
+            chartHeight={expanded ? expandedChartH : 150}
             onRemove={() => toggle(v.metric_id)}
             onRetry={() => endpoints.forEach((e) => states[e]?.status === 'error' && retry(e))}
           />
@@ -136,11 +154,13 @@ interface CardProps {
   variable: VariableEntry
   reads: PlaceRead[]
   invasionDate: string
+  expanded: boolean
+  chartHeight: number
   onRemove: () => void
   onRetry: () => void
 }
 
-function GlassCard({ index, variable, reads, invasionDate, onRemove, onRetry }: CardProps) {
+function GlassCard({ index, variable, reads, invasionDate, expanded, chartHeight, onRemove, onRetry }: CardProps) {
   const [flipped, setFlipped] = useState(false)
   const main = reads[0] as PlaceRead
   const { scale, unit } = displayUnit(variable)
@@ -166,7 +186,35 @@ function GlassCard({ index, variable, reads, invasionDate, onRemove, onRetry }: 
               </button>
             </div>
           </div>
-          {main.reading ? (
+          {expanded ? (
+            <>
+              <p className={styles.meta} data-testid="card-meta">
+                {unit}
+                {span ? `, ${reads.length > 1 ? `${placeLabel(main.placeId)} ` : ''}tested ${span}` : ''}
+              </p>
+              <ul className={styles.verdicts} data-testid="card-verdicts">
+                {reads.map((r) => (
+                  <li key={r.placeId} data-verdict={r.reading?.verdict ?? 'none'}>
+                    <span className={styles.swatch} style={{ background: r.color }} aria-hidden="true" />
+                    <span className={styles.vPlace}>{placeLabel(r.placeId)}</span>
+                    <span className={styles.vText}>
+                      {r.reading ? (
+                        <>
+                          <span aria-hidden="true">{ICON[r.reading.verdict]}</span> {r.reading.badge}
+                        </>
+                      ) : r.state === 'none' ? (
+                        'No record'
+                      ) : r.state === 'error' ? (
+                        'Did not load'
+                      ) : (
+                        'Loading…'
+                      )}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : main.reading ? (
             <p className={styles.verdict} data-verdict={main.reading.verdict} data-testid="card-verdict">
               <span aria-hidden="true">{ICON[main.reading.verdict]}</span> {main.reading.badge}
             </p>
@@ -186,6 +234,8 @@ function GlassCard({ index, variable, reads, invasionDate, onRemove, onRetry }: 
               eventT={dateToDecimalYear(invasionDate)}
               formatValue={(v) => `${fmt(v)} ${unit}`}
               ariaLabel={`${variable.label}, monthly. ${main.reading?.sentence ?? ''}`}
+              height={chartHeight}
+              large={expanded}
             />
           ) : null}
         </div>

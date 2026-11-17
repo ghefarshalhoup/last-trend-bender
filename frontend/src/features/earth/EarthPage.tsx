@@ -26,12 +26,14 @@ async function loadEarth(signal: AbortSignal) {
 }
 
 /** Screen space the glass cards take, in the same sizes the stylesheet uses, so the camera can slide the place clear of them. */
-function measure(investigating: boolean): Insets {
+function measure(investigating: boolean, expanded: boolean): Insets {
   if (typeof window === 'undefined' || !investigating) return { left: 0, bottom: 0 }
   const w = window.innerWidth
+  // On a phone the expanded sheet covers the map; the camera keeps its last framing.
   if (w <= NARROW) return { left: 0, bottom: Math.round(window.innerHeight * 0.52) }
   const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
-  return { left: Math.round(Math.min(Math.max(20 * rem, w * 0.32), 28 * rem) + 32), bottom: 0 }
+  const compact = Math.min(Math.max(20 * rem, w * 0.32), 28 * rem)
+  return { left: Math.round((expanded ? Math.max(compact, w * 0.6 - 32) : compact) + 32), bottom: 0 }
 }
 
 /**
@@ -42,7 +44,13 @@ export default function EarthPage() {
   const { state, retry } = useApiResource(loadEarth)
   const [view, setView] = useState<View>('earth')
   const [placeId, setPlaceId] = useState<string | null>(null)
-  const [investigating, setInvestigating] = useState(false)
+  const [investigating, setInvestigatingRaw] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  // Closing the cards always returns to the compact layout next time.
+  const setInvestigating = useCallback((on: boolean) => {
+    setInvestigatingRaw(on)
+    if (!on) setExpanded(false)
+  }, [])
   const [compare, setCompare] = useState<string[]>([])
   const [metrics, setMetrics] = useState<string[]>([])
   const [explored, setExplored] = useState(false)
@@ -51,13 +59,13 @@ export default function EarthPage() {
   useEffect(() => {
     const update = () =>
       setInsets((old) => {
-        const next = measure(investigating)
+        const next = measure(investigating, expanded)
         return old.left === next.left && old.bottom === next.bottom ? old : next
       })
     update()
     window.addEventListener('resize', update)
     return () => window.removeEventListener('resize', update)
-  }, [investigating])
+  }, [investigating, expanded])
 
   const data = state.status === 'success' ? state.data : null
   const places = useMemo<PlaceFeature[]>(() => {
@@ -80,12 +88,12 @@ export default function EarthPage() {
     setInvestigating(false)
     setPlaceId(null)
     setView('case')
-  }, [])
+  }, [setInvestigating])
   const backToEarth = useCallback(() => {
     setInvestigating(false)
     setPlaceId(null)
     setView('earth')
-  }, [])
+  }, [setInvestigating])
   const onExplore = useCallback(() => setExplored(true), [])
 
   const investigate = () => {
@@ -111,13 +119,14 @@ export default function EarthPage() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return
-      if (investigating) setInvestigating(false)
+      if (expanded) setExpanded(false)
+      else if (investigating) setInvestigating(false)
       else if (placeId) setPlaceId(null)
       else if (view === 'case') setView('earth')
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [investigating, placeId, view])
+  }, [expanded, investigating, placeId, view, setInvestigating])
 
   const hint =
     view === 'earth'
@@ -129,7 +138,7 @@ export default function EarthPage() {
         : null
 
   return (
-    <main className={styles.page} data-view={view} data-investigating={investigating} data-testid="earth-page">
+    <main className={styles.page} data-view={view} data-investigating={investigating} data-expanded={expanded} data-testid="earth-page">
       <Starfield className={styles.stars} />
       <EarthMap view={view} places={places} placeId={placeId} insets={insets} onOpenCase={openCase} onSelectPlace={selectPlace} onExplore={onExplore} />
 
@@ -183,7 +192,7 @@ export default function EarthPage() {
       ) : null}
 
       {investigating && place && data ? (
-        <GlassCards place={place} compare={activeCompare} catalog={data.catalog} trendIndex={trendIndex} extra={extra} metrics={metrics} onMetrics={setMetrics} />
+        <GlassCards place={place} compare={activeCompare} catalog={data.catalog} trendIndex={trendIndex} extra={extra} metrics={metrics} onMetrics={setMetrics} expanded={expanded} onExpanded={setExpanded} />
       ) : null}
     </main>
   )

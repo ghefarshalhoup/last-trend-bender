@@ -18,9 +18,12 @@ interface Props {
   formatValue: (v: number) => string
   ariaLabel: string
   height?: number
+  /** Bigger axis labels, for the expanded evidence grid. */
+  large?: boolean
 }
 
-const PAD = { top: 10, right: 10, bottom: 20, left: 34 }
+const PAD_SMALL = { top: 10, right: 10, bottom: 20, left: 34 }
+const PAD_LARGE = { top: 12, right: 12, bottom: 24, left: 42 }
 const MIN_SPAN_YEARS = 0.5
 
 const monthName = (m: string) => {
@@ -42,7 +45,7 @@ function niceTicks(lo: number, hi: number, count: number): number[] {
  * A quiet line chart for the glass cards. Drag across it to zoom into a stretch of time;
  * double-click or press "Full record" to go back. Zooming only changes the view: the trend test always uses the full record.
  */
-export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, ariaLabel, height = 150 }: Props) {
+export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, ariaLabel, height = 150, large = false }: Props) {
   const wrap = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(320)
   const all = useMemo(() => series.flatMap((s) => s.points.filter((p) => p.value !== null)), [series])
@@ -63,6 +66,7 @@ export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, 
     return () => ro.disconnect()
   }, [])
 
+  const PAD = large ? PAD_LARGE : PAD_SMALL
   const innerW = width - PAD.left - PAD.right
   const innerH = height - PAD.top - PAD.bottom
   const visible = all.filter((p) => p.t >= x0 && p.t <= x1)
@@ -144,7 +148,7 @@ export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, 
   const clipId = useMemo(() => `clip-${Math.random().toString(36).slice(2)}`, [])
 
   return (
-    <div className={styles.wrap} ref={wrap}>
+    <div className={styles.wrap} ref={wrap} data-large={large}>
       <svg
         width={width}
         height={height}
@@ -175,7 +179,7 @@ export function GlassChart({ series, rateLine, rateDashed, eventT, formatValue, 
           </g>
         ))}
         {xTicks.map((t) => (
-          <text key={t} x={sx(t)} y={height - 4} className={styles.tick} textAnchor="middle">
+          <text key={t} x={sx(t)} y={height - (large ? 6 : 4)} className={styles.tick} textAnchor="middle">
             {xLabel(t)}
           </text>
         ))}
