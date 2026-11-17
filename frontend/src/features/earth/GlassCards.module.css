@@ -3,11 +3,12 @@
  * The surface is opaque enough that terrain and map labels never read through the evidence.
  */
 .column {
-  --surface: rgba(247, 245, 239, 0.95);
+  --surface: linear-gradient(155deg, rgba(255, 255, 255, 0.80), rgba(240, 243, 248, 0.68));
+  --glass-blur: blur(22px) saturate(1.35) brightness(1.05);
   --ink: #1b2333;
   --ink-2: #4a5468;
   --ink-3: #6b7488;
-  --edge: rgba(24, 34, 56, 0.12);
+  --edge: rgba(255, 255, 255, 0.55);
   position: absolute; z-index: 3; top: calc(var(--nav-h) + 12px); bottom: 16px; left: 16px;
   width: var(--cards-w);
   display: flex; flex-direction: column; gap: 10px;
@@ -15,20 +16,13 @@
   transition: width 700ms var(--ease-out);
 }
 
-.paper {
-  background: var(--surface);
-  backdrop-filter: blur(10px) saturate(1.1);
-  -webkit-backdrop-filter: blur(10px) saturate(1.1);
-  border: 1px solid var(--edge);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 12px 32px rgba(4, 8, 20, 0.28);
-  border-radius: 12px;
-}
 
 /* One compact bar: places on the left, actions on the right. */
 .head {
   flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
   min-height: 42px; padding: 6px 8px 6px 12px;
   background: var(--surface); border: 1px solid var(--edge); border-radius: 12px; box-shadow: 0 8px 24px rgba(4, 8, 20, 0.22);
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
 }
 .place { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 12px; color: var(--ink-2); min-width: 0; }
 .placeKey { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
@@ -48,6 +42,7 @@
 .picker {
   flex: none; padding: 12px 14px; display: grid; gap: 10px; max-height: 50vh; overflow-y: auto;
   background: var(--surface); border: 1px solid var(--edge); border-radius: 12px; box-shadow: 0 12px 32px rgba(4, 8, 20, 0.28);
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
 }
 .group { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .group legend { width: 100%; margin-bottom: 4px; font-size: 11px; font-weight: 600; color: var(--ink-3); }
@@ -65,12 +60,15 @@
 .empty {
   padding: 10px 12px; font-size: 13px; color: var(--ink-2);
   background: var(--surface); border: 1px solid var(--edge); border-radius: 12px;
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
 }
 
 /* Compact: a scrolling column. */
 .stack { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; padding-right: 2px; overscroll-behavior: contain; }
 
 .card { flex: none; perspective: 1600px; animation: card-in 500ms var(--ease-out) both; }
+/* The blur sits on the card, outside the 3D flip, because browsers drop backdrop blur inside a flipped (preserve-3d) element. */
+.card { border-radius: 12px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); }
 @keyframes card-in {
   from { opacity: 0; transform: translateX(-20px); }
   to { opacity: 1; transform: none; }
@@ -82,7 +80,7 @@
   padding: 10px 12px 6px;
   background: var(--surface);
   border: 1px solid var(--edge);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 12px 32px rgba(4, 8, 20, 0.28);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 0 0 1px rgba(24, 34, 56, 0.06), 0 14px 36px rgba(4, 8, 20, 0.32);
   border-radius: 12px;
 }
 .front { display: flex; flex-direction: column; min-width: 0; }
@@ -122,15 +120,17 @@
 .source { margin-top: auto; font-size: 11px; color: var(--ink-3); }
 
 /*
- * Expanded: the evidence area holds a grid sized by the number of cards.
- * 1 card fills it; 2 sit side by side at full height; 3 and 4 use a 2 x 2 grid.
+ * Expanded: the evidence area is always two rows.
+ * 1 card spans the top row; 2 stack full-width; 3 and 4 use a 2 x 2 grid.
  * Rows and columns are fixed shares of the area, so the charts grow with their cells.
  */
 .column[data-expanded='true'] { width: var(--cards-w-expanded); }
-.column[data-expanded='true'] .stack { display: grid; gap: 12px; overflow: hidden; grid-template-columns: 1fr; grid-template-rows: 1fr; }
-.column[data-expanded='true'] .stack[data-count='2'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.column[data-expanded='true'] .stack {
+  display: grid; gap: 12px; overflow: hidden;
+  grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(2, minmax(0, 1fr));
+}
 .column[data-expanded='true'] .stack[data-count='3'],
-.column[data-expanded='true'] .stack[data-count='4'] { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); }
+.column[data-expanded='true'] .stack[data-count='4'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .column[data-expanded='true'] .card,
 .column[data-expanded='true'] .inner,
 .column[data-expanded='true'] .front { height: 100%; min-height: 0; }
